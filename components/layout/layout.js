@@ -8,13 +8,6 @@ import Footer from 'components/layout/footer';
 import Head from 'components/layout/head';
 import Icons from 'components/layout/icons';
 
-/* eslint-disable */
-if (process.env.NODE_ENV !== 'production') {
-  const { whyDidYouUpdate } = require('why-did-you-update');
-  whyDidYouUpdate(React);
-}
-/* eslint-enable */
-
 export default function Layout(props) {
   const { title, children, className } = props;
 

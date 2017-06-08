@@ -1,0 +1,96 @@
+/**
+ * COLORS
+ * - App
+ * - Common
+ * - States
+ * - Text
+ * - Borders
+*/
+// App
+$color-primary: #69D0E1;
+$color-1: #2C2F33;
+$color-2: #3B3F42;
+$color-3: #D8D8D8;
+$color-4: rgba(#2C2F32, .1);
+$color-5: #FAFAFA;
+
+// Common colors
+$color-white: #FFFFFF;
+$color-black: #000000;
+
+// States
+// $color-success: #1c801c;
+// $color-error: #de2239;
+
+// Text
+$color-text-1: #2C2F32;
+$color-text-2: rgba($color-text-1, .6);
+$color-text-3: rgba($color-text-1, .3);
+$color-text-4: #D8D8D8;
+$color-text-4: #FFFFFF;
+
+// Zindex
+$z-index-1: 0;
+$z-index-2: 100;
+$z-index-3: 200;
+
+/**
+ * FONTS
+ * - Families
+ * - Sizes
+ * - Weights
+*/
+// Families
+$font-family-1: 'Yantramanav', sans-serif;
+
+// Sizes
+$font-size-extrasmall:  12px;
+$font-size-smaller:     14px;
+$font-size-small:       15px;
+$font-size-default:     16px;
+$font-size-big:         22px;
+$font-size-bigger:      28px;
+$font-size-extrabig:    32px;
+$font-size-huge:        64px;
+
+// Weights
+$font-weight-thin:    100;
+$font-weight-light:   300;
+$font-weight-default: 400;
+$font-weight-bold:    700;
+
+/**
+ * LAYOUT
+*/
+// Max widths
+// $layout-max-width: 1060px;
+
+// Responsive breakpoints
+// $br-mobile: 640px;
+// $br-tablet: 1024px;
+// $br-desktop: 1200px;
+
+/**
+ * SPACES && SIZES
+*/
+// $space-1: 8px;
+
+/**
+ * ANIMATIONS
+ * - Times
+ * - Eases
+*/
+// Times
+// $animation-time: .16s;
+// $animation-time-2: .24s;
+// $animation-time-3: .5s;
+// $animation-time-4: .75s;
+
+// Eases
+// $ease-in-cubic: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+// $ease-out-cubic: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+// $ease-in-out-cubic: cubic-bezier(0.645, 0.045, 0.355, 1.000);
+
+// $ease-in-sine: cubic-bezier(0.470, 0.000, 0.745, 0.715);
+// $ease-out-sine: cubic-bezier(0.390, 0.575, 0.565, 1.000);
+// $ease-in-out-sine: cubic-bezier(0.445, 0.050, 0.550, 0.950);

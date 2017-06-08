@@ -6,18 +6,28 @@
 @include foundation-flex-classes;
 @include foundation-flex-grid;
 
+// Reset
+@import 'reset';
+
 // Common
 @import 'base';
 @import 'font';
 @import 'mixins';
+@import 'icons';
 @import 'layout';
 @import 'animations';
 
+// - page
+// @import 'components/page/section';
+
 // Components
 // - layout
+// @import 'components/layout/layout';
+// - page
+// @import 'components/page/section';
+// - common
+@import 'components/common/main-nav';
+@import 'components/common/sub-menu';
 @import 'components/common/grid-item'; // Must be before the other grid components
 @import 'components/common/grid-list';
 @import 'components/common/grid-slider';
-
-// - page
-// @import 'components/page/section';

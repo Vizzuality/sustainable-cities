@@ -11,6 +11,7 @@
     "babel-plugin-module-resolver": "https://registry.npmjs.org/babel-plugin-module-resolver/-/babel-plugin-module-resolver-2.6.2.tgz",
     "babel-plugin-wrap-in-js": "^1.1.1",
     "body-parser": "^1.15.2",
+    "caniuse-lite": "^1.0.30000680",
     "classnames": "^2.2.5",
     "cookie-parser": "^1.4.3",
     "dotenv": "^4.0.0",

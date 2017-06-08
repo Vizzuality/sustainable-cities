@@ -31,11 +31,6 @@ export default class SubMenu extends React.Component {
     }
   }
 
-  onClickItem(e, value) {
-    if (e) e.preventDefault();
-    this.props.onClick(value);
-  }
-
   setEventListeners() {
     window.addEventListener('click', this._onClickOutside);
   }

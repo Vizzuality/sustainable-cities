@@ -54,8 +54,7 @@
     "eslint-plugin-babel": "^4.1.1",
     "eslint-plugin-import": "https://registry.npmjs.org/eslint-plugin-import/-/eslint-plugin-import-2.2.0.tgz",
     "eslint-plugin-react": "^6.10.3",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "why-did-you-update": "0.0.8"
+    "extract-text-webpack-plugin": "^2.1.0"
   },
   "scripts": {
     "dev": "NODE_ENV=development node index.js",

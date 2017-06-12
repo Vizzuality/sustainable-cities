@@ -30,6 +30,10 @@ export default class SubMenu extends React.Component {
       this.props.onCloseSubMenu();
     }
   }
+  onClickItem(e, value) {
+    if (e) e.preventDefault();
+    this.props.onClick(value);
+  }
 
   setEventListeners() {
     window.addEventListener('click', this._onClickOutside);
@@ -37,12 +41,6 @@ export default class SubMenu extends React.Component {
 
   removeEventListeners() {
     window.removeEventListener('click', this._onClickOutside);
-  }
-
-  onClickItem(e, value) {
-    if (e) e.preventDefault();
-
-    this.props.onClick(value);
   }
 
   render() {

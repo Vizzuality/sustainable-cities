@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
+import { Link, Router } from 'routes';
 import TetherComponent from 'react-tether';
-import Router from 'next/router';
 
 // components
 import SubMenu from 'components/common/SubMenu';
@@ -11,6 +10,9 @@ import SubMenu from 'components/common/SubMenu';
 import { EXPLORE_SECTIONS } from 'constants/common';
 
 export default class MainNav extends React.Component {
+  static onClickItem(pathname, category) {
+    Router.pushRoute(pathname, { category });
+  }
 
   constructor(props) {
     super(props);
@@ -34,11 +36,6 @@ export default class MainNav extends React.Component {
     this.setState({
       active: ''
     });
-  }
-
-  // take a look, this is not working
-  onClickItem(pathname, category) {
-    Router.push(`/${pathname}/${category}`);
   }
 
   render() {
@@ -86,7 +83,7 @@ export default class MainNav extends React.Component {
                       parentNode={this.exploreListNode}
                       items={EXPLORE_SECTIONS}
                       onCloseSubMenu={() => this.onCloseSubMenu()}
-                      onClick={category => this.onClickItem('explore', category)}
+                      onClick={category => this.onClickItem('explore-index', category)}
                     />}
                 </TetherComponent>
                 <li className={`nav-item ${route === 'about' ? '-current' : ''}`} role="menuitem">

@@ -47,7 +47,7 @@
     > .literal {
       font-size: $font-size-big;
       color: rgba($color-1, .9);
-      font-weight: 300;
+      font-weight: $font-weight-light;
       white-space: nowrap;
     }
   }

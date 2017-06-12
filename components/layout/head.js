@@ -27,7 +27,6 @@ export default class Head extends React.Component {
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="author" content="Vizzuality" />
-        <link href="https://fonts.googleapis.com/css?family=Yantramanav:100,300,400" rel="stylesheet" />
         {Head.getStyles()}
         {/* Do we need any polyfills? */}
         {/* <script src="https://cdn.polyfill.io/v2/polyfill.min.js" /> */}

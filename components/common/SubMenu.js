@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import Link from 'next/link';
+import { Link } from 'routes';
 
 export default class SubMenu extends React.Component {
 
@@ -45,16 +45,21 @@ export default class SubMenu extends React.Component {
 
   render() {
     const { items, className, parent } = this.props;
-    const classNames = classnames({
+    const classNames = classnames('c-submenu', {
       [className]: !!className
     });
 
     return (
-      <div className={`c-submenu ${classNames}`} ref={(node) => { this.subMenuNode = node; }}>
+      <div className={classNames} ref={(node) => { this.subMenuNode = node; }}>
         <div className="parent-menu"><span className="literal">{parent}</span></div>
         <ul className="menu-list" role="menubar" aria-label={`Submenu for ${parent} section`}>
           {items.map(item => <li key={item.value} className="menu-item" role="menuitem" tabIndex="-1">
-            <Link href={`/explore/${item.value}`} prefetch><a className="literal">{item.label}</a></Link>
+            <Link
+              href={{ pathname: item.pathname }}
+              prefetch
+            >
+              <a className="literal">{item.label}</a>
+            </Link>
           </li>)}
         </ul>
       </div>

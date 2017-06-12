@@ -1,53 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Router } from 'routes';
+import classnames from 'classnames';
+import { Link } from 'routes';
 import TetherComponent from 'react-tether';
 
 // components
 import SubMenu from 'components/common/SubMenu';
 
+// helpers
+import { pushTo } from 'utils/router';
+
 // constants
 import { EXPLORE_SECTIONS } from 'constants/common';
 
 export default class MainNav extends React.Component {
-  static onClickItem(pathname, category) {
-    Router.pushRoute(pathname, { category });
-  }
 
   constructor(props) {
     super(props);
 
     this.state = {
-      active: ''
+      section: ''
     };
   }
 
-  onSelectSection(e, active) {
+  onSelectSection(e, section) {
     if (e) e.preventDefault();
-    const currentActive = this.state.active;
-    if (currentActive === active) return;
+    const currentSection = this.state.section;
+    if (currentSection === section) return;
 
     this.setState({
-      active
+      section
     });
   }
 
   onCloseSubMenu() {
     this.setState({
-      active: ''
+      section: ''
     });
   }
 
   render() {
     const { route, logged, username } = this.props;
-    const { active } = this.state;
+    const { section } = this.state;
 
     return (
       <div className="c-main-nav">
         <div className="row">
           <div className="nav-container">
             <div className="logo">
-              <Link prefetch href="/"><a>Financing Sustainable <br /> Cities Initiative</a></Link>
+              <Link prefetch route="home">
+                <a>Financing Sustainable <br /> Cities Initiative</a>
+              </Link>
             </div>
             <nav className="nav">
               <ul className="nav-list" role="menubar">
@@ -63,7 +66,7 @@ export default class MainNav extends React.Component {
                 >
                   <li
                     ref={(node) => { this.exploreListNode = node; }}
-                    className={`nav-item ${route === 'explore' ? '-current' : ''} -has-submenu`}
+                    className={classnames('nav-item', { '-current': route === 'explore' })}
                     role="menuitem"
                     aria-haspopup="true"
                     tabIndex="-1"
@@ -77,21 +80,24 @@ export default class MainNav extends React.Component {
                   </a>
 
                   </li>
-                  {active === 'explore' &&
+                  {section === 'explore' &&
                     <SubMenu
                       parent="Explore"
                       parentNode={this.exploreListNode}
                       items={EXPLORE_SECTIONS}
                       onCloseSubMenu={() => this.onCloseSubMenu()}
-                      onClick={category => this.onClickItem('explore-index', category)}
+                      onClick={category => pushTo('explore-index', { category })}
                     />}
                 </TetherComponent>
-                <li className={`nav-item ${route === 'about' ? '-current' : ''}`} role="menuitem">
-                  <Link prefetch href="/about"><a className="literal">About</a></Link>
+                <li
+                  className={classnames('nav-item', { '-current': route === 'about' })}
+                  role="menuitem"
+                >
+                  <Link prefetch route="about"><a className="literal">About</a></Link>
                 </li>
                 <li className="nav-item -separator" />
                 <li className="nav-item" role="menuitem">
-                  <Link prefetch href="/builder"><a className="literal">Build a project</a></Link>
+                  <Link prefetch route="builder"><a className="literal">Build a project</a></Link>
                 </li>
                 <li className="nav-item" role="menuitem">
                   <a href="username" className="username">{username}</a>

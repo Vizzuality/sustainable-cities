@@ -11,6 +11,9 @@ import SubMenu from 'components/common/SubMenu';
 import { EXPLORE_SECTIONS, EXPLORE_ROUTES } from 'constants/common';
 
 export default class MainNav extends React.Component {
+  static onClickItem(pathname, category) {
+    Router.pushRoute(pathname, { category });
+  }
 
   constructor(props) {
     super(props);
@@ -77,7 +80,6 @@ export default class MainNav extends React.Component {
                   </a>
 
                   </li>
-<<<<<<< HEAD
                   {section === 'explore-index' &&
                     <SubMenu
                       parent="Explore"
@@ -85,7 +87,7 @@ export default class MainNav extends React.Component {
                       parentNode={this.exploreListNode}
                       items={EXPLORE_SECTIONS}
                       onCloseSubMenu={() => this.onCloseSubMenu()}
-                      onClick={category => pushTo('explore-index', { category })}
+                      onClick={category => this.onClickItem('explore-index', category)}
                     />}
                 </TetherComponent>
                 <li

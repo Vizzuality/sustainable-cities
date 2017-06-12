@@ -3,6 +3,11 @@
 // Reset
 @import '../node_modules/normalize.css/normalize';
 
+// Foundation styles
+@import 'foundation-sites/scss/foundation';
+@include foundation-flex-classes;
+@include foundation-flex-grid;
+
 // Common
 @import 'base';
 @import 'font';
@@ -11,7 +16,8 @@
 
 // Components
 // - layout
-// @import 'components/layout/header';
+@import 'components/common/grid-item';
+@import 'components/common/grid-list';
 
 // - page
 // @import 'components/page/section';

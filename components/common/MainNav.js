@@ -7,13 +7,13 @@ import TetherComponent from 'react-tether';
 // components
 import SubMenu from 'components/common/SubMenu';
 
+// helpers
+import { pushTo } from 'utils/router';
+
 // constants
 import { EXPLORE_SECTIONS, EXPLORE_ROUTES } from 'constants/common';
 
 export default class MainNav extends React.Component {
-  static onClickItem(pathname, category) {
-    Router.pushRoute(pathname, { category });
-  }
 
   constructor(props) {
     super(props);
@@ -87,7 +87,7 @@ export default class MainNav extends React.Component {
                       parentNode={this.exploreListNode}
                       items={EXPLORE_SECTIONS}
                       onCloseSubMenu={() => this.onCloseSubMenu()}
-                      onClick={category => this.onClickItem('explore-index', category)}
+                      onClick={category => pushTo('explore-index', { category })}
                     />}
                 </TetherComponent>
                 <li

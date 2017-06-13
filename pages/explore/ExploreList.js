@@ -17,15 +17,23 @@ export default class ExploreList extends React.Component {
     const sample = [
       {
         title: 'Capital Bikeshare',
-        subtitle: 'Washington DC'
+        subtitle: 'Washington DC',
+        link: 'https://www.duckduckgo.com'
       },
       {
         title: 'Citi Bike',
-        subtitle: 'NYC'
+        subtitle: 'NYC',
+        link: {
+          route: 'explore-index'
+        }
       },
       {
         title: 'Divvy',
-        subtitle: 'Chicago'
+        subtitle: 'Chicago',
+        link: {
+          route: 'explore-detail',
+          params: { category: 'bike-sharing', slug: 'divyy', id: 3 }
+        }
       },
       {
         title: 'Hubway',

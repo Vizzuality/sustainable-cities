@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { Link } from 'routes';
 
 export default function GridItem(props) {
-  const isExternalLink = props.link && /^https?/.test(props.link);
-  const linkAttributes = {
-    href: props.link,
-    rel: 'noopener',
-    target: isExternalLink ? '_blank' : '_self'
-  };
+  // If the link is a string, this means that it is external
+  const isExternalLink = typeof props.link === 'string';
 
-  return (
+  const linkAttributes = isExternalLink
+    ? { href: props.link, rel: 'noopener', target: '_blank' }
+    : {};
+
+  const content = (
     <a // eslint-disable-line jsx-a11y/no-static-element-interactions
-      {...(props.link ? linkAttributes : {})}
+      {...linkAttributes}
       role="link"
       onClick={() => props.onClick && props.onClick()}
       className="c-grid-item"
@@ -26,6 +27,16 @@ export default function GridItem(props) {
       { props.subtitle && <div className="subtitle">{props.subtitle}</div> }
     </a>
   );
+
+  if (!props.link || isExternalLink) {
+    return content;
+  }
+
+  return (
+    <Link route={props.link.route} params={props.link.params}>
+      {content}
+    </Link>
+  );
 }
 
 GridItem.propTypes = {
@@ -34,7 +45,13 @@ GridItem.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
   onClick: PropTypes.func,
-  link: PropTypes.string
+  link: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      route: PropTypes.string.isRequired,
+      params: PropTypes.object
+    })
+  ])
 };
 
 GridItem.defaultProps = {

@@ -48,7 +48,8 @@ $font-size-extrasmall:  12px;
 $font-size-smaller:     14px;
 $font-size-small:       15px;
 $font-size-default:     16px;
-$font-size-big:         22px;
+$font-size-medium:      22px;
+$font-size-big:         24px;
 $font-size-bigger:      28px;
 $font-size-extrabig:    32px;
 $font-size-huge:        64px;
@@ -63,7 +64,7 @@ $font-weight-bold:    700;
  * LAYOUT
 */
 // Max widths
-// $layout-max-width: 1060px;
+$layout-max-width: 1080px;
 
 // Responsive breakpoints
 // $br-mobile: 640px;
@@ -94,3 +95,13 @@ $font-weight-bold:    700;
 // $ease-in-sine: cubic-bezier(0.470, 0.000, 0.745, 0.715);
 // $ease-out-sine: cubic-bezier(0.390, 0.575, 0.565, 1.000);
 // $ease-in-out-sine: cubic-bezier(0.445, 0.050, 0.550, 0.950);
+
+/**
+ * FOUNDATION
+ */
+$base-font-size: $font-size-default;
+$global-width: $layout-max-width;
+$grid-column-gutter: (
+  small:  20px,
+  medium: 20px
+);

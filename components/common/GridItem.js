@@ -8,7 +8,7 @@ export default function GridItem(props) {
   const isExternalLink = typeof props.link === 'string';
 
   const linkAttributes = isExternalLink
-    ? { href: props.link, rel: 'noopener', target: '_blank' }
+    ? { href: props.link, rel: 'noreferrer', target: '_blank' }
     : {};
 
   const content = (

@@ -1,9 +1,7 @@
 @import 'settings';
 
-// Reset
-@import '../node_modules/normalize.css/normalize';
-
 // Foundation styles
+// NOTE: normalize is included with foundation
 @import 'foundation-sites/scss/foundation';
 @include foundation-flex-classes;
 @include foundation-flex-grid;

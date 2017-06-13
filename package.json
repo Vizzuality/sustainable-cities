@@ -29,7 +29,6 @@
     "next-redux-wrapper": "^1.1.2",
     "next-routes": "^1.0.24",
     "node-sass": "^4.5.0",
-    "normalize.css": "^7.0.0",
     "now-logs": "0.0.7",
     "orm": "^3.2.3",
     "postcss-easy-import": "^2.1.0",

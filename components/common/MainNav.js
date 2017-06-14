@@ -79,6 +79,7 @@ export default class MainNav extends React.Component {
                   </li>
                   {section === 'explore-index' &&
                     <SubMenu
+                      className="-nav"
                       parent="Explore"
                       route={'explore-index'}
                       parentNode={this.exploreListNode}

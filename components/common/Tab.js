@@ -39,9 +39,8 @@ export default class Tab extends React.Component {
         <TetherComponent
           attachment="top center"
           targetAttachment="top center"
-          targetOffset="-15px 50%"
+          targetOffset="-15px 0"
           key={label}
-          offset="0 25px"
           constraints={[{
             to: 'target',
             attachment: 'together'
@@ -64,6 +63,7 @@ export default class Tab extends React.Component {
           </li>
           {this.state.category === query.category &&
             <SubMenu
+              className="-tab"
               parent={label}
               route={route}
               parentNode={this.tabNodes[index]}
@@ -98,19 +98,25 @@ export default class Tab extends React.Component {
   }
 
   render() {
-    const { items } = this.props;
+    const { items, className } = this.props;
+    const classNames = classnames('c-tabs', {
+      [className]: !!className
+    });
 
     return (
-      <div className="c-tabs">
-        <ul className="tab-list">
-          {items.map((item, index) => this.renderTab(item, index))}
-        </ul>
+      <div className={classNames}>
+        <div className="row">
+          <ul className="tab-list">
+            {items.map((item, index) => this.renderTab(item, index))}
+          </ul>
+        </div>
       </div>
     );
   }
 }
 
 Tab.propTypes = {
+  className: PropTypes.string,
   items: PropTypes.array.isRequired,
   queryParams: PropTypes.object.isRequired
 };

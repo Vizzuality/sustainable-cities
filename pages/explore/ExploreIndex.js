@@ -27,6 +27,7 @@ export default class ExploreIndex extends Page {
         <strong>Sub-category?: </strong> {subCategory || '–'}
 
         <Tab
+          className="-explore"
           items={EXPLORE_TABS}
           queryParams={this.props.queryParams}
         />

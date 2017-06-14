@@ -30,6 +30,7 @@ export default class SubMenu extends React.Component {
       this.props.onCloseSubMenu();
     }
   }
+
   onClickItem(e, value) {
     if (e) e.preventDefault();
     this.props.onClick(value);
@@ -44,7 +45,7 @@ export default class SubMenu extends React.Component {
   }
 
   render() {
-    const { items, className, parent } = this.props;
+    const { items, className, parent, route } = this.props;
     const classNames = classnames('c-submenu', {
       [className]: !!className
     });
@@ -53,9 +54,10 @@ export default class SubMenu extends React.Component {
       <div className={classNames} ref={(node) => { this.subMenuNode = node; }}>
         <div className="parent-menu"><span className="literal">{parent}</span></div>
         <ul className="menu-list" role="menubar" aria-label={`Submenu for ${parent} section`}>
-          {items.map(item => <li key={item.value} className="menu-item" role="menuitem" tabIndex="-1">
+          {items.map(item => <li key={item.category} className="menu-item" role="menuitem" tabIndex="-1">
             <Link
-              href={{ pathname: item.pathname }}
+              route={route}
+              params={{ category: item.category }}
               prefetch
             >
               <a className="literal">{item.label}</a>
@@ -69,9 +71,10 @@ export default class SubMenu extends React.Component {
 
 SubMenu.propTypes = {
   className: PropTypes.string,
-  items: PropTypes.array,
+  items: PropTypes.array.isRequired,
+  onClick: PropTypes.func,
   onCloseSubMenu: PropTypes.func,
   parent: PropTypes.string,
-  parentNode: PropTypes.object,
-  onClick: PropTypes.func
+  parentNode: PropTypes.object.isRequired,
+  route: PropTypes.string.isRequired
 };

@@ -11,7 +11,7 @@ import SubMenu from 'components/common/SubMenu';
 import { pushTo } from 'utils/router';
 
 // constants
-import { EXPLORE_SECTIONS } from 'constants/common';
+import { EXPLORE_SECTIONS, EXPLORE_ROUTES } from 'constants/common';
 
 export default class MainNav extends React.Component {
 
@@ -66,23 +66,24 @@ export default class MainNav extends React.Component {
                 >
                   <li
                     ref={(node) => { this.exploreListNode = node; }}
-                    className={classnames('nav-item', { '-current': route === 'explore' })}
+                    className={classnames('nav-item', { '-current': EXPLORE_ROUTES.indexOf(route) !== -1 })}
                     role="menuitem"
                     aria-haspopup="true"
                     tabIndex="-1"
                   >
                     <a
                       href="explore"
-                      onClick={e => this.onSelectSection(e, 'explore')}
+                      onClick={e => this.onSelectSection(e, 'explore-index')}
                       className="literal"
                     >
                     Explore
                   </a>
 
                   </li>
-                  {section === 'explore' &&
+                  {section === 'explore-index' &&
                     <SubMenu
                       parent="Explore"
+                      route={'explore-index'}
                       parentNode={this.exploreListNode}
                       items={EXPLORE_SECTIONS}
                       onCloseSubMenu={() => this.onCloseSubMenu()}

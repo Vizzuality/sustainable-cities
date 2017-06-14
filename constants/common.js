@@ -1,12 +1,14 @@
 
 // Nav
 const EXPLORE_SECTIONS = [
-  { label: 'Solutions', pathname: '/explore/solutions', value: 'solutions' },
-  { label: 'Investment capital', pathname: '/explore/investment-capital', value: 'investment-capital' },
-  { label: 'Funding Sources', pathname: '/explore/funding-sources', value: 'funding-sources' },
-  { label: 'Legal framework', pathname: '/explore/legal-framework', value: 'legal-framework' },
-  { label: 'Investment components', pathname: '/explore/investment-components', value: 'investment-components' },
-  { label: 'Cities', pathname: '/explore/cities', value: 'cities' }
+  { label: 'Solutions', category: 'solutions' },
+  { label: 'Investment capital', category: 'investment-capital' },
+  { label: 'Funding Sources', category: 'funding-sources' },
+  { label: 'Legal framework', category: 'legal-framework' },
+  { label: 'Investment components', category: 'investment-components' },
+  { label: 'Cities', category: 'cities' }
 ];
 
-export { EXPLORE_SECTIONS };
+const EXPLORE_ROUTES = ['explore-index', 'explore-list', 'explore-detail'];
+
+export { EXPLORE_SECTIONS, EXPLORE_ROUTES };

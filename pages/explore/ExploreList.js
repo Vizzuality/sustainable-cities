@@ -4,6 +4,7 @@ import Layout from 'components/layout/layout';
 
 // Components
 import GridList from 'components/common/GridList';
+import GridSlider from 'components/common/GridSlider';
 
 export default class ExploreList extends React.Component {
   static async getInitialProps({ query }) {
@@ -51,6 +52,7 @@ export default class ExploreList extends React.Component {
         <strong>Category: </strong> {this.props.category}<br />
         <strong>Sub-category: </strong> {this.props.subCategory}
         <GridList items={sample} />
+        <GridSlider items={[...sample, ...sample]} layout="portrait" />
       </Layout>
     );
   }

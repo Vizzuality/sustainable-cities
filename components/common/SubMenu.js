@@ -30,6 +30,7 @@ export default class SubMenu extends React.Component {
       this.props.onCloseSubMenu();
     }
   }
+
   onClickItem(e, value) {
     if (e) e.preventDefault();
     this.props.onClick(value);

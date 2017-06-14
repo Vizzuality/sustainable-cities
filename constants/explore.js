@@ -25,9 +25,25 @@ const EXPLORE_TABS = [
       { label: 'Other budgets', query: { category: 'funding-sources', subCategory: 'other-budgets' } }
     ]
   },
-  { label: 'Legal framework', query: { category: 'legal-framework' } },
+  { label: 'Legal framework',
+    query: { category: 'legal-framework' },
+    children: [
+      { label: 'Contracts', query: { category: 'legal-framework', subCategory: 'contracts' } },
+      { label: 'Ownership structures & entities', query: { category: 'legal-framework', subCategory: 'ownership-structures-entities' } },
+      { label: 'Policy & regualation', query: { category: 'legal-framework', subCategory: 'policy-regulation' } }
+    ]
+  },
   { label: 'Investment components', query: { category: 'investment-components' } },
-  { label: 'Cities', query: { category: 'cities' } }
+  { label: 'Cities',
+    query: { category: 'cities' },
+    children: [
+      { label: 'Africa', query: { category: 'cities', subCategory: 'africa' } },
+      { label: 'America', query: { category: 'cities', subCategory: 'america' } },
+      { label: 'Asia', query: { category: 'cities', subCategory: 'asia' } },
+      { label: 'Europe', query: { category: 'cities', subCategory: 'europe' } },
+      { label: 'Oceania', query: { category: 'cities', subCategory: 'oceania' } }
+    ]
+  }
 ];
 
 

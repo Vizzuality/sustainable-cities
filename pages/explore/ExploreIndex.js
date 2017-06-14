@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
+import Tab from 'components/common/Tab';
+
+import { EXPLORE_TABS } from 'constants/explore';
 
 export default class ExploreIndex extends Page {
   render() {
@@ -23,6 +26,11 @@ export default class ExploreIndex extends Page {
         <h1>Explore Index</h1>
         <strong>Category?: </strong> {category || '–'}<br />
         <strong>Sub-category?: </strong> {subCategory || '–'}
+
+        <Tab
+          items={EXPLORE_TABS}
+          queryParams={this.props.queryParams}
+        />
       </Layout>
     );
   }

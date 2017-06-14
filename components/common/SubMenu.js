@@ -31,11 +31,6 @@ export default class SubMenu extends React.Component {
     }
   }
 
-  onClickItem(e, value) {
-    if (e) e.preventDefault();
-    this.props.onClick(value);
-  }
-
   setEventListeners() {
     window.addEventListener('click', this._onClickOutside);
   }
@@ -54,10 +49,10 @@ export default class SubMenu extends React.Component {
       <div className={classNames} ref={(node) => { this.subMenuNode = node; }}>
         <div className="parent-menu"><span className="literal">{parent}</span></div>
         <ul className="menu-list" role="menubar" aria-label={`Submenu for ${parent} section`}>
-          {items.map(item => <li key={item.category} className="menu-item" role="menuitem" tabIndex="-1">
+          {items.map(item => <li key={item.query.subCategory || item.query.category} className="menu-item" role="menuitem" tabIndex="-1">
             <Link
               route={route}
-              params={{ category: item.category }}
+              params={item.query}
               prefetch
             >
               <a className="literal">{item.label}</a>
@@ -72,7 +67,6 @@ export default class SubMenu extends React.Component {
 SubMenu.propTypes = {
   className: PropTypes.string,
   items: PropTypes.array.isRequired,
-  onClick: PropTypes.func,
   onCloseSubMenu: PropTypes.func,
   parent: PropTypes.string,
   parentNode: PropTypes.object.isRequired,

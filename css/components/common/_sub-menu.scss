@@ -1,6 +1,7 @@
 .c-submenu {
+  max-width: 270px;
   background: $color-5;
-  z-index: 5;
+  z-index: $z-index-3;
   box-shadow: 0 1px 3px 0 rgba($color-black, .15), 0 7px 15px 0 rgba($color-black, .15);
 
   > .parent-menu {
@@ -50,11 +51,11 @@
 
     > .literal {
       display: block;
-      padding: 8px 30px;
-      font-size: $font-size-big;
+      padding: 8px 10px;
+      font-size: $font-size-medium;
       color: rgba($color-1, .9);
       font-weight: $font-weight-light;
-      white-space: nowrap;
+      line-height: 32px;
     }
   }
 

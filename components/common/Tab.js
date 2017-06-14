@@ -31,10 +31,20 @@ export default class Tab extends React.Component {
   }
 
   renderTab(item, index) {
-    const { route, category } = this.props.queryParams;
+    const { allowAll, queryParams } = this.props;
+    const { route, category } = queryParams;
     const { children, label, query } = item;
 
     if (children) {
+      let subMenuOptions = children;
+
+      if (allowAll) {
+        subMenuOptions = [
+          ...[{ label: 'See all', query: { category: query.category } }],
+          ...children
+        ];
+      }
+
       return (
         <TetherComponent
           attachment="top center"
@@ -67,7 +77,7 @@ export default class Tab extends React.Component {
               parent={label}
               route={route}
               parentNode={this.tabNodes[index]}
-              items={children}
+              items={subMenuOptions}
               onCloseSubMenu={() => this.onCloseSubMenu()}
             />}
         </TetherComponent>
@@ -116,7 +126,12 @@ export default class Tab extends React.Component {
 }
 
 Tab.propTypes = {
+  allowAll: PropTypes.bool, // adds to submenu options a "see all" option if needed
   className: PropTypes.string,
   items: PropTypes.array.isRequired,
   queryParams: PropTypes.object.isRequired
+};
+
+Tab.defaultProps = {
+  allowAll: false
 };

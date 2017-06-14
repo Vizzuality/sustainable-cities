@@ -9,13 +9,15 @@
 // Common
 @import 'base';
 @import 'font';
+@import 'mixins';
 @import 'layout';
 @import 'animations';
 
 // Components
 // - layout
-@import 'components/common/grid-item';
+@import 'components/common/grid-item'; // Must be before the other grid components
 @import 'components/common/grid-list';
+@import 'components/common/grid-slider';
 
 // - page
 // @import 'components/page/section';

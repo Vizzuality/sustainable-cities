@@ -39,7 +39,7 @@ export default class ExploreList extends Page {
         subtitle: 'Chicago',
         link: {
           route: 'explore-detail',
-          params: { category: 'bike-sharing', slug: 'divyy', id: 3 }
+          params: { category: 'bike-sharing', id: 3 }
         }
       },
       {

@@ -17,7 +17,7 @@ export default class ExploreDetail extends Page {
   }
 
   render() {
-    const { category, id, slug } = this.props.queryParams;
+    const { category, id } = this.props.queryParams;
 
     const categoryItem = ExploreDetail.getCategory(category);
     const breadcrumbs = (
@@ -41,7 +41,6 @@ export default class ExploreDetail extends Page {
 
         <h1>Explore list</h1>
         <strong>Category: </strong> {category}<br />
-        <strong>Slug: </strong> {slug}<br />
         <strong>Id: </strong> {id}
       </Layout>
     );

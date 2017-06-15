@@ -19,7 +19,7 @@ export default class HomePage extends Page {
         <br />
         <Link route="explore-list" params={{ category: 'solutions', subCategory: 'bike-sharing' }}>Explore list page</Link>
         <br />
-        <Link route="explore-detail" params={{ category: 'solutions', slug: 'bicimad', id: 1 }}>Explore detail page</Link>
+        <Link route="explore-detail" params={{ category: 'solutions', id: 1 }}>Explore detail page</Link>
       </Layout>
     );
   }

@@ -1,19 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Layout from 'components/layout/layout';
 
 // Components
+import Page from 'pages/Page';
+import Layout from 'components/layout/layout';
 import GridList from 'components/common/GridList';
 import GridSlider from 'components/common/GridSlider';
 
-export default class ExploreList extends React.Component {
-  static async getInitialProps({ query }) {
-    return {
-      category: query.category,
-      subCategory: query.subCategory
-    };
-  }
-
+export default class ExploreList extends Page {
   render() {
     const sample = [
       {
@@ -47,7 +41,10 @@ export default class ExploreList extends React.Component {
     ];
 
     return (
-      <Layout title="Explore list">
+      <Layout
+        title="Explore list"
+        queryParams={this.props.queryParams}
+      >
         <h1>Explore list</h1>
         <strong>Category: </strong> {this.props.category}<br />
         <strong>Sub-category: </strong> {this.props.subCategory}
@@ -59,6 +56,5 @@ export default class ExploreList extends React.Component {
 }
 
 ExploreList.propTypes = {
-  category: PropTypes.string.isRequired,
-  subCategory: PropTypes.string.isRequired
+  queryParams: PropTypes.object.isRequired
 };

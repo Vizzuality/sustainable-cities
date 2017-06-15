@@ -1,30 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+// components
+import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 
-export default class ExploreDetail extends React.Component {
-  static async getInitialProps({ query }) {
-    return {
-      category: query.category,
-      slug: query.slug,
-      id: query.id
-    };
-  }
-
+export default class ExploreDetail extends Page {
   render() {
+    const { category, id, slug } = this.props.queryParams;
     return (
-      <Layout title="Explore detail">
+      <Layout
+        title="Explore detail"
+        queryParams={this.props.queryParams}
+      >
         <h1>Explore list</h1>
-        <strong>Category: </strong> {this.props.category}<br />
-        <strong>Slug: </strong> {this.props.slug}<br />
-        <strong>Id: </strong> {this.props.id}
+        <strong>Category: </strong> {category}<br />
+        <strong>Slug: </strong> {slug}<br />
+        <strong>Id: </strong> {id}
       </Layout>
     );
   }
 }
 
 ExploreDetail.propTypes = {
-  category: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  queryParams: PropTypes.object.isRequired,
+  slug: PropTypes.string.isRequired
 };

@@ -1,0 +1,54 @@
+.c-submenu {
+  background: $color-5;
+  z-index: 5;
+  box-shadow: 0 1px 3px 0 rgba($color-black, .15), 0 7px 15px 0 rgba($color-black, .15);
+
+  > .parent-menu {
+    display: block;
+    padding: 15px 25px 20px;
+    margin: 0 0 16px;
+    text-align: center;
+
+    > .literal {
+      position: relative;
+      font-size: $font-size-smaller;
+      color: $color-text-2;
+      text-transform: uppercase;
+
+      &::after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        width: 50%;
+        height: 5px;
+        transform: translate(-50%, 50%);
+        background: $color-6;
+      }
+    }
+  }
+
+  > .menu-list {
+    padding: 0 0 15px;
+  }
+
+  > .menu-list > .menu-item {
+    display: block;
+    padding: 8px 30px;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      background: $color-white;
+      box-shadow: 0 1px 3px 0 rgba($color-black, .15);
+    }
+
+    > .literal {
+      font-size: $font-size-big;
+      color: rgba($color-1, .9);
+      font-weight: $font-weight-light;
+      white-space: nowrap;
+    }
+  }
+}

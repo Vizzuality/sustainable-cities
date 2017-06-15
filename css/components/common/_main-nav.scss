@@ -1,0 +1,87 @@
+.c-main-nav {
+  height: 60px;
+  padding: 15px;
+  background: $color-1;
+
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .nav-container > .logo {
+    display: flex;
+
+    > a {
+      font-size: $font-size-smaller;
+      color: $color-primary;
+      line-height: 15px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+  }
+
+  .nav-container > .nav {
+
+    .nav-list {
+      display: flex;
+      height: 100%;
+    }
+
+    .nav-list > .nav-item {
+      display: inline-flex;
+      align-items: center;
+
+      &:not(:first-child) {
+        margin: 0 0 0 35px;
+      }
+
+      &.-current {
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -50%;
+          left: 50%;
+          width: 50%;
+          height: 5px;
+          background: $color-primary;
+          transform: translate(-50%, 0);
+        }
+      }
+
+      &.-separator {
+        display: inline;
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          display: inline-block;
+          width: 1px;
+          height: 30px;
+          background-color: rgba($color-white, .5);
+          transform: translate(0, -50%);
+        }
+      }
+    }
+
+    .nav-list > .nav-item > .literal,
+    .nav-list > .nav-item > .username {
+      display: inline-flex;
+      align-items: center;
+      height: 100%;
+      color: rgba($color-white, .5);
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .nav-list > .nav-item > .username {
+      & + .icon {
+        margin: 0 0 0 5px;
+      }
+    }
+  }
+}

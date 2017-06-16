@@ -8,7 +8,7 @@ import TetherComponent from 'react-tether';
 import SubMenu from 'components/common/SubMenu';
 
 // constants
-import { EXPLORE_SECTIONS, EXPLORE_ROUTES } from 'constants/common';
+import { EXPLORE_SECTIONS, EXPLORE_ROUTES } from 'constants/explore';
 
 export default class MainNav extends React.Component {
 

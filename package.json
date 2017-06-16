@@ -24,6 +24,7 @@
     "glob": "7.1.1",
     "isomorphic-fetch": "^2.2.1",
     "json-api-normalizer": "^0.4.0",
+    "lodash": "^4.17.4",
     "lusca": "^1.4.1",
     "moveto": "^1.6.1",
     "next": "^3.0.0-beta6",

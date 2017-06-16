@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'routes';
 import TetherComponent from 'react-tether';
+import isEqual from 'lodash/isEqual';
 
 // components
 import SubMenu from 'components/common/SubMenu';
@@ -17,6 +18,12 @@ export default class Tab extends React.Component {
 
     // saves node references of tabs to colocate submenus
     this.tabNodes = [];
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!isEqual(this.props.queryParams, nextProps.queryParams)) {
+      this.onCloseSubMenu();
+    }
   }
 
   onClickTab(e, category) {

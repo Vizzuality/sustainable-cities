@@ -49,6 +49,11 @@
           background: $color-primary;
           transform: translate(-50%, 0);
         }
+
+        & > .literal,
+        & > .username {
+          color: $color-white;
+        }
       }
 
       &.-separator {
@@ -66,21 +71,21 @@
           transform: translate(0, -50%);
         }
       }
-    }
 
-    .nav-list > .nav-item > .literal,
-    .nav-list > .nav-item > .username {
-      display: inline-flex;
-      align-items: center;
-      height: 100%;
-      color: rgba($color-white, .5);
-      text-transform: uppercase;
-      cursor: pointer;
-    }
+      & > .literal,
+      & > .username {
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        color: rgba($color-white, .5);
+        text-transform: uppercase;
+        cursor: pointer;
+      }
 
-    .nav-list > .nav-item > .username {
-      & + .icon {
-        margin: 0 0 0 5px;
+      & > .username {
+        & + .icon {
+          margin: 0 0 0 5px;
+        }
       }
     }
   }

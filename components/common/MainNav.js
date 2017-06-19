@@ -7,11 +7,8 @@ import TetherComponent from 'react-tether';
 // components
 import SubMenu from 'components/common/SubMenu';
 
-// helpers
-import { pushTo } from 'utils/router';
-
 // constants
-import { EXPLORE_SECTIONS, EXPLORE_ROUTES } from 'constants/common';
+import { EXPLORE_TABS, EXPLORE_ROUTES } from 'constants/explore';
 
 export default class MainNav extends React.Component {
 
@@ -82,12 +79,12 @@ export default class MainNav extends React.Component {
                   </li>
                   {section === 'explore-index' &&
                     <SubMenu
+                      className="-nav"
                       parent="Explore"
                       route={'explore-index'}
                       parentNode={this.exploreListNode}
-                      items={EXPLORE_SECTIONS}
+                      items={EXPLORE_TABS}
                       onCloseSubMenu={() => this.onCloseSubMenu()}
-                      onClick={category => pushTo('explore-index', { category })}
                     />}
                 </TetherComponent>
                 <li

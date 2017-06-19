@@ -1,16 +1,22 @@
 .c-submenu {
+  width: 270px;
   background: $color-5;
-  z-index: 5;
+  z-index: $z-index-3;
   box-shadow: 0 1px 3px 0 rgba($color-black, .15), 0 7px 15px 0 rgba($color-black, .15);
 
   > .parent-menu {
-    display: block;
-    padding: 15px 25px 20px;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
     margin: 0 0 16px;
-    text-align: center;
 
     > .literal {
       position: relative;
+      display: flex;
+      align-items: center;
+      height: 100%;
+
       font-size: $font-size-smaller;
       color: $color-text-2;
       text-transform: uppercase;
@@ -19,11 +25,11 @@
         content: '';
         display: inline-block;
         position: absolute;
-        bottom: -20px;
+        bottom: 0;
         left: 50%;
         width: 50%;
         height: 5px;
-        transform: translate(-50%, 50%);
+        transform: translate(-50%, 0);
         background: $color-6;
       }
     }
@@ -35,7 +41,6 @@
 
   > .menu-list > .menu-item {
     display: block;
-    padding: 8px 30px;
     text-align: center;
     cursor: pointer;
 
@@ -45,10 +50,27 @@
     }
 
     > .literal {
-      font-size: $font-size-big;
+      display: block;
+      padding: 8px 10px;
+      font-size: $font-size-medium;
       color: rgba($color-1, .9);
       font-weight: $font-weight-light;
-      white-space: nowrap;
+      line-height: 32px;
+    }
+  }
+
+  &.-nav {
+    > .parent-menu {
+      height: $nav-height;
+    }
+  }
+
+  &.-tab {
+    > .parent-menu {
+      height: $tab-height;
+      margin: 0 0 32px;
+      // 15px is the vertical displacement of the submenu in tabs
+      transform: translate(0, 15px);
     }
   }
 }

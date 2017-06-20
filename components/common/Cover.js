@@ -2,9 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-// Components
-import Breadcrumbs from 'components/common/Breadcrumbs';
-
 export default function Cover(props) {
   return (
     <div
@@ -32,7 +29,7 @@ Cover.propTypes = {
   size: PropTypes.oneOf(['normal', 'short']),
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
-  breadcrumbs: PropTypes.instanceOf(Breadcrumbs),
+  breadcrumbs: PropTypes.PropTypes.element, // Breadcrumbs component expected
   children: PropTypes.any
 };
 

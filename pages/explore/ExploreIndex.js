@@ -1,66 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import { Router } from 'routes';
 
 // Redux
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
 // modules
-import { getCategories, setCategoryFilters } from 'modules/category';
+import { getCategoryTree, getCategories, setCategoryFilters } from 'modules/category';
 import { getProjects, setProjectFilters } from 'modules/project';
 
 // selectors
-import { getCategoriesByType } from 'selectors/category';
+import { getCategoryTabs } from 'selectors/category';
+import { getProjectGallery } from 'selectors/project';
 
 // components
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
 import Tab from 'components/common/Tab';
-import GridList from 'components/common/GridList';
+import ItemGallery from 'components/explore/ItemGallery';
 
 // constants
-import { EXPLORE_TABS } from 'constants/explore';
+import { SAMPLE_GRID_CATEGORIES_DATA } from 'constants/explore';
+import { CATEGORY_TYPE_CONVERSION } from 'constants/category';
+
 
 class ExploreIndex extends Page {
 
   componentWillMount() {
-    const { category, subCategory } = this.props.queryParams;
+    this.props.getCategoryTree();
+  }
 
-    this.props.setProjectFilters({
-      bme: category !== 'solutions' ? subCategory || category : null,
-      solution: category === 'solutions' && subCategory ? subCategory : null
-    });
+  componentDidMount() {
+    this.setFilters(this.props);
 
-    this.props.getCategories(this.props.categoryFilters);
-    this.props.getProjects(this.props.projectFilters);
+    // sets Solutions as default section
+    Router.pushRoute('explore-index', { category: 'solutions' });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.projects) {
-      this.projectList = nextProps.projects.map(project => (
-        {
-          title: project.name,
-          subtitle: project['project-type'],
-          link: {
-            route: 'explore-detail',
-            params: {
-              category: project['category-id'],
-              id: project.id
-            }
-          }
-        }
-      ));
+    // updates filters
+    if (!isEqual(this.props.queryParams, nextProps.queryParams)) {
+      this.setFilters(nextProps);
     }
 
-    if (!isEqual(this.props.queryParams, nextProps.queryParams)) {
-      const { category, subCategory } = nextProps.queryParams;
-
-      this.props.setProjectFilters({
-        bme: category !== 'solutions' ? subCategory || category : null,
-        solution: category === 'solutions' && subCategory ? subCategory : null
-      });
+    // retrieves projects and categories if filters have been updated
+    if (!isEqual(this.props.categoryFilters, nextProps.categoryFilters)) {
+      this.props.getCategories(nextProps.categoryFilters);
     }
 
     if (!isEqual(this.props.projectFilters, nextProps.projectFilters)) {
@@ -68,9 +56,28 @@ class ExploreIndex extends Page {
     }
   }
 
+  setFilters({ queryParams }) {
+    const { category, subCategory } = queryParams;
+    const NonBmeType = category === 'solutions' ? CATEGORY_TYPE_CONVERSION.solution : null;
+    const NonCityCategory = category === 'solutions' && !subCategory ?
+      null : subCategory || category;
+
+    this.props.setCategoryFilters({
+      type: category && category !== 'solutions' && category !== 'cities' ?
+        CATEGORY_TYPE_CONVERSION.bme : NonBmeType,
+      category: category && category !== 'cities' ? NonCityCategory : null
+    });
+
+    this.props.setProjectFilters({
+      bme: category && category !== 'solutions' && category !== 'cities' ?
+        subCategory || category : null,
+      solution: category === 'solutions' && subCategory ? subCategory : null,
+      city: category === 'cities' ? subCategory || null : null
+    });
+  }
 
   render() {
-    const { loadingProjects, queryParams } = this.props;
+    const { categoryTabs, loadingProjects, queryParams } = this.props;
     const { category, subCategory } = queryParams;
 
     // This is a temporary variable to show some content
@@ -91,11 +98,16 @@ class ExploreIndex extends Page {
         <Tab
           allowAll
           className="-explore"
-          items={EXPLORE_TABS}
+          items={categoryTabs}
           queryParams={queryParams}
         />
-        {loadingProjects ?
-          <div>Loading projects...</div> : <GridList items={this.projectList} />}
+        <div className="row">
+          <div className="column small-12">
+            {loadingProjects ?
+              <div>Loading projects...</div> :
+              <ItemGallery items={SAMPLE_GRID_CATEGORIES_DATA} />}
+          </div>
+        </div>
       </Layout>
     );
   }
@@ -103,8 +115,9 @@ class ExploreIndex extends Page {
 
 ExploreIndex.propTypes = {
   // categories
-  categories: PropTypes.array,
   categoryFilters: PropTypes.object,
+  filteredCategories: PropTypes.array,
+  categoryTabs: PropTypes.array,
   // projects
   loadingProjects: PropTypes.bool,
   projectFilters: PropTypes.object,
@@ -114,8 +127,8 @@ ExploreIndex.propTypes = {
 };
 
 ExploreIndex.defaultProps = {
-  projects: [],
-  solutionCategories: []
+  categoryTabs: [],
+  projects: []
 };
 
 export default withRedux(
@@ -124,14 +137,17 @@ export default withRedux(
     // categories
     categories: state.category.list,
     categoryFilters: state.category.filters,
-    // getCategoriesByTypeX: getCategoriesByType(state),
+    categoryTabs: getCategoryTabs(state),
+    filteredCategories: state.category.filteredCategories,
     // projects
     loadingProjects: state.project.loading,
     projects: state.project.list,
+    projectsGallery: getProjectGallery(state),
     projectFilters: state.project.filters
   }),
   dispatch => ({
     // categories
+    getCategoryTree() { dispatch(getCategoryTree()); },
     getCategories(filters) { dispatch(getCategories(filters)); },
     setCategoryFilters(filters) { dispatch(setCategoryFilters(filters)); },
     // projects

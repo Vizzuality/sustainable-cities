@@ -7,6 +7,7 @@
   line-height: 1;
   text-decoration: none;
   text-transform: uppercase;
+  cursor: pointer;
 
   &.-primary {
     color: $color-text-4;
@@ -28,5 +29,10 @@
       color: $color-text-4;
       border: 1px solid $color-white;
     }
+  }
+
+  &.-disabled {
+    opacity: .3;
+    pointer-events: none;
   }
 }

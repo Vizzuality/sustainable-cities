@@ -8,7 +8,8 @@ export default function Button(props) {
     'c-button': true,
     '-primary': !props.secondary,
     '-secondary': props.secondary,
-    '-inverse': props.inverse
+    '-inverse': props.inverse,
+    '-disabled': props.disabled
   });
 
   if (props.link) {
@@ -63,10 +64,12 @@ Button.propTypes = {
   ]),
   onClick: PropTypes.func,
   secondary: PropTypes.bool,
-  inverse: PropTypes.bool
+  inverse: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 Button.defaultProps = {
   secondary: false,
-  inverse: false
+  inverse: false,
+  disabled: false
 };

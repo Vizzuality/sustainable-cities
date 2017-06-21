@@ -4,13 +4,12 @@ import classnames from 'classnames';
 import { Link } from 'routes';
 
 export default function Button(props) {
-  const classes = ['c-button'];
-
-  // We add the classes
-  if (props.secondary) classes.push('-secondary');
-  else classes.push('-primary');
-
-  if (props.inverse) classes.push('-inverse');
+  const classes = classnames({
+    'c-button': true,
+    '-primary': !props.secondary,
+    '-secondary': props.secondary,
+    '-inverse': props.inverse
+  });
 
   if (props.link) {
     // If the link is a string, this means that it is external
@@ -24,7 +23,7 @@ export default function Button(props) {
       <a // eslint-disable-line jsx-a11y/no-static-element-interactions
         {...linkAttributes}
         role="link"
-        className={classnames(classes)}
+        className={classes}
       >
         {props.children}
       </a>

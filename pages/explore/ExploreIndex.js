@@ -7,7 +7,11 @@ import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
 // modules
-import { getProjects, setFilters } from 'modules/project';
+import { getCategories, setCategoryFilters } from 'modules/category';
+import { getProjects, setProjectFilters } from 'modules/project';
+
+// selectors
+import { getCategoriesByType } from 'selectors/category';
 
 // components
 import Page from 'pages/Page';
@@ -21,13 +25,15 @@ import { EXPLORE_TABS } from 'constants/explore';
 
 class ExploreIndex extends Page {
 
-  constructor(props) {
-    super(props);
-
-    this.projectList = [];
-  }
-
   componentWillMount() {
+    const { category, subCategory } = this.props.queryParams;
+
+    this.props.setProjectFilters({
+      bme: category !== 'solutions' ? subCategory || category : null,
+      solution: category === 'solutions' && subCategory ? subCategory : null
+    });
+
+    this.props.getCategories(this.props.categoryFilters);
     this.props.getProjects(this.props.projectFilters);
   }
 
@@ -48,10 +54,20 @@ class ExploreIndex extends Page {
       ));
     }
 
+    if (!isEqual(this.props.queryParams, nextProps.queryParams)) {
+      const { category, subCategory } = nextProps.queryParams;
+
+      this.props.setProjectFilters({
+        bme: category !== 'solutions' ? subCategory || category : null,
+        solution: category === 'solutions' && subCategory ? subCategory : null
+      });
+    }
+
     if (!isEqual(this.props.projectFilters, nextProps.projectFilters)) {
       this.props.getProjects(nextProps.projectFilters);
     }
   }
+
 
   render() {
     const { loadingProjects, queryParams } = this.props;
@@ -59,7 +75,9 @@ class ExploreIndex extends Page {
 
     // This is a temporary variable to show some content
     // eslint-disable-next-line
-    const description = `Solution description lorem ipusm casius tesebe erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Etiam porta sem malesuada magna mollis euismod. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.`;
+    const description = `Solution description lorem ipusm casius tesebe erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus,
+      porta ac consectetur ac, vestibulum at eros. Etiam porta sem malesuada magna mollis euismod. Duis mollis, est non commodo luctus, nisi
+      erat porttitor ligula, eget lacinia odio sem nec elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.`;
 
     return (
       <Layout
@@ -84,25 +102,40 @@ class ExploreIndex extends Page {
 }
 
 ExploreIndex.propTypes = {
+  // categories
+  categories: PropTypes.array,
+  categoryFilters: PropTypes.object,
+  // projects
   loadingProjects: PropTypes.bool,
   projectFilters: PropTypes.object,
   projects: PropTypes.array,
+  // queryParams
   queryParams: PropTypes.object.isRequired
 };
 
 ExploreIndex.defaultProps = {
-  projects: []
+  projects: [],
+  solutionCategories: []
 };
 
 export default withRedux(
   store,
   state => ({
+    // categories
+    categories: state.category.list,
+    categoryFilters: state.category.filters,
+    // getCategoriesByTypeX: getCategoriesByType(state),
+    // projects
     loadingProjects: state.project.loading,
     projects: state.project.list,
     projectFilters: state.project.filters
   }),
   dispatch => ({
+    // categories
+    getCategories(filters) { dispatch(getCategories(filters)); },
+    setCategoryFilters(filters) { dispatch(setCategoryFilters(filters)); },
+    // projects
     getProjects(filters) { dispatch(getProjects(filters)); },
-    setProjectFilters(filters) { dispatch(setFilters(filters)); }
+    setProjectFilters(filters) { dispatch(setProjectFilters(filters)); }
   })
 )(ExploreIndex);

@@ -37,7 +37,7 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, { error: action.payload });
     case SET_FILTERS: {
       const filters = { ...state.filters, ...action.payload };
-      return Object.asssign({}, state, { filters });
+      return Object.assign({}, state, { filters });
     }
     default:
       return state;
@@ -74,7 +74,7 @@ export function getProjects() {
   };
 }
 
-export function setFilters(filters) {
+export function setProjectFilters(filters) {
   return (dispatch) => {
     dispatch({ type: SET_FILTERS, payload: filters });
   };

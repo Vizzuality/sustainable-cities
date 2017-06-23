@@ -2,30 +2,37 @@
 // routes
 const EXPLORE_ROUTES = ['explore-index', 'explore-list', 'explore-detail'];
 
-
 const EXPLORE_TABS = [
   { label: 'Solutions',
     query: {
       category: 'solutions'
     },
-    slug: 'solutions',
+    slug: 'Solution',
     children: [],
     info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
   },
-  { label: 'Investment capital', query: { category: 'investment-capital' } },
+  { label: 'Finance',
+    query: { category: 'financial-product' },
+    slug: 'financial-product',
+    children: []
+  },
   { label: 'Funding Sources',
     query: {
-      category: 'funding-sources'
+      category: 'funding-source'
     },
-    slug: 'funding-sources',
+    slug: 'funding-source',
     children: []
   },
   { label: 'Legal framework',
-    query: { category: 'legal-framework' },
-    slug: 'legal-framework',
+    query: { category: 'delivery-mechanism' },
+    slug: 'delivery-mechanism',
     children: []
   },
-  { label: 'Investment components', query: { category: 'investment-components' }, slug: 'investment-components' },
+  { label: 'Investment components',
+    query: { category: 'investment-component' },
+    slug: 'investment-component',
+    children: []
+  },
   { label: 'Cities',
     query: { category: 'cities' },
     children: [

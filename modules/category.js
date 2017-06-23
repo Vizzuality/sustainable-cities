@@ -53,7 +53,7 @@ export function getCategoryTree() {
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_CATEGORIES, payload: true });
 
-    fetch(`${process.env.API_URL}/categories-tree`, {
+    fetch(`${process.env.API_URL}/categories?filters[type]=Solution,Bme`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -69,11 +69,15 @@ export function getCategoryTree() {
       dispatch({ type: SET_ERROR_CATEGORIES, payload: true });
       throw new Error(response.status);
     })
-    .then((categories) => {
-      new Deserializer().deserialize(categories, (err, parsedCategories) => {
-        dispatch({ type: SET_LOADING_CATEGORIES, payload: false });
-        dispatch({ type: GET_CATEGORIES, payload: parsedCategories });
-      });
+    .then(({ data }) => {
+      // We don't use deserializer by now in this call
+      // new Deserializer().deserialize(categories, (err, parsedCategories) => {
+      //   dispatch({ type: SET_LOADING_CATEGORIES, payload: false });
+      //   dispatch({ type: GET_CATEGORIES, payload: parsedCategories });
+      // });
+
+      dispatch({ type: SET_LOADING_CATEGORIES, payload: false });
+      dispatch({ type: GET_CATEGORIES, payload: data });
     });
   };
 }

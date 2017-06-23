@@ -81,7 +81,7 @@ export default class MainNav extends React.Component {
                     <SubMenu
                       className="-nav"
                       parent="Explore"
-                      route={'explore-index'}
+                      route="explore-index"
                       parentNode={this.exploreListNode}
                       items={EXPLORE_TABS}
                       onCloseSubMenu={() => this.onCloseSubMenu()}

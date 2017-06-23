@@ -1,0 +1,38 @@
+.c-button {
+  display: inline-block;
+  padding: 8px 15px 7px;
+  background-color: transparent;
+  border-radius: 15px;
+  font-size: $font-size-smaller;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &.-primary {
+    color: $color-text-4;
+    background-color: $color-1;
+    border: 1px solid $color-1;
+
+    &.-inverse {
+      color: $color-text-1;
+      background-color: $color-white;
+      border: 1px solid $color-white;
+    }
+  }
+
+  &.-secondary {
+    color: $color-text-1;
+    border: 1px solid $color-4;
+
+    &.-inverse {
+      color: $color-text-4;
+      border: 1px solid $color-white;
+    }
+  }
+
+  &.-disabled {
+    opacity: .3;
+    pointer-events: none;
+  }
+}

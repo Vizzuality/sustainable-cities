@@ -24,6 +24,7 @@
     "glob": "7.1.1",
     "isomorphic-fetch": "^2.2.1",
     "json-api-normalizer": "^0.4.0",
+    "jsonapi-serializer": "^3.5.3",
     "lodash": "^4.17.4",
     "lusca": "^1.4.1",
     "moveto": "^1.6.1",
@@ -36,6 +37,7 @@
     "postcss-easy-import": "^2.1.0",
     "postcss-loader": "^2.0.5",
     "prop-types": "https://registry.npmjs.org/prop-types/-/prop-types-15.5.7.tgz",
+    "query-string": "^4.3.4",
     "raw-loader": "^0.5.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
@@ -43,6 +45,7 @@
     "react-tether": "^0.5.7",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
+    "reselect": "^3.0.1",
     "sass-loader": "^5.0.1",
     "webpack": "https://registry.npmjs.org/webpack/-/webpack-2.4.0.tgz"
   },

@@ -1,0 +1,22 @@
+.c-item-gallery {
+  margin: 55px 0 100px;
+
+  > .gallery-list {
+    width: 100%;
+  }
+
+  > .gallery-list > .gallery-item {
+    display: block;
+
+    &:not(:first-child) {
+      margin: 55px 0 0;
+    }
+
+    > .gallery-title {
+      margin: 0;
+      font-size: $font-size-extrabig;
+      color: $color-text-4;
+      font-weight: $font-weight-light;
+    }
+  }
+}

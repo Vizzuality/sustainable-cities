@@ -2,41 +2,37 @@
 // routes
 const EXPLORE_ROUTES = ['explore-index', 'explore-list', 'explore-detail'];
 
-// Tabs
 const EXPLORE_TABS = [
   { label: 'Solutions',
     query: {
       category: 'solutions'
     },
-    children: [
-      { label: 'Transit-oriented developments', query: { category: 'solutions', subCategory: 'transit-oriented-developments' } },
-      { label: 'Bike sharing System', query: { category: 'solutions', subCategory: 'bike-sharing-system' } },
-      { label: 'Low emission buses', query: { category: 'solutions', subCategory: 'low-emission-buses' } },
-      { label: 'Building efficiency retrofits', query: { category: 'solutions', subCategory: 'building-efficiency-retrofits' } },
-      { label: 'New efficient constructions', query: { category: 'solutions', subCategory: 'new-efficient-constructions' } }
-    ],
+    slug: 'Solution',
+    children: [],
     info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
   },
-  { label: 'Investment capital', query: { category: 'investment-capital' } },
+  { label: 'Finance',
+    query: { category: 'financial-product' },
+    slug: 'financial-product',
+    children: []
+  },
   { label: 'Funding Sources',
     query: {
-      category: 'funding-sources'
+      category: 'funding-source'
     },
-    children: [
-      { label: 'Investment proceeds', query: { category: 'funding-sources', subCategory: 'investment-proceeds' } },
-      { label: 'Incentives', query: { category: 'funding-sources', subCategory: 'incentives' } },
-      { label: 'Other budgets', query: { category: 'funding-sources', subCategory: 'other-budgets' } }
-    ]
+    slug: 'funding-source',
+    children: []
   },
   { label: 'Legal framework',
-    query: { category: 'legal-framework' },
-    children: [
-      { label: 'Contracts', query: { category: 'legal-framework', subCategory: 'contracts' } },
-      { label: 'Ownership structures & entities', query: { category: 'legal-framework', subCategory: 'ownership-structures-entities' } },
-      { label: 'Policy & regualation', query: { category: 'legal-framework', subCategory: 'policy-regulation' } }
-    ]
+    query: { category: 'delivery-mechanism' },
+    slug: 'delivery-mechanism',
+    children: []
   },
-  { label: 'Investment components', query: { category: 'investment-components' } },
+  { label: 'Investment components',
+    query: { category: 'investment-component' },
+    slug: 'investment-component',
+    children: []
+  },
   { label: 'Cities',
     query: { category: 'cities' },
     children: [
@@ -49,5 +45,37 @@ const EXPLORE_TABS = [
   }
 ];
 
+// to remove
+const SAMPLE_GRID_CATEGORIES_DATA = [
+  {
+    title: 'Bike sharing system',
+    children: [{
+      id: 1,
+      title: 'Capital bikeshare',
+      subtitle: 'Washington DC',
+      link: { route: 'explore-detail', params: { category: 2, id: 1 } }
+    }, {
+      id: 2,
+      title: 'Capital bikeshare 2',
+      subtitle: 'Washington DC 2',
+      link: { route: 'explore-detail', params: { category: 2, id: 2 } }
+    }]
+  },
+  {
+    title: 'Bike sharing system 2',
+    children: [{
+      id: 3,
+      title: 'Capital bikeshare 2 1',
+      subtitle: 'Washington DC 3',
+      link: { route: 'explore-detail', params: { category: 2, id: 1 } }
+    }, {
+      id: 4,
+      title: 'Capital bikeshare 2 2',
+      subtitle: 'Washington DC 4',
+      link: { route: 'explore-detail', params: { category: 2, id: 2 } }
+    }]
+  }
+];
 
-export { EXPLORE_ROUTES, EXPLORE_TABS };
+
+export { EXPLORE_ROUTES, EXPLORE_TABS, SAMPLE_GRID_CATEGORIES_DATA };

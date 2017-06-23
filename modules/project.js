@@ -22,6 +22,8 @@ const initialState = {
   filters: {
     // BME category
     bme: null,
+    // id used to get a single project
+    detailId: null,
     // category or subcategory (exclusive for projects)
     solution: 'all',
     city: null
@@ -56,6 +58,13 @@ export default function (state = initialState, action) {
 
 /* Action creators */
 export function getProjects(filters = {}) {
+  const { detailId } = filters;
+  let endpoint = '/study-cases?';
+
+  if (detailId) {
+    endpoint = `/study-cases/${detailId}`;
+  }
+
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_PROJECTS, payload: true });
     const { solution } = filters;
@@ -64,7 +73,7 @@ export function getProjects(filters = {}) {
       'filters[solution]': solution
     });
 
-    fetch(`${process.env.API_URL}/study-cases?${queryParams}`, {
+    fetch(`${process.env.API_URL}${endpoint}${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -82,7 +91,7 @@ export function getProjects(filters = {}) {
     })
     .then((projects) => {
       if (!solution) {
-        new Deserializer().deserialize(projects, (err, parsedProjects) => {
+        new Deserializer({ keyForAttribute: 'camelCase' }).deserialize(projects, (err, parsedProjects) => {
           dispatch({ type: SET_LOADING_PROJECTS, payload: false });
           dispatch({ type: GET_PROJECTS, payload: parsedProjects });
         });

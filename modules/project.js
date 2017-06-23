@@ -1,5 +1,6 @@
-import { Deserializer } from 'jsonapi-serializer';
+// import { Deserializer } from 'jsonapi-serializer';
 import fetch from 'isomorphic-fetch';
+import * as queryString from 'query-string';
 
 /* Actions */
 const GET_PROJECTS = 'project/GET_PROJECTS';
@@ -11,15 +12,12 @@ const SET_ERROR_PROJECTS = 'project/SET_ERROR_PROJECTS';
 /* Initial state */
 const initialState = {
   list: [],
-  detail: {
-    id: null,
-    data: {}
-  },
+  detailId: null,
   filters: {
     // BME category
     bme: null,
     // category or subcategory (exclusive for projects)
-    solution: null,
+    solution: 'all',
     city: null
   },
   loading: false,
@@ -45,11 +43,16 @@ export default function (state = initialState, action) {
 }
 
 /* Action creators */
-export function getProjects() {
+export function getProjects(filters = {}) {
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_PROJECTS, payload: true });
+    const { solution } = filters;
 
-    fetch(`${process.env.API_URL}/study-cases`, {
+    const queryParams = queryString.stringify({
+      'filters[solution]': solution
+    });
+
+    fetch(`${process.env.API_URL}/study-cases?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -65,11 +68,15 @@ export function getProjects() {
       dispatch({ type: SET_ERROR_PROJECTS, payload: true });
       throw new Error(response.status);
     })
-    .then((projects) => {
-      new Deserializer().deserialize(projects, (err, parsedProjects) => {
-        dispatch({ type: SET_LOADING_PROJECTS, payload: false });
-        dispatch({ type: GET_PROJECTS, payload: parsedProjects });
-      });
+    .then(({ data }) => {
+      // We won't use deserializer by now
+      // new Deserializer().deserialize(projects, (err, parsedProjects) => {
+      //   dispatch({ type: SET_LOADING_PROJECTS, payload: false });
+      //   dispatch({ type: GET_PROJECTS, payload: parsedProjects });
+      // });
+
+      dispatch({ type: SET_LOADING_PROJECTS, payload: false });
+      dispatch({ type: GET_PROJECTS, payload: data });
     });
   };
 }

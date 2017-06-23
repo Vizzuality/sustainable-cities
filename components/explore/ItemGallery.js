@@ -30,17 +30,6 @@ ItemGallery.propTypes = {
 };
 
 ItemGallery.defaultProps = {
-  // [
-  // { title: 'Bike sharing system',
-  //   children: [
-  //    { id: 1,
-  //      title: 'Capital bikeshare',
-  //      subtitle: 'Washington DC',
-  //      link: { route: 'explore-detail', params: { category: 2, id: 1 }}
-  //   }]
-  //  },
-  // ...
-  // ]
   items: [],
   // shows/hides title
   showTitle: true,

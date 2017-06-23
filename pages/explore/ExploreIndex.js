@@ -13,7 +13,6 @@ import { getProjects, setProjectFilters } from 'modules/project';
 
 // selectors
 import { getCategoryTabs } from 'selectors/category';
-import { getProjectGallery } from 'selectors/project';
 
 // components
 import Page from 'pages/Page';
@@ -22,29 +21,40 @@ import Cover from 'components/common/Cover';
 import Tab from 'components/common/Tab';
 import ItemGallery from 'components/explore/ItemGallery';
 
+// utils
+import { parseFilteredProjects } from 'utils/project';
+import { getCategoryIdBySlug } from 'utils/category';
+
 // constants
-import { SAMPLE_GRID_CATEGORIES_DATA } from 'constants/explore';
 import { CATEGORY_TYPE_CONVERSION } from 'constants/category';
 
 
 class ExploreIndex extends Page {
+  constructor(props) {
+    super(props);
 
+    // move this as prop?
+    this.subCategoryId = null;
+  }
   componentWillMount() {
     this.props.getCategoryTree();
   }
 
   componentDidMount() {
-    this.setFilters(this.props);
+    const { queryParams } = this.props;
+    const { category, subCategory } = queryParams;
 
-    // sets Solutions as default section
-    Router.pushRoute('explore-index', { category: 'solutions' });
+    this.props.setProjectFilters(this.props);
+
+    if (!category && !subCategory) {
+      // sets Solutions as default section
+      Router.pushRoute('explore-index', { category: 'solutions' });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     // updates filters
-    if (!isEqual(this.props.queryParams, nextProps.queryParams)) {
-      this.setFilters(nextProps);
-    }
+    this.setFilters(nextProps);
 
     // retrieves projects and categories if filters have been updated
     if (!isEqual(this.props.categoryFilters, nextProps.categoryFilters)) {
@@ -56,28 +66,41 @@ class ExploreIndex extends Page {
     }
   }
 
-  setFilters({ queryParams }) {
+  setFilters({ queryParams, categoryTabs }) {
     const { category, subCategory } = queryParams;
+    const prevCategoryId = this.subCategoryId;
     const NonBmeType = category === 'solutions' ? CATEGORY_TYPE_CONVERSION.solution : null;
     const NonCityCategory = category === 'solutions' && !subCategory ?
       null : subCategory || category;
 
-    this.props.setCategoryFilters({
-      type: category && category !== 'solutions' && category !== 'cities' ?
-        CATEGORY_TYPE_CONVERSION.bme : NonBmeType,
-      category: category && category !== 'cities' ? NonCityCategory : null
-    });
+    if (!isEqual(this.props.queryParams, queryParams)) {
+      this.props.setCategoryFilters({
+        type: category && category !== 'solutions' && category !== 'cities' ?
+          CATEGORY_TYPE_CONVERSION.bme : NonBmeType,
+        category: category && category !== 'cities' ? NonCityCategory : null
+      });
+    }
 
-    this.props.setProjectFilters({
-      bme: category && category !== 'solutions' && category !== 'cities' ?
-        subCategory || category : null,
-      solution: category === 'solutions' && subCategory ? subCategory : null,
-      city: category === 'cities' ? subCategory || null : null
-    });
+    if (categoryTabs.length && subCategory) {
+      this.subCategoryId = getCategoryIdBySlug(categoryTabs, subCategory);
+    }
+
+    if (category === 'solutions' && !subCategory) {
+      this.subCategoryId = null;
+    }
+
+    if (!isEqual(this.props.queryParams, queryParams) || prevCategoryId !== this.subCategoryId) {
+      this.props.setProjectFilters({
+        bme: category && category !== 'solutions' && category !== 'cities' ?
+          this.subCategoryId || category : null,
+        solution: category === 'solutions' && !this.subCategoryId ? 'all' : this.subCategoryId,
+        city: category === 'cities' ? subCategory || null : null
+      });
+    }
   }
 
   render() {
-    const { categoryTabs, loadingProjects, queryParams } = this.props;
+    const { categoryTabs, loadingProjects, projects, queryParams } = this.props;
     const { category, subCategory } = queryParams;
 
     // This is a temporary variable to show some content
@@ -105,7 +128,7 @@ class ExploreIndex extends Page {
           <div className="column small-12">
             {loadingProjects ?
               <div>Loading projects...</div> :
-              <ItemGallery items={SAMPLE_GRID_CATEGORIES_DATA} />}
+              projects.length > 0 && <ItemGallery items={parseFilteredProjects(projects)} />}
           </div>
         </div>
       </Layout>
@@ -142,7 +165,6 @@ export default withRedux(
     // projects
     loadingProjects: state.project.loading,
     projects: state.project.list,
-    projectsGallery: getProjectGallery(state),
     projectFilters: state.project.filters
   }),
   dispatch => ({

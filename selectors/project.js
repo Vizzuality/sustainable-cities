@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 const getProjects = state => state.project.list;
 
-const getProjectGallery = createSelector(
+const getFilteredProjects = createSelector(
   getProjects,
   (projectSolutions) => {
     const gallery = [];
@@ -32,4 +32,4 @@ const getProjectGallery = createSelector(
   }
 );
 
-export { getProjectGallery };
+export { getFilteredProjects };

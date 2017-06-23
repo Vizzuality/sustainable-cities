@@ -1,13 +1,26 @@
+import compact from 'lodash/compact';
+import { CATEGORY_TYPE_CONVERSION } from 'constants/category';
+
+const getCategoryIdBySlug = (categories, subCategory) => {
+  const subCategoryObject = categories.map(cat => cat.children.find(c =>
+      c.query.subCategory === subCategory));
+
+  if (subCategoryObject) compact(subCategoryObject);
+  return subCategoryObject[0].id;
+};
+
 const parseCategoryToTab = (category) => {
-  const { id, name, slug, parent_slug } = category;
+  const { id, category_type: categoryType, slug, name, parent_slug: parentSlug } = category;
   return {
     label: name,
     id,
     query: {
-      category: parent_slug,
+      category: categoryType === CATEGORY_TYPE_CONVERSION.solution ?
+        'solutions' : parentSlug,
       subCategory: slug
     }
   };
 };
 
-export { parseCategoryToTab };
+
+export { getCategoryIdBySlug, parseCategoryToTab };

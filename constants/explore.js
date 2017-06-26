@@ -2,6 +2,10 @@
 // routes
 const EXPLORE_ROUTES = ['explore-index', 'explore-list', 'explore-detail'];
 
+const EXPLORE_DESCRIPTION = `Solution description lorem ipusm casius tesebe erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus,
+      porta ac consectetur ac, vestibulum at eros. Etiam porta sem malesuada magna mollis euismod. Duis mollis, est non commodo luctus, nisi
+      erat porttitor ligula, eget lacinia odio sem nec elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.`;
+
 const EXPLORE_TABS = [
   { label: 'Solutions',
     query: {
@@ -45,37 +49,4 @@ const EXPLORE_TABS = [
   }
 ];
 
-// to remove
-const SAMPLE_GRID_CATEGORIES_DATA = [
-  {
-    title: 'Bike sharing system',
-    children: [{
-      id: 1,
-      title: 'Capital bikeshare',
-      subtitle: 'Washington DC',
-      link: { route: 'explore-detail', params: { category: 2, id: 1 } }
-    }, {
-      id: 2,
-      title: 'Capital bikeshare 2',
-      subtitle: 'Washington DC 2',
-      link: { route: 'explore-detail', params: { category: 2, id: 2 } }
-    }]
-  },
-  {
-    title: 'Bike sharing system 2',
-    children: [{
-      id: 3,
-      title: 'Capital bikeshare 2 1',
-      subtitle: 'Washington DC 3',
-      link: { route: 'explore-detail', params: { category: 2, id: 1 } }
-    }, {
-      id: 4,
-      title: 'Capital bikeshare 2 2',
-      subtitle: 'Washington DC 4',
-      link: { route: 'explore-detail', params: { category: 2, id: 2 } }
-    }]
-  }
-];
-
-
-export { EXPLORE_ROUTES, EXPLORE_TABS, SAMPLE_GRID_CATEGORIES_DATA };
+export { EXPLORE_DESCRIPTION, EXPLORE_ROUTES, EXPLORE_TABS };

@@ -9,15 +9,15 @@ export default function ItemGallery(props) {
   return (
     <div className="c-item-gallery">
       <ul className="gallery-list">
-        {props.items.map(item => (
-          <li className="gallery-item" key={item.title}>
-            {props.showTitle &&
-              <h3 className="gallery-title">{item.title}</h3>}
-            {props.slider ?
-              <GridSlider items={item.children} /> :
-              <GridList items={item.children} />}
-          </li>
-        ))}
+        {props.slider ?
+          props.items.map(item => (
+            <li className="gallery-item" key={item.title}>
+              {props.showTitle &&
+                <h3 className="gallery-title">{item.title}</h3>}
+              <GridSlider items={item.children} />
+            </li>
+          ))
+        : <GridList items={props.items} />}
       </ul>
     </div>
   );

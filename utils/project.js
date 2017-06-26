@@ -1,25 +1,21 @@
 
-// parseFilteredProjects format
-// [
-// { title: 'Bike sharing system',
-//   children: [
-//    { id: 1,
-//      title: 'Capital bikeshare',
-//      subtitle: 'Washington DC',
-//      link: { route: 'explore-detail', params: { category: 2, id: 1 }}
-//   }]
-//  },
-// ...
-// ]
+// parses projects in order to populate GridList component
+const listProjects = projects => projects.map(project => ({
+  id: project.id,
+  title: project.name,
+  subtitle: project.cities && project.cities[0] ? project.cities[0].name : null,
+  link: { route: 'explore-detail', params: { category: project.category_id, id: project.id } }
+}));
 
-const parseFilteredProjects = categories => categories.map(category => ({
-  title: category.name,
-  children: category.projects.map(project => ({
+// parses projects in order to populate GridSlider component
+const projectsBySolution = solutions => solutions.map(solution => ({
+  title: solution.name,
+  children: solution.projects.map(project => ({
     id: project.id,
     title: project.name,
     subtitle: project.cities && project.cities[0] ? project.cities[0].name : null,
-    link: { route: 'explore-detail', params: { category: category.category_id, id: project.id } }
+    link: { route: 'explore-detail', params: { category: solution.category_id, id: project.id } }
   }))
 }));
 
-export { parseFilteredProjects };
+export { listProjects, projectsBySolution };

@@ -6,6 +6,7 @@ const getCategoryIdBySlug = (categories, subCategory) => {
       c.query.subCategory === subCategory));
 
   if (subCategoryObject) compact(subCategoryObject);
+
   return subCategoryObject[0].id;
 };
 

@@ -1,17 +1,38 @@
 @import 'settings';
 
+// Foundation styles
+// NOTE: normalize is included with foundation
+@import 'foundation-sites/scss/foundation';
+@include foundation-flex-classes;
+@include foundation-flex-grid;
+
 // Reset
-@import '../node_modules/normalize.css/normalize';
+@import 'reset';
 
 // Common
 @import 'base';
 @import 'font';
+@import 'mixins';
+@import 'icons';
 @import 'layout';
 @import 'animations';
 
-// Components
-// - layout
-// @import 'components/layout/header';
-
 // - page
 // @import 'components/page/section';
+
+// Components
+// - layout
+// @import 'components/layout/layout';
+// - page
+// @import 'components/page/section';
+// - common
+@import 'components/common/main-nav';
+@import 'components/common/sub-menu';
+@import 'components/common/tab';
+@import 'components/common/grid-item'; // Must be before the other grid components
+@import 'components/common/grid-list';
+@import 'components/common/grid-slider';
+@import 'components/common/cover';
+@import 'components/common/breadcrumbs';
+@import 'components/common/button';
+@import 'components/common/item-gallery';

@@ -36,7 +36,8 @@ module.exports = {
 
     config.plugins.push(
       new webpack.DefinePlugin({
-        // 'process.env.PORT': JSON.stringify(process.env.PORT)
+        'process.env.API_URL': JSON.stringify(process.env.API_URL),
+        'process.env.SC_API_KEY': JSON.stringify(process.env.SC_API_KEY)
       })
     );
 

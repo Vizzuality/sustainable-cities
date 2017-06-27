@@ -8,24 +8,12 @@ import Footer from 'components/layout/footer';
 import Head from 'components/layout/head';
 import Icons from 'components/layout/icons';
 
-/* eslint-disable */
-if (process.env.NODE_ENV !== 'production') {
-  const { whyDidYouUpdate } = require('why-did-you-update');
-  whyDidYouUpdate(React);
-}
-/* eslint-enable */
-
 export default function Layout(props) {
-  const { title, children, className } = props;
+  const { title, children, className, description, queryParams } = props;
 
   const classNames = classnames({
     [className]: !!className
   });
-
-  let { description } = props;
-  if (!description) {
-    description = 'Default description';
-  }
 
   return (
     <div className={`l-page c-page ${classNames}`}>
@@ -36,7 +24,9 @@ export default function Layout(props) {
 
       <Icons />
 
-      <Header />
+      <Header
+        queryParams={queryParams}
+      />
 
       <div className={`l-main ${classNames}`}>
         {children}
@@ -49,7 +39,12 @@ export default function Layout(props) {
 
 Layout.propTypes = {
   title: PropTypes.string.isRequired,
+  queryParams: PropTypes.object,
   description: PropTypes.string,
   children: PropTypes.any.isRequired,
   className: PropTypes.string
+};
+
+Layout.defaultProps = {
+  description: 'Default description'
 };

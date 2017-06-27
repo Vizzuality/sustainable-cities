@@ -1,0 +1,64 @@
+$grid-item-landscape-height: 130px;
+$grid-item-portrait-height:  310px;
+
+.c-grid-item {
+  display: block;
+  position: relative;
+  text-decoration: none;
+
+  &:hover {
+    z-index: 1;
+
+    .background {
+      transform: scale(1.2);
+      background-color: $color-white;
+      box-shadow: 0 7px 15px 0 rgba($color-black, .15);
+    }
+  }
+
+  .background {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    transition: transform .3s, background-color .3s, box-shadow .3s;
+    content: '';
+    z-index: -1;
+  }
+
+  .image {
+    display: block;
+    width: 100%;
+    height: 130px;
+    margin-bottom: 10px;
+    background-size: cover;
+    background-position: center center;
+    background-color: $color-4;
+
+    &.-portrait {
+      height: 310px;
+    }
+  }
+
+  .title {
+    font-size: $font-size-bigger;
+    font-weight: $font-weight-light;
+    line-height: 1.3;
+    color: $color-text-1;
+
+    &.-small {
+      font-size: $font-size-big;
+    }
+  }
+
+  .subtitle {
+    font-size: $font-size-smaller;
+    text-transform: uppercase;
+    color: $color-text-2;
+    line-height: 1.3;
+  }
+
+}

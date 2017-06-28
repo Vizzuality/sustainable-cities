@@ -9,7 +9,7 @@ import { store } from 'store';
 
 // modules
 import { getCategoryTree, getCategories, setCategoryFilters } from 'modules/category';
-import { getProjects, setProjectFilters, setParsedProjects, setSolutionId } from 'modules/project';
+import { getProjects, setProjectFilters, setParsedProjects, setSolutionId, removeProjectDetail } from 'modules/project';
 
 // selectors
 import { getCategoryTabs } from 'selectors/category';
@@ -42,15 +42,16 @@ class ExploreIndex extends Page {
   }
 
   componentWillMount() {
+    // this._setProjectFilters(this.props);
+
     this.props.getCategoryTree();
-    // this.props.setProjectFilters(this.props);
   }
 
   componentDidMount() {
     const { queryParams, projectFilters } = this.props;
-    const { category, subCategory } = queryParams;
+    const { category, subCategory, route } = queryParams;
 
-    if (!category && !subCategory) {
+    if (!category && !subCategory && route === 'explore-index') {
       // sets Solutions as default section
       Router.replaceRoute('explore-index', { category: 'solutions' });
     }
@@ -211,6 +212,7 @@ export default withRedux(
     getProjects(filters) { dispatch(getProjects(filters)); },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
     setSolutionId(solutionId) { dispatch(setSolutionId(solutionId)); },
-    setParsedProjects(projects, filters) { dispatch(setParsedProjects(projects, filters)); }
+    setParsedProjects(projects, filters) { dispatch(setParsedProjects(projects, filters)); },
+    removeProjectDetail() { dispatch(removeProjectDetail()); }
   })
 )(ExploreIndex);

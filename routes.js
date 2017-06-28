@@ -7,9 +7,9 @@ const routes = module.exports = nextRoutes();
 routes.add('home', '/', 'homepage/HomepageIndex');
 
 // EXPLORE
-routes.add('explore-index', '/explore/:category?/:subCategory?', 'explore/ExploreIndex');
 routes.add('explore-list', '/explore/list/:category/:subCategory', 'explore/ExploreList');
-routes.add('explore-detail', '/explore/detail/:type/:id', 'explore/ExploreDetail');
+routes.add('explore-index', '/explore/:category?/:subCategory?', 'explore/ExploreIndex');
+routes.add('explore-detail', '/explore-detail/:type/:id', 'explore/ExploreDetail');
 
 // ABOUT
 routes.add('about', '/about/:section?', 'about/AboutIndex');

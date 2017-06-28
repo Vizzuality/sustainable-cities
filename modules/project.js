@@ -10,6 +10,7 @@ const GET_PROJECTS = 'project/GET_PROJECTS';
 const SET_PARSED_PROJECTS = 'project/SET_PARSED_PROJECTS';
 const SET_SOLUTION_ID = 'project/SET_SOLUTION_ID';
 const SET_FILTERS = 'project/SET_FILTERS';
+const REMOVE_PROJECT_DETAIL = 'project/REMOVE_PROJECT_DETAIL';
 
 const SET_LOADING_PROJECTS = 'project/SET_LOADING_PROJECTS';
 const SET_ERROR_PROJECTS = 'project/SET_ERROR_PROJECTS';
@@ -18,7 +19,6 @@ const SET_ERROR_PROJECTS = 'project/SET_ERROR_PROJECTS';
 const initialState = {
   list: [],
   parsedList: [],
-  detailId: null,
   filters: {
     // BME category
     bme: null,
@@ -39,6 +39,10 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, { list: action.payload });
     case SET_PARSED_PROJECTS:
       return Object.assign({}, state, { parsedList: action.payload });
+    case REMOVE_PROJECT_DETAIL: {
+      const filters = { ...state.filters, ...{ detailId: null } };
+      return Object.assign({}, state, { list: [] }, { filters });
+    }
     case SET_LOADING_PROJECTS:
       return Object.assign({}, state, { loading: action.payload });
     case SET_ERROR_PROJECTS:
@@ -70,7 +74,7 @@ export function getProjects(filters = {}) {
     const { solution } = filters;
 
     const queryParams = queryString.stringify({
-      'filters[solution]': solution
+      'filters[solution]': solution || undefined
     });
 
     fetch(`${process.env.API_URL}${endpoint}${queryParams}`, {
@@ -90,7 +94,7 @@ export function getProjects(filters = {}) {
       throw new Error(response.status);
     })
     .then((projects) => {
-      if (!solution) {
+      if (!solution || detailId) {
         new Deserializer({ keyForAttribute: 'camelCase' }).deserialize(projects, (err, parsedProjects) => {
           dispatch({ type: SET_LOADING_PROJECTS, payload: false });
           dispatch({ type: GET_PROJECTS, payload: parsedProjects });
@@ -122,6 +126,12 @@ export function setProjectFilters(filters) {
 export function setSolutionId(solutionId) {
   return (dispatch) => {
     dispatch({ type: SET_SOLUTION_ID, payload: solutionId });
+  };
+}
+
+export function removeProjectDetail() {
+  return (dispatch) => {
+    dispatch({ type: REMOVE_PROJECT_DETAIL });
   };
 }
 

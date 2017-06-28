@@ -7,14 +7,13 @@ import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
 // modules
-import { getCategories, setCategoryFilters } from 'modules/category';
-import { getProjects, setProjectFilters } from 'modules/project';
+import { getProjects, setProjectFilters, removeProjectDetail } from 'modules/project';
 import { getBmes, setBmeFilters } from 'modules/bme';
 
 // components
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
-import Cover from 'components/common/Cover';
+// import Cover from 'components/common/Cover';
 // import Breadcrumbs from 'components/common/Breadcrumbs';
 import ProjectDetail from 'components/explore/ProjectDetail';
 import BmeDetail from 'components/explore/BmeDetail';
@@ -25,7 +24,7 @@ class ExploreDetail extends Page {
   componentWillMount() {
     const { id, type } = this.props.queryParams;
 
-    if (type === 'project') {
+    if (type === 'solutions') {
       this.props.setProjectFilters({ detailId: id });
     }
 
@@ -38,13 +37,17 @@ class ExploreDetail extends Page {
     const { bmeFilters, projectFilters, queryParams } = nextProps;
     const { type } = queryParams;
 
-    if (type === 'project' && !isEqual(this.props.projectFilters, projectFilters)) {
+    if (type === 'solutions' && !isEqual(this.props.projectFilters, projectFilters)) {
       this.props.getProjects(projectFilters);
     }
 
     if (type === 'bme' && !isEqual(this.props.bmeFilters, bmeFilters)) {
       this.props.getBmes(bmeFilters);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.removeProjectDetail();
   }
 
   render() {
@@ -75,7 +78,7 @@ class ExploreDetail extends Page {
         <strong>Type: </strong> {type}<br />
         <strong>Id: </strong> {id}
 
-        {type === 'project' && project
+        {type === 'solutions' && project
           && <ProjectDetail
             project={project}
             isLoading={loadingProjects}
@@ -124,6 +127,7 @@ export default withRedux(
     // projects
     getProjects(filters) { dispatch(getProjects(filters)); },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
+    removeProjectDetail() { dispatch(removeProjectDetail()); },
     // bme
     getBmes(filters) { dispatch(getBmes(filters)); },
     setBmeFilters(filters) { dispatch(setBmeFilters(filters)); }

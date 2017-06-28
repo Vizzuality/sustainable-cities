@@ -20,6 +20,6 @@ RUN npm install --loglevel warn
 COPY . /usr/src/app
 RUN npm run build
 
-EXPOSE 3005
+EXPOSE 3000
 
 CMD ["npm", "start"]

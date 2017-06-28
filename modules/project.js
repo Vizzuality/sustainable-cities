@@ -8,6 +8,7 @@ import { projectsBySolution, listProjects } from 'utils/project';
 /* Actions */
 const GET_PROJECTS = 'project/GET_PROJECTS';
 const SET_PARSED_PROJECTS = 'project/SET_PARSED_PROJECTS';
+const SET_PROJECT_DETAIL = 'project/SET_PROJECT_DETAIL';
 const SET_SOLUTION_ID = 'project/SET_SOLUTION_ID';
 const SET_FILTERS = 'project/SET_FILTERS';
 const REMOVE_PROJECT_DETAIL = 'project/REMOVE_PROJECT_DETAIL';
@@ -19,6 +20,7 @@ const SET_ERROR_PROJECTS = 'project/SET_ERROR_PROJECTS';
 const initialState = {
   list: [],
   parsedList: [],
+  detail: {},
   filters: {
     // BME category
     bme: null,
@@ -39,6 +41,8 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, { list: action.payload });
     case SET_PARSED_PROJECTS:
       return Object.assign({}, state, { parsedList: action.payload });
+    case SET_PROJECT_DETAIL:
+      return Object.assign({}, state, { detail: action.payload });
     case REMOVE_PROJECT_DETAIL: {
       const filters = { ...state.filters, ...{ detailId: null } };
       return Object.assign({}, state, { list: [] }, { filters });
@@ -62,13 +66,6 @@ export default function (state = initialState, action) {
 
 /* Action creators */
 export function getProjects(filters = {}) {
-  const { detailId } = filters;
-  let endpoint = '/study-cases?';
-
-  if (detailId) {
-    endpoint = `/study-cases/${detailId}`;
-  }
-
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_PROJECTS, payload: true });
     const { solution } = filters;
@@ -77,7 +74,7 @@ export function getProjects(filters = {}) {
       'filters[solution]': solution || undefined
     });
 
-    fetch(`${process.env.API_URL}${endpoint}${queryParams}`, {
+    fetch(`${process.env.API_URL}/study-cases?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +91,7 @@ export function getProjects(filters = {}) {
       throw new Error(response.status);
     })
     .then((projects) => {
-      if (!solution || detailId) {
+      if (!solution) {
         new Deserializer({ keyForAttribute: 'camelCase' }).deserialize(projects, (err, parsedProjects) => {
           dispatch({ type: SET_LOADING_PROJECTS, payload: false });
           dispatch({ type: GET_PROJECTS, payload: parsedProjects });
@@ -103,6 +100,35 @@ export function getProjects(filters = {}) {
 
       dispatch({ type: SET_LOADING_PROJECTS, payload: false });
       dispatch({ type: GET_PROJECTS, payload: projects.data });
+    });
+  };
+}
+
+export function getProjectDetail(projectId) {
+  return (dispatch, getState) => {
+    dispatch({ type: SET_LOADING_PROJECTS, payload: true });
+
+    fetch(`${process.env.API_URL}/study-cases/${projectId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'SC-API-KEY': process.env.SC_API_KEY
+      }
+    })
+    .then((response) => {
+      if (response.ok) {
+        if (getState().project.error) dispatch({ type: SET_ERROR_PROJECTS, payload: false });
+        return response.json();
+      }
+
+      dispatch({ type: SET_ERROR_PROJECTS, payload: true });
+      throw new Error(response.status);
+    })
+    .then((project) => {
+      new Deserializer({ keyForAttribute: 'camelCase' }).deserialize(project, (err, parsedProject) => {
+        dispatch({ type: SET_LOADING_PROJECTS, payload: false });
+        dispatch({ type: SET_PROJECT_DETAIL, payload: parsedProject });
+      });
     });
   };
 }

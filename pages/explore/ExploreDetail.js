@@ -7,19 +7,39 @@ import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
 // modules
-import { getProjects, setProjectFilters, removeProjectDetail } from 'modules/project';
+import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
 import { getBmes, setBmeFilters } from 'modules/bme';
 
 // components
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
-// import Cover from 'components/common/Cover';
-// import Breadcrumbs from 'components/common/Breadcrumbs';
-import ProjectDetail from 'components/explore/ProjectDetail';
-import BmeDetail from 'components/explore/BmeDetail';
+import Cover from 'components/common/Cover';
+import Breadcrumbs from 'components/common/Breadcrumbs';
+import ProjectDetail from 'components/explore-detail/ProjectDetail';
+import BmeDetail from 'components/explore-detail/BmeDetail';
 
 
 class ExploreDetail extends Page {
+  static generateSolutionBreadcrumbs(project) {
+    if (!project) return null;
+    const { name } = project;
+
+    return [
+      {
+        name: 'Solutions',
+        route: 'explore-index',
+        params: { category: 'solutions' }
+      },
+      {
+        name
+      }
+    ];
+  }
+
+  // TO-DO
+  static generateBmeBreadcrumbs(bme) {
+    return bme;
+  }
 
   componentWillMount() {
     const { id, type } = this.props.queryParams;
@@ -38,7 +58,8 @@ class ExploreDetail extends Page {
     const { type } = queryParams;
 
     if (type === 'solutions' && !isEqual(this.props.projectFilters, projectFilters)) {
-      this.props.getProjects(projectFilters);
+      const { detailId } = projectFilters;
+      this.props.getProjectDetail(detailId);
     }
 
     if (type === 'bme' && !isEqual(this.props.bmeFilters, bmeFilters)) {
@@ -52,31 +73,26 @@ class ExploreDetail extends Page {
 
   render() {
     const { project, bme, loadingProjects, loadingBmes, queryParams } = this.props;
-    const { type, id } = queryParams;
+    const { type } = queryParams;
+    let breadcrumbsItems = null;
 
-    // const categoryItem = ExploreDetail.getCategory(category);
-    // const breadcrumbs = (
-    //   <Breadcrumbs
-    //     items={[
-    //       {
-    //         name: categoryItem.label,
-    //         route: 'explore-index',
-    //         params: { category }
-    //       }
-    //     ]}
-    //   />
-    // );
+    if (Object.keys(project).length) {
+      breadcrumbsItems = ExploreDetail.generateSolutionBreadcrumbs(project);
+    }
+
+    if (Object.keys(bme).length) {
+      breadcrumbsItems = ExploreDetail.generateBmeBreadcrumbs(bme);
+    }
+
+    const breadcrumbs = breadcrumbsItems ?
+      <Breadcrumbs items={breadcrumbsItems} /> : null;
 
     return (
       <Layout
         title="Explore detail"
         queryParams={this.props.queryParams}
       >
-        {/*<Cover title={id} breadcrumbs={breadcrumbs} />*/}
-
-        <h1>Explore list</h1>
-        <strong>Type: </strong> {type}<br />
-        <strong>Id: </strong> {id}
+        <Cover title={project.name || ''} breadcrumbs={breadcrumbs} />
 
         {type === 'solutions' && project
           && <ProjectDetail
@@ -96,11 +112,8 @@ class ExploreDetail extends Page {
 
 ExploreDetail.propTypes = {
   // projects
-  project: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.array
-  ]).isRequired,
-  getProjects: PropTypes.func,
+  project: PropTypes.object,
+  getProjectDetail: PropTypes.func,
   // bmes
   bme: PropTypes.oneOfType([
     PropTypes.object,
@@ -110,13 +123,16 @@ ExploreDetail.propTypes = {
   queryParams: PropTypes.object.isRequired
 };
 
+ExploreDetail.defaultProps = {
+  project: {}
+};
 
 export default withRedux(
   store,
   state => ({
     // projects
     loadingProjects: state.project.loading,
-    project: state.project.list,
+    project: state.project.detail,
     projectFilters: state.project.filters,
     // bmes
     loadingBmes: state.bme.loading,
@@ -125,7 +141,7 @@ export default withRedux(
   }),
   dispatch => ({
     // projects
-    getProjects(filters) { dispatch(getProjects(filters)); },
+    getProjectDetail(filters) { dispatch(getProjectDetail(filters)); },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
     removeProjectDetail() { dispatch(removeProjectDetail()); },
     // bme

@@ -1,0 +1,21 @@
+
+.c-cloud {
+
+  >.cloud-list {
+    >.cloud-item {
+      border-radius: 15px;
+      border: 1px solid rgba($color-1, .1);
+
+      &:not(:first-child) {
+        margin: 0 0 0 10px;
+      }
+    }
+
+    >.cloud-item > a {
+      display: inline-block;
+      padding: 2px 15px 0;
+
+      text-transform: uppercase;
+    }
+  }
+}

@@ -13,7 +13,7 @@ export default function BmeDetail(props) {
   const { name, description, categories } = bme;
 
   return (
-    <div className="c-bme-detail">
+    <div className="c-detail">
       <span>Name: {name}</span><br />
       <span>Description: {description}</span><br />
       <span>Categories: </span><br />

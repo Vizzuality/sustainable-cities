@@ -8,11 +8,11 @@ export default function Breadcrumbs(props) {
       {props.items.map((item) => { // eslint-disable-line arrow-body-style
         return (
           <li key={item.name}>
-            <Link route={item.route} params={item.params}>
-              <a>
-                {item.name}
-              </a>
-            </Link>
+            {item.route ?
+              <Link route={item.route} params={item.params}>
+                <a>{item.name}</a>
+              </Link> :
+              <span>{item.name}</span>}
           </li>
         );
       })}
@@ -24,7 +24,7 @@ Breadcrumbs.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      route: PropTypes.string.isRequired,
+      route: PropTypes.string,
       params: PropTypes.object
     })
   )

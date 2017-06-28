@@ -47,7 +47,7 @@ export default class Tab extends React.Component {
 
       if (allowAll) {
         subMenuOptions = [
-          ...[{ label: 'See all', query: { category: query.category } }],
+          ...[{ id: -1, label: 'See all', query: { category: query.category } }],
           ...children
         ];
       }

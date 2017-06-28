@@ -49,7 +49,7 @@ export default class SubMenu extends React.Component {
       <div className={classNames} ref={(node) => { this.subMenuNode = node; }}>
         <div className="parent-menu"><span className="literal">{parent}</span></div>
         <ul className="menu-list" role="menubar" aria-label={`Submenu for ${parent} section`}>
-          {items.map(item => <li key={item.query.subCategory || item.query.category} className="menu-item" role="menuitem" tabIndex="-1">
+          {items.map(item => <li key={item.id} className="menu-item" role="menuitem" tabIndex="-1">
             <Link
               route={route}
               params={item.query}

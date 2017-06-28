@@ -9,11 +9,10 @@ import { store } from 'store';
 
 // modules
 import { getCategoryTree, getCategories, setCategoryFilters } from 'modules/category';
-import { getProjects, setProjectFilters } from 'modules/project';
+import { getProjects, setProjectFilters, setParsedProjects, setSolutionId } from 'modules/project';
 
 // selectors
 import { getCategoryTabs } from 'selectors/category';
-import { getProjectGallery } from 'selectors/project';
 
 // components
 import Page from 'pages/Page';
@@ -22,43 +21,101 @@ import Cover from 'components/common/Cover';
 import Tab from 'components/common/Tab';
 import ItemGallery from 'components/explore/ItemGallery';
 
+// utils
+import { isArrayEqual } from 'utils/common';
+import { getCategoryIdBySlug } from 'utils/category';
+
 // constants
-import { SAMPLE_GRID_CATEGORIES_DATA } from 'constants/explore';
 import { CATEGORY_TYPE_CONVERSION } from 'constants/category';
+import { EXPLORE_DESCRIPTION } from 'constants/explore';
 
 
 class ExploreIndex extends Page {
+  static _getSubCategoryId({ queryParams, categoryTabs }) {
+    const { subCategory } = queryParams || {};
+    let id = null;
+    if (categoryTabs && subCategory) {
+      id = getCategoryIdBySlug(categoryTabs, subCategory);
+    }
+
+    return id;
+  }
 
   componentWillMount() {
     this.props.getCategoryTree();
+    // this.props.setProjectFilters(this.props);
   }
 
   componentDidMount() {
-    this.setFilters(this.props);
+    const { queryParams, projectFilters } = this.props;
+    const { category, subCategory } = queryParams;
 
-    // sets Solutions as default section
-    Router.pushRoute('explore-index', { category: 'solutions' });
+    if (!category && !subCategory) {
+      // sets Solutions as default section
+      Router.replaceRoute('explore-index', { category: 'solutions' });
+    }
+
+    // when user is at '/explore/solutions', there's no filter change, so we force
+    // getting projects
+    if ((!category && !subCategory) || (category === 'solutions' && !subCategory)) {
+      this.props.getProjects(projectFilters);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    // updates filters
+    // updates category and project filters
     if (!isEqual(this.props.queryParams, nextProps.queryParams)) {
-      this.setFilters(nextProps);
+      this._setCategoryFilters(nextProps);
+      this._setProjectFilters(nextProps);
     }
 
-    // retrieves projects and categories if filters have been updated
+    // retrieves categories if filters have been updated
     if (!isEqual(this.props.categoryFilters, nextProps.categoryFilters)) {
       this.props.getCategories(nextProps.categoryFilters);
     }
 
+    // retrieves projects if filters have been updated
     if (!isEqual(this.props.projectFilters, nextProps.projectFilters)) {
       this.props.getProjects(nextProps.projectFilters);
     }
+
+    // parses projects based on filters if those ones have changed
+    if (!isArrayEqual(this.props.projects, nextProps.projects)) {
+      this.props.setParsedProjects(nextProps.projects, nextProps.projectFilters);
+    }
+
+    // if the category tree is ready, gets the solution id through its slug
+    if (!isArrayEqual(this.props.categoryTabs, nextProps.categoryTabs)) {
+      const solutionId = ExploreIndex._getSubCategoryId(nextProps);
+      if (solutionId) this.props.setSolutionId(solutionId);
+    }
   }
 
-  setFilters({ queryParams }) {
+  componentDidUpdate(prevProps) {
+    const { subCategory } = this.props.queryParams;
+    const { subCategory: prevSubCategory } = prevProps.queryParams;
+
+    if (!!subCategory && prevSubCategory !== subCategory) {
+      const solutionId = ExploreIndex._getSubCategoryId(this.props);
+      if (solutionId) this.props.setSolutionId(solutionId);
+    }
+  }
+
+  _setProjectFilters({ queryParams }) {
     const { category, subCategory } = queryParams;
-    const NonBmeType = category === 'solutions' ? CATEGORY_TYPE_CONVERSION.solution : null;
+
+    this.props.setProjectFilters({
+      bme: category && category !== 'solutions' && category !== 'cities' ?
+        subCategory || category : null,
+      solution: category === 'solutions' && !subCategory ? 'all' : subCategory,
+      city: category === 'cities' ? subCategory || null : null
+    });
+  }
+
+  _setCategoryFilters({ queryParams }) {
+    const { category, subCategory } = queryParams;
+    const NonBmeType = category === 'solutions' ?
+      CATEGORY_TYPE_CONVERSION.solution : null;
     const NonCityCategory = category === 'solutions' && !subCategory ?
       null : subCategory || category;
 
@@ -67,31 +124,25 @@ class ExploreIndex extends Page {
         CATEGORY_TYPE_CONVERSION.bme : NonBmeType,
       category: category && category !== 'cities' ? NonCityCategory : null
     });
-
-    this.props.setProjectFilters({
-      bme: category && category !== 'solutions' && category !== 'cities' ?
-        subCategory || category : null,
-      solution: category === 'solutions' && subCategory ? subCategory : null,
-      city: category === 'cities' ? subCategory || null : null
-    });
   }
 
   render() {
-    const { categoryTabs, loadingProjects, queryParams } = this.props;
+    const {
+      categoryTabs,
+      loadingProjects,
+      parsedProjects,
+      queryParams,
+      projectFilters
+    } = this.props;
     const { category, subCategory } = queryParams;
-
-    // This is a temporary variable to show some content
-    // eslint-disable-next-line
-    const description = `Solution description lorem ipusm casius tesebe erat a ante venenatis dapibus posuere velit aliquet. Morbi leo risus,
-      porta ac consectetur ac, vestibulum at eros. Etiam porta sem malesuada magna mollis euismod. Duis mollis, est non commodo luctus, nisi
-      erat porttitor ligula, eget lacinia odio sem nec elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.`;
+    const { solution } = projectFilters;
 
     return (
       <Layout
         title="Explore"
         queryParams={queryParams}
       >
-        <Cover title="Explore" description={description} />
+        <Cover title="Explore" description={EXPLORE_DESCRIPTION} />
         <h1>Explore Index</h1>
         <strong>Category?: </strong> {category || '–'}<br />
         <strong>Sub-category?: </strong> {subCategory || '–'}
@@ -105,7 +156,11 @@ class ExploreIndex extends Page {
           <div className="column small-12">
             {loadingProjects ?
               <div>Loading projects...</div> :
-              <ItemGallery items={SAMPLE_GRID_CATEGORIES_DATA} />}
+              parsedProjects.length > 0 &&
+                <ItemGallery
+                  items={parsedProjects}
+                  slider={solution === 'all'}
+                />}
           </div>
         </div>
       </Layout>
@@ -122,13 +177,15 @@ ExploreIndex.propTypes = {
   loadingProjects: PropTypes.bool,
   projectFilters: PropTypes.object,
   projects: PropTypes.array,
+  parsedProjects: PropTypes.array,
   // queryParams
   queryParams: PropTypes.object.isRequired
 };
 
 ExploreIndex.defaultProps = {
   categoryTabs: [],
-  projects: []
+  projects: [],
+  parsedProjects: []
 };
 
 export default withRedux(
@@ -142,7 +199,7 @@ export default withRedux(
     // projects
     loadingProjects: state.project.loading,
     projects: state.project.list,
-    projectsGallery: getProjectGallery(state),
+    parsedProjects: state.project.parsedList,
     projectFilters: state.project.filters
   }),
   dispatch => ({
@@ -152,6 +209,8 @@ export default withRedux(
     setCategoryFilters(filters) { dispatch(setCategoryFilters(filters)); },
     // projects
     getProjects(filters) { dispatch(getProjects(filters)); },
-    setProjectFilters(filters) { dispatch(setProjectFilters(filters)); }
+    setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
+    setSolutionId(solutionId) { dispatch(setSolutionId(solutionId)); },
+    setParsedProjects(projects, filters) { dispatch(setParsedProjects(projects, filters)); }
   })
 )(ExploreIndex);

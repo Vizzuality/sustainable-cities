@@ -12,6 +12,7 @@ const ITEMS_PER_PAGE = 4;
 export default class GridSlider extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       page: 0
     };

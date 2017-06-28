@@ -12,6 +12,8 @@ const getCategories = state => state.category.list;
 const getCategoryTabs = createSelector(
   getCategories,
   (categoryTypes) => {
+    if (!Object.keys(categoryTypes).length) return [];
+
     const tabs = EXPLORE_TABS;
 
     Object.values(categoryTypes).forEach((catType) => {

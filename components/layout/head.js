@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import HeadNext from 'next/head';
 import styles from 'css/index.scss';
 
-import Package from '../../package.json';
-
 export default class Head extends React.Component {
 
   static getStyles() {

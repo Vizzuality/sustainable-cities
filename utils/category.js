@@ -7,7 +7,7 @@ const getCategoryIdBySlug = (categories, subCategory) => {
 
   if (subCategoryObject) compact(subCategoryObject);
 
-  return subCategoryObject[0].id;
+  return subCategoryObject && !!subCategoryObject[0] ? subCategoryObject[0].id : null;
 };
 
 const parseCategoryToTab = (category) => {

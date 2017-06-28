@@ -11,6 +11,7 @@ const SET_PARSED_PROJECTS = 'project/SET_PARSED_PROJECTS';
 const SET_PROJECT_DETAIL = 'project/SET_PROJECT_DETAIL';
 const SET_SOLUTION_ID = 'project/SET_SOLUTION_ID';
 const SET_FILTERS = 'project/SET_FILTERS';
+const RESET_FILTERS = 'project/RESET_FILTERS';
 const REMOVE_PROJECT_DETAIL = 'project/REMOVE_PROJECT_DETAIL';
 
 const SET_LOADING_PROJECTS = 'project/SET_LOADING_PROJECTS';
@@ -53,6 +54,10 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, { error: action.payload });
     case SET_FILTERS: {
       const filters = { ...state.filters, ...action.payload };
+      return Object.assign({}, state, { filters });
+    }
+    case RESET_FILTERS: {
+      const filters = { ...state.filters, ...initialState.filters };
       return Object.assign({}, state, { filters });
     }
     case SET_SOLUTION_ID: {
@@ -145,6 +150,12 @@ export function setProjectFilters(filters) {
   return (dispatch) => {
     dispatch({ type: SET_FILTERS, payload: filters });
     dispatch({ type: SET_PARSED_PROJECTS, payload: [] });
+  };
+}
+
+export function resetProjectFilters() {
+  return (dispatch) => {
+    dispatch({ type: RESET_FILTERS });
   };
 }
 

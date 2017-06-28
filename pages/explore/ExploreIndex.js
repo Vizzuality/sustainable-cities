@@ -9,7 +9,8 @@ import { store } from 'store';
 
 // modules
 import { getCategoryTree, getCategories, setCategoryFilters } from 'modules/category';
-import { getProjects, setProjectFilters, setParsedProjects, setSolutionId, removeProjectDetail } from 'modules/project';
+import { getProjects, setProjectFilters, setParsedProjects,
+  setSolutionId, removeProjectDetail, resetProjectFilters } from 'modules/project';
 
 // selectors
 import { getCategoryTabs } from 'selectors/category';
@@ -42,16 +43,21 @@ class ExploreIndex extends Page {
   }
 
   componentWillMount() {
-    // this._setProjectFilters(this.props);
+    const { subCategory } = this.props.queryParams;
+
+    if (subCategory) {
+      const solutionId = ExploreIndex._getSubCategoryId(this.props);
+      if (solutionId) this.props.setSolutionId(solutionId);
+    }
 
     this.props.getCategoryTree();
   }
 
   componentDidMount() {
     const { queryParams, projectFilters } = this.props;
-    const { category, subCategory, route } = queryParams;
+    const { category, subCategory, id } = queryParams;
 
-    if (!category && !subCategory && route === 'explore-index') {
+    if ((!category && !subCategory) || !!id) {
       // sets Solutions as default section
       Router.replaceRoute('explore-index', { category: 'solutions' });
     }
@@ -100,6 +106,10 @@ class ExploreIndex extends Page {
       const solutionId = ExploreIndex._getSubCategoryId(this.props);
       if (solutionId) this.props.setSolutionId(solutionId);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.resetProjectFilters();
   }
 
   _setProjectFilters({ queryParams }) {
@@ -211,6 +221,7 @@ export default withRedux(
     // projects
     getProjects(filters) { dispatch(getProjects(filters)); },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
+    resetProjectFilters() { dispatch(resetProjectFilters()); },
     setSolutionId(solutionId) { dispatch(setSolutionId(solutionId)); },
     setParsedProjects(projects, filters) { dispatch(setParsedProjects(projects, filters)); },
     removeProjectDetail() { dispatch(removeProjectDetail()); }

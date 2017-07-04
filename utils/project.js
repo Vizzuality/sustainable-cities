@@ -4,7 +4,7 @@ const listProjects = projects => projects.map(project => ({
   id: project.id,
   title: project.name,
   subtitle: project.cities && project.cities[0] ? project.cities[0].name : null,
-  link: { route: 'explore-detail', params: { category: project.category_id, id: project.id } }
+  link: { route: 'explore-detail', params: { type: 'solutions', id: project.id } }
 }));
 
 // parses projects in order to populate GridSlider component
@@ -14,7 +14,7 @@ const projectsBySolution = solutions => solutions.map(solution => ({
     id: project.id,
     title: project.name,
     subtitle: project.cities && project.cities[0] ? project.cities[0].name : null,
-    link: { route: 'explore-detail', params: { category: solution.category_id, id: project.id } }
+    link: { route: 'explore-detail', params: { type: 'solutions', id: project.id } }
   }))
 }));
 

@@ -1,0 +1,42 @@
+.c-detail-section {
+  margin: 50px 0 0;
+
+  .section-title {
+    margin: 0;
+
+    font-size: $font-size-extrabig;
+    font-weight: $font-weight-light;
+    color: $color-text-4;
+    line-height: 1;
+  }
+
+  .content {
+    padding: 0 0 50px;
+
+    border-bottom: 1px solid rgba($color-1, .1);
+
+    * {
+      font-family: $font-family-1;
+      font-size: $font-size-default;
+      color: $color-text-4;
+      line-height: 26px;
+    }
+
+    p {
+      margin: 0;
+
+      &:not(:first-child) {
+        margin: 15px 0 0;
+      }
+    }
+
+    .info-list {
+      > .info-item {
+        display: flex;
+        &:not(:first-child) {
+          margin: 15px 0 0;
+        }
+      }
+    }
+  }
+}

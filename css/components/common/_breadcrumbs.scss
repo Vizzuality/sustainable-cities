@@ -11,7 +11,8 @@
       content: '/';
     }
 
-    a {
+    a,
+    span {
       font-size: $font-size-extrasmall;
       font-weight: $font-weight-bold;
       text-transform: uppercase;

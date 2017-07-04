@@ -7,7 +7,9 @@ const EXPLORE_DESCRIPTION = `Solution description lorem ipusm casius tesebe erat
       erat porttitor ligula, eget lacinia odio sem nec elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.`;
 
 const EXPLORE_TABS = [
-  { label: 'Solutions',
+  {
+    id: 1,
+    label: 'Solutions',
     query: {
       category: 'solutions'
     },
@@ -15,29 +17,39 @@ const EXPLORE_TABS = [
     children: [],
     info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
   },
-  { label: 'Finance',
+  {
+    id: 2,
+    label: 'Finance',
     query: { category: 'financial-product' },
     slug: 'financial-product',
     children: []
   },
-  { label: 'Funding Sources',
+  {
+    id: 3,
+    label: 'Funding Sources',
     query: {
       category: 'funding-source'
     },
     slug: 'funding-source',
     children: []
   },
-  { label: 'Legal framework',
+  {
+    id: 4,
+    label: 'Legal framework',
     query: { category: 'delivery-mechanism' },
     slug: 'delivery-mechanism',
     children: []
   },
-  { label: 'Investment components',
+  {
+    id: 5,
+    label: 'Investment components',
     query: { category: 'investment-component' },
     slug: 'investment-component',
     children: []
   },
-  { label: 'Cities',
+  {
+    id: 6,
+    label: 'Cities',
     query: { category: 'cities' },
     children: [
       { label: 'Africa', query: { category: 'cities', subCategory: 'africa' } },

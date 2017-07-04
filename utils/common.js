@@ -24,4 +24,10 @@ const isArrayEqual = (originalArray, comparedArray) => {
   return isArrEqual;
 };
 
-export { isArrayEqual };
+const getYearFromDateString = (dateString) => {
+  if (!dateString) return null;
+  const date = new Date(dateString);
+  return date ? date.getFullYear() : '-';
+};
+
+export { isArrayEqual, getYearFromDateString };

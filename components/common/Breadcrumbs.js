@@ -9,9 +9,7 @@ export default function Breadcrumbs(props) {
         return (
           <li key={item.name}>
             <Link route={item.route} params={item.params}>
-              <a>
-                {item.name}
-              </a>
+              <a>{item.name}</a>
             </Link>
           </li>
         );
@@ -24,7 +22,7 @@ Breadcrumbs.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      route: PropTypes.string.isRequired,
+      route: PropTypes.string,
       params: PropTypes.object
     })
   )

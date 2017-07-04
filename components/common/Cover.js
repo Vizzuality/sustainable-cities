@@ -11,7 +11,7 @@ export default function Cover(props) {
       <div className="row align-bottom">
         <div className="column large-8">
           { props.breadcrumbs && <div className="breadcrumbs">{props.breadcrumbs}</div> }
-          <h1>{props.title}</h1>
+          <h1 className="c-title -light -fs-huge -fw-thin">{props.title}</h1>
           { props.description && <p className="description">{props.description}</p> }
         </div>
         <div className="column large-4">

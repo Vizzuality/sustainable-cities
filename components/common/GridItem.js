@@ -23,8 +23,8 @@ export default function GridItem(props) {
         className={classnames('image', `-${props.imageLayout}`)}
         style={props.image && { backgroundImage: `url(${props.image})` }}
       />
-      <div className={classnames('title', { '-small': props.imageLayout === 'portrait' })}>{props.title}</div>
-      { props.subtitle && <div className="subtitle">{props.subtitle}</div> }
+      <h4 className="c-title -dark -fs-bigger -fw-light">{props.title}</h4>
+      { props.subtitle && <h5 className="c-title -gray-light -fs-smaller -uppercase">{props.subtitle}</h5> }
     </a>
   );
 

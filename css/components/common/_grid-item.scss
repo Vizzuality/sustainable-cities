@@ -42,23 +42,4 @@ $grid-item-portrait-height:  310px;
       height: 310px;
     }
   }
-
-  .title {
-    font-size: $font-size-bigger;
-    font-weight: $font-weight-light;
-    line-height: 1.3;
-    color: $color-text-1;
-
-    &.-small {
-      font-size: $font-size-big;
-    }
-  }
-
-  .subtitle {
-    font-size: $font-size-smaller;
-    text-transform: uppercase;
-    color: $color-text-2;
-    line-height: 1.3;
-  }
-
 }

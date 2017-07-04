@@ -13,7 +13,7 @@ export default function ItemGallery(props) {
           props.items.map(item => (
             <li className="gallery-item" key={item.title}>
               {props.showTitle &&
-                <h3 className="gallery-title">{item.title}</h3>}
+                <h3 className="c-title -dark -fs-extrabig -fw-light">{item.title}</h3>}
               <GridSlider items={item.children} />
             </li>
           ))

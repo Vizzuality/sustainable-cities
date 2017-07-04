@@ -6,7 +6,7 @@ export default function DetailSection(props) {
     <div className="c-detail-section">
       <div className="row">
         <div className="column small-4">
-          <h2 className="section-title">{props.title}</h2>
+          <h2 className="c-title -dark -fs-extrabig -fw-light">{props.title}</h2>
         </div>
         <div className="column small-8">
           <div className="content">

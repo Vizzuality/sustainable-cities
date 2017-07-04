@@ -16,13 +16,19 @@ export default function ProjectDetail(props) {
   if (isLoading) return (<div>Loading project...</div>);
   if (isEmpty(project)) return null;
 
-  const { name, situation, solution, operationalYear, cities, externalSources } = project;
+  const { name, situation, solution, operationalYear, cities, externalSources, impacts } = project;
   const sourcesCloud = externalSources ?
     externalSources.map(source => ({ id: source.id, name: source.name, link: source.webUrl })) : [];
-  // TO-DO
-  const impactItems = [];
-  // const impactItems = impacts && impacts.map(impact => ({ name: impact.name,
-  //   children: impact.children.map(child => ({ name: child.name })) }));
+  const impactItems = impacts.map(impact => ({
+    id: impact.id,
+    name: impact.category ? impact.category.name : null,
+    children: impact.category ? impacts.filter(imp => // eslint-disable-line no-confusing-arrow
+      imp.category && impact.category ?
+        imp.category.name === impact.category.name : false).map(i => ({
+          id: i.id,
+          name: `${i.impactUnit}: ${i.impactValue}`
+        })) : []
+  }));
 
   return (
     <div className="c-detail">

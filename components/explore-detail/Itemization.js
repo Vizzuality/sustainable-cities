@@ -2,7 +2,7 @@ import React from 'react';
 import Proptypes from 'prop-types';
 
 const descomposeItem = item => (
-  <div>
+  <div key={item.id}>
     <h3 className="item-title">{item.name}</h3>
     <ul className="item-child-list">
       {item.children.map(child =>
@@ -15,7 +15,7 @@ const descomposeItem = item => (
 export default function Itemization(props) {
   return (
     <div className="c-itemization">
-      {props.items(item => descomposeItem(item))}
+      {props.items.map(item => descomposeItem(item))}
     </div>
   );
 }

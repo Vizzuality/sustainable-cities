@@ -15,11 +15,9 @@ export default class HomePage extends Page {
       >
         Hi there! Welcome to Sustainable Cities!
         <br />
-        <Link route="explore-index">Explore index page</Link>
+        <Link route="explore-index" params={{ category: 'solutions' }}><a>Explore index page</a></Link>
         <br />
-        <Link route="explore-list" params={{ category: 'solutions', subCategory: 'bike-sharing' }}>Explore list page</Link>
-        <br />
-        <Link route="explore-detail" params={{ category: 'solutions', id: 1 }}>Explore detail page</Link>
+        <Link route="explore-detail" params={{ type: 'solutions', id: 1 }}><a>Explore detail page</a></Link>
       </Layout>
     );
   }

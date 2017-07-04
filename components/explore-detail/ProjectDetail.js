@@ -32,15 +32,10 @@ export default function ProjectDetail(props) {
   } = project;
   const sourcesCloud = externalSources ?
     externalSources.map(source => ({ id: source.id, name: source.name, link: source.webUrl })) : [];
-  const impactItems = impacts.map(impact => ({
+  const impactItems = impacts.filter(i => !!i.category).map(impact => ({
     id: impact.id,
-    name: impact.category ? impact.category.name : null,
-    children: impact.category ? impacts.filter(imp => // eslint-disable-line no-confusing-arrow
-      imp.category && impact.category ?
-        imp.category.name === impact.category.name : false).map(i => ({
-          id: i.id,
-          name: `${i.impactUnit}: ${i.impactValue}`
-        })) : []
+    name: impact.category.name,
+    children: impacts.map(imp => ({ id: imp.id, name: `${imp.impactUnit}: ${imp.impactValue}` }))
   }));
 
   return (

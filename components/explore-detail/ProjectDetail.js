@@ -16,7 +16,16 @@ export default function ProjectDetail(props) {
   if (isLoading) return (<div>Loading project...</div>);
   if (isEmpty(project)) return null;
 
-  const { name, situation, solution, operationalYear, cities, externalSources, impacts } = project;
+  const {
+    name,
+    situation,
+    solution,
+    operationalYear,
+    cities,
+    country,
+    externalSources,
+    impacts
+  } = project;
   const sourcesCloud = externalSources ?
     externalSources.map(source => ({ id: source.id, name: source.name, link: source.webUrl })) : [];
   const impactItems = impacts.map(impact => ({
@@ -38,7 +47,7 @@ export default function ProjectDetail(props) {
         <ul className="info-list">
           <li className="info-item"><span>Name: {name}</span></li>
           <li className="info-item"><span>Year (operational): {getYearFromDateString(operationalYear)}</span></li>
-          <li className="info-item"><span>Country: {cities && cities[0] ? cities[0].iso : '' }</span></li>
+          <li className="info-item"><span>Country: {country ? country.name : '' }</span></li>
           <li className="info-item"><span>City: {cities && cities[0] ? cities[0].name : '' }</span></li>
         </ul>
       </DetailSection>

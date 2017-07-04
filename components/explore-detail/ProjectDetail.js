@@ -6,9 +6,13 @@ import isEmpty from 'lodash/isEmpty';
 import DetailSection from 'components/explore-detail/DetailSection';
 import Itemization from 'components/explore-detail/Itemization';
 import Cloud from 'components/explore-detail/Cloud';
+import BmeTree from 'components/explore-detail/project/BmeTree';
 
 // utils
 import { getYearFromDateString } from 'utils/common';
+
+// sample data
+import { BMES_PROJECT_SAMPLE } from 'samples/project_bme';
 
 export default function ProjectDetail(props) {
   const { isLoading, project } = props;
@@ -78,6 +82,9 @@ export default function ProjectDetail(props) {
             items={impactItems}
           />
         </DetailSection>}
+      <BmeTree
+        bmes={BMES_PROJECT_SAMPLE}
+      />
     </div>
   );
 }

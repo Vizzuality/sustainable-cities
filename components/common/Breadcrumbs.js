@@ -8,11 +8,9 @@ export default function Breadcrumbs(props) {
       {props.items.map((item) => { // eslint-disable-line arrow-body-style
         return (
           <li key={item.name}>
-            {item.route ?
-              <Link route={item.route} params={item.params}>
-                <a>{item.name}</a>
-              </Link> :
-              <span>{item.name}</span>}
+            <Link route={item.route} params={item.params}>
+              <a>{item.name}</a>
+            </Link>
           </li>
         );
       })}

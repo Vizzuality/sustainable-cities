@@ -2,11 +2,14 @@ import React from 'react';
 import Proptypes from 'prop-types';
 
 const descomposeItem = item => (
-  <div key={item.id}>
-    <h3 className="item-title">{item.name}</h3>
-    <ul className="item-child-list">
+  <div
+    key={item.id}
+    className="itemization-unit"
+  >
+    <h3 className="c-title -dark -fs-bigger -fw-light">{item.name}</h3>
+    <ul className="child-list">
       {item.children.map(child =>
-        <li key={child.id} className="item-child-list">{child.name}</li>
+        <li key={child.id} className="child-item">{child.name}</li>
       )}
     </ul>
   </div>

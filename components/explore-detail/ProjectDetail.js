@@ -6,6 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 import DetailSection from 'components/explore-detail/DetailSection';
 import Itemization from 'components/explore-detail/Itemization';
 import Cloud from 'components/explore-detail/Cloud';
+import BmeTree from 'components/explore-detail/project/BmeTree';
 
 // utils
 import { getYearFromDateString } from 'utils/common';
@@ -24,19 +25,15 @@ export default function ProjectDetail(props) {
     cities,
     country,
     externalSources,
-    impacts
+    impacts,
+    bmeTree
   } = project;
   const sourcesCloud = externalSources ?
     externalSources.map(source => ({ id: source.id, name: source.name, link: source.webUrl })) : [];
-  const impactItems = impacts.map(impact => ({
+  const impactItems = impacts.filter(i => !!i.category).map(impact => ({
     id: impact.id,
-    name: impact.category ? impact.category.name : null,
-    children: impact.category ? impacts.filter(imp => // eslint-disable-line no-confusing-arrow
-      imp.category && impact.category ?
-        imp.category.name === impact.category.name : false).map(i => ({
-          id: i.id,
-          name: `${i.impactUnit}: ${i.impactValue}`
-        })) : []
+    name: impact.category.name,
+    children: impacts.map(imp => ({ id: imp.id, name: `${imp.impactUnit}: ${imp.impactValue}` }))
   }));
 
   return (
@@ -78,6 +75,10 @@ export default function ProjectDetail(props) {
             items={impactItems}
           />
         </DetailSection>}
+      {bmeTree.length > 0 &&
+        <BmeTree
+          bmes={bmeTree}
+        />}
     </div>
   );
 }

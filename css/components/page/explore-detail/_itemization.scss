@@ -1,0 +1,36 @@
+.c-itemization {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  // padding: 0 60px 0 0;
+
+  .itemization-unit {
+    display: flex;
+    flex-direction: column;
+    flex-basis: calc(50% - 25px);
+
+    &:not(:first-child) {
+      margin: 50px 0 0;
+    }
+
+    // &:not(:nth-child(2)) {
+    //   margin: 50px 0 0;
+    // }
+  }
+
+  .itemization-unit > .child-list {
+    margin: 10px 0 0;
+  }
+
+  .itemization-unit > .child-list > .child-item {
+    flex-basis: 50%;
+    font-size: $font-size-default;
+    color: $color-text-4;
+    line-height: 21px;
+
+    &:not(:first-child) {
+      margin: 10px 0 0;
+    }
+  }
+}

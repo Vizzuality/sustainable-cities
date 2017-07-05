@@ -10,12 +10,12 @@ export default function BmeTree(props) {
   return (
     <div className="c-bme-tree">
       {props.bmes.map(bme =>
-        bme.items && bme.items.length > 0
+        bme.children && bme.children.length > 0
           && <Accordion
-            key={bme.title}
-            title={bme.title}
+            key={bme.id}
+            title={bme.name}
             header={BmeTitleAccordion}
-            content={<BmeContentAccordion bmes={bme.items} />}
+            content={<BmeContentAccordion bmes={bme.children} />}
           />)}
     </div>
   );

@@ -29,8 +29,8 @@ export default function BmeContentAccordion(props) {
     <div className="c-bme-content-accordion">
       {props.bmes.map(bme =>
         <DetailSection
-          key={bme.title}
-          title={bme.title}
+          key={bme.id}
+          title={bme.name}
         >
           <Itemization
             items={bme.children}

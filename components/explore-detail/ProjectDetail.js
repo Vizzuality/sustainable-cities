@@ -28,7 +28,8 @@ export default function ProjectDetail(props) {
     cities,
     country,
     externalSources,
-    impacts
+    impacts,
+    bmeTree
   } = project;
   const sourcesCloud = externalSources ?
     externalSources.map(source => ({ id: source.id, name: source.name, link: source.webUrl })) : [];
@@ -77,9 +78,10 @@ export default function ProjectDetail(props) {
             items={impactItems}
           />
         </DetailSection>}
-      <BmeTree
-        bmes={BMES_PROJECT_SAMPLE}
-      />
+      {bmeTree.length > 0 &&
+        <BmeTree
+          bmes={bmeTree}
+        />}
     </div>
   );
 }

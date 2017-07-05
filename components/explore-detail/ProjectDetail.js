@@ -11,9 +11,6 @@ import BmeTree from 'components/explore-detail/project/BmeTree';
 // utils
 import { getYearFromDateString } from 'utils/common';
 
-// sample data
-import { BMES_PROJECT_SAMPLE } from 'samples/project_bme';
-
 export default function ProjectDetail(props) {
   const { isLoading, project } = props;
 

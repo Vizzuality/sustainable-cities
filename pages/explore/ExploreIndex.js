@@ -9,8 +9,14 @@ import { store } from 'store';
 
 // modules
 import { getCategoryTree, getCategories, setCategoryFilters } from 'modules/category';
-import { getProjects, setProjectFilters, setParsedProjects,
-  setSolutionId, removeProjectDetail, resetProjectFilters } from 'modules/project';
+import {
+  getProjects,
+  setProjectFilters,
+  setParsedProjects,
+  removeProjectDetail,
+  resetProjectFilters
+} from 'modules/project';
+import { getBmes, setBmeFilters, setBmeCategoryId } from 'modules/bme';
 
 // selectors
 import { getCategoryTabs } from 'selectors/category';
@@ -24,7 +30,6 @@ import ItemGallery from 'components/explore/ItemGallery';
 
 // utils
 import { isArrayEqual } from 'utils/common';
-import { getCategoryIdBySlug } from 'utils/category';
 
 // constants
 import { CATEGORY_TYPE_CONVERSION } from 'constants/category';
@@ -32,40 +37,21 @@ import { EXPLORE_DESCRIPTION } from 'constants/explore';
 
 
 class ExploreIndex extends Page {
-  static _getSubCategoryId({ queryParams, categoryTabs }) {
-    const { subCategory } = queryParams || {};
-    let id = null;
-    if (categoryTabs && subCategory) {
-      id = getCategoryIdBySlug(categoryTabs, subCategory);
-    }
-
-    return id;
-  }
-
   componentWillMount() {
-    const { subCategory } = this.props.queryParams;
-
-    if (subCategory) {
-      const solutionId = ExploreIndex._getSubCategoryId(this.props);
-      if (solutionId) this.props.setSolutionId(solutionId);
-    }
-
+    // retrieves solutions and BME categories to populate tabs
     this.props.getCategoryTree();
   }
 
   componentDidMount() {
-    const { queryParams, projectFilters } = this.props;
+    const { queryParams } = this.props;
     const { category, subCategory, id } = queryParams;
+
+    this._setProjectFilters(this.props);
+    this._setBmeFilters(this.props);
 
     if ((!category && !subCategory) || !!id) {
       // sets Solutions as default section
       Router.replaceRoute('explore-index', { category: 'solutions' });
-    }
-
-    // when user is at '/explore/solutions', there's no filter change, so we force
-    // getting projects
-    if ((!category && !subCategory) || (category === 'solutions' && !subCategory)) {
-      this.props.getProjects(projectFilters);
     }
   }
 
@@ -74,6 +60,7 @@ class ExploreIndex extends Page {
     if (!isEqual(this.props.queryParams, nextProps.queryParams)) {
       this._setCategoryFilters(nextProps);
       this._setProjectFilters(nextProps);
+      this._setBmeFilters(nextProps);
     }
 
     // retrieves categories if filters have been updated
@@ -87,24 +74,13 @@ class ExploreIndex extends Page {
     }
 
     // parses projects based on filters if those ones have changed
-    if (!isArrayEqual(this.props.projects, nextProps.projects)) {
+    if (!isArrayEqual(this.props.projects, nextProps.projects) && nextProps.queryParams.category === 'solutions') {
       this.props.setParsedProjects(nextProps.projects, nextProps.projectFilters);
     }
 
-    // if the category tree is ready, gets the solution id through its slug
-    if (!isArrayEqual(this.props.categoryTabs, nextProps.categoryTabs)) {
-      const solutionId = ExploreIndex._getSubCategoryId(nextProps);
-      if (solutionId) this.props.setSolutionId(solutionId);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const { subCategory } = this.props.queryParams;
-    const { subCategory: prevSubCategory } = prevProps.queryParams;
-
-    if (!!subCategory && prevSubCategory !== subCategory) {
-      const solutionId = ExploreIndex._getSubCategoryId(this.props);
-      if (solutionId) this.props.setSolutionId(solutionId);
+    // retrieves bmes if filters have been updated
+    if (!isEqual(this.props.bmeFilters, nextProps.bmeFilters) && nextProps.queryParams.category !== 'solutions') {
+      this.props.getBmes(nextProps.bmeFilters);
     }
   }
 
@@ -118,7 +94,7 @@ class ExploreIndex extends Page {
     this.props.setProjectFilters({
       bme: category && category !== 'solutions' && category !== 'cities' ?
         subCategory || category : null,
-      solution: category === 'solutions' && !subCategory ? 'all' : subCategory,
+      solution: category === 'solutions' ? subCategory || 'all' : null,
       city: category === 'cities' ? subCategory || null : null
     });
   }
@@ -137,16 +113,28 @@ class ExploreIndex extends Page {
     });
   }
 
+  _setBmeFilters({ queryParams }) {
+    const { category, subCategory } = queryParams;
+
+    this.props.setBmeFilters({
+      category: category !== 'solutions' ? subCategory || category : null
+    });
+  }
+
   render() {
     const {
       categoryTabs,
       loadingProjects,
       parsedProjects,
       queryParams,
-      projectFilters
+      projectFilters,
+      bmes,
+      loadingBmes
     } = this.props;
-    const { category, subCategory } = queryParams;
+    const { category } = queryParams;
     const { solution } = projectFilters;
+    const loader = !solution ? loadingProjects : loadingBmes;
+    const items = category === 'solutions' ? parsedProjects : bmes;
 
     return (
       <Layout
@@ -154,9 +142,6 @@ class ExploreIndex extends Page {
         queryParams={queryParams}
       >
         <Cover title="Explore" description={EXPLORE_DESCRIPTION} />
-        <h1>Explore Index</h1>
-        <strong>Category?: </strong> {category || '–'}<br />
-        <strong>Sub-category?: </strong> {subCategory || '–'}
         <Tab
           allowAll
           className="-explore"
@@ -165,12 +150,12 @@ class ExploreIndex extends Page {
         />
         <div className="row">
           <div className="column small-12">
-            {loadingProjects ?
+            {loader ?
               <div>Loading projects...</div> :
-              parsedProjects.length > 0 &&
+              items.length > 0 &&
                 <ItemGallery
-                  items={parsedProjects}
-                  slider={solution === 'all'}
+                  items={items}
+                  slider={solution === 'all' || category !== 'solutions'}
                 />}
           </div>
         </div>
@@ -182,7 +167,6 @@ class ExploreIndex extends Page {
 ExploreIndex.propTypes = {
   // categories
   categoryFilters: PropTypes.object,
-  filteredCategories: PropTypes.array,
   categoryTabs: PropTypes.array,
   // projects
   loadingProjects: PropTypes.bool,
@@ -196,7 +180,8 @@ ExploreIndex.propTypes = {
 ExploreIndex.defaultProps = {
   categoryTabs: [],
   projects: [],
-  parsedProjects: []
+  parsedProjects: [],
+  bmes: []
 };
 
 export default withRedux(
@@ -206,12 +191,15 @@ export default withRedux(
     categories: state.category.list,
     categoryFilters: state.category.filters,
     categoryTabs: getCategoryTabs(state),
-    filteredCategories: state.category.filteredCategories,
     // projects
     loadingProjects: state.project.loading,
     projects: state.project.list,
     parsedProjects: state.project.parsedList,
-    projectFilters: state.project.filters
+    projectFilters: state.project.filters,
+    // bmes
+    loadingBmes: state.bme.loading,
+    bmes: state.bme.list,
+    bmeFilters: state.bme.filters
   }),
   dispatch => ({
     // categories
@@ -222,8 +210,11 @@ export default withRedux(
     getProjects(filters) { dispatch(getProjects(filters)); },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
     resetProjectFilters() { dispatch(resetProjectFilters()); },
-    setSolutionId(solutionId) { dispatch(setSolutionId(solutionId)); },
     setParsedProjects(projects, filters) { dispatch(setParsedProjects(projects, filters)); },
-    removeProjectDetail() { dispatch(removeProjectDetail()); }
+    removeProjectDetail() { dispatch(removeProjectDetail()); },
+    // bmes
+    getBmes(filters) { dispatch(getBmes(filters)); },
+    setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
+    setBmeCategoryId(categoryId) { dispatch(setBmeCategoryId(categoryId)); }
   })
 )(ExploreIndex);

@@ -1,9 +1,14 @@
 import { Deserializer } from 'jsonapi-serializer';
 import fetch from 'isomorphic-fetch';
+import * as queryString from 'query-string';
+
+// utils
+import { listBmes } from 'utils/bme';
 
 /* Actions */
 const GET_BMES = 'bme/GET_BMES';
 const SET_FILTERS = 'bme/SET_FILTERS';
+const SET_BME_CATEGORY_ID = 'bme/SET_BME_CATEGORY_ID';
 
 const SET_LOADING_BMES = 'bme/SET_LOADING_BMES';
 const SET_ERROR_BMES = 'bme/SET_ERROR_BMES';
@@ -12,7 +17,7 @@ const SET_ERROR_BMES = 'bme/SET_ERROR_BMES';
 const initialState = {
   list: [],
   filters: {
-    // BME category
+    // BME category or subcategory
     category: null,
     // id used to get a single bme
     detailId: null
@@ -34,6 +39,10 @@ export default function (state = initialState, action) {
       const filters = { ...state.filters, ...action.payload };
       return Object.assign({}, state, { filters });
     }
+    case SET_BME_CATEGORY_ID: {
+      const filters = { ...state.filters, ...{ category: action.payload } };
+      return Object.assign({}, state, { filters });
+    }
     default:
       return state;
   }
@@ -41,17 +50,16 @@ export default function (state = initialState, action) {
 
 /* Action creators */
 export function getBmes(filters = {}) {
-  const { detailId } = filters;
-  let endpoint = '/business-model-elements';
+  const { category } = filters;
 
-  if (detailId) {
-    endpoint = `/business-model-elements/${detailId}`;
-  }
+  const queryParams = queryString.stringify({
+    'filters[bme]': category || undefined
+  });
 
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_BMES, payload: true });
 
-    fetch(`${process.env.API_URL}${endpoint}`, {
+    fetch(`${process.env.API_URL}/categories?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -68,9 +76,12 @@ export function getBmes(filters = {}) {
       throw new Error(response.status);
     })
     .then((bmes) => {
-      new Deserializer().deserialize(bmes, (err, parsedBmes) => {
+      new Deserializer().deserialize(bmes, (err, serializedBmes) => {
         dispatch({ type: SET_LOADING_BMES, payload: false });
-        dispatch({ type: GET_BMES, payload: parsedBmes });
+        dispatch({
+          type: GET_BMES,
+          payload: serializedBmes && serializedBmes.children.length ?
+            listBmes(serializedBmes) : [] });
       });
     });
   };
@@ -79,5 +90,11 @@ export function getBmes(filters = {}) {
 export function setBmeFilters(filters) {
   return (dispatch) => {
     dispatch({ type: SET_FILTERS, payload: filters });
+  };
+}
+
+export function setBmeCategoryId(categoryId) {
+  return (dispatch) => {
+    dispatch({ type: SET_BME_CATEGORY_ID, payload: categoryId });
   };
 }

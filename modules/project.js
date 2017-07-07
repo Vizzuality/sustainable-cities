@@ -9,7 +9,6 @@ import { projectsBySolution, listProjects } from 'utils/project';
 const GET_PROJECTS = 'project/GET_PROJECTS';
 const SET_PARSED_PROJECTS = 'project/SET_PARSED_PROJECTS';
 const SET_PROJECT_DETAIL = 'project/SET_PROJECT_DETAIL';
-const SET_SOLUTION_ID = 'project/SET_SOLUTION_ID';
 const SET_FILTERS = 'project/SET_FILTERS';
 const RESET_FILTERS = 'project/RESET_FILTERS';
 const REMOVE_PROJECT_DETAIL = 'project/REMOVE_PROJECT_DETAIL';
@@ -28,7 +27,7 @@ const initialState = {
     // id used to get a single project
     detailId: null,
     // category or subcategory (exclusive for projects)
-    solution: 'all',
+    solution: null,
     city: null
   },
   loading: false,
@@ -60,10 +59,6 @@ export default function (state = initialState, action) {
       const filters = { ...state.filters, ...initialState.filters };
       return Object.assign({}, state, { filters });
     }
-    case SET_SOLUTION_ID: {
-      const filters = { ...state.filters, ...{ solution: action.payload } };
-      return Object.assign({}, state, { filters });
-    }
     default:
       return state;
   }
@@ -73,10 +68,11 @@ export default function (state = initialState, action) {
 export function getProjects(filters = {}) {
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_PROJECTS, payload: true });
-    const { solution } = filters;
+    const { solution, bme } = filters;
 
     const queryParams = queryString.stringify({
-      'filters[solution]': solution || undefined
+      'filters[solution]': solution || undefined,
+      'filters[bme]': bme || undefined
     });
 
     fetch(`${process.env.API_URL}/study-cases?${queryParams}`, {
@@ -156,13 +152,6 @@ export function setProjectFilters(filters) {
 export function resetProjectFilters() {
   return (dispatch) => {
     dispatch({ type: RESET_FILTERS });
-  };
-}
-
-
-export function setSolutionId(solutionId) {
-  return (dispatch) => {
-    dispatch({ type: SET_SOLUTION_ID, payload: solutionId });
   };
 }
 

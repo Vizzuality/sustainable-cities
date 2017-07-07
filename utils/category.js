@@ -1,27 +1,37 @@
-import compact from 'lodash/compact';
 import { CATEGORY_TYPE_CONVERSION } from 'constants/category';
 
-const getCategoryIdBySlug = (categories, subCategory) => {
-  const subCategoryObject = categories.map(cat => cat.children.find(c =>
+
+const getCategoryIdByCategorySlug = (categories, category) => {
+  const categoryObject = categories.find(cat => cat.children.find(c =>
+      c.query.category === category));
+
+  return categoryObject ? categoryObject.id : null;
+};
+
+const getCategoryIdBySubCategorySlug = (categories, subCategory) => {
+  const categoryObject = categories.find(cat => cat.children.find(c =>
       c.query.subCategory === subCategory));
 
-  if (subCategoryObject) compact(subCategoryObject);
+  if (!categoryObject) return null;
 
-  return subCategoryObject && !!subCategoryObject[0] ? subCategoryObject[0].id : null;
+  const subCategoryObject = categoryObject.children.find(child =>
+    child.query.subCategory === subCategory);
+
+  return subCategoryObject ? subCategoryObject.id : null;
 };
 
 const parseCategoryToTab = (category) => {
-  const { id, category_type: categoryType, slug, name, parent_slug: parentSlug } = category;
+  const { id, category_type: categoryType, name, parent_slug: parentSlug } = category;
   return {
     label: name,
     id,
     query: {
       category: categoryType === CATEGORY_TYPE_CONVERSION.solution ?
         'solutions' : parentSlug,
-      subCategory: slug
+      subCategory: id
     }
   };
 };
 
 
-export { getCategoryIdBySlug, parseCategoryToTab };
+export { getCategoryIdByCategorySlug, getCategoryIdBySubCategorySlug, parseCategoryToTab };

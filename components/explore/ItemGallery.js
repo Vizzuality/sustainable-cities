@@ -11,7 +11,7 @@ export default function ItemGallery(props) {
       <ul className="gallery-list">
         {props.slider ?
           props.items.map(item => (
-            <li className="gallery-item" key={item.title}>
+            <li className="gallery-item" key={item.id}>
               {props.showTitle &&
                 <h3 className="c-title -dark -fs-extrabig -fw-light">{item.title}</h3>}
               <GridSlider items={item.children} />

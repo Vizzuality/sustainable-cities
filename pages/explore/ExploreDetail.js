@@ -22,7 +22,7 @@ import BmeDetail from 'components/explore-detail/BmeDetail';
 class ExploreDetail extends Page {
   static generateSolutionBreadcrumbs(project) {
     if (!project) return null;
-    const { solutionName, solutionSlug } = project;
+    const { name, slug } = project ? project.category : {};
 
     return [
       {
@@ -31,9 +31,9 @@ class ExploreDetail extends Page {
         params: { category: 'solutions' }
       },
       {
-        name: solutionName,
+        name,
         route: 'explore-index',
-        params: { category: 'solutions', subCategory: solutionSlug }
+        params: { category: 'solutions', subCategory: slug }
       }
     ];
   }

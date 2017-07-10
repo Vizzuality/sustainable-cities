@@ -8,7 +8,7 @@ const EXPLORE_DESCRIPTION = `Solution description lorem ipusm casius tesebe erat
 
 const EXPLORE_TABS = [
   {
-    id: 1,
+    id: 999,
     label: 'Solutions',
     query: {
       category: 'solutions'
@@ -17,36 +17,7 @@ const EXPLORE_TABS = [
     children: [],
     info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
   },
-  {
-    id: 2,
-    label: 'Finance',
-    query: { category: 'financial-product' },
-    slug: 'financial-product',
-    children: []
-  },
-  {
-    id: 3,
-    label: 'Funding Sources',
-    query: {
-      category: 'funding-source'
-    },
-    slug: 'funding-source',
-    children: []
-  },
-  {
-    id: 4,
-    label: 'Legal framework',
-    query: { category: 'delivery-mechanism' },
-    slug: 'delivery-mechanism',
-    children: []
-  },
-  {
-    id: 5,
-    label: 'Investment components',
-    query: { category: 'investment-component' },
-    slug: 'investment-component',
-    children: []
-  },
+  // BME categories come here...
   {
     id: 6,
     label: 'Cities',

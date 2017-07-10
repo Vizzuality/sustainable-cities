@@ -46,12 +46,12 @@ class ExploreIndex extends Page {
     const { queryParams } = this.props;
     const { category, subCategory, id } = queryParams;
 
-    this._setProjectFilters(this.props);
-    this._setBmeFilters(this.props);
-
     if ((!category && !subCategory) || !!id) {
       // sets Solutions as default section
       Router.replaceRoute('explore-index', { category: 'solutions' });
+    } else {
+      this._setProjectFilters(this.props);
+      this._setBmeFilters(this.props);
     }
   }
 

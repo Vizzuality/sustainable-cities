@@ -70,9 +70,11 @@ export function getProjects(filters = {}) {
     dispatch({ type: SET_LOADING_PROJECTS, payload: true });
     const { solution, bme } = filters;
 
+    const includeFields = ['category', 'cities'];
+
     const queryParams = queryString.stringify({
-      'filters[solution]': solution || undefined,
-      'filters[bme]': bme || undefined
+      'filter[category_slug]': solution !== 'all' ? solution : bme || undefined,
+      include: includeFields.join(',')
     });
 
     fetch(`${process.env.API_URL}/study-cases?${queryParams}`, {
@@ -92,15 +94,11 @@ export function getProjects(filters = {}) {
       throw new Error(response.status);
     })
     .then((projects) => {
-      if (!solution) {
-        new Deserializer({ keyForAttribute: 'camelCase' }).deserialize(projects, (err, parsedProjects) => {
+      new Deserializer({ keyForAttribute: 'camelCase' })
+        .deserialize(projects, (err, parsedProjects) => {
           dispatch({ type: SET_LOADING_PROJECTS, payload: false });
           dispatch({ type: GET_PROJECTS, payload: parsedProjects });
         });
-      }
-
-      dispatch({ type: SET_LOADING_PROJECTS, payload: false });
-      dispatch({ type: GET_PROJECTS, payload: projects.data });
     });
   };
 }

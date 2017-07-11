@@ -52,8 +52,12 @@ export default function (state = initialState, action) {
 export function getBmes(filters = {}) {
   const { category } = filters;
 
+  const includeParams = ['children', 'children.bmes'];
+
   const queryParams = queryString.stringify({
-    'filters[bme]': category || undefined
+    'filter[slug]': category || undefined,
+    include: includeParams.join(','),
+    'page[size]': 1000
   });
 
   return (dispatch, getState) => {
@@ -76,13 +80,11 @@ export function getBmes(filters = {}) {
       throw new Error(response.status);
     })
     .then((bmes) => {
-      new Deserializer().deserialize(bmes, (err, serializedBmes) => {
-        dispatch({ type: SET_LOADING_BMES, payload: false });
-        dispatch({
-          type: GET_BMES,
-          payload: serializedBmes && serializedBmes.children.length ?
-            listBmes(serializedBmes) : [] });
-      });
+      new Deserializer()
+        .deserialize(bmes, (err, parsedBmes) => {
+          dispatch({ type: SET_LOADING_BMES, payload: false });
+          dispatch({ type: GET_BMES, payload: listBmes(parsedBmes) });
+        });
     });
   };
 }

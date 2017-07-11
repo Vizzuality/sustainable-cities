@@ -1,5 +1,6 @@
 import { Deserializer } from 'jsonapi-serializer';
 import fetch from 'isomorphic-fetch';
+import * as queryString from 'query-string';
 
 // utils
 import { categoriesToTabs } from 'utils/category';
@@ -53,7 +54,21 @@ export function getCategoryTree() {
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_CATEGORIES, payload: true });
 
-    fetch(`${process.env.API_URL}/categories?filters[type]=Solution,Bme`, {
+    const filters = {
+      category: ['Solution', 'Bme'],
+      level: [1]
+    };
+    const { category, level } = filters;
+    const includeFilters = ['children', 'children.parent'];
+
+    const queryParams = queryString.stringify({
+      'filter[category_type]': category.join(','),
+      'filter[level]': level.join(','),
+      include: includeFilters.join(','),
+      'page[size]': 999
+    });
+
+    fetch(`${process.env.API_URL}/categories?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -69,15 +84,12 @@ export function getCategoryTree() {
       dispatch({ type: SET_ERROR_CATEGORIES, payload: true });
       throw new Error(response.status);
     })
-    .then(({ data }) => {
-      // We don't use deserializer by now in this call
-      // new Deserializer().deserialize(categories, (err, parsedCategories) => {
-      //   dispatch({ type: SET_LOADING_CATEGORIES, payload: false });
-      //   dispatch({ type: GET_CATEGORIES, payload: parsedCategories });
-      // });
-
-      dispatch({ type: SET_LOADING_CATEGORIES, payload: false });
-      dispatch({ type: GET_CATEGORIES, payload: data });
+    .then((categories) => {
+      new Deserializer()
+        .deserialize(categories, (err, parsedCategories) => {
+          dispatch({ type: SET_LOADING_CATEGORIES, payload: false });
+          dispatch({ type: GET_CATEGORIES, payload: parsedCategories });
+        });
     });
   };
 }

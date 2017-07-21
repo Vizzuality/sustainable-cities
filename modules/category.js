@@ -2,68 +2,70 @@ import { Deserializer } from 'jsonapi-serializer';
 import fetch from 'isomorphic-fetch';
 import * as queryString from 'query-string';
 
-// utils
-import { categoriesToTabs } from 'utils/category';
-
 /* Actions */
-const GET_CATEGORIES = 'category/GET_CATEGORIES';
-const SET_FILTERS = 'category/SET_FILTERS';
-const GET_FILTERED_CATEGORIES = 'category/GET_FILTERED_CATEGORIES';
-
-const SET_LOADING_CATEGORIES = 'category/SET_LOADING_CATEGORIES';
-const SET_ERROR_CATEGORIES = 'category/SET_ERROR_CATEGORIES';
+// setters and getters
+const GET_SOLUTION_CATEGORIES = 'category/GET_SOLUTION_CATEGORIES';
+const GET_BME_CATEGORIES = 'category/GET_BME_CATEGORIES';
+// load management
+const SET_LOADING_SOLUTION = 'category/SET_LOADING_SOLUTION';
+const SET_LOADING_BME = 'category/SET_LOADING_BME';
+// error management
+const SET_ERROR_SOLUTION = 'category/SET_ERROR_SOLUTION';
+const SET_ERROR_BME = 'category/SET_ERROR_BME';
 
 /* Initial state */
 const initialState = {
-  // contains all categories available
-  list: [],
-  filters: {
-    // type of the categories, can be 'Solution' or 'Bme' by now
-    type: null,
-    // it can be category or subcategory
-    category: null
+  solution: {
+    list: [],
+    loading: false,
+    error: false
   },
-  // used when one or several filters are applied to categories
-  filteredList: [],
-  loading: false,
-  error: false
+  bme: {
+    list: [],
+    loading: false,
+    error: false
+  }
 };
 
 /* Reducer */
 export default function (state = initialState, action) {
   switch (action.type) {
-    case GET_CATEGORIES:
-      return Object.assign({}, state, { list: action.payload });
-    case SET_LOADING_CATEGORIES:
-      return Object.assign({}, state, { loading: action.payload });
-    case SET_ERROR_CATEGORIES:
-      return Object.assign({}, state, { error: action.payload });
-    case SET_FILTERS: {
-      const filters = { ...state.filters, ...action.payload };
-      return Object.assign({}, state, { filters });
-    }
-    case GET_FILTERED_CATEGORIES:
-      return Object.assign({}, state, { filteredList: action.payload });
+    case GET_SOLUTION_CATEGORIES:
+      return Object.assign({}, state, { solution: { ...state.solution, list: action.payload } });
+    case GET_BME_CATEGORIES:
+      return Object.assign({}, state, { bme: { ...state.bme, list: action.payload } });
+    case SET_LOADING_SOLUTION:
+      return Object.assign({}, state, { solution: { ...state.solution, loading: action.payload } });
+    case SET_LOADING_BME:
+      return Object.assign({}, state, { bme: { ...state.bme, loading: action.payload } });
+    case SET_ERROR_SOLUTION:
+      return Object.assign({}, state, { solution: { ...state.solution, error: action.payload } });
+    case SET_ERROR_BME:
+      return Object.assign({}, state, { bme: { ...state.bme, error: action.payload } });
     default:
       return state;
   }
 }
 
 /* Action creators */
-export function getCategoryTree() {
+
+// Retrieves categories of type Solution
+export function getSolutionCategories() {
   return (dispatch, getState) => {
-    dispatch({ type: SET_LOADING_CATEGORIES, payload: true });
+    dispatch({ type: SET_LOADING_SOLUTION, payload: true });
 
     const filters = {
-      category: ['Solution', 'Bme'],
-      level: [1]
+      categoryType: 'Solution',
+      level: [2]
     };
-    const { category, level } = filters;
-    const includeFilters = ['children', 'children.parent'];
+    const { categoryType, level } = filters;
+    const includeFilters = ['children'];
+    const categoriesFields = ['name', 'slug', 'category-type'];
 
     const queryParams = queryString.stringify({
-      'filter[category_type]': category.join(','),
+      'filter[category-type]': categoryType,
       'filter[level]': level.join(','),
+      'fields[categories]': categoriesFields.join(','),
       include: includeFilters.join(','),
       'page[size]': 999
     });
@@ -77,28 +79,45 @@ export function getCategoryTree() {
     })
     .then((response) => {
       if (response.ok) {
-        if (getState().category.error) dispatch({ type: SET_ERROR_CATEGORIES, payload: false });
+        if (getState().category.error) dispatch({ type: SET_ERROR_SOLUTION, payload: false });
         return response.json();
       }
 
-      dispatch({ type: SET_ERROR_CATEGORIES, payload: true });
+      dispatch({ type: SET_ERROR_SOLUTION, payload: true });
       throw new Error(response.status);
     })
     .then((categories) => {
       new Deserializer()
         .deserialize(categories, (err, parsedCategories) => {
-          dispatch({ type: SET_LOADING_CATEGORIES, payload: false });
-          dispatch({ type: GET_CATEGORIES, payload: parsedCategories });
+          dispatch({ type: SET_LOADING_SOLUTION, payload: false });
+          dispatch({ type: GET_SOLUTION_CATEGORIES, payload: parsedCategories });
         });
     });
   };
 }
 
-export function getCategories() {
+// Retrieves categories of type Bme
+export function getBmeCategories() {
   return (dispatch, getState) => {
-    dispatch({ type: SET_LOADING_CATEGORIES, payload: true });
+    dispatch({ type: SET_LOADING_BME, payload: true });
 
-    fetch(`${process.env.API_URL}/categories`, {
+    const filters = {
+      categoryType: 'Bme',
+      level: [1]
+    };
+    const { categoryType, level } = filters;
+    const includeFilters = ['children'];
+    const categoriesFields = ['name', 'slug', 'children', 'category-type'];
+
+    const queryParams = queryString.stringify({
+      'filter[category-type]': categoryType,
+      'filter[level]': level.join(','),
+      'fields[categories]': categoriesFields.join(','),
+      include: includeFilters.join(','),
+      'page[size]': 999
+    });
+
+    fetch(`${process.env.API_URL}/categories?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -107,35 +126,19 @@ export function getCategories() {
     })
     .then((response) => {
       if (response.ok) {
-        if (getState().category.error) dispatch({ type: SET_ERROR_CATEGORIES, payload: false });
+        if (getState().category.error) dispatch({ type: SET_ERROR_BME, payload: false });
         return response.json();
       }
 
-      dispatch({ type: SET_ERROR_CATEGORIES, payload: true });
+      dispatch({ type: SET_ERROR_BME, payload: true });
       throw new Error(response.status);
     })
     .then((categories) => {
-      new Deserializer().deserialize(categories, (err, parsedCategories) => {
-        dispatch({ type: SET_LOADING_CATEGORIES, payload: false });
-        dispatch({ type: GET_FILTERED_CATEGORIES, payload: parsedCategories });
-      });
+      new Deserializer()
+        .deserialize(categories, (err, parsedCategories) => {
+          dispatch({ type: SET_LOADING_BME, payload: false });
+          dispatch({ type: GET_BME_CATEGORIES, payload: parsedCategories });
+        });
     });
-  };
-}
-
-export function getParsedCategories() {
-  return (dispatch, getState) => {
-    const { list } = getState().category;
-
-    return dispatch({
-      type: GET_FILTERED_CATEGORIES,
-      payload: categoriesToTabs(list)
-    });
-  };
-}
-
-export function setCategoryFilters(filters) {
-  return (dispatch) => {
-    dispatch({ type: SET_FILTERS, payload: filters });
   };
 }

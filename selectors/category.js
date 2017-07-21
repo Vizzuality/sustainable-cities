@@ -6,37 +6,34 @@ import { EXPLORE_TABS } from 'constants/explore';
 // utils
 import { parseCategoryToTab } from 'utils/category';
 
-const getCategories = state => state.category.list;
+const getSolutionCategories = state => state.category.solution.list;
+const getBmeCategories = state => state.category.bme.list;
 
 const getCategoryTabs = createSelector(
-  getCategories,
-  (categoryTypes) => {
-    if (!Object.keys(categoryTypes).length) return [];
+  [getSolutionCategories, getBmeCategories],
+  (solutionCategories, bmeCategories) => {
+    if (!solutionCategories.length || !bmeCategories.length) return [];
     const tabs = EXPLORE_TABS;
-    const secondLevelSolutions = categoryTypes.filter(category => category['category-type'] === 'Solution');
-    const firstLevelBmes = categoryTypes.filter(category => category['category-type'] === 'Bme');
-    const solutionChildren = [];
 
-    // populates solutions
-    secondLevelSolutions.forEach(solutionCategory => (
-      solutionCategory.children.map(child => solutionChildren.push(parseCategoryToTab(child)))
-    ));
+    // populates solutions categories
+    tabs[0].children = solutionCategories.map(solutionCategory =>
+      parseCategoryToTab(solutionCategory));
 
-    tabs[0].children = solutionChildren;
-
-    const bmeCategories = firstLevelBmes.map(firstLevelBme => ({
-      id: firstLevelBme.id,
-      label: firstLevelBme.name,
+    // populates BME categories
+    const bmeCategoryTabs = bmeCategories.map(firstLevelBmeCategory => ({
+      id: firstLevelBmeCategory.id,
+      label: firstLevelBmeCategory.name,
       query: {
-        category: firstLevelBme.slug
+        category: firstLevelBmeCategory.slug
       },
-      slug: firstLevelBme.slug,
-      children: firstLevelBme.children.map(bmeCategory => parseCategoryToTab(bmeCategory)),
-      info: firstLevelBme.description
+      slug: firstLevelBmeCategory.slug,
+      children: (firstLevelBmeCategory.children || [])
+        .map(bmeCategory => parseCategoryToTab(bmeCategory)),
+      info: firstLevelBmeCategory.description
     }));
 
     // inserts BME categories
-    tabs.splice(1, 0, ...bmeCategories);
+    tabs.splice(1, 0, ...bmeCategoryTabs);
 
     return tabs;
   }

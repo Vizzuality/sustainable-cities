@@ -28,7 +28,11 @@ const getCategoryTabs = createSelector(
       },
       slug: firstLevelBmeCategory.slug,
       children: (firstLevelBmeCategory.children || [])
-        .map(bmeCategory => parseCategoryToTab(bmeCategory)),
+        .map(bmeCategory => parseCategoryToTab({
+          ...bmeCategory,
+          parentSlug: firstLevelBmeCategory.slug
+        })
+      ),
       info: firstLevelBmeCategory.description
     }));
 

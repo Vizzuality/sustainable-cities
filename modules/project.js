@@ -60,13 +60,13 @@ export function getProjectsByCategory(filters = {}) {
     dispatch({ type: SET_LOADING_PROJECTS, payload: true });
     const { category } = filters;
 
-    const includeFields = ['projects', 'children', 'children.projects'];
-    const levelFilter = [2, 3];
+    const includeFields = ['projects'];
+    const levelFilter = !category ? [2] : undefined;
 
     const queryParams = queryString.stringify({
-      'filter[slug]': category !== 'solutions' ? category : undefined,
+      'filter[slug]': category || undefined,
       'filter[category-type]': 'Solution',
-      'filter[level]': levelFilter.join(','),
+      'filter[level]': levelFilter ? levelFilter.join(',') : undefined,
       include: includeFields.join(',')
     });
 

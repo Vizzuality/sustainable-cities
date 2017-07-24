@@ -141,7 +141,7 @@ class ExploreIndex extends Page {
       bmes,
       loadingBmes
     } = this.props;
-    const { category } = queryParams;
+    const { category, subCategory } = queryParams;
     const { solution } = projectFilters;
     const loader = !solution ? loadingProjects : loadingBmes;
     const isSolutionView = category === 'solutions';
@@ -162,12 +162,12 @@ class ExploreIndex extends Page {
         <div className="row">
           <div className="column small-12">
             {loader ?
-              <div>Loading projects...</div> :
-              items.length > 0 &&
-                <ItemGallery
-                  items={items}
-                  slider={solution === 'all' || category !== 'solutions'}
-                />}
+              <div>Loading data...</div> :
+              <ItemGallery
+                items={items}
+                isSolutionView={isSolutionView}
+                slider={!subCategory}
+              />}
           </div>
         </div>
       </Layout>

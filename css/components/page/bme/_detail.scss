@@ -1,0 +1,90 @@
+.bme-detail {
+
+  a.external {
+    color: $color-4-1;
+    border-bottom: 1px solid $color-4-1;
+    text-decoration: none;
+  }
+
+  ul {
+    li {
+      display: block;
+    }
+  }
+
+  font-weight: 300;
+
+  .title {
+    &.huge {
+      font-size: 64px;
+    }
+    &.medium {
+      font-size: 32px;
+    }
+  }
+
+  .inverted {
+    color: $color-text-6;
+  }
+
+  .bme-detail-header {
+
+    background-color: $color-7;
+    color: $color-white;
+    padding: 25px 0;
+    margin-bottom: 50px;
+
+
+    .title.sub {
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+
+  }
+
+  .bme-detail-body {
+
+    .content {
+      font-size: 22px;
+    }
+
+    .details {
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    .separator {
+      border-bottom: 1px solid rgba(#2C2F32, 0.1);
+      padding-bottom: 40px;
+      margin-bottom: 40px;
+    }
+
+    .project-content {
+      .title {
+        font-size: 28px;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 50px;
+      }
+    }
+
+    ul.external-sources {
+      li {
+        font-size: 16px;
+        line-height: 26px;
+      }
+    }
+  }
+
+  .bme-detail-related-content {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+
+  .bme-detail-download-data {
+    background-color: rgba(44, 47, 51, 0.9);
+  }
+
+}
+

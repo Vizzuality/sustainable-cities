@@ -12,6 +12,7 @@
 // Common
 @import 'base';
 @import 'font';
+@import 'text';
 @import 'mixins';
 @import 'icons';
 @import 'layout';
@@ -34,6 +35,7 @@
 @import 'components/page/home/main-link';
 @import 'components/page/home/video-wrapper';
 
+@import 'components/page/bme/detail';
 // @import 'components/page/section';
 // - common
 @import 'components/common/title';

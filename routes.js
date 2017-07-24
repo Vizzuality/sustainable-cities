@@ -16,3 +16,6 @@ routes.add('about', '/about/:section?', 'about/AboutIndex');
 
 // BUILDER
 routes.add('builder', '/builder', 'builder/builderIndex');
+
+// BME
+routes.add('bme-detail', '/bme/:id/', 'bme/BmeDetail');

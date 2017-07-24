@@ -70,12 +70,14 @@ export function getProjects(filters = {}) {
     dispatch({ type: SET_LOADING_PROJECTS, payload: true });
     const { solution, bme } = filters;
 
-    const includeFields = ['category', 'cities'];
+    const includeFields = ['category', 'category.parent', 'cities'];
 
     const queryParams = queryString.stringify({
       'filter[category_slug]': solution !== 'all' ? solution : bme || undefined,
-      include: includeFields.join(',')
+      include: includeFields.join(','),
+      'page[size]': 1000
     });
+
 
     fetch(`${process.env.API_URL}/study-cases?${queryParams}`, {
       method: 'GET',

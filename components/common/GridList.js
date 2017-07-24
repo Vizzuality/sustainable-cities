@@ -5,20 +5,21 @@ import PropTypes from 'prop-types';
 import GridItem from 'components/common/GridItem';
 
 export default function GridList(props) {
+  const { items, layout, onClick } = props;
   return (
     <div className="c-grid-list row align-stretch">
-      { props.items.map(item => (
+      { items.length > 0 ? items.map(item => (
         <div className="column small-3" key={item.title}>
           <GridItem
             image={item.image}
-            imageLayout={props.layout || item.layout}
+            imageLayout={layout || item.layout}
             title={item.title}
             subtitle={item.subtitle}
             link={item.link}
-            onClick={props.onClick || item.onClick}
+            onClick={onClick || item.onClick}
           />
         </div>
-      )) }
+      )) : <div>no data available</div>}
     </div>
   );
 }

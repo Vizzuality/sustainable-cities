@@ -1,18 +1,27 @@
 import { createSelector } from 'reselect';
 
 // utils
-import { projectsBySolution, listProjects } from 'utils/project';
+import { listsProjectsBySolution, listProjects } from 'utils/project';
 
 const getProjects = state => state.project.list;
-const getProjectFilters = state => state.category.bme.list;
+const getProjectFilters = state => state.project.filters;
 
 const getParsedProjects = createSelector(
   [getProjects, getProjectFilters],
-  (projects, filters) => {
-    if (!projects.length) return [];
+  (projectsBySolution, filters) => {
+    if (!projectsBySolution.length) return [];
+    const projects = [];
+
+    if (filters.category) {
+      projectsBySolution.forEach(p =>
+        projects.push([...p.projects])
+      );
+    }
+
 
     return !filters.category ?
-      projectsBySolution(projects) : listProjects(projects);
+      listsProjectsBySolution(projectsBySolution) :
+      listProjects(projects[0]); // change this
   }
 );
 

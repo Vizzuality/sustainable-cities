@@ -14,7 +14,7 @@ node {
 
       if (env.BRANCH_NAME == "develop") {
         sshagent (credentials: ['jenkins-cred']) {
-          sh 'ssh ${RW_STAGING} "cd /home/ubuntu/sustainable-cities-app && ./start.sh"'
+          sh 'ssh ${SUSTAINABLE_CITIES_STAGING} "cd /home/ubuntu/sustainable-cities-app && ./start.sh"'
         }
       } else {
 

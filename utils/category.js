@@ -1,7 +1,7 @@
 import { CATEGORY_TYPE_CONVERSION } from 'constants/category';
 
 const parseCategoryToTab = (category) => {
-  const { id, 'category-type': categoryType, name, parent_slug: parentSlug, slug } = category;
+  const { id, 'category-type': categoryType, name, parentSlug, slug } = category;
   return {
     label: name,
     id,

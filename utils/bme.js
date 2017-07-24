@@ -1,24 +1,22 @@
-// parses projects in order to populate GridList component
-const listBmes = (bmeCategories) => {
-  const bmesbyCategory = [];
 
-  bmeCategories.map(bmeParenCategory => (
-    bmeParenCategory.children.forEach((bmeChildrenCategory) => {
-      bmesbyCategory.push({
-        id: bmeChildrenCategory.id,
-        title: bmeChildrenCategory.name,
-        children: bmeChildrenCategory.bmes.map(bme => ({
-          id: bme.id,
-          title: bme.name,
-          // do we need it?
-          // subtitle: project.cities && project.cities[0] ? project.cities[0].name : null,
-          link: { route: 'explore-detail', params: { type: 'business-model-elements', id: bme.id } }
-        }))
-      });
-    })
-  ));
+// parses bmes in order to populate GridList component
+const listBmes = bmes => bmes.map(bme => ({
+  id: bme.id,
+  title: bme.name,
+  link: { route: 'bme-detail', params: { id: bme.id } }
+}));
 
-  return bmesbyCategory;
-};
+// parses bmes in order to populate GridSlider component
+const listsBmesByCategory = (categories, filters = {}) =>
+  categories.map(category => ({
+    groupId: filters.category || undefined,
+    parentId: category.level === 3 ? filters.subCategory : undefined,
+    id: category.id,
+    title: category.name,
+    level: category.level,
+    slug: category.slug,
+    children: listBmes(category['children-bmes'] || [])
+  }
+));
 
-export { listBmes };
+export { listBmes, listsBmesByCategory };

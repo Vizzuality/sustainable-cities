@@ -7,7 +7,7 @@ import GridSlider from 'components/common/GridSlider';
 import GridList from 'components/common/GridList';
 
 export default function ItemGallery(props) {
-  const { items, isSolutionView, slider, showTitle } = props;
+  const { items, isSolutionView, slider, showAll, showTitle } = props;
   return (
     <div className="c-item-gallery">
       <ul className="gallery-list">
@@ -17,9 +17,17 @@ export default function ItemGallery(props) {
               <div className="gallery-item-header">
                 {showTitle &&
                   <h3 className="c-title -dark -fs-extrabig -fw-light">{item.title}</h3>}
-                <Link route="explore-index" params={{ category: isSolutionView ? 'solutions' : '', subCategory: item.slug }}>
-                  <a>See all</a>
-                </Link>
+                {showAll &&
+                  <Link
+                    route="explore-index"
+                    params={{
+                      category: isSolutionView ? 'solutions' : item.groupId,
+                      subCategory: item.level === 3 ? item.parentId : item.slug,
+                      children: item.level === 3 ? item.slug : null
+                    }}
+                  >
+                    <a>See all</a>
+                  </Link>}
               </div>
               {(item.children || []).length > 0 ?
                 <GridSlider items={item.children} /> :
@@ -36,6 +44,7 @@ ItemGallery.propTypes = {
   items: PropTypes.array,
   isSolutionView: PropTypes.bool,
   slider: PropTypes.bool,
+  showAll: PropTypes.bool,
   showTitle: PropTypes.bool // eslint-disable-line react/no-unused-prop-types
 };
 

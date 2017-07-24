@@ -9,7 +9,7 @@ routes.add('home', '/', 'homepage/HomepageIndex');
 // EXPLORE
 routes.add('explore-index', '/explore/:category?/:subCategory?/:children?', 'explore/ExploreIndex');
 routes.add('explore-detail', '/:type/:id', 'explore/ExploreDetail');
-routes.add('bme-detail', '/bussiness-model-elements/:id', 'explore/BmeDetail');
+routes.add('bme-detail', '/business-model-elements/:id', 'explore/BmeDetail');
 routes.add('solution-detail', '/solutions/:id', 'explore/SolutionDetail');
 
 // ABOUT

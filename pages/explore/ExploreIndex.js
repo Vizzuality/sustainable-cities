@@ -8,11 +8,14 @@ import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
 // modules
-import { getCategoryTree, getCategories, setCategoryFilters } from 'modules/category';
 import {
-  getProjects,
+  getSolutionCategories,
+  getBmeCategories,
+  setCategoryFilters
+} from 'modules/category';
+import {
+  getProjectsByCategory,
   setProjectFilters,
-  setParsedProjects,
   removeProjectDetail,
   resetProjectFilters
 } from 'modules/project';
@@ -20,6 +23,8 @@ import { getBmes, setBmeFilters, setBmeCategoryId } from 'modules/bme';
 
 // selectors
 import { getCategoryTabs } from 'selectors/category';
+import { getParsedProjects } from 'selectors/project';
+import { getParsedBmes } from 'selectors/bme';
 
 // components
 import Page from 'pages/Page';
@@ -28,18 +33,14 @@ import Cover from 'components/common/Cover';
 import Tab from 'components/common/Tab';
 import ItemGallery from 'components/explore/ItemGallery';
 
-// utils
-import { isArrayEqual } from 'utils/common';
-
-// constants
-import { CATEGORY_TYPE_CONVERSION } from 'constants/category';
 import { EXPLORE_DESCRIPTION } from 'constants/explore';
 
 
 class ExploreIndex extends Page {
   componentWillMount() {
     // retrieves solutions and BME categories to populate tabs
-    this.props.getCategoryTree();
+    this.props.getSolutionCategories();
+    this.props.getBmeCategories();
   }
 
   componentDidMount() {
@@ -56,26 +57,15 @@ class ExploreIndex extends Page {
   }
 
   componentWillReceiveProps(nextProps) {
-    // updates category and project filters
+    // updates filters
     if (!isEqual(this.props.queryParams, nextProps.queryParams)) {
-      this._setCategoryFilters(nextProps);
       this._setProjectFilters(nextProps);
       this._setBmeFilters(nextProps);
     }
 
-    // retrieves categories if filters have been updated
-    if (!isEqual(this.props.categoryFilters, nextProps.categoryFilters)) {
-      this.props.getCategories(nextProps.categoryFilters);
-    }
-
     // retrieves projects if filters have been updated
     if (!isEqual(this.props.projectFilters, nextProps.projectFilters)) {
-      this.props.getProjects(nextProps.projectFilters);
-    }
-
-    // parses projects based on filters if those ones have changed
-    if (!isArrayEqual(this.props.projects, nextProps.projects) && nextProps.queryParams.category === 'solutions') {
-      this.props.setParsedProjects(nextProps.projects, nextProps.projectFilters);
+      this.props.getProjectsByCategory(nextProps.projectFilters);
     }
 
     // retrieves bmes if filters have been updated
@@ -88,36 +78,32 @@ class ExploreIndex extends Page {
     this.props.resetProjectFilters();
   }
 
+  _updateView({ queryParams }) {
+    const { category } = queryParams;
+
+    this.setState({
+      view: category && category !== 'solutions' ? 'Bme' : 'Solution'
+    });
+  }
+
   _setProjectFilters({ queryParams }) {
     const { category, subCategory } = queryParams;
 
     this.props.setProjectFilters({
-      bme: category && category !== 'solutions' && category !== 'cities' ?
-        subCategory || category : null,
-      solution: category === 'solutions' ? subCategory || 'all' : null,
+      categoryType: category && category === 'solutions' ?
+        'Solution' : 'Bme',
+      category: subCategory,
       city: category === 'cities' ? subCategory || null : null
     });
   }
 
-  _setCategoryFilters({ queryParams }) {
-    const { category, subCategory } = queryParams;
-    const NonBmeType = category === 'solutions' ?
-      CATEGORY_TYPE_CONVERSION.solution : null;
-    const NonCityCategory = category === 'solutions' && !subCategory ?
-      null : subCategory || category;
-
-    this.props.setCategoryFilters({
-      type: category && category !== 'solutions' && category !== 'cities' ?
-        CATEGORY_TYPE_CONVERSION.bme : NonBmeType,
-      category: category && category !== 'cities' ? NonCityCategory : null
-    });
-  }
-
   _setBmeFilters({ queryParams }) {
-    const { category, subCategory } = queryParams;
+    const { category, subCategory, children } = queryParams;
 
     this.props.setBmeFilters({
-      category: category !== 'solutions' ? subCategory || category : null
+      category: category !== 'solutions' ? category : null,
+      subCategory: category !== 'solutions' ? subCategory : null,
+      children: category !== 'solutions' ? children : null
     });
   }
 
@@ -125,16 +111,15 @@ class ExploreIndex extends Page {
     const {
       categoryTabs,
       loadingProjects,
+      loadingBmes,
       parsedProjects,
-      queryParams,
-      projectFilters,
-      bmes,
-      loadingBmes
+      parsedBmes,
+      queryParams
     } = this.props;
-    const { category } = queryParams;
-    const { solution } = projectFilters;
-    const loader = !solution ? loadingProjects : loadingBmes;
-    const items = category === 'solutions' ? parsedProjects : bmes;
+    const { category, subCategory, children } = queryParams;
+    const isLoading = loadingProjects || loadingBmes;
+    const isSolutionView = category === 'solutions';
+    const items = isSolutionView ? parsedProjects : parsedBmes;
 
     return (
       <Layout
@@ -150,13 +135,14 @@ class ExploreIndex extends Page {
         />
         <div className="row">
           <div className="column small-12">
-            {loader ?
-              <div>Loading projects...</div> :
-              items.length > 0 &&
-                <ItemGallery
-                  items={items}
-                  slider={solution === 'all' || category !== 'solutions'}
-                />}
+            {isLoading ?
+              <div>Loading data...</div> :
+              <ItemGallery
+                items={items}
+                isSolutionView={isSolutionView}
+                slider={(isSolutionView && !subCategory) || (!isSolutionView && !children)}
+                showAll={(isSolutionView && !subCategory) || (!isSolutionView && !children)}
+              />}
           </div>
         </div>
       </Layout>
@@ -173,15 +159,23 @@ ExploreIndex.propTypes = {
   projectFilters: PropTypes.object,
   projects: PropTypes.array,
   parsedProjects: PropTypes.array,
+  // bmes
+  loadingBmes: PropTypes.bool,
+  bmes: PropTypes.array,
+  parsedBmes: PropTypes.array,
   // queryParams
   queryParams: PropTypes.object.isRequired
 };
 
 ExploreIndex.defaultProps = {
+  // categories
   categoryTabs: [],
+  // projects
   projects: [],
   parsedProjects: [],
-  bmes: []
+  // bmes
+  bmes: [],
+  parsedBmes: []
 };
 
 export default withRedux(
@@ -194,23 +188,23 @@ export default withRedux(
     // projects
     loadingProjects: state.project.loading,
     projects: state.project.list,
-    parsedProjects: state.project.parsedList,
+    parsedProjects: getParsedProjects(state),
     projectFilters: state.project.filters,
     // bmes
     loadingBmes: state.bme.loading,
     bmes: state.bme.list,
+    parsedBmes: getParsedBmes(state),
     bmeFilters: state.bme.filters
   }),
   dispatch => ({
     // categories
-    getCategoryTree() { dispatch(getCategoryTree()); },
-    getCategories(filters) { dispatch(getCategories(filters)); },
+    getSolutionCategories() { dispatch(getSolutionCategories()); },
+    getBmeCategories() { dispatch(getBmeCategories()); },
     setCategoryFilters(filters) { dispatch(setCategoryFilters(filters)); },
     // projects
-    getProjects(filters) { dispatch(getProjects(filters)); },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
+    getProjectsByCategory(filters) { dispatch(getProjectsByCategory(filters)); },
     resetProjectFilters() { dispatch(resetProjectFilters()); },
-    setParsedProjects(projects, filters) { dispatch(setParsedProjects(projects, filters)); },
     removeProjectDetail() { dispatch(removeProjectDetail()); },
     // bmes
     getBmes(filters) { dispatch(getBmes(filters)); },

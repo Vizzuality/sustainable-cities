@@ -61,6 +61,7 @@ export function getSolutionCategories() {
     const { categoryType, level } = filters;
     const includeFilters = ['children'];
     const categoriesFields = ['name', 'slug', 'category-type'];
+    //const includeFilters = ['children', 'children.children', 'children.parent'];
 
     const queryParams = queryString.stringify({
       'filter[category-type]': categoryType,

@@ -64,7 +64,10 @@ export default class MainNav extends React.Component {
                   <Link prefetch route="about"><a className="literal">About the initiative</a></Link>
                 </li>
                 <li className="nav-item -separator" />
-                <li className="nav-item" role="menuitem">
+                <li
+                  className={classnames('nav-item', { '-current': route === 'builder' })}
+                  role="menuitem"
+                >
                   <Link prefetch route="builder"><a className="literal">Build a project</a></Link>
                 </li>
                 <li className="nav-item" role="menuitem">

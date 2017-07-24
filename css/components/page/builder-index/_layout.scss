@@ -1,0 +1,32 @@
+.c-builder-sidebar {
+  margin-top: 50px;
+  width: 200px;
+}
+
+.radial-chart {
+  font-weight: 300;
+  position: relative;
+  width: 1000px;
+}
+
+circle {
+  stroke-width: 2;
+  fill-opacity: 0.2;
+}
+
+circle.investment-component { fill: #F7B50C; stroke: #F7B50C; }
+circle.delivery-mechanism { fill: #28D1ED; stroke: #28D1ED; }
+circle.financial-product { fill: #69E090; stroke: #69E090; }
+circle.funding-source { fill: #DD7D5C; stroke: #DD7D5C; }
+
+line.investment-component { stroke: #F7B50C; stroke-width: 3; opacity: 0.2; }
+line.delivery-mechanism { stroke: #28D1ED; stroke-width: 3; opacity: 0.2; }
+line.financial-product { stroke: #69E090; stroke-width: 3; opacity: 0.2; }
+line.funding-source { stroke: #DD7D5C; stroke-width: 3; opacity: 0.2; }
+
+.active-undefined circle:hover { fill-opacity: 1; stroke: #fff; }
+
+
+.root-label { width: 16%; height: 16%; margin: 0; display: flex; align-items: center; pointer-events: none; padding: 2%; }
+.root-label p { text-align: center; width: 100%; }
+

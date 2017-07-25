@@ -72,8 +72,8 @@ export default function BmeDetail(props) {
         </div>
         {bme.projects.length === 0 && (<div className='column large-8 content separator'>
           <div className='row'>
-            <div className='column large-9 title huge'>
-              no associated projects
+            <div className='column large-9'>
+              No associated projects
             </div>
           </div>
         </div>)}
@@ -109,7 +109,7 @@ export default function BmeDetail(props) {
         <div className='column large-8 content'>
           <ul className='external-sources'>
             {bme.externalSources.length === 0 && (<li>
-              no external sources
+              No external sources
             </li>)}
             {bme.externalSources.length > 0 && (bme.externalSources.map((s) => (<li key={s.id}>
               {s.webUrl && (<a className='external' href={s.webUrl}>

@@ -24,17 +24,17 @@ export default class HomePage extends Page {
         <section className="l-home-main-links">
           <div className="row">
             <ul>
-              <li className="columns large-4"><Link route="explore-index">
+              <li className="columns medium-4"><Link route="explore-index">
                 <a className="m-main-link">
                   <p className="c-title -dark -fs-extrabig -fw-light">Explore sustainable projects</p>
                 </a>
               </Link></li>
-              <li className="columns large-4"><Link route="explore-index">
+              <li className="columns medium-4"><Link route="explore-index">
                 <a className="m-main-link">
                   <p className="c-title -dark -fs-extrabig -fw-light">Design a business model</p>
                 </a>
               </Link></li>
-              <li className="columns large-4"><Link route="explore-index">
+              <li className="columns medium-4"><Link route="explore-index">
                 <a className="m-main-link">
                   <p className="c-title -dark -fs-extrabig -fw-light">Learn more about the initiative</p>
                 </a>
@@ -67,7 +67,7 @@ export default class HomePage extends Page {
               <div className="m-call-to-action">
                 <h3 className="c-title -dark -fs-extrabig -fw-light">Explore projects & business models elements</h3>
                 <p className="c-text c-text -gray-light -fs-medium -fw-light -lh-medium">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa maiores adipisci enim dolore blanditiis, odio doloribus, dicta temporibus facere, ipsum tempora ducimus nobis. Libero ad commodi cumque sit mollitia, facilis.</p>
-                <Link route="explore-index"><a className="c-button -secondary">start exploring</a></Link>
+                <Link route="explore-index"><a className="c-button -primary">start exploring</a></Link>
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@ export default class HomePage extends Page {
               <div className="m-call-to-action">
                 <h3 className="c-title -dark -fs-extrabig -fw-light">Business models builder</h3>
                 <p className="c-text c-text -gray-light -fs-medium -fw-light -lh-medium">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa maiores adipisci enim dolore blanditiis, odio doloribus, dicta temporibus facere, ipsum tempora ducimus nobis. Libero ad commodi cumque sit mollitia, facilis.</p>
-                <Link route="explore-index"><a className="c-button -secondary">start building</a></Link>
+                <Link route="explore-index"><a className="c-button -primary">start building</a></Link>
               </div>
             </div>
           </div>

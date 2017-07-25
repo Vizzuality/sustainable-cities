@@ -19,10 +19,10 @@ export default class HomePage extends Page {
         <br />
         <Link route="explore-detail" params={{ type: 'solutions', id: 1 }}><a>Explore detail page</a></Link>
 
-        <section className="l-header">
+        <section className="l-home-header">
           <div className="row">
             <div className="columns large-8 large-offset-2">
-              <h1 className="header -title">An initiative to accelerate the implementation of <span className="-highlited">sustainable urban solutions</span> trough new business models</h1>
+              <h1 className="c-title -fs-huge -light -fw-light">An initiative to accelerate the implementation of <span className="-highlited">sustainable urban solutions</span> trough new business models</h1>
             </div>
 
           </div>

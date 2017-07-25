@@ -1,5 +1,5 @@
 .c-cover {
-  height: 440px;
+  min-height: 440px;
   padding: 50px 0;
   background-size: cover;
   background-position: center center;
@@ -14,12 +14,12 @@
   }
 
   &.-short {
-    height: 300px;
+    min-height: 300px;
     padding: 25px 0;
   }
 
   &.-shorter {
-    height: 170px;
+    min-height: 170px;
   }
 
   > .row {

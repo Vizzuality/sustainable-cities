@@ -2,32 +2,24 @@ import { Deserializer } from 'jsonapi-serializer';
 import fetch from 'isomorphic-fetch';
 import * as queryString from 'query-string';
 
-// utils
-import { projectsBySolution, listProjects } from 'utils/project';
-
 /* Actions */
 const GET_PROJECTS = 'project/GET_PROJECTS';
-const SET_PARSED_PROJECTS = 'project/SET_PARSED_PROJECTS';
 const SET_PROJECT_DETAIL = 'project/SET_PROJECT_DETAIL';
 const SET_FILTERS = 'project/SET_FILTERS';
 const RESET_FILTERS = 'project/RESET_FILTERS';
 const REMOVE_PROJECT_DETAIL = 'project/REMOVE_PROJECT_DETAIL';
 
+// loading and error management
 const SET_LOADING_PROJECTS = 'project/SET_LOADING_PROJECTS';
 const SET_ERROR_PROJECTS = 'project/SET_ERROR_PROJECTS';
 
 /* Initial state */
 const initialState = {
   list: [],
-  parsedList: [],
   detail: {},
   filters: {
-    // BME category
-    bme: null,
-    // id used to get a single project
+    category: null,
     detailId: null,
-    // category or subcategory (exclusive for projects)
-    solution: null,
     city: null
   },
   loading: false,
@@ -39,8 +31,6 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case GET_PROJECTS:
       return Object.assign({}, state, { list: action.payload });
-    case SET_PARSED_PROJECTS:
-      return Object.assign({}, state, { parsedList: action.payload });
     case SET_PROJECT_DETAIL:
       return Object.assign({}, state, { detail: action.payload });
     case REMOVE_PROJECT_DETAIL: {
@@ -65,19 +55,22 @@ export default function (state = initialState, action) {
 }
 
 /* Action creators */
-export function getProjects(filters = {}) {
+export function getProjectsByCategory(filters = {}) {
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_PROJECTS, payload: true });
-    const { solution, bme } = filters;
+    const { category } = filters;
 
-    const includeFields = ['category', 'cities'];
+    const includeFields = ['projects'];
+    const levelFilter = !category ? [2] : undefined;
 
     const queryParams = queryString.stringify({
-      'filter[category_slug]': solution !== 'all' ? solution : bme || undefined,
+      'filter[slug]': category || undefined,
+      'filter[category-type]': 'Solution',
+      'filter[level]': levelFilter ? levelFilter.join(',') : undefined,
       include: includeFields.join(',')
     });
 
-    fetch(`${process.env.API_URL}/study-cases?${queryParams}`, {
+    fetch(`${process.env.API_URL}/categories?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -139,18 +132,9 @@ export function getProjectDetail(projectId) {
   };
 }
 
-export function setParsedProjects(projects, filters) {
-  const parsedProjects = filters.solution === 'all' ?
-    projectsBySolution(projects) : listProjects(projects);
-  return (dispatch) => {
-    dispatch({ type: SET_PARSED_PROJECTS, payload: parsedProjects });
-  };
-}
-
 export function setProjectFilters(filters) {
   return (dispatch) => {
     dispatch({ type: SET_FILTERS, payload: filters });
-    dispatch({ type: SET_PARSED_PROJECTS, payload: [] });
   };
 }
 

@@ -1,9 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function Header() {
+// Components
+import MainNav from 'components/common/MainNav';
+
+export default function Header(props) {
   return (
     <header className="c-header">
-      Sustainable Cities
+      <MainNav
+        route={props.queryParams.route}
+      />
     </header>
   );
 }
+
+Header.propTypes = {
+  queryParams: PropTypes.object
+};

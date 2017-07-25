@@ -1,0 +1,43 @@
+.c-cover {
+  height: 440px;
+  padding: 50px 0;
+  background-size: cover;
+  background-position: center center;
+  background-color: $color-2;
+
+  &.-short {
+    height: 300px;
+    padding: 25px 0;
+  }
+
+  > .row {
+    height: 100%;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: $font-size-huge;
+    font-weight: $font-weight-thin;
+    color: $color-text-5;
+    line-height: 1.15;
+  }
+
+  .description {
+    margin: 10px 0 0 0;
+    color: $color-text-5;
+  }
+
+  .breadcrumbs {
+    margin-bottom: 7px;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+    &.-margin {
+      margin-bottom: 14px;
+    }
+  }
+}

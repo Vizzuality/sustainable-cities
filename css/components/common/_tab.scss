@@ -1,0 +1,59 @@
+.c-tabs {
+  display: flex;
+  justify-content: center;
+
+  border-bottom: 1px solid rgba($color-black, .1);
+  background: $color-white;
+
+  .tab-list {
+    display: flex;
+    align-items: center;
+    height: $tab-height;
+  }
+
+  .tab-list > .tab-item {
+    display: flex;
+    height: 100%;
+
+    > .literal {
+      display: flex;
+      align-items: center;
+      height: 100%;
+
+      font-size: $font-size-smaller;
+      color: $color-text-3;
+      text-transform: uppercase;
+    }
+
+    &.-current {
+      position: relative;
+
+      &::after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 50%;
+        height: 5px;
+        background: $color-6;
+      }
+
+      > .literal {
+        color: $color-text-2;
+      }
+    }
+  }
+
+  &.-explore {
+    > .row {
+      width: 100%;
+    }
+
+    .tab-list {
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+}

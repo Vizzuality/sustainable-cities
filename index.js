@@ -4,6 +4,7 @@ const express = require('express');
 const next = require('next');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const routes = require('./routes');
 
 // Load environment variables from .env file if present
 require('dotenv').load();
@@ -29,12 +30,9 @@ process.on('unhandledRejection', (reason, p) => {
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 process.env.PORT = process.env.PORT || 80;
 
-const app = next({
-  dir: '.',
-  dev
-});
+const app = next({ dir: '.', dev });
 
-const handle = app.getRequestHandler();
+const handle = routes.getRequestHandler(app);
 
 // Express app creation
 const server = express();
@@ -46,9 +44,6 @@ server.use(bodyParser.json());
 
 app.prepare()
   .then(() => {
-    // Public/landing page
-    server.get('/', (req, res) => app.render(req, res, '/Home'));
-
     server.get('*', (req, res) => handle(req, res));
 
     server.listen(port, (err) => {

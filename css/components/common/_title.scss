@@ -1,0 +1,51 @@
+.c-title {
+  margin: 0;
+
+  font-family: $font-family-1;
+  font-weight: $font-weight-default;
+  line-height: 1;
+
+  // colors
+  &.-dark {
+    color: $color-text-4;
+  }
+
+  &.-gray-light {
+    color: $color-text-2;
+  }
+
+  &.-light {
+    color: $color-text-6;
+  }
+
+  // sizes
+  &.-fs-huge {
+    font-size: $font-size-huge;
+  }
+
+  &.-fs-extrabig {
+    font-size: $font-size-extrabig;
+  }
+
+  &.-fs-bigger {
+    font-size: $font-size-bigger;
+  }
+
+  &.-fs-smaller {
+    font-size: $font-size-smaller;
+  }
+
+  // weigths
+  &.-fw-light {
+    font-weight: $font-weight-light;
+  }
+
+  &.-fw-thin {
+    font-weight: $font-weight-thin;
+  }
+
+  // miscellaneous
+  &.-uppercase {
+    text-transform: uppercase;
+  }
+}

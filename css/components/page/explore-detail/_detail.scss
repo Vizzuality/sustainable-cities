@@ -1,0 +1,12 @@
+
+.c-detail {
+
+  .c-detail-section {
+
+    &:last-child {
+      .content {
+        border-bottom: none;
+      }
+    }
+  }
+}

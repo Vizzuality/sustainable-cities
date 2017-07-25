@@ -46,6 +46,7 @@ $color-text-7: #ffee40;
 $z-index-1: 0;
 $z-index-2: 100;
 $z-index-3: 200;
+$z-index-4: 400;
 
 /**
  * FONTS
@@ -100,7 +101,7 @@ $tab-height: 52px;
 // $animation-time: .16s;
 // $animation-time-2: .24s;
 // $animation-time-3: .5s;
-// $animation-time-4: .75s;
+$animation-time-4: .75s;
 
 // Eases
 // $ease-in-cubic: cubic-bezier(0.550, 0.055, 0.675, 0.190);
@@ -109,7 +110,7 @@ $tab-height: 52px;
 
 // $ease-in-sine: cubic-bezier(0.470, 0.000, 0.745, 0.715);
 // $ease-out-sine: cubic-bezier(0.390, 0.575, 0.565, 1.000);
-// $ease-in-out-sine: cubic-bezier(0.445, 0.050, 0.550, 0.950);
+$ease-in-out-sine: cubic-bezier(0.445, 0.050, 0.550, 0.950);
 
 /**
  * FOUNDATION

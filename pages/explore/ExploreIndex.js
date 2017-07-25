@@ -31,10 +31,16 @@ import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
 import Tab from 'components/common/Tab';
+import Map from 'components/common/map/Map';
 import ItemGallery from 'components/explore/ItemGallery';
 
-import { EXPLORE_DESCRIPTION } from 'constants/explore';
+// utils
+import LayerManager from 'utils/map/LayerManager';
+import LayerSpec from 'utils/map/layerSpec.json';
+import getLayerType from 'utils/map/layer';
 
+// constants
+import { EXPLORE_DESCRIPTION } from 'constants/explore';
 
 class ExploreIndex extends Page {
   componentWillMount() {
@@ -107,6 +113,7 @@ class ExploreIndex extends Page {
     });
   }
 
+
   render() {
     const {
       categoryTabs,
@@ -120,6 +127,7 @@ class ExploreIndex extends Page {
     const isLoading = loadingProjects || loadingBmes;
     const isSolutionView = category === 'solutions';
     const items = isSolutionView ? parsedProjects : parsedBmes;
+    const activeLayers = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
     return (
       <Layout
@@ -133,6 +141,12 @@ class ExploreIndex extends Page {
           items={categoryTabs}
           queryParams={queryParams}
         />
+        <div className="l-map-container">
+          <Map
+            layersActive={[activeLayers]}
+            LayerManager={LayerManager}
+          />
+        </div>
         <div className="row">
           <div className="column small-12">
             {isLoading ?

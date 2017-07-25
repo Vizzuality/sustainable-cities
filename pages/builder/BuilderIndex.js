@@ -6,8 +6,6 @@ import RadialChart from 'components/common/RadialChart';
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
-// modules
-//import { getCategoryTree } from 'modules/category';
 import { getBmes } from 'modules/bme';
 
 class BuilderIndex extends Page {

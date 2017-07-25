@@ -1,16 +1,25 @@
 .c-builder-sidebar {
-  margin-top: 50px;
-  width: 200px;
+  margin-top: 35px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .footer {
+    font-weight: $font-weight-light;
+    font-size: $font-size-smaller;
+  }
 }
 
 .radial-chart {
+  margin-top: 50px;
   font-weight: 300;
   position: relative;
-  width: 1000px;
+  width: 800px;
 }
 
 circle {
-  stroke-width: 2;
+  stroke-width: 1.5;
   fill-opacity: 0.2;
 }
 
@@ -29,4 +38,3 @@ line.funding-source { stroke: #DD7D5C; stroke-width: 3; opacity: 0.2; }
 
 .root-label { width: 16%; height: 16%; margin: 0; display: flex; align-items: center; pointer-events: none; padding: 2%; }
 .root-label p { text-align: center; width: 100%; }
-

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const depths = [120, 230, 285, 360];
+const depths = [140, 270, 340, 480];
 const sizes = [80, 15, 5, 5];
 
 const distanceBetween = (p0, p1) => Math.sqrt((p1.y - p0.y)**2 + (p1.x - p0.x)**2);

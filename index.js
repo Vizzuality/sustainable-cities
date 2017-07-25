@@ -44,9 +44,6 @@ server.use(bodyParser.json());
 
 app.prepare()
   .then(() => {
-    // Public/landing page
-    server.get('/', (req, res) => app.render(req, res, '/Home'));
-
     server.get('*', (req, res) => handle(req, res));
 
     server.listen(port, (err) => {

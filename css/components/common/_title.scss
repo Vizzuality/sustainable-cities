@@ -18,6 +18,10 @@
     color: $color-text-6;
   }
 
+  &.-highlight {
+    color: $color-text-7;
+  }
+
   // sizes
   &.-fs-huge {
     font-size: $font-size-huge;

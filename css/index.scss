@@ -22,14 +22,18 @@
 
 // Components
 // - layout
-// @import 'components/layout/layout';
+@import 'components/layout/l-home';
+
 // - page
 @import 'components/page/explore-detail/detail';
 @import 'components/page/explore-detail/section-detail';
 @import 'components/page/explore-detail/cloud';
 @import 'components/page/explore-detail/itemization';
 
-@import 'components/page/home/home';
+@import 'components/page/home/call-to-action';
+@import 'components/page/home/main-link';
+@import 'components/page/home/video-wrapper';
+
 // @import 'components/page/section';
 // - common
 @import 'components/common/title';

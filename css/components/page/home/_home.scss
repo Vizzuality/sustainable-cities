@@ -1,0 +1,36 @@
+.l-home-intro {
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+    margin: 30px 0;
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+.l-home-main-links {
+  padding: 50px 0 80px 0;
+}
+
+.m-main-link {
+  display: flex;
+  align-items: flex-end;
+  height: 230px;
+  width: 100%;
+  padding: 36px 30px;
+  border: solid 1px rgba($color-1, .1);
+  transition: .2s ease-in;
+
+  &:hover {
+    box-shadow: 0 7px 15px 0 rgba(0, 0, 0, 0.15), 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+  }
+}

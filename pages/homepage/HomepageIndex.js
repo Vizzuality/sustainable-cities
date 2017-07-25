@@ -46,7 +46,7 @@ export default class HomePage extends Page {
         <section className="l-home-intro">
           <div className="row">
             <div className="columns large-8 large-offset-2">
-              <p className="c-text c-text -gray-light -fs-medium -fw-light -lh-medium">A global movement to change how we treat the planet and each other is underway.</p>
+              <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">A global movement to change how we treat the planet and each other is underway.</p>
             </div>
           </div>
           <div className="row">
@@ -58,7 +58,7 @@ export default class HomePage extends Page {
           </div>
           <div className="row">
             <div className="columns large-8 large-offset-2">
-              <p className="c-text c-text -gray-light -fs-medium -fw-light -lh-medium">In the past two years, we’ve seen leaders and citizens come together to declare climate change action and sustainable living to be the sensible path forward. At the center of action are cities—places that half the world’s population call home. And millions more will join them in the decades ahead.</p>
+              <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">In the past two years, we’ve seen leaders and citizens come together to declare climate change action and sustainable living to be the sensible path forward. At the center of action are cities—places that half the world’s population call home. And millions more will join them in the decades ahead.</p>
             </div>
           </div>
         </section>
@@ -67,7 +67,7 @@ export default class HomePage extends Page {
             <div className="columns medium-6 medium-offset-6">
               <div className="m-call-to-action">
                 <h3 className="c-title -dark -fs-extrabig -fw-light">Explore projects & business models elements</h3>
-                <p className="c-text c-text -gray-light -fs-medium -fw-light -lh-medium">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa maiores adipisci enim dolore blanditiis, odio doloribus, dicta temporibus facere, ipsum tempora ducimus nobis. Libero ad commodi cumque sit mollitia, facilis.</p>
+                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa maiores adipisci enim dolore blanditiis, odio doloribus, dicta temporibus facere, ipsum tempora ducimus nobis. Libero ad commodi cumque sit mollitia, facilis.</p>
                 <Link route="explore-index"><a className="c-button -primary">start exploring</a></Link>
               </div>
             </div>
@@ -78,7 +78,7 @@ export default class HomePage extends Page {
             <div className="columns medium-6">
               <div className="m-call-to-action">
                 <h3 className="c-title -dark -fs-extrabig -fw-light">Business models builder</h3>
-                <p className="c-text c-text -gray-light -fs-medium -fw-light -lh-medium">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa maiores adipisci enim dolore blanditiis, odio doloribus, dicta temporibus facere, ipsum tempora ducimus nobis. Libero ad commodi cumque sit mollitia, facilis.</p>
+                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa maiores adipisci enim dolore blanditiis, odio doloribus, dicta temporibus facere, ipsum tempora ducimus nobis. Libero ad commodi cumque sit mollitia, facilis.</p>
                 <Link route="explore-index"><a className="c-button -primary">start building</a></Link>
               </div>
             </div>

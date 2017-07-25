@@ -15,6 +15,7 @@
 @import 'mixins';
 @import 'icons';
 @import 'layout';
+@import 'texts';
 @import 'animations';
 
 // - page
@@ -28,6 +29,8 @@
 @import 'components/page/explore-detail/section-detail';
 @import 'components/page/explore-detail/cloud';
 @import 'components/page/explore-detail/itemization';
+
+@import 'components/page/home/home';
 // @import 'components/page/section';
 // - common
 @import 'components/common/title';

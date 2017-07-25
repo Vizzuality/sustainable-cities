@@ -1,4 +1,3 @@
-
 .c-detail {
 
   .c-detail-section {
@@ -10,3 +9,121 @@
     }
   }
 }
+
+.bme-detail {
+
+  a.external {
+    color: $color-4-1;
+    border-bottom: 1px solid $color-4-1;
+    text-decoration: none;
+  }
+
+  ul {
+    li {
+      display: block;
+    }
+  }
+
+  font-weight: 300;
+
+  .title {
+    &.huge {
+      font-size: $font-size-huge;
+    }
+    &.extrabig {
+      font-size: $font-size-extrabig;
+    }
+    &.smaller {
+      font-size: $font-size-smaller;
+    }
+  }
+
+  .city {
+    text-transform: uppercase;
+    color: $color-text-7;
+  }
+
+  .content {
+    font-size: $font-size-medium;
+  }
+
+  .details {
+    font-size: $font-size-default;
+    font-weight: normal;
+  }
+
+  .inverted {
+    color: $color-text-6;
+  }
+
+  .bme-detail-body {
+
+    margin: 50px 0 100px;
+
+    .separator {
+      border-bottom: 1px solid rgba(#2C2F32, 0.1);
+      padding-bottom: 40px;
+      margin-bottom: 40px;
+    }
+
+    .project-content {
+      .title {
+        line-height: 28px;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 50px;
+      }
+    }
+
+    ul.external-sources {
+      margin-top: 15px;
+      li {
+        font-size: $font-size-default;
+        line-height: 26px;
+      }
+    }
+  }
+
+  .bme-detail-related-content {
+    padding: 50px 110px 100px;
+    background-color: rgba(0, 0, 0, 0.02);
+
+    .title.huge {
+      font-weight: 100;
+    }
+  }
+
+  .bme-detail-download-data {
+
+    position: relative;
+    background-image: url('/static/images/download-data-module.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    .title.huge {
+      font-weight: 100;
+    }
+
+    .row:nth-child(1) {
+      margin-bottom: 30px;
+    }
+
+    .row:nth-child(2) {
+      margin-bottom: 50px;
+    }
+
+    .download-button {
+      background-color: #ffffff;
+    }
+
+    .bme-detail-download-data-content {
+      padding: 85px 110px 100px;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+  }
+
+}
+

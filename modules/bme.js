@@ -10,7 +10,6 @@ const REMOVE_BME_DETAIL = 'bme/REMOVE_BME_DETAIL';
 
 // loading and error management
 const SET_BME_CATEGORY_ID = 'bme/SET_BME_CATEGORY_ID';
-const SET_BME_DETAIL = 'bme/SET_BME_DETAIL';
 const SET_LOADING_BMES = 'bme/SET_LOADING_BMES';
 const SET_ERROR_BMES = 'bme/SET_ERROR_BMES';
 
@@ -95,7 +94,16 @@ export function getBmes(filters = {}) {
 export function getBmeDetail(filters) {
   const { detailId } = filters;
 
-  const includeParams = ["enablings", "categories", "projects", "projects.cities", "external-sources"];
+  const includeParams = [
+    'enablings',
+    'categories',
+    'categories.parent',
+    'categories.parent.parent',
+    'categories.parent.parent.parent',
+    'projects',
+    'projects.cities',
+    'external-sources'
+  ];
 
   const queryParams = queryString.stringify({
     include: includeParams.join(',')

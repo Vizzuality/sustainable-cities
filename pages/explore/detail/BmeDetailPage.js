@@ -7,7 +7,7 @@ import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
 // modules
-import { getBmeDetail, setBmeFilters, removeBmeDetail } from 'modules/bme';
+import { getBmeDetail, removeBmeDetail } from 'modules/bme';
 
 // components
 import Page from 'pages/Page';
@@ -16,23 +16,28 @@ import Cover from 'components/common/Cover';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import BmeDetail from 'components/explore-detail/BmeDetail';
 
-class BmeDetailPage extends Page {
-  static setBreadcrumbs(bme) {
-    if (!bme) return null;
+const getBreadcrumbs = (bme) => {
 
-    // TO-DO
-    return [];
+  const traverse = (category, accumulator = []) => {
+    if (!category) {
+      return accumulator;
+    } else {
+      return traverse(category.parent, [category, ...accumulator]);
+    }
   }
+
+  return traverse(bme.categories.find((c) => c.categoryType === 'Bme')).map((c) => ({
+    name: c.name,
+    route: `/categories/${c.id}`
+  }));
+};
+
+class BmeDetailPage extends Page {
 
   componentWillMount() {
     const { id } = this.props.queryParams;
 
-    this.props.setBmeFilters({ detailId: id });
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return (!isEqual(this.props.bmeFilters, nextProps.bmeFilters)) ||
-      (!isEqual(this.props.bme, nextProps.bme));
+    this.props.getBmeDetail({ detailId: id });
   }
 
   componentDidUpdate(prevProps) {
@@ -49,37 +54,38 @@ class BmeDetailPage extends Page {
   }
 
   render() {
-    const { bme, loadingBmes } = this.props;
-    const breadcrumbsItems = BmeDetailPage.setBreadcrumbs(bme);
+    const { bme, isLoading } = this.props;
 
-    const breadcrumbs = breadcrumbsItems ?
+    const breadcrumbsItems = !isEqual(bme, {}) ?
+      getBreadcrumbs(bme) : [];
+
+    const breadcrumbs = !isEqual(breadcrumbsItems, []) ?
       <Breadcrumbs items={breadcrumbsItems} /> : null;
 
     return (
       <Layout
-        title="Business model element detail"
+        title='Business model element detail'
         queryParams={this.props.queryParams}
       >
         <Cover
+          size='shorter'
+          className='-blue'
           title={bme.name || ''}
           breadcrumbs={breadcrumbs}
         />
 
         <BmeDetail
           bme={bme}
-          isLoading={loadingBmes}
+          isLoading={isLoading}
         />
+
       </Layout>
     );
   }
 }
 
 BmeDetailPage.propTypes = {
-  // bmes
-  bme: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.array
-  ]).isRequired,
+  bme: PropTypes.object.isRequired,
   getBmeDetail: PropTypes.func,
   removeBmeDetail: PropTypes.func,
   queryParams: PropTypes.object.isRequired
@@ -91,16 +97,12 @@ BmeDetailPage.defaultProps = {
 
 export default withRedux(
   store,
-  state => ({
-    // bmes
-    loadingBmes: state.bme.loading,
-    bme: state.bme.list,
-    bmeFilters: state.bme.filters
+  (state) => ({
+    isLoading: state.bme.loading,
+    bme: state.bme.detail,
   }),
-  dispatch => ({
-    // bme
+  (dispatch) => ({
     getBmeDetail(filters) { dispatch(getBmeDetail(filters)); },
-    setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
     removeBmeDetail() { dispatch(removeBmeDetail()); }
   })
 )(BmeDetailPage);

@@ -8,6 +8,9 @@
   &.-blue {
     background-color: $color-7;
     color: $color-white;
+    a {
+      color: $color-white;
+    }
   }
 
   &.-short {

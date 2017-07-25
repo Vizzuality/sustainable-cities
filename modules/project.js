@@ -60,7 +60,7 @@ export function getProjectsByCategory(filters = {}) {
     dispatch({ type: SET_LOADING_PROJECTS, payload: true });
     const { category } = filters;
 
-    const includeFields = ['projects'];
+    const includeFields = ['projects', 'projects.photos'];
     const levelFilter = !category ? [2] : undefined;
 
     const queryParams = queryString.stringify({

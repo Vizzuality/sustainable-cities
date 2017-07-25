@@ -3,6 +3,8 @@
 const listBmes = bmes => bmes.map(bme => ({
   id: bme.id,
   title: bme.name,
+  image: bme.photos && bme.photos[0] ?
+    `${process.env.API_URL}${bme.photos[0].attachment.thumbnail.url}` : null,
   link: { route: 'bme-detail', params: { id: bme.id } }
 }));
 

@@ -5,9 +5,18 @@
   background-position: center center;
   background-color: $color-2;
 
+  &.-blue {
+    background-color: $color-7;
+    color: $color-white;
+  }
+
   &.-short {
     height: 300px;
     padding: 25px 0;
+  }
+
+  &.-shorter {
+    height: 170px;
   }
 
   > .row {

@@ -26,7 +26,7 @@ export default function ItemGallery(props) {
                       children: item.level === 3 ? item.slug : null
                     }}
                   >
-                    <a>See all</a>
+                    <a className="c-button -secondary">See all</a>
                   </Link>}
               </div>
               {(item.children || []).length > 0 ?

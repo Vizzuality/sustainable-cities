@@ -25,16 +25,19 @@ export default class HomePage extends Page {
           <ul className="row">
             <li className="columns small-12 medium-4"><Link route="explore-index">
               <a className="m-main-link">
+                <svg className="icon"><use xlinkHref="#icon-home-explore" /></svg>
                 <p className="c-title -dark -fs-extrabig -fw-light">Explore sustainable projects</p>
               </a>
             </Link></li>
             <li className="columns small-12 medium-4"><Link route="explore-index">
               <a className="m-main-link">
+                <svg className="icon"><use xlinkHref="#icon-home-build" /></svg>
                 <p className="c-title -dark -fs-extrabig -fw-light">Design a business model</p>
               </a>
             </Link></li>
             <li className="columns small-12 medium-4"><Link route="explore-index">
               <a className="m-main-link">
+                <svg className="icon"><use xlinkHref="#icon-home-about" /></svg>
                 <p className="c-title -dark -fs-extrabig -fw-light">Learn more about the initiative</p>
               </a>
             </Link></li>

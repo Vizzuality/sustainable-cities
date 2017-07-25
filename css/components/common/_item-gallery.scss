@@ -8,6 +8,11 @@
   > .gallery-list > .gallery-item {
     display: block;
 
+    > .gallery-item-header {
+      display: flex;
+      justify-content: space-between;
+    }
+
     &:not(:first-child) {
       margin: 55px 0 0;
     }

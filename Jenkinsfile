@@ -12,9 +12,9 @@ node {
 
     stage('Deploy') {
 
-      if (env.BRANCH_NAME == "develop") {
+      if (env.BRANCH_NAME == "master") {
         sshagent (credentials: ['jenkins-cred']) {
-          sh 'ssh ${SUSTAINABLE_CITIES_STAGING} "cd /home/ubuntu/sustainable-cities-app && ./start.sh"'
+          sh 'ssh ${SUSTAINABLE_CITIES_STAGING} "cd /home/ubuntu/projects/sc-app && ./start.sh"'
         }
       } else {
 

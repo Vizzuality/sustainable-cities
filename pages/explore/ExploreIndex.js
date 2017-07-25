@@ -19,7 +19,7 @@ import {
   removeProjectDetail,
   resetProjectFilters
 } from 'modules/project';
-import { getBmes, setBmeFilters, setBmeCategoryId } from 'modules/bme';
+import { getBmes, setBmeFilters } from 'modules/bme';
 
 // selectors
 import { getCategoryTabs } from 'selectors/category';
@@ -208,7 +208,6 @@ export default withRedux(
     removeProjectDetail() { dispatch(removeProjectDetail()); },
     // bmes
     getBmes(filters) { dispatch(getBmes(filters)); },
-    setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
-    setBmeCategoryId(categoryId) { dispatch(setBmeCategoryId(categoryId)); }
+    setBmeFilters(filters) { dispatch(setBmeFilters(filters)); }
   })
 )(ExploreIndex);

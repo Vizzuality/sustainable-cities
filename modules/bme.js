@@ -4,15 +4,18 @@ import * as queryString from 'query-string';
 
 /* Actions */
 const GET_BMES = 'bme/GET_BMES';
+const SET_BME_DETAIL = 'bme/SET_BME_DETAIL';
 const SET_FILTERS = 'bme/SET_FILTERS';
-const SET_BME_CATEGORY_ID = 'bme/SET_BME_CATEGORY_ID';
+const REMOVE_BME_DETAIL = 'bme/REMOVE_BME_DETAIL';
 
+// loading and error management
 const SET_LOADING_BMES = 'bme/SET_LOADING_BMES';
 const SET_ERROR_BMES = 'bme/SET_ERROR_BMES';
 
 /* Initial state */
 const initialState = {
   list: [],
+  detail: {},
   filters: {
     category: null,
     subCategory: null,
@@ -27,6 +30,8 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case GET_BMES:
       return Object.assign({}, state, { list: action.payload });
+    case SET_BME_DETAIL:
+      return Object.assign({}, state, { detail: action.payload });
     case SET_LOADING_BMES:
       return Object.assign({}, state, { loading: action.payload });
     case SET_ERROR_BMES:
@@ -35,9 +40,9 @@ export default function (state = initialState, action) {
       const filters = { ...state.filters, ...action.payload };
       return Object.assign({}, state, { filters });
     }
-    case SET_BME_CATEGORY_ID: {
-      const filters = { ...state.filters, ...{ category: action.payload } };
-      return Object.assign({}, state, { filters });
+    case REMOVE_BME_DETAIL: {
+      const filters = { ...state.filters, ...{ detailId: null } };
+      return Object.assign({}, state, { list: [] }, { filters });
     }
     default:
       return state;
@@ -85,14 +90,23 @@ export function getBmes(filters = {}) {
   };
 }
 
+// TO-DO
+// eslint-disable-next-line no-unused-vars
+export function getBmeDetail(bmeId) {
+  return (dispatch) => {
+    dispatch({ type: SET_BME_DETAIL, payload: {} });
+  };
+}
+
 export function setBmeFilters(filters) {
   return (dispatch) => {
     dispatch({ type: SET_FILTERS, payload: filters });
   };
 }
 
-export function setBmeCategoryId(categoryId) {
+export function removeBmeDetail() {
   return (dispatch) => {
-    dispatch({ type: SET_BME_CATEGORY_ID, payload: categoryId });
+    dispatch({ type: REMOVE_BME_DETAIL });
   };
 }
+

@@ -22,25 +22,23 @@ export default class HomePage extends Page {
           </div>
         </section>
         <section className="l-home-main-links">
-          <div className="row">
-            <ul>
-              <li className="columns medium-4"><Link route="explore-index">
-                <a className="m-main-link">
-                  <p className="c-title -dark -fs-extrabig -fw-light">Explore sustainable projects</p>
-                </a>
-              </Link></li>
-              <li className="columns medium-4"><Link route="explore-index">
-                <a className="m-main-link">
-                  <p className="c-title -dark -fs-extrabig -fw-light">Design a business model</p>
-                </a>
-              </Link></li>
-              <li className="columns medium-4"><Link route="explore-index">
-                <a className="m-main-link">
-                  <p className="c-title -dark -fs-extrabig -fw-light">Learn more about the initiative</p>
-                </a>
-              </Link></li>
-            </ul>
-          </div>
+          <ul className="row">
+            <li className="columns small-12 medium-4"><Link route="explore-index">
+              <a className="m-main-link">
+                <p className="c-title -dark -fs-extrabig -fw-light">Explore sustainable projects</p>
+              </a>
+            </Link></li>
+            <li className="columns small-12 medium-4"><Link route="explore-index">
+              <a className="m-main-link">
+                <p className="c-title -dark -fs-extrabig -fw-light">Design a business model</p>
+              </a>
+            </Link></li>
+            <li className="columns small-12 medium-4"><Link route="explore-index">
+              <a className="m-main-link">
+                <p className="c-title -dark -fs-extrabig -fw-light">Learn more about the initiative</p>
+              </a>
+            </Link></li>
+          </ul>
         </section>
         <section className="l-home-intro">
           <div className="row">

@@ -13,12 +13,6 @@ export default class HomePage extends Page {
         title="Home"
         queryParams={this.props.queryParams}
       >
-        Hi there! Welcome to Sustainable Cities!
-        <br />
-        <Link route="explore-index" params={{ category: 'solutions' }}><a>Explore index page</a></Link>
-        <br />
-        <Link route="explore-detail" params={{ type: 'solutions', id: 1 }}><a>Explore detail page</a></Link>
-
         <section className="l-home-header">
           <div className="row">
             <div className="columns large-8 large-offset-2">
@@ -69,7 +63,7 @@ export default class HomePage extends Page {
         </section>
         <section className="l-home-call-to-action -explore">
           <div className="row">
-            <div className="columns large-6 large-offset-6">
+            <div className="columns medium-6 medium-offset-6">
               <div className="m-call-to-action">
                 <h3 className="c-title -dark -fs-extrabig -fw-light">Explore projects & business models elements</h3>
                 <p className="c-text c-text -gray-light -fs-medium -fw-light -lh-medium">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa maiores adipisci enim dolore blanditiis, odio doloribus, dicta temporibus facere, ipsum tempora ducimus nobis. Libero ad commodi cumque sit mollitia, facilis.</p>
@@ -80,7 +74,7 @@ export default class HomePage extends Page {
         </section>
         <section className="l-home-call-to-action -builder">
           <div className="row">
-            <div className="columns large-6">
+            <div className="columns medium-6">
               <div className="m-call-to-action">
                 <h3 className="c-title -dark -fs-extrabig -fw-light">Business models builder</h3>
                 <p className="c-text c-text -gray-light -fs-medium -fw-light -lh-medium">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa maiores adipisci enim dolore blanditiis, odio doloribus, dicta temporibus facere, ipsum tempora ducimus nobis. Libero ad commodi cumque sit mollitia, facilis.</p>

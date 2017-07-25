@@ -6,6 +6,8 @@
 }
 
 .l-home-intro {
+  padding-bottom: 80px;
+
   .video-wrapper {
     position: relative;
     padding-bottom: 56.25%;
@@ -39,5 +41,33 @@
 
   &:hover {
     box-shadow: 0 7px 15px 0 rgba(0, 0, 0, 0.15), 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+  }
+}
+
+.l-home-call-to-action {
+  padding: 150px 0 125px 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  &.-explore {
+    background-image: url('/static/images/home-module-explore.jpg');
+  }
+
+  &.-builder {
+    background-image: url('/static/images/home-module-builder.png');
+  }
+
+  .m-call-to-action {
+    padding: 55px 50px 45px;
+    background-color: $color-white;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+
+    .c-title {
+      margin-bottom: 20px;
+    }
+
+    .c-text {
+      margin-bottom: 20px;
+    }
   }
 }

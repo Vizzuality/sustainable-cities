@@ -125,7 +125,7 @@ export function getBmeDetail(filters) {
         return response.json();
       }
 
-      dispatch({ type: SET_ERROR_PROJECTS, payload: true });
+      dispatch({ type: SET_ERROR_BMES, payload: true });
       throw new Error(response.status);
     })
     .then((bme) => {

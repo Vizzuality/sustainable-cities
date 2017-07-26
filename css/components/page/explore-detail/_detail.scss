@@ -13,8 +13,8 @@
 .bme-detail {
 
   a.external {
-    color: $color-4-1;
-    border-bottom: 1px solid $color-4-1;
+    color: $color-1;
+    border-bottom: 1px solid $color-1;
     text-decoration: none;
   }
 
@@ -24,32 +24,21 @@
     }
   }
 
-  font-weight: 300;
-
-  .title {
-    &.huge {
-      font-size: $font-size-huge;
-    }
-    &.extrabig {
-      font-size: $font-size-extrabig;
-    }
-    &.smaller {
-      font-size: $font-size-smaller;
+  ul.details {
+    li {
+      margin-top: 1em;
     }
   }
 
-  .city {
-    text-transform: uppercase;
-    color: $color-text-7;
-  }
+  .external-sources {
+    margin-top: 7px;
 
-  .content {
-    font-size: $font-size-medium;
-  }
-
-  .details {
-    font-size: $font-size-default;
-    font-weight: normal;
+    li {
+      line-height: 26px;
+      &:not(:last-child) {
+        margin-bottom: .5em;
+      }
+    }
   }
 
   .inverted {
@@ -66,21 +55,31 @@
       margin-bottom: 40px;
     }
 
+    .bme-description {
+      line-height: 32px;
+    }
+
     .project-content {
-      .title {
+      .project-name {
         line-height: 28px;
+      }
+
+      .project-city {
+        text-transform: uppercase;
+        color: $color-text-7;
+        margin: .2em 0 .7em;
+      }
+
+      .project-link {
+        text-align: right;
+      }
+
+      .project-description {
+        line-height: 26px;
       }
 
       &:not(:last-child) {
         margin-bottom: 50px;
-      }
-    }
-
-    ul.external-sources {
-      margin-top: 15px;
-      li {
-        font-size: $font-size-default;
-        line-height: 26px;
       }
     }
   }
@@ -88,10 +87,6 @@
   .bme-detail-related-content {
     padding: 50px 110px 100px;
     background-color: rgba(0, 0, 0, 0.02);
-
-    .title.huge {
-      font-weight: 100;
-    }
   }
 
   .bme-detail-download-data {
@@ -101,10 +96,6 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-
-    .title.huge {
-      font-weight: 100;
-    }
 
     .row:nth-child(1) {
       margin-bottom: 30px;

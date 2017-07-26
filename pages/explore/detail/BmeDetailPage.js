@@ -28,7 +28,7 @@ const getBreadcrumbs = (bme) => {
 
   return traverse(bme.categories.find((c) => c.categoryType === 'Bme')).map((c) => ({
     name: c.name,
-    route: `/categories/${c.id}`
+    route: `/categories/${c.slug}`
   }));
 };
 

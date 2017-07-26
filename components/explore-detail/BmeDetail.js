@@ -19,24 +19,24 @@ export default function BmeDetail(props) {
     knownBarriers: bme.enablings && bme.enablings.filter((e) => e.assessmentValue === 'Barrier'),
   };
 
-  return (<div className='bme-detail'>
+  return (<div className='bme-detail -fw-light'>
     <div className='bme-detail-body'>
       <div className='row'>
-        <div className='column large-4 title extrabig'>
+        <div className='column large-4 c-title -fs-extrabig -fw-light'>
           What it is & how does it work?
         </div>
-        <div className='column large-8 content separator'>
+        <div className='column large-8 c-text -fs-medium separator c-text -fw-light bme-description'>
           {bme.description}
         </div>
       </div>
       <div className='row'>
-        <div className='column large-4 title extrabig'>
+        <div className='column large-4 c-title -fs-extrabig -fw-light'>
           Enabling conditions
         </div>
         <div className='column large-8 separator'>
           <div className='row'>
-            <div className='column large-6 content'>
-              <div className='title extrabig'>
+            <div className='column large-6'>
+              <div className='c-title -fs-bigger -fw-light'>
                 Success factors
               </div>
               <ul className='details'>
@@ -49,53 +49,51 @@ export default function BmeDetail(props) {
               </ul>
             </div>
             <div className='column large-6'>
-              <div className='title extrabig'>
+              <div className='c-title -fs-bigger -fw-light'>
                 Known barriers
               </div>
-              <div className='content'>
-                <ul className='details'>
-                  {enablingConditions.knownBarriers.length === 0 && (<li>
-                    No known barriers
-                  </li>)}
-                  {enablingConditions.knownBarriers.map((e) => (<li key={e.id}>
-                    {e.name}
-                  </li>))}
-                </ul>
-              </div>
+              <ul className='details'>
+                {enablingConditions.knownBarriers.length === 0 && (<li>
+                  No known barriers
+                </li>)}
+                {enablingConditions.knownBarriers.map((e) => (<li key={e.id}>
+                  {e.name}
+                </li>))}
+              </ul>
             </div>
           </div>
         </div>
       </div>
       <div className='row'>
-        <div className='column large-4 title extrabig'>
+        <div className='column large-4 c-title -fs-extrabig -fw-light'>
           Projects that use it
         </div>
-        {bme.projects.length === 0 && (<div className='column large-8 content separator'>
+        {bme.projects.length === 0 && (<div className='column large-8 c-text -fs-medium separator'>
           <div className='row'>
             <div className='column large-9'>
               No associated projects
             </div>
           </div>
         </div>)}
-        {bme.projects.length > 0 && (<div className='column large-8 content separator'>
+        {bme.projects.length > 0 && (<div className='column large-8 separator'>
           {bme.projects.map((project) => (<div className='project-content' key={project.id}>
             <div className='row'>
-              <div className='column large-9 title extrabig'>
+              <div className='column large-9 c-title -fs-bigger -fw-light project-name'>
                 {project.name}
               </div>
-              <div className='column large-3 align-right'>
-                <Button secondary link={`/projects/${project.id}`}>See Project</Button>
+              <div className='column large-3 project-link'>
+                <Button secondary link={`/solutions/${project.id}`}>See Project</Button>
               </div>
             </div>
             <div className='row'>
-              <div className='column large-12 title smaller city'>
+              <div className='column large-12 c-title -fs-smaller project-city'>
                 {project.cities.length > 0 && (<span>
                   {project.cities[0].name}
                 </span>)}
               </div>
             </div>
             <div className='row'>
-              <div className='column large-12 details'>
+              <div className='column large-12 c-text project-description'>
                 {project.solution}
               </div>
             </div>
@@ -103,10 +101,10 @@ export default function BmeDetail(props) {
         </div>)}
       </div>
       <div className='row'>
-        <div className='column large-4 title extrabig'>
+        <div className='column large-4 c-title -fs-extrabig -fw-light'>
           Where can I learn more?
         </div>
-        <div className='column large-8 content'>
+        <div className='column large-8 c-text -fw-light'>
           <ul className='external-sources'>
             {bme.externalSources.length === 0 && (<li>
               No external sources
@@ -125,7 +123,7 @@ export default function BmeDetail(props) {
     </div>
     <div className='bme-detail-related-content'>
       <div className='row'>
-        <div className='column large-12 title huge'>
+        <div className='column large-12 c-title -fs-huge -fw-thin'>
           Related Content
         </div>
       </div>
@@ -133,12 +131,12 @@ export default function BmeDetail(props) {
     <div className='bme-detail-download-data inverted'>
       <div className='bme-detail-download-data-content'>
         <div className='row'>
-          <div className='column large-12 title huge'>
+          <div className='column large-12 c-title -fs-huge -fw-thin'>
             Download Data
           </div>
         </div>
         <div className='row'>
-          <div className='column large-12 content'>
+          <div className='column large-12 c-text -fs-medium'>
             <p>Lorem ipsum cras mattis consectetur purus sit amet fermentum.</p>
             <p>Praesent commodo cursus magna, vel scelerisque.</p>
           </div>

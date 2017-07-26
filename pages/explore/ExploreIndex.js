@@ -32,6 +32,7 @@ import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
 import Tab from 'components/common/Tab';
 import Map from 'components/common/map/Map';
+import Legend from 'components/common/map/Legend';
 import ItemGallery from 'components/explore/ItemGallery';
 
 // utils
@@ -127,7 +128,7 @@ class ExploreIndex extends Page {
     const isLoading = loadingProjects || loadingBmes;
     const isSolutionView = category === 'solutions';
     const items = isSolutionView ? parsedProjects : parsedBmes;
-    const activeLayers = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
+    const layersActive = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
     return (
       <Layout
@@ -143,8 +144,13 @@ class ExploreIndex extends Page {
         />
         <div className="l-map-container">
           <Map
-            layersActive={[activeLayers]}
+            layersActive={[layersActive]}
             LayerManager={LayerManager}
+            filters={queryParams}
+          />
+          <Legend
+            filters={queryParams}
+            layer={layersActive}
           />
         </div>
         <div className="row">

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import isEmpty from 'lodash/isEmpty';
 
 // Redux
 import withRedux from 'next-redux-wrapper';
@@ -16,21 +17,40 @@ import Cover from 'components/common/Cover';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import BmeDetail from 'components/explore-detail/BmeDetail';
 
-const getBreadcrumbs = (bme) => {
+const flatten = (category, accumulator = []) => {
+  if (category) {
+    return flatten(category.parent, [category, ...accumulator]);
+  } else {
+    return accumulator;
+  }
+};
 
-  const traverse = (category, accumulator = []) => {
-    if (!category) {
-      return accumulator;
-    } else {
-      return traverse(category.parent, [category, ...accumulator]);
-    }
+const getBreadcrumbs = (bme) => {
+  if (isEmpty(bme)) {
+    return null;
   }
 
-  return traverse(bme.categories.find((c) => c.categoryType === 'Bme')).map((c) => ({
-    name: c.name,
-    route: `/categories/${c.slug}`
-  }));
-};
+  const routeName = 'explore-index';
+  const routeProps = ['category', 'subCategory', 'children'];
+  const flattened = flatten(bme.categories.find((c) => c.categoryType === 'Bme'));
+  const breadcrumbs = [];
+
+  flattened.forEach((current) => {
+    breadcrumbs.push({
+      name: current.name,
+      route: routeName,
+      params: {
+        ...breadcrumbs.map(b => b.params).reduce((current, accumulator) => ({
+          ...accumulator,
+          ...current
+        }), {}),
+        [routeProps[breadcrumbs.length]]: current.slug
+      }
+    });
+  });
+
+  return breadcrumbs;
+}
 
 class BmeDetailPage extends Page {
 
@@ -58,8 +78,8 @@ class BmeDetailPage extends Page {
 
     const breadcrumbsItems = !isEqual(bme, {}) ?
       getBreadcrumbs(bme) : [];
-
     const breadcrumbs = !isEqual(breadcrumbsItems, []) ?
+
       <Breadcrumbs items={breadcrumbsItems} /> : null;
 
     return (

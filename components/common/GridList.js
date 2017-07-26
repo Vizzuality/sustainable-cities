@@ -9,7 +9,7 @@ export default function GridList(props) {
   return (
     <div className="c-grid-list row align-stretch">
       { items.length > 0 ? items.map(item => (
-        <div className="column small-3" key={item.title}>
+        <div className="column small-3" key={item.id}>
           <GridItem
             image={item.image}
             imageLayout={layout || item.layout}

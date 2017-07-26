@@ -1,7 +1,7 @@
 import React from 'react';
 
-const depths = [140, 270, 340, 480];
-const sizes = [80, 15, 5, 5];
+const depths = [140, 270, 340, 450];
+const sizes = [80, 15, 5, 6];
 
 const distanceBetween = (p0, p1) => Math.sqrt((p1.y - p0.y)**2 + (p1.x - p0.x)**2);
 const rad2deg = rad => rad * 180 / Math.PI;
@@ -14,7 +14,7 @@ const fitbounds = (angle) => {
 
 function placeLines(p0, p1, d0, d1, r0, r1) {
   return p1.map(node => {
-    var parent = p0.find(p => (p.children || p["children-bmes"] || []).map(x=>x.id).includes(node.id));
+    var parent = p0.find(p => (p.children || p.bmes || []).map(x=>x.id).includes(node.id));
 
     return {
       ...node,
@@ -75,7 +75,7 @@ function buildNodes(tree) {
     nodes = nodes.concat(place(p, sizes[i], depths[i], i));
 
     tree = tree.map(n =>
-      (n.children || n["children-bmes"] || []).map(node => ({
+      (n.children || n.bmes || []).map(node => ({
         ...node,
         family: n.family,
       }))

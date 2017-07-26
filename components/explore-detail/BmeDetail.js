@@ -70,7 +70,7 @@ export default function BmeDetail(props) {
         </div>
         {bme.projects.length === 0 && (<div className='column large-8 c-text -fs-medium separator'>
           <div className='row'>
-            <div className='column large-9'>
+            <div className='column large-9 c-title -fs-bigget -fw-light'>
               No associated projects
             </div>
           </div>

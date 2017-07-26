@@ -135,7 +135,7 @@ class ExploreIndex extends Page {
         title="Explore"
         queryParams={queryParams}
       >
-        <Cover title="Explore" description={EXPLORE_DESCRIPTION} />
+        {/* <Cover title="Explore" description={EXPLORE_DESCRIPTION} /> */}
         <Tab
           allowAll
           className="-explore"
@@ -148,10 +148,10 @@ class ExploreIndex extends Page {
             LayerManager={LayerManager}
             filters={queryParams}
           />
-          <Legend
+          {/* <Legend
             filters={queryParams}
             layer={layersActive}
-          />
+          /> */}
         </div>
         <div className="row">
           <div className="column small-12">

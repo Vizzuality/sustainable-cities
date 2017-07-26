@@ -20,16 +20,16 @@ import {
   resetProjectFilters
 } from 'modules/project';
 import { getBmes, setBmeFilters } from 'modules/bme';
+import { getLayer } from 'modules/map';
 
 // selectors
-import { getCategoryTabs } from 'selectors/category';
+import { getCategoryTabs, getAllCategories } from 'selectors/category';
 import { getParsedProjects } from 'selectors/project';
 import { getParsedBmes } from 'selectors/bme';
 
 // components
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
-import Cover from 'components/common/Cover';
 import Tab from 'components/common/Tab';
 import Map from 'components/common/map/Map';
 import Legend from 'components/common/map/Legend';
@@ -39,9 +39,6 @@ import ItemGallery from 'components/explore/ItemGallery';
 import LayerManager from 'utils/map/LayerManager';
 import LayerSpec from 'utils/map/layerSpec.json';
 import getLayerType from 'utils/map/layer';
-
-// constants
-import { EXPLORE_DESCRIPTION } from 'constants/explore';
 
 class ExploreIndex extends Page {
   componentWillMount() {
@@ -117,6 +114,7 @@ class ExploreIndex extends Page {
 
   render() {
     const {
+      categories,
       categoryTabs,
       loadingProjects,
       loadingBmes,
@@ -128,14 +126,13 @@ class ExploreIndex extends Page {
     const isLoading = loadingProjects || loadingBmes;
     const isSolutionView = category === 'solutions';
     const items = isSolutionView ? parsedProjects : parsedBmes;
-    const layersActive = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
+    const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
     return (
       <Layout
         title="Explore"
         queryParams={queryParams}
       >
-        {/* <Cover title="Explore" description={EXPLORE_DESCRIPTION} /> */}
         <Tab
           allowAll
           className="-explore"
@@ -144,14 +141,20 @@ class ExploreIndex extends Page {
         />
         <div className="l-map-container">
           <Map
-            layersActive={[layersActive]}
+            activeLayer={[activeLayer]}
             LayerManager={LayerManager}
             filters={queryParams}
+            getLayer={this.props.getLayer}
+            layerData={this.props.layer}
+            loading={this.props.loadingMap}
           />
-          {/* <Legend
-            filters={queryParams}
-            layer={layersActive}
-          /> */}
+          {categories.length > 0 &&
+            <Legend
+              categories={categories}
+              filters={queryParams}
+              activeLayer={activeLayer}
+              layerData={this.props.layer}
+            />}
         </div>
         <div className="row">
           <div className="column small-12">
@@ -184,7 +187,10 @@ ExploreIndex.propTypes = {
   bmes: PropTypes.array,
   parsedBmes: PropTypes.array,
   // queryParams
-  queryParams: PropTypes.object.isRequired
+  queryParams: PropTypes.object.isRequired,
+  // map
+  loadingMap: PropTypes.bool,
+  layer: PropTypes.object
 };
 
 ExploreIndex.defaultProps = {
@@ -195,14 +201,16 @@ ExploreIndex.defaultProps = {
   parsedProjects: [],
   // bmes
   bmes: [],
-  parsedBmes: []
+  parsedBmes: [],
+  // map
+  layer: {}
 };
 
 export default withRedux(
   store,
   state => ({
     // categories
-    categories: state.category.list,
+    categories: getAllCategories(state),
     categoryFilters: state.category.filters,
     categoryTabs: getCategoryTabs(state),
     // projects
@@ -214,7 +222,10 @@ export default withRedux(
     loadingBmes: state.bme.loading,
     bmes: state.bme.list,
     parsedBmes: getParsedBmes(state),
-    bmeFilters: state.bme.filters
+    bmeFilters: state.bme.filters,
+    // map
+    loadingMap: state.map.loading,
+    layer: state.map.layer
   }),
   dispatch => ({
     // categories
@@ -228,6 +239,8 @@ export default withRedux(
     removeProjectDetail() { dispatch(removeProjectDetail()); },
     // bmes
     getBmes(filters) { dispatch(getBmes(filters)); },
-    setBmeFilters(filters) { dispatch(setBmeFilters(filters)); }
+    setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
+    // map
+    getLayer(layerSpec) { dispatch(getLayer(layerSpec)); }
   })
 )(ExploreIndex);

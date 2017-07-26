@@ -1,0 +1,85 @@
+.c-legend-item {
+  display: flex;
+  align-items: center;
+
+  .legend-item-content {
+    > .legend-item-circle {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+
+      & + .legend-item-name {
+        margin: 0 0 0 15px;
+      }
+    }
+
+    > .legend-label {
+      display: block;
+
+      font-size: $font-size-medium;
+      color: $color-text-4;
+      font-weight: $font-weight-light;
+    }
+
+    > .legend-description {
+      margin: 0 0 25px;
+
+      font-size: $font-size-default;
+      color: $color-text-1;
+      line-height: 26px;
+    }
+
+    > .legend-item-name {
+      font-size: $font-size-smaller;
+      color: $color-text-2;
+      text-transform: uppercase;
+    }
+
+    > .legend-range {
+      display: flex;
+      align-items: center;
+
+      > .limit-range {
+        font-size: $font-size-smaller;
+        color: $color-text-2;
+      }
+
+      > .circle {
+        display: inline-block;
+        border-radius: 50%;
+
+        &:not(:first-child) {
+          margin: 0 0 0 5px;
+        }
+
+        &.-small {
+          width: 10px;
+          height: 10px;
+        }
+
+        &.-medium {
+          width: 15px;
+          height: 15px;
+        }
+
+        &.-big {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      > .legend-custom-text {
+        margin: 0 0 0 10px;
+
+        font-size: $font-size-smaller;
+        color: $color-text-2;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  & + & {
+    margin: 5px 0 0;
+  }
+}

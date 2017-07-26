@@ -13,5 +13,4 @@ const parseCategoryToTab = (category) => {
   };
 };
 
-
 export { parseCategoryToTab };

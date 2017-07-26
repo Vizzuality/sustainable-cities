@@ -103,8 +103,8 @@ class RadialChart extends React.Component {
     }
   }
 
-  nodeClick(slug) {
-    console.log(slug);
+  nodeClick(node) {
+    this.props.onClick(node);
   }
 
   render() {
@@ -117,7 +117,7 @@ class RadialChart extends React.Component {
           <g transform={`translate(${this.state.x + 500} 500) scale(${this.state.scale})`}>
             {nodes.map(node => {
               const Component = node.component;
-              return <Component key={node.key} {...node.props} onClick={() => this.nodeClick(node.slug)} />
+              return <Component key={node.key} {...node.props} onClick={() => this.nodeClick(node)} />
             })}
           </g>
         </svg>

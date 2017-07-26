@@ -1,15 +1,3 @@
-.c-detail {
-
-  .c-detail-section {
-
-    &:last-child {
-      .content {
-        border-bottom: none;
-      }
-    }
-  }
-}
-
 .bme-detail {
 
   a.external {
@@ -42,7 +30,6 @@
   }
 
   .inverted {
-    color: $color-text-6;
   }
 
   .bme-detail-body {
@@ -89,32 +76,18 @@
     background-color: rgba(0, 0, 0, 0.02);
   }
 
-  .bme-detail-download-data {
-
-    position: relative;
-    background-image: url('/static/images/download-data-module.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-
-    .row:nth-child(1) {
-      margin-bottom: 30px;
-    }
-
-    .row:nth-child(2) {
-      margin-bottom: 50px;
-    }
-
-    .download-button {
-      background-color: #ffffff;
-    }
-
-    .bme-detail-download-data-content {
-      padding: 85px 110px 100px;
-      background: rgba(0, 0, 0, 0.7);
-    }
-
-  }
 
 }
 
+.solution-detail {
+  padding-top: 46px;
+
+  .solution-detail-main {
+    padding-top: 46px;
+  }
+
+  .solution-detail-rest {
+    padding-top: 46px;
+    background-color: $color-white;
+  }
+}

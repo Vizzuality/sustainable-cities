@@ -16,7 +16,7 @@ export default class HomePage extends Page {
         <section className="l-home-header">
           <div className="row">
             <div className="columns medium-8 medium-offset-2">
-              <h1 className="c-title -fs-huge -light -fw-thin">An initiative to accelerate the implementation of <span className="c-title -fs-huge -highlight -fw-thin">sustainable urban solutions</span> trough new business models</h1>
+              <h1 className="c-title -fs-huge -light -fw-thin">An initiative to accelerate the implementation of <span className="c-title -fs-huge -highlight -fw-thin">sustainable urban solutions</span> through new business models</h1>
             </div>
 
           </div>
@@ -77,7 +77,7 @@ export default class HomePage extends Page {
           <div className="row">
             <div className="columns medium-8 large-6">
               <div className="call-to-action">
-                <h3 className="c-title -dark -fs-extrabig -fw-light">Business models builder</h3>
+                <h3 className="c-title -dark -fs-extrabig -fw-light">Business model builder</h3>
                 <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa maiores adipisci enim dolore blanditiis, odio doloribus, dicta temporibus facere, ipsum tempora ducimus nobis. Libero ad commodi cumque sit mollitia, facilis.</p>
                 <Link route="explore-index"><a className="c-button -primary">start building</a></Link>
               </div>

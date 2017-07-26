@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import { Deserializer } from 'jsonapi-serializer';
 import GeoJSON from 'geojson';
+import substitution from 'utils/text';
 
 // Leaflet can't be imported on the server because it's not isomorphic
 const L = (typeof window !== 'undefined') ? require('leaflet') : null;
@@ -36,33 +37,32 @@ export default class LayerManager {
   /*
     Public methods
   */
-  addLayer(layerSpec) {
-    const layerConfig = {
-      ...layerSpec.layerConfig,
-      ...{ id: layerSpec.id, category: layerSpec.category }
+  addLayer(layerSpec, filters) {
+    let layerConfig = {
+      ...layerSpec
     };
+    const { category, subCategory, children } = filters;
+    const { queryParams, id } = layerConfig;
 
-    // const options = opts;
+    if (queryParams) {
+      const params = queryParams.map(p => ({
+        key: p,
+        value: children || subCategory || category
+      }));
 
-    // if (this._mapRequests[layerConfig.category]) {
-    //   if (this._mapRequests[layerConfig.category].readyState !== 4) {
-    //     this._mapRequests[layerConfig.category].abort();
-    //     delete this._mapRequests[layerConfig.category];
-    //     this._deleteLoader(layerConfig.id);
-    //   }
-    // }
+      const queryParsed = substitution(layerSpec.urlQuery, params);
 
-    // const layerConfigConverted = getObjectConversion(layerConfig, options, 'water');
-    // const layerConfigParsed = {
-    //   ...layerConfigConverted,
-    //   ...{ body: LayerManager._getLayerConfigParsed(layerConfigConverted) }
-    // };
+      layerConfig = {
+        ...layerConfig,
+        urlQuery: queryParsed
+      };
+    }
 
     // Save loader
-    this._addLoader(layerSpec.id);
+    this._addLoader(id);
 
     // Save request && send
-    this._mapRequests[layerSpec.id] = fetch(`${process.env.API_URL}${layerSpec.urlQuery}`, {
+    this._mapRequests[id] = fetch(`${process.env.API_URL}${layerConfig.urlQuery}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ export default class LayerManager {
         return response.json();
       }
 
-      this._deleteLoader(layerConfig.id);
+      this._deleteLoader(id);
       throw new Error(response.status);
     })
     .then((cities) => {
@@ -84,7 +84,7 @@ export default class LayerManager {
           const citiesWithProjects = parsedCities.filter(city => city.projects.length);
           const geojson = GeoJSON.parse(citiesWithProjects, { Point: ['lat', 'lng'] });
 
-          this._mapLayers[layerSpec.id] = L.geoJson(geojson, {
+          this._mapLayers[id] = L.geoJson(geojson, {
             pointToLayer: (feature, latlng) =>
               new L.CircleMarker(latlng, {
                 className: 'c-marker',
@@ -99,7 +99,7 @@ export default class LayerManager {
             }
           }).addTo(this._map);
 
-          this._deleteLoader(layerSpec.id);
+          this._deleteLoader(id);
         });
     });
   }

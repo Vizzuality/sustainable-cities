@@ -15,6 +15,7 @@ import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
 import Breadcrumbs from 'components/common/Breadcrumbs';
+import DownloadData from 'components/common/DownloadData';
 import BmeDetail from 'components/explore-detail/BmeDetail';
 
 const flatten = (category, accumulator = []) => {
@@ -87,17 +88,27 @@ class BmeDetailPage extends Page {
         title='Business model element detail'
         queryParams={this.props.queryParams}
       >
-        <Cover
-          size='shorter'
-          className='-blue'
-          title={bme.name || ''}
-          breadcrumbs={breadcrumbs}
-        />
 
-        <BmeDetail
-          bme={bme}
-          isLoading={isLoading}
-        />
+        {isLoading && (<div>
+          Loading bme...
+        </div>)}
+
+        {!isLoading && (<div>
+          <Cover
+            size='shorter'
+            className='-blue'
+            title={bme.name || ''}
+            breadcrumbs={breadcrumbs}
+          />
+
+          <BmeDetail
+            bme={bme}
+            isLoading={isLoading}
+          />
+
+          <DownloadData />
+
+        </div>)}
 
       </Layout>
     );
@@ -118,7 +129,7 @@ BmeDetailPage.defaultProps = {
 export default withRedux(
   store,
   (state) => ({
-    isLoading: state.bme.loading,
+    isLoading: state.bme.loading || isEmpty(state.bme.detail),
     bme: state.bme.detail,
   }),
   (dispatch) => ({

@@ -9,6 +9,7 @@ const SET_FILTERS = 'bme/SET_FILTERS';
 const REMOVE_BME_DETAIL = 'bme/REMOVE_BME_DETAIL';
 
 // loading and error management
+const SET_BME_CATEGORY_ID = 'bme/SET_BME_CATEGORY_ID';
 const SET_LOADING_BMES = 'bme/SET_LOADING_BMES';
 const SET_ERROR_BMES = 'bme/SET_ERROR_BMES';
 
@@ -31,7 +32,7 @@ export default function (state = initialState, action) {
     case GET_BMES:
       return Object.assign({}, state, { list: action.payload });
     case SET_BME_DETAIL:
-      return Object.assign({}, state, { detail: action.payload });
+      return { ...state, detail: action.payload };
     case SET_LOADING_BMES:
       return Object.assign({}, state, { loading: action.payload });
     case SET_ERROR_BMES:
@@ -90,12 +91,51 @@ export function getBmes(filters = {}) {
   };
 }
 
-// TO-DO
-// eslint-disable-next-line no-unused-vars
-export function getBmeDetail(bmeId) {
-  return (dispatch) => {
-    dispatch({ type: SET_BME_DETAIL, payload: {} });
-  };
+export function getBmeDetail(filters) {
+  const { detailId } = filters;
+
+  const includeParams = [
+    'enablings',
+    'categories',
+    'categories.parent',
+    'categories.parent.parent',
+    'categories.parent.parent.parent',
+    'projects',
+    'projects.cities',
+    'external-sources'
+  ];
+
+  const queryParams = queryString.stringify({
+    include: includeParams.join(',')
+  });
+
+  return (dispatch, getState) => {
+    dispatch({ type: SET_LOADING_BMES, payload: true });
+
+    fetch(`${process.env.API_URL}/bmes/${detailId}?${queryParams}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'SC-API-KEY': process.env.SC_API_KEY
+      }
+    })
+    .then((response) => {
+      if (response.ok) {
+        if (getState().bme.error) dispatch({ SET_ERROR_BMES, payload: false });
+        return response.json();
+      }
+
+      dispatch({ type: SET_ERROR_BMES, payload: true });
+      throw new Error(response.status);
+    })
+    .then((bme) => {
+      new Deserializer({ keyForAttribute: 'camelCase' })
+        .deserialize(bme, (err, parsedBme) => {
+          dispatch({ type: SET_LOADING_BMES, payload: false });
+          dispatch({ type: SET_BME_DETAIL, payload: parsedBme });
+        })
+    });
+  }
 }
 
 export function setBmeFilters(filters) {

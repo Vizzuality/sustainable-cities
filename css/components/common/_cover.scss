@@ -1,13 +1,25 @@
 .c-cover {
-  height: 440px;
+  min-height: 440px;
   padding: 50px 0;
   background-size: cover;
   background-position: center center;
   background-color: $color-2;
 
+  &.-blue {
+    background-color: $color-7;
+    color: $color-white;
+    a {
+      color: $color-white;
+    }
+  }
+
   &.-short {
-    height: 300px;
+    min-height: 300px;
     padding: 25px 0;
+  }
+
+  &.-shorter {
+    min-height: 170px;
   }
 
   > .row {

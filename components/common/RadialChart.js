@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from  'prop-types';
 import classnames from 'classnames';
 
-const depths = [140, 260, 320, 490];
+const depths = [140, 260, 320, 485];
 const sizes = [80, 15, 5, 6];
 
 const distanceBetween = (p0, p1) => Math.sqrt((p1.y - p0.y)**2 + (p1.x - p0.x)**2);

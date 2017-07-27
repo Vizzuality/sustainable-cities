@@ -19,7 +19,6 @@ function placeLines(p0, p1, d0, d1, r0, r1) {
     var parent = p0.find(p => (p.children || p.bmes || []).map(x=>x.id).includes(node.id));
 
     return {
-      ...node,
       component:"line",
       props: {
         x1:0, y1:0, x2:1, y2:0,

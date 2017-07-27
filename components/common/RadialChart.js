@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from  'prop-types';
+import classnames from 'classnames';
 
-const depths = [140, 270, 340, 450];
+const depths = [140, 260, 320, 490];
 const sizes = [80, 15, 5, 6];
 
 const distanceBetween = (p0, p1) => Math.sqrt((p1.y - p0.y)**2 + (p1.x - p0.x)**2);
@@ -35,15 +37,55 @@ function placeLines(p0, p1, d0, d1, r0, r1) {
   });
 }
 
+class Node extends React.Component {
+  static propTypes = {
+    size: PropTypes.number.isRequired,
+    level: PropTypes.number.isRequired,
+    family: PropTypes.string.isRequired,
+    angle: PropTypes.number.isRequired,
+    depth: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired,
+    onMouseOver: PropTypes.func.isRequired,
+    onMouseOut: PropTypes.func.isRequired,
+  }
+
+  render() {
+    return (
+      <g
+        transform={`rotate(${rad2deg(this.props.angle)} 0 0) translate(${this.props.depth} 0)`}
+      >
+        <circle
+          cx="0"
+          cy="0"
+          r={this.props.size}
+          className={classnames(this.props.family, `level-${this.props.level}`)}
+          onClick={this.props.onClick}
+          onMouseOver={this.props.onMouseOver}
+          onMouseOut={this.props.onMouseOut}
+        />
+        {this.props.selected &&
+          <circle
+            cx="0"
+            cy="0"
+            r={this.props.size + 4}
+            className="selected"
+          />
+        }
+      </g>
+    );
+  }
+}
+
 function place(nodes, size, depth, level) {
   return nodes.map(node => ({
     ...node,
-    component: "circle",
+    component: Node,
     props: {
-      cx: 0, cy: 0,
-      className: `${node.family} level-${level}`,
-      r: size,
-      transform: `rotate(${rad2deg(node.angle)} 0 0) translate(${depth} 0)`,
+      size: size,
+      level: level,
+      family: node.family,
+      angle: node.angle,
+      depth: depth,
     },
     key: `circle-${node.slug}-${node.id}`,
   }));
@@ -107,6 +149,18 @@ class RadialChart extends React.Component {
     this.props.onClick(node);
   }
 
+  showPopup(node) {
+    if (node.id && !node["category-type"]) {
+      this.setState({ popup: node });
+    }
+  }
+
+  hidePopup(node) {
+    if (this.state.popup && node.id == this.state.popup.id) {
+      this.setState({ popup: undefined });
+    }
+  }
+
   render() {
     let nodes = buildNodes(this.props.nodes ||[]);
 
@@ -115,14 +169,20 @@ class RadialChart extends React.Component {
         <svg id="chart" viewBox="0 0 1000 1000">
           <g transform={`scale(${this.state.scale})`} onTransitionEnd={() => this.transitionEnd()} />
           <g transform={`translate(${this.state.x + 500} 500) scale(${this.state.scale})`}>
-            {nodes.map(node => {
-              const Component = node.component;
-              return <Component key={node.key} {...node.props} onClick={() => this.nodeClick(node)} />
-            })}
+            {nodes.map(node => (
+              <node.component
+                {...node.props}
+                key={node.key}
+                onClick={() => this.nodeClick(node)}
+                onMouseOver={() => this.showPopup(node)}
+                onMouseOut={() => this.hidePopup(node)}
+                selected={node.props.level == 3 && this.props.selected.includes(node.id)}
+              />
+            ))}
           </g>
         </svg>
 
-        {nodes.filter(node => node.level == 1 && node.component == "circle").map(node =>
+        {nodes.filter(node => node.level == 1).map(node =>
           <div className={`root-label ${node.family}`} key={`label-${node.id}`} style={{
             opacity: this.state.zooming ? 0 : "",
             position: "absolute",
@@ -133,6 +193,15 @@ class RadialChart extends React.Component {
           </div>
         )}
 
+        {this.state.popup &&
+        <div className={`tooltip ${this.state.popup.family}`} style={{
+          position: 'absolute',
+          top: `${(this.state.popup.y * this.state.scale + 500)/1000.0*100}%`,
+          left: `${(this.state.popup.x * this.state.scale + 500 + this.state.x)/1000.0*100}%`,
+        }}>
+          <p>{this.state.popup.name}</p>
+        </div>
+        }
       </div>
     );
   }

@@ -43,6 +43,7 @@ class BmeDetail extends React.Component {
                   <ul className="tab-list">
                     {Object.entries(tabs).map(([key, label]) => (
                       <li
+                        key={key}
                         className={classnames("tab-item", { "-current": this.state.activeTab == key})}
                         onClick={() => this.selectTab(key)}
                       >
@@ -83,16 +84,21 @@ class BmeDetail extends React.Component {
 
                 <textarea placeholder="Add your comment here" />
 
-                <div className="maisumavezOverlay">
-                  <p className="c-text -fw-light -fs-extrabig">Save this business model element to add a comment</p>
-                </div>
+                {!this.props.selected &&
+                  <div className="maisumavezOverlay">
+                    <p className="c-text -fw-light -fs-extrabig">Save this business model element to add a comment</p>
+                  </div>
+                }
               </section>
             </div>
           </div>
 
           <div className="actions">
             <Button onClick={() => this.props.onClose()} secondary>Close</Button>
-            <Button primary>Save BME</Button>
+            {this.props.selected
+              ? <Button onClick={() => this.props.onDelete()} primary>Delete BME</Button>
+              : <Button onClick={() => this.props.onSave()} primary>Save BME</Button>
+            }
           </div>
 
           <div className="dismiss" onClick={() => this.props.onClose()}>&times;</div>

@@ -8,6 +8,7 @@ import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
 import { getBmes } from 'modules/bme';
+import { selectBME, deselectBME } from 'modules/builder';
 
 class BuilderIndex extends Page {
   constructor() {
@@ -28,6 +29,14 @@ class BuilderIndex extends Page {
     this.setState({ bme: undefined });
   }
 
+  selectBME(bme) {
+    this.props.selectBME(bme.id);
+  }
+
+  deselectBME(bme) {
+    this.props.deselectBME(bme.id);
+  }
+
   render() {
     return (
       <Layout
@@ -37,9 +46,19 @@ class BuilderIndex extends Page {
       >
         <Sidebar />
 
-        <RadialChart nodes={this.props.categories.filter(c => c["category-type"] == "Bme")} onClick={(bme) => this.showBME(bme)} />
+        <RadialChart
+          nodes={this.props.categories.filter(c => c["category-type"] == "Bme")}
+          selected={this.props.selectedBMEs}
+          onClick={(bme) => this.showBME(bme)}
+        />
 
-      {this.state.bme && <BmeDetail bme={this.state.bme} onClose={() => this.hideBME()} />}
+        {this.state.bme && <BmeDetail
+          bme={this.state.bme}
+          selected={this.props.selectedBMEs.includes(this.state.bme.id)}
+          onClose={() => this.hideBME()}
+          onSave={() => this.selectBME(this.state.bme)}
+          onDelete={() => this.deselectBME(this.state.bme)}
+        />}
       </Layout>
     );
   }
@@ -49,8 +68,11 @@ export default withRedux(
   store,
   state => ({
     categories: state.bme.list,
+    selectedBMEs: state.builder.selectedBMEs,
   }),
   dispatch => ({
     getCategoryTree() { dispatch(getBmes()); },
+    selectBME(bmeId) { dispatch(selectBME(bmeId)); },
+    deselectBME(bmeId) { dispatch(deselectBME(bmeId)); },
   })
 )(BuilderIndex);

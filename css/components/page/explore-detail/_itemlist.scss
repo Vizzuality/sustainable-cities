@@ -1,0 +1,19 @@
+.c-itemlist {
+
+  >.itemlist {
+
+    li {
+      display: block;
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 13px;
+    }
+
+    >.itemlist-item > a {
+      display: inline-block;
+      border-bottom: 1px solid $color-text-4;
+      line-height: 16px;
+    }
+  }
+}

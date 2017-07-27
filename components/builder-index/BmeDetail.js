@@ -102,6 +102,8 @@ class BmeDetail extends React.Component {
           </div>
 
           <div className="dismiss" onClick={() => this.props.onClose()}>&times;</div>
+          <div className="prev" onClick={this.props.onPrev}></div>
+          <div className="next" onClick={this.props.onNext}></div>
         </div>
       </div>
     );

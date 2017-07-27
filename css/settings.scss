@@ -45,6 +45,13 @@ $color-text-6: #FFFFFF;
 $color-text-7: rgba(44, 47, 51, 0.6);
 $color-text-8: #FFEE40;
 
+$color-categories: (
+  investment-component: #F7B50C,
+  delivery-mechanism: #28D1ED,
+  financial-product: #69E090,
+  funding-source: #DD7D5C,
+);
+
 // Zindex
 $z-index-1: 0;
 $z-index-2: 100;

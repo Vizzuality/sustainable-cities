@@ -10,6 +10,16 @@ import { store } from 'store';
 import { getBmes } from 'modules/bme';
 import { selectBME, deselectBME } from 'modules/builder';
 
+const leaves = (nodes) => {
+  const children = nodes.map(t => t.children || t.bmes || []).reduce((a,b) => a.concat(b), []);
+
+  if (children.length > 0) {
+    return leaves(children);
+  } else {
+    return nodes;
+  }
+};
+
 class BuilderIndex extends Page {
   constructor() {
     super();
@@ -37,6 +47,18 @@ class BuilderIndex extends Page {
     this.props.deselectBME(bme.id);
   }
 
+  selectNext(bme) {
+    const bmes = leaves(this.props.categories);
+
+    this.showBME((bmes.concat(bmes))[bmes.findIndex(b => b.id == bme.id) + 1]);
+  }
+
+  selectPrevious(bme) {
+    const bmes = leaves(this.props.categories);
+
+    this.showBME((bmes.concat(bmes))[bmes.findIndex(b => b.id == bme.id) + bmes.length - 1]);
+  }
+
   render() {
     return (
       <Layout
@@ -47,7 +69,7 @@ class BuilderIndex extends Page {
         <Sidebar />
 
         <RadialChart
-          nodes={this.props.categories.filter(c => c["category-type"] == "Bme")}
+          nodes={this.props.categories}
           selected={this.props.selectedBMEs}
           onClick={(bme) => this.showBME(bme)}
         />
@@ -58,6 +80,8 @@ class BuilderIndex extends Page {
           onClose={() => this.hideBME()}
           onSave={() => this.selectBME(this.state.bme)}
           onDelete={() => this.deselectBME(this.state.bme)}
+          onNext={() => this.selectNext(this.state.bme)}
+          onPrev={() => this.selectPrevious(this.state.bme)}
         />}
       </Layout>
     );
@@ -67,7 +91,7 @@ class BuilderIndex extends Page {
 export default withRedux(
   store,
   state => ({
-    categories: state.bme.list,
+    categories: state.bme.list.filter(c => c["category-type"] == "Bme"),
     selectedBMEs: state.builder.selectedBMEs,
   }),
   dispatch => ({

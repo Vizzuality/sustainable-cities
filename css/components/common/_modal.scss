@@ -11,8 +11,7 @@
   .content {
     position: relative;
     background-color: $color-5;
-    min-width: 800px;
-    max-width: 1000px;
+    width: 900px;
     margin: 0px auto;
 
     header {
@@ -111,4 +110,17 @@
       cursor: pointer;
     }
   }
+
+  .next, .prev {
+    border: solid $color-white;
+    border-width: 3px 3px 0px 0px;
+    width: 25px;
+    height: 25px;
+    top: 50%;
+    position: absolute;
+    cursor: pointer;
+  }
+
+  .next { right: -60px; transform: rotate(45deg); }
+  .prev { left: -60px; transform: rotate(-135deg); }
 }

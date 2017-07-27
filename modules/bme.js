@@ -57,6 +57,7 @@ export function getBmes(filters = {}) {
   const includeParams = ['children', 'children.bmes', 'children.children.bmes'];
 
   const queryParams = queryString.stringify({
+    'filter[level]': 1,
     'filter[slug]': subCategory || category || undefined,
     include: includeParams.join(','),
     'page[size]': 1000

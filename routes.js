@@ -15,4 +15,4 @@ routes.add('solution-detail', '/solutions/:id', 'explore/detail/SolutionDetailPa
 routes.add('about', '/about/:section?', 'about/AboutIndex');
 
 // BUILDER
-routes.add('builder', '/builder', 'builder/builderIndex');
+routes.add('builder', '/builder', 'builder/BuilderIndex');

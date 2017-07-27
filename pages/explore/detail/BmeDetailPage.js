@@ -16,6 +16,7 @@ import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import DownloadData from 'components/common/DownloadData';
+import RelatedContent from 'components/explore-detail/RelatedContent';
 import BmeDetail from 'components/explore-detail/BmeDetail';
 
 const flatten = (category, accumulator = []) => {
@@ -88,27 +89,32 @@ class BmeDetailPage extends Page {
         title='Business model element detail'
         queryParams={this.props.queryParams}
       >
+        <div className='bme-detail-page'>
 
-        {isLoading && (<div>
-          Loading bme...
-        </div>)}
+          {isLoading && (<div>
+            Loading bme...
+          </div>)}
 
-        {!isLoading && (<div>
-          <Cover
-            size='shorter'
-            className='-blue'
-            title={bme.name || ''}
-            breadcrumbs={breadcrumbs}
-          />
+          {!isLoading && (<div>
+            <Cover
+              size='shorter'
+              className='-blue'
+              title={bme.name || ''}
+              breadcrumbs={breadcrumbs}
+            />
 
-          <BmeDetail
-            bme={bme}
-            isLoading={isLoading}
-          />
+            <BmeDetail
+              bme={bme}
+              isLoading={isLoading}
+            />
 
-          <DownloadData />
+            <RelatedContent />
 
-        </div>)}
+            <DownloadData />
+
+          </div>)}
+
+        </div>
 
       </Layout>
     );

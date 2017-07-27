@@ -112,13 +112,6 @@ export default function BmeDetail({ bme }) {
         </div>
       </div>
     </div>
-    <div className='bme-detail-related-content'>
-      <div className='row'>
-        <div className='column large-12 c-title -fs-huge -fw-thin'>
-          Related Content
-        </div>
-      </div>
-    </div>
   </div>);
 }
 

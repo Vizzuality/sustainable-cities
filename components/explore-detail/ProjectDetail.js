@@ -149,6 +149,7 @@ console.log(project);
         {bmeTree.length > 0 &&
           <DetailSection
             title='Business model elements overview'
+            contentSeparator={false}
         >
           <BmeOverview
             bmes={bmeTree}

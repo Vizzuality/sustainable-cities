@@ -19,6 +19,8 @@ import Cover from 'components/common/Cover';
 import Tab from 'components/common/Tab';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import DownloadData from 'components/common/DownloadData';
+import RelatedContent from 'components/explore-detail/RelatedContent';
+import ContactForm from 'components/explore-detail/ContactForm';
 import ProjectDetail from 'components/explore-detail/ProjectDetail';
 import ProjectDetailOverview from 'components/explore-detail/ProjectDetailOverview';
 import ProjectDetailCategory from 'components/explore-detail/ProjectDetailCategory';
@@ -159,26 +161,34 @@ class SolutionDetailPage extends Page {
         queryParams={this.props.queryParams}
       >
 
-        {isLoading && (<div>
-          Loading project...
-        </div>)}
+        <div className='solution-detail-page'>
 
-        {!isLoading && (<div>
+          {isLoading && (<div>
+            Loading project...
+          </div>)}
 
-          <Cover
-            title={project.name || ''}
-            breadcrumbs={breadcrumbs}
-            size='shorter'
-            position='bottom'
-          />
+          {!isLoading && (<div>
 
-          {this.renderTabs(tabItems)}
+            <Cover
+              title={project.name || ''}
+              breadcrumbs={breadcrumbs}
+              size='shorter'
+              position='bottom'
+            />
 
-          {this.renderContent()}
+            {this.renderTabs(tabItems)}
 
-          <DownloadData />
+            {this.renderContent()}
 
-        </div>)}
+            <ContactForm />
+
+            <RelatedContent />
+
+            <DownloadData />
+
+          </div>)}
+
+        </div>
 
       </Layout>
     );

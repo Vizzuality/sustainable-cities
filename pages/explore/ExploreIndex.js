@@ -29,12 +29,18 @@ import { getParsedBmes } from 'selectors/bme';
 // components
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
-import Cover from 'components/common/Cover';
 import Tab from 'components/common/Tab';
+import Map from 'components/common/map/Map';
+import Legend from 'components/common/map/Legend';
 import ItemGallery from 'components/explore/ItemGallery';
 
-import { EXPLORE_DESCRIPTION } from 'constants/explore';
+// utils
+import LayerManager from 'utils/map/LayerManager';
+import LayerSpec from 'utils/map/layerSpec.json';
+import getLayerType from 'utils/map/layer';
 
+// constants
+import { EXPLORE_DESCRIPTION } from 'constants/explore';
 
 class ExploreIndex extends Page {
   componentWillMount() {
@@ -107,6 +113,7 @@ class ExploreIndex extends Page {
     });
   }
 
+
   render() {
     const {
       categoryTabs,
@@ -120,19 +127,30 @@ class ExploreIndex extends Page {
     const isLoading = loadingProjects || loadingBmes;
     const isSolutionView = category === 'solutions';
     const items = isSolutionView ? parsedProjects : parsedBmes;
+    const layersActive = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
     return (
       <Layout
         title="Explore"
         queryParams={queryParams}
       >
-        <Cover title="Explore" description={EXPLORE_DESCRIPTION} />
         <Tab
           allowAll
           className="-explore"
           items={categoryTabs}
           queryParams={queryParams}
         />
+        <div className="l-map-container">
+          <Map
+            layersActive={[layersActive]}
+            LayerManager={LayerManager}
+            filters={queryParams}
+          />
+          {/* <Legend
+            filters={queryParams}
+            layer={layersActive}
+          /> */}
+        </div>
         <div className="row">
           <div className="column small-12">
             {isLoading ?

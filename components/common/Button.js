@@ -10,7 +10,7 @@ export default function Button(props) {
     '-secondary': props.secondary,
     '-inverse': props.inverse,
     '-disabled': props.disabled
-  });
+  }, props.className);
 
   if (props.link) {
     // If the link is a string, this means that it is external
@@ -55,6 +55,7 @@ export default function Button(props) {
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   link: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({

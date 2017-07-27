@@ -17,13 +17,15 @@
 @import 'layout';
 @import 'animations';
 
+@import "leaflet/dist/leaflet.css";
+
 // - page
 // @import 'components/page/section';
 
 // Components
 // - layout
 @import 'components/layout/l-home';
-
+@import 'components/layout/map-container';
 // - page
 @import 'components/page/explore-detail/detail';
 @import 'components/page/explore-detail/section-detail';
@@ -36,6 +38,7 @@
 
 @import 'components/page/builder-index/layout';
 // @import 'components/page/section';
+
 // - common
 @import 'components/common/title';
 @import 'components/common/texts';
@@ -49,3 +52,7 @@
 @import 'components/common/breadcrumbs';
 @import 'components/common/button';
 @import 'components/common/item-gallery';
+@import 'components/common/spinner';
+@import 'components/common/map';
+@import 'components/common/map/legend';
+@import 'components/common/map/marker';

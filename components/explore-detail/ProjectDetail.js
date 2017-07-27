@@ -12,7 +12,6 @@ import BmeTree from 'components/explore-detail/project/BmeTree';
 import { getYearFromDateString } from 'utils/common';
 
 export default function ProjectDetail({ project }) {
-
   const {
     name,
     situation,

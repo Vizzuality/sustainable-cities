@@ -82,12 +82,24 @@
 .solution-detail {
   padding-top: 46px;
 
+  li.info-item {
+    b + span {
+      margin-left: 5px;
+    }
+  }
+
   .solution-detail-main {
-    padding-top: 46px;
+    padding-top: 0px;
+    border-bottom: 1px solid rgba($color-1, .1);
+
+    .row:not(:last-child) {
+      margin-bottom: 1em;
+    }
   }
 
   .solution-detail-rest {
-    padding-top: 46px;
+    padding-top: 1px;
     background-color: $color-white;
   }
+
 }

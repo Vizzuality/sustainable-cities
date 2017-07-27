@@ -13,16 +13,16 @@
   },
   {
     "id": "2",
-    "urlQuery": "/cities?include=projects&filter[contains_projects]=true&filter[projects_category]={{slug}}&page[size]=1000",
+    "urlQuery": "/cities?include=projects&filter[projects_category]={{solution_slug}}&page[size]=1000",
     "type": "one-solution",
-    "queryParams": ["slug"],
+    "queryParams": ["solution_slug"],
     "legendConfig": {}
   },
   {
     "id": "3",
-    "urlQuery": "/cities?filter[bme_id]={{bme_id}}&filter[contains_projects]=true&page[size]=1000",
+    "urlQuery": "/cities?filter[bme_id]={{bme_slug}}&filter[contains_projects]=true&page[size]=1000",
     "type": "bme",
-    "queryParams": ["bme_id"],
+    "queryParams": ["bme_slug"],
     "legendConfig": {}
   }
 ]

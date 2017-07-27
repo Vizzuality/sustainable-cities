@@ -29,7 +29,6 @@ import { getParsedBmes } from 'selectors/bme';
 // components
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
-import Cover from 'components/common/Cover';
 import Tab from 'components/common/Tab';
 import Map from 'components/common/map/Map';
 import Legend from 'components/common/map/Legend';
@@ -135,7 +134,6 @@ class ExploreIndex extends Page {
         title="Explore"
         queryParams={queryParams}
       >
-        {/* <Cover title="Explore" description={EXPLORE_DESCRIPTION} /> */}
         <Tab
           allowAll
           className="-explore"

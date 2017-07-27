@@ -8,6 +8,12 @@ import GridList from 'components/common/GridList';
 
 export default function ItemGallery(props) {
   const { items, isSolutionView, slider, showAll, showTitle } = props;
+
+  let resultItems = items;
+  if (isSolutionView && !slider) {
+    resultItems = resultItems.map(c => c.children)[0];
+  }
+
   return (
     <div className="c-item-gallery">
       <ul className="gallery-list">
@@ -34,7 +40,7 @@ export default function ItemGallery(props) {
                 <div>no data available</div>}
             </li>
           ))
-        : <GridList items={items} />}
+        : <GridList items={resultItems || []} />}
       </ul>
     </div>
   );

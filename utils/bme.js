@@ -15,6 +15,7 @@ const listsBmesByCategory = (categories, filters = {}) =>
     title: category.name,
     level: category.level,
     slug: category.slug,
+    image: bme.photos && bme.photos[0] ? `${process.env.API_URL}${bme.photos[0].attachment.medium.url}` : null,
     children: listBmes(category['children-bmes'] || [])
   }
 ));

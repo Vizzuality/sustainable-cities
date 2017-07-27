@@ -23,7 +23,7 @@ class Map extends React.Component {
     super(props);
 
     this.state = {
-      loading: false
+      loading: props.loading
     };
   }
 
@@ -38,44 +38,38 @@ class Map extends React.Component {
       scrollWheelZoom: MAP_CONFIG.scrollWheelZoom
     });
 
-
-    // if (this.props.mapConfig.bounds) {
-    //   this.fitBounds(this.props.mapConfig.bounds.geometry);
-    // }
-
     // SETTERS
     this.setAttribution();
     this.setZoomControl();
     this.setBasemap();
-    this.setMapEventListeners();
 
     // Add layers
     this.setLayerManager();
-    this.addLayers(this.props.layersActive, this.props.filters);
+    this.addLayers(this.props.activeLayer, this.props.filters);
   }
 
   componentWillReceiveProps(nextProps) {
     const filtersChanged = !isEqual(nextProps.filters, this.props.filters);
-    const layersActiveChanged = !isEqual(nextProps.layersActive, this.props.layersActive);
+    const activeLayerChanged = !isEqual(nextProps.activeLayer, this.props.activeLayer);
 
-    if (filtersChanged || layersActiveChanged) {
+    if (filtersChanged || activeLayerChanged) {
       this.removeLayers();
-      this.addLayers(nextProps.layersActive, nextProps.filters);
+      this.addLayers(nextProps.activeLayer, nextProps.filters);
+    }
+
+    if (!isEqual(nextProps.layerData, this.props.layerData)) {
+      this.setMarkers(nextProps.layerData);
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state.loading !== nextState.loading;
+  shouldComponentUpdate(nextProps) {
+    return this.props.loading !== nextProps.loading;
   }
 
   componentWillUnmount() {
     this._mounted = false;
-    // Remember to remove the listeners before removing the map
-    // or they will stay in memory
-    if (this.props.setMapParams) this.removeMapEventListeners();
     this.map.remove();
   }
-
 
   // SETTERS
   setLayerManager() {
@@ -90,7 +84,8 @@ class Map extends React.Component {
 
     this.layerManager = new this.props.LayerManager(this.map, {
       onLayerAddedSuccess: stopLoading,
-      onLayerAddedError: stopLoading
+      onLayerAddedError: stopLoading,
+      getLayer: this.props.getLayer
     });
   }
 
@@ -108,40 +103,17 @@ class Map extends React.Component {
                       .setZIndex(0);
   }
 
-  // GETTERS
-  getMapParams() {
-    const params = {
-      zoom: this.getZoom(),
-      latLng: this.getCenter()
-    };
-    return params;
-  }
 
   // MAP FUNCTIONS
   getCenter() { return this.map.getCenter(); }
 
   getZoom() { return this.map.getZoom(); }
 
-  // MAP LISTENERS
-  setMapEventListeners() {
-    function mapChangeHandler() {
-      // Dispatch the action to set the params
-      this.props.setMapParams(this.getMapParams());
-    }
-
-    if (this.props.setMapParams) {
-      this.map.on('zoomend', mapChangeHandler.bind(this));
-      this.map.on('dragend', mapChangeHandler.bind(this));
-    }
-  }
-
-  removeMapEventListeners() {
-    this.map.off('zoomend');
-    this.map.off('dragend');
-  }
-
-
   // LAYER METHODS
+  setMarkers({ id, data }) {
+    this.layerManager.setMarkers(id, data);
+  }
+
   addLayer(layer, filters) {
     this.setState({
       loading: true
@@ -176,7 +148,7 @@ class Map extends React.Component {
   render() {
     return (
       <div className="c-map">
-        {this.state.loading && <Spinner className="-map" isLoading />}
+        {this.props.loading && <Spinner className="-map" isLoading />}
         <div ref={(node) => { this.mapNode = node; }} className="map-leaflet" />
       </div>
     );
@@ -185,15 +157,17 @@ class Map extends React.Component {
 
 Map.propTypes = {
   LayerManager: PropTypes.func,
-  layersActive: PropTypes.array,
+  activeLayer: PropTypes.array,
   filters: PropTypes.object,
-  //  ??
-  setMapParams: PropTypes.func
+  getLayer: PropTypes.func,
+  layerData: PropTypes.object,
+  loading: PropTypes.bool
 };
 
 Map.defaultProptypes = {
-  layersActive: [],
-  filters: {}
+  activeLayer: [],
+  filters: {},
+  layerData: {}
 };
 
 export default Map;

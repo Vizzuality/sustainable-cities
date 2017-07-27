@@ -16,7 +16,7 @@ export default class HomePage extends Page {
         <section className="l-home-header">
           <div className="row">
             <div className="columns medium-8 medium-offset-2">
-              <h1 className="c-title -fs-huge -light -fw-thin">An initiative to accelerate the implementation of <span className="c-title -fs-huge -highlight -fw-thin">sustainable urban solutions</span> through new business models</h1>
+              <h1 className="c-title -fs-huge -light -fw-thin">An initiative to accelerate the implementation of <span className="c-title -fs-huge -highlight-yellow -fw-thin">sustainable urban solutions</span> through new business models</h1>
             </div>
 
           </div>

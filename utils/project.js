@@ -4,6 +4,8 @@ const listProjects = projects => projects.map(project => ({
   id: project.id,
   title: project.name,
   subtitle: project.cities && project.cities[0] ? project.cities[0].name : null,
+  image: project.photos && project.photos[0] ?
+    `${process.env.API_URL}${project.photos[0].attachment.thumbnail.url}` : null,
   link: { route: 'solution-detail', params: { id: project.id } }
 }));
 

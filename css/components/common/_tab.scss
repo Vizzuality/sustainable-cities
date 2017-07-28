@@ -16,6 +16,7 @@
     height: 100%;
 
     > .literal {
+      cursor: pointer;
       display: flex;
       align-items: center;
       height: 100%;
@@ -42,6 +43,7 @@
 
       > .literal {
         color: $color-text-2;
+        cursor: default;
       }
     }
   }

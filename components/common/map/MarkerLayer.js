@@ -54,7 +54,7 @@ export default class MarkerLayer {
       fillColor = CATEGORY_FIRST_LEVEL_COLORS[category];
     }
 
-    radius = value !== 0 ? ((radius * Math.log(value)) + 0.5) : 5;
+    radius = value !== 0 || value !== 1 ? ((radius * Math.log(value)) + 5) : 5;
 
     return {
       ...DEFAULT_MARKER_OPTIONS,

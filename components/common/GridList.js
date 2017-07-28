@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import uuidv1 from 'uuid/v1';
 
 // Components
 import GridItem from 'components/common/GridItem';
@@ -9,7 +10,7 @@ export default function GridList(props) {
   return (
     <div className="c-grid-list row align-stretch">
       { items && items.length > 0 ? items.map(item => (
-        <div className="column small-3" key={item.id}>
+        <div className="column small-3" key={uuidv1()}>
           <GridItem
             image={item.image}
             imageLayout={layout || item.layout}

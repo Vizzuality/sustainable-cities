@@ -152,6 +152,7 @@ export default function ProjectDetail({ project }) {
             contentSeparator={false}
         >
           <BmeOverview
+            projectId={project.id}
             bmes={bmeTree}
           />
         </DetailSection>}

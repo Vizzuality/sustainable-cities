@@ -1,27 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function SummarySection(props) {
+import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
+
+export default function SummarySection({ category, parent }) {
+
+  let titleColor = CATEGORY_FIRST_LEVEL_COLORS[parent.slug] || CATEGORY_FIRST_LEVEL_COLORS.default;
+
   return (<div className='c-summary-section'>
     <div className='row title'>
-      <div className='column large-12 c-text -fs-huge -fw-thin' style={{ borderBottom: `2px solid ${props.titleColor}` }}>
-        {props.title}
+      <div className='column large-12 c-text -fs-huge -fw-thin'>
+        <span style={{ borderBottom: `2px solid ${titleColor}` }}>
+          {category.name}
+        </span>
       </div>
     </div>
-    {props.items.map((item, n) => (<div key={n} className='row subtitle'>
+    {category.children.map((child, n) => (<div key={n} className='row subtitle'>
       <div className='column large-4 c-text -fs-extrabig -fw-light'>
-        {item.title}
+        {child.name}
       </div>
       <div className='column large-8'>
-        {item.items && item.items.map((item, n) => (<div className='subsubitem' key={n}>
+        {child.children && child.children.map((child) => (<div className='subsubitem' key={child.id}>
           <div className='row subsubtitle'>
             <div className='column large-12 c-text -fs-big -fw-light'>
-              {item.title}
+              {child.name}
             </div>
           </div>
           <div className='row description'>
             <div className='column large-12 c-text'>
-              {item.description}
+              {child.description}
             </div>
           </div>
         </div>))}
@@ -31,13 +38,6 @@ export default function SummarySection(props) {
 }
 
 SummarySection.propTypes = {
-  title: PropTypes.string.isRequired,
-  titleColor: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string,
-    }))
-  }))
+  parent: PropTypes.object.isRequired,
+  category: PropTypes.object.isRequired,
 };

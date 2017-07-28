@@ -99,6 +99,10 @@
 
 }
 
+.solution-detail-overview {
+
+}
+
 .solution-detail-category {
   .solution-detail-category-summary {
     padding: 46px 0;
@@ -108,7 +112,7 @@
       margin-top: 10px;
       li:not(:last-child)::after {
         content: '|';
-        margin-right: .2em;
+        margin: 0 .2em;
       }
     }
   }

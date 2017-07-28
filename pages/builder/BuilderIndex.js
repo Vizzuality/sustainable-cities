@@ -7,8 +7,7 @@ import BmeDetail from 'components/builder-index/BmeDetail';
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
-import { getBmes } from 'modules/bme';
-import { selectBME, deselectBME } from 'modules/builder';
+import { getBmes, selectBME, deselectBME } from 'modules/builder';
 
 const leaves = (nodes) => {
   const children = nodes.map(t => t.children || t.bmes || []).reduce((a,b) => a.concat(b), []);
@@ -91,7 +90,7 @@ class BuilderIndex extends Page {
 export default withRedux(
   store,
   state => ({
-    categories: state.bme.list.filter(c => c["category-type"] == "Bme"),
+    categories: state.builder.bmeCategories,
     selectedBMEs: state.builder.selectedBMEs,
   }),
   dispatch => ({

@@ -11,7 +11,6 @@ import { store } from 'store';
 
 // modules
 import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
-import { getBmeCategories } from 'modules/category';
 
 // components
 import Page from 'pages/Page';
@@ -61,7 +60,6 @@ class SolutionDetailPage extends Page {
     if (!isEqual(prevProps.projectFilters, projectFilters)) {
       const { detailId } = projectFilters;
       this.props.getProjectDetail(detailId);
-      this.props.getBmeCategories();
     }
   }
 

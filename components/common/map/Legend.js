@@ -36,8 +36,8 @@ export default class Legend extends React.Component {
         projectCategories = uniq(projectCategories);
 
         // build the item array with the necessary values
-        items = projectCategories.map((catId) => {
-          const solutionCategory = solutionCategories.find(sc => +sc.id === catId);
+        items = projectCategories.map((catSlug) => {
+          const solutionCategory = solutionCategories.find(sc => sc.slug === catSlug);
           return ({
             id: solutionCategory.id,
             name: solutionCategory.name,

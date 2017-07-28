@@ -82,14 +82,6 @@ class ExploreIndex extends Page {
     this.props.resetProjectFilters();
   }
 
-  _updateView({ queryParams }) {
-    const { category } = queryParams;
-
-    this.setState({
-      view: category && category !== 'solutions' ? 'Bme' : 'Solution'
-    });
-  }
-
   _setProjectFilters({ queryParams }) {
     const { category, subCategory } = queryParams;
 
@@ -128,6 +120,7 @@ class ExploreIndex extends Page {
     const items = isSolutionView ? parsedProjects : parsedBmes;
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
+
     return (
       <Layout
         title="Explore"
@@ -142,6 +135,7 @@ class ExploreIndex extends Page {
         <div className="l-map-container">
           <Map
             activeLayer={[activeLayer]}
+            categories={categories}
             LayerManager={LayerManager}
             filters={queryParams}
             getLayer={this.props.getLayer}

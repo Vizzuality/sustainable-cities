@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": 1,
     "urlQuery": "/cities?include=projects&filter[contains_projects]=true&page[size]=1000",
     "type": "all-solutions",
     "legendConfig": {
@@ -8,14 +8,14 @@
     }
   },
   {
-    "id": "2",
+    "id": 2,
     "urlQuery": "/cities?include=projects&filter[projects_category]={{solution_slug}}&page[size]=1000",
     "type": "one-solution",
     "queryParams": ["solution_slug"]
   },
   {
-    "id": "3",
-    "urlQuery": "/cities?filter[bme_slug]={{bme_slug}}&filter[contains_projects]=true&page[size]=1000",
+    "id": 3,
+    "urlQuery": "/cities?filter[bme_slug]={{bme_slug}}&filter[contains_projects]=true&include=projects&page[size]=1000",
     "type": "bme",
     "queryParams": ["bme_slug"]
   }

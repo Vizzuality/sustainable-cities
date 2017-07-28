@@ -42,23 +42,28 @@ class Map extends React.Component {
     this.setAttribution();
     this.setZoomControl();
     this.setBasemap();
-
-    // Add layers
-    this.setLayerManager();
-    this.addLayers(this.props.activeLayer, this.props.filters);
   }
 
   componentWillReceiveProps(nextProps) {
     const filtersChanged = !isEqual(nextProps.filters, this.props.filters);
-    const activeLayerChanged = !isEqual(nextProps.activeLayer, this.props.activeLayer);
+    const layerDataChanged = !isEqual(nextProps.layerData, this.props.layerData);
+    // const activeLayerChanged = !isEqual(nextProps.activeLayer, this.props.activeLayer);
+    const categoriesChanged = !isEqual(nextProps.categories, this.props.categories);
 
-    if (filtersChanged || activeLayerChanged) {
-      this.removeLayers();
-      this.addLayers(nextProps.activeLayer, nextProps.filters);
+    // if ((filtersChanged || activeLayerChanged) && this.layerManager) {
+    //   this.removeLayers();
+    //   this.addLayers(nextProps.activeLayer, nextProps.filters);
+    // }
+
+    if (layerDataChanged) {
+      this.setMarkers(nextProps.layerData);
     }
 
-    if (!isEqual(nextProps.layerData, this.props.layerData)) {
-      this.setMarkers(nextProps.layerData);
+    if (categoriesChanged || filtersChanged) {
+      // Add layers
+      if (this.layerManager) this.removeLayers();
+      this.setLayerManager(nextProps);
+      this.addLayers(nextProps.activeLayer, nextProps.filters);
     }
   }
 
@@ -72,7 +77,7 @@ class Map extends React.Component {
   }
 
   // SETTERS
-  setLayerManager() {
+  setLayerManager({ getLayer, filters, categories }) {
     const stopLoading = () => {
       // Don't execute callback if component has been unmounted
       if (this._mounted) {
@@ -85,7 +90,9 @@ class Map extends React.Component {
     this.layerManager = new this.props.LayerManager(this.map, {
       onLayerAddedSuccess: stopLoading,
       onLayerAddedError: stopLoading,
-      getLayer: this.props.getLayer
+      getLayer,
+      filters,
+      categories
     });
   }
 
@@ -118,7 +125,10 @@ class Map extends React.Component {
     this.setState({
       loading: true
     });
-    this.layerManager.addLayer(layer, filters || this.props.filters);
+    this.layerManager.addLayer(
+      layer,
+      filters || this.props.filters
+    );
   }
 
   addLayers(layers, filters) {
@@ -156,15 +166,16 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
+  categories: PropTypes.array,
   LayerManager: PropTypes.func,
-  activeLayer: PropTypes.array,
+  activeLayer: PropTypes.array, // eslint-disable-line react/no-unused-prop-types
   filters: PropTypes.object,
-  getLayer: PropTypes.func,
   layerData: PropTypes.object,
   loading: PropTypes.bool
 };
 
 Map.defaultProptypes = {
+  categories: [],
   activeLayer: [],
   filters: {},
   layerData: {}

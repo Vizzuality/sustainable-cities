@@ -17,29 +17,14 @@
     width: 40px;
     height: 5px;
     margin-bottom: 20px;
-
-    &.c-color-0 {
-      background-color: #DD7D5C;
-    }
-
-    &.c-color-1 {
-      background-color: #69E191;
-    }
-
-    &.c-color-2 {
-      background-color: #28BCD4;
-    }
-
-    &.c-color-3 {
-      background-color: #F7B50C;
-    }
   }
 
-
-
-
-  .c-bme-overview-item {
+  .c-bme-overview-item-50 {
     width: 50%;
+  }
+
+  .c-bme-overview-item-25 {
+    width: 25%;
   }
 
 }

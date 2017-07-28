@@ -1,0 +1,27 @@
+.c-summary-section {
+
+  padding-top: 46px;
+
+  &:not(:last-child)
+  {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .row.title {
+     margin-bottom: 52px;
+  }
+
+  .row.subtitle {
+     margin-bottom: 50px;
+   }
+
+  .row.subsubtitle {
+    margin-bottom: 10px;
+  }
+
+  .subsubitem:not(:last-child) {
+    margin-bottom: 50px;
+  }
+
+
+}

@@ -98,3 +98,18 @@
   }
 
 }
+
+.solution-detail-category {
+  .solution-detail-category-summary {
+    padding: 46px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);p
+
+    ul.summary-items {
+      margin-top: 10px;
+      li:not(:last-child)::after {
+        content: '|';
+        margin-right: .2em;
+      }
+    }
+  }
+}

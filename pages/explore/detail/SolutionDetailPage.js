@@ -110,9 +110,10 @@ class SolutionDetailPage extends Page {
         />
       )
     } else {
+      let category = project.bmeTree.find((c) => c.slug === queryParams.subPage);
       return (
         <ProjectDetailCategory
-          project={project}
+          category={category}
         />
       )
     }
@@ -150,7 +151,7 @@ class SolutionDetailPage extends Page {
         route: 'solution-detail',
         params: {
           id: project.id,
-          subPage: bme.id
+          subPage: bme.slug
         }
       }
     }))];

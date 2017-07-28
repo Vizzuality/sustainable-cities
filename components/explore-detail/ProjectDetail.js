@@ -23,7 +23,7 @@ export default function ProjectDetail({ project }) {
     impacts,
     bmeTree
   } = project;
-console.log(project);
+
   const sourcesList = externalSources ?
     externalSources.map(source => ({ id: source.id, name: source.name, link: source.webUrl })) : [];
 

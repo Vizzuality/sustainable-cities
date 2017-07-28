@@ -1,18 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 
 import Button from 'components/common/Button';
 
-export default function BmeDetail(props) {
-
-  const { isLoading, bme } = props;
-
-  if (isLoading) {
-    return (<div>Loading bme...</div>);
-  }
-
-  if (isEmpty(bme)) return null;
+export default function BmeDetail({ bme }) {
 
   const enablingConditions = {
     successFactors: bme.enablings && bme.enablings.filter((e) => e.assessmentValue === 'Success'),
@@ -121,37 +112,9 @@ export default function BmeDetail(props) {
         </div>
       </div>
     </div>
-    <div className='bme-detail-related-content'>
-      <div className='row'>
-        <div className='column large-12 c-title -fs-huge -fw-thin'>
-          Related Content
-        </div>
-      </div>
-    </div>
-    <div className='bme-detail-download-data inverted'>
-      <div className='bme-detail-download-data-content'>
-        <div className='row'>
-          <div className='column large-12 c-title -fs-huge -fw-thin'>
-            Download Data
-          </div>
-        </div>
-        <div className='row'>
-          <div className='column large-12 c-text -fs-medium'>
-            <p>Lorem ipsum cras mattis consectetur purus sit amet fermentum.</p>
-            <p>Praesent commodo cursus magna, vel scelerisque.</p>
-          </div>
-        </div>
-        <div className='row'>
-          <div className='column large-12'>
-            <Button className='download-button' secondary>select data</Button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>);
 }
 
 BmeDetail.propTypes = {
-  isLoading: PropTypes.bool,
   bme: PropTypes.object.isRequired
 };

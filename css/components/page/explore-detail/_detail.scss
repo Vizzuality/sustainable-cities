@@ -1,15 +1,3 @@
-.c-detail {
-
-  .c-detail-section {
-
-    &:last-child {
-      .content {
-        border-bottom: none;
-      }
-    }
-  }
-}
-
 .bme-detail {
 
   a.external {
@@ -42,7 +30,6 @@
   }
 
   .inverted {
-    color: $color-text-6;
   }
 
   .bme-detail-body {
@@ -84,37 +71,45 @@
     }
   }
 
-  .bme-detail-related-content {
-    padding: 50px 110px 100px;
-    background-color: rgba(0, 0, 0, 0.02);
+
+}
+
+.solution-detail {
+  padding-top: 46px;
+
+  li.info-item {
+    b + span {
+      margin-left: 5px;
+    }
   }
 
-  .bme-detail-download-data {
+  .solution-detail-main {
+    padding-top: 0px;
+    border-bottom: 1px solid rgba($color-1, .1);
 
-    position: relative;
-    background-image: url('/static/images/download-data-module.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-
-    .row:nth-child(1) {
-      margin-bottom: 30px;
+    .row:not(:last-child) {
+      margin-bottom: 1em;
     }
+  }
 
-    .row:nth-child(2) {
-      margin-bottom: 50px;
-    }
-
-    .download-button {
-      background-color: #ffffff;
-    }
-
-    .bme-detail-download-data-content {
-      padding: 85px 110px 100px;
-      background: rgba(0, 0, 0, 0.7);
-    }
-
+  .solution-detail-rest {
+    padding-top: 1px;
+    background-color: $color-white;
   }
 
 }
 
+.solution-detail-category {
+  .solution-detail-category-summary {
+    padding: 46px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);p
+
+    ul.summary-items {
+      margin-top: 10px;
+      li:not(:last-child)::after {
+        content: '|';
+        margin-right: .2em;
+      }
+    }
+  }
+}

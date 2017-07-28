@@ -13,13 +13,17 @@
     }
   }
 
-  &.-short {
+  &.-size-short {
     min-height: 300px;
     padding: 25px 0;
   }
 
-  &.-shorter {
+  &.-size-shorter {
     min-height: 170px;
+  }
+
+  &.-position-bottom {
+    padding: 180px 0 25px;
   }
 
   > .row {

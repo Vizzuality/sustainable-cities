@@ -5,18 +5,13 @@ import isEmpty from 'lodash/isEmpty';
 // components
 import DetailSection from 'components/explore-detail/DetailSection';
 import Itemization from 'components/explore-detail/Itemization';
-import Cloud from 'components/explore-detail/Cloud';
-import BmeTree from 'components/explore-detail/project/BmeTree';
+import ItemList from 'components/explore-detail/ItemList';
+import BmeOverview from 'components/explore-detail/project/BmeOverview';
 
 // utils
 import { getYearFromDateString } from 'utils/common';
 
-export default function ProjectDetail(props) {
-  const { isLoading, project } = props;
-
-  if (isLoading) return (<div>Loading project...</div>);
-  if (isEmpty(project)) return null;
-
+export default function ProjectDetail({ project }) {
   const {
     name,
     situation,
@@ -28,8 +23,10 @@ export default function ProjectDetail(props) {
     impacts,
     bmeTree
   } = project;
-  const sourcesCloud = externalSources ?
+console.log(project);
+  const sourcesList = externalSources ?
     externalSources.map(source => ({ id: source.id, name: source.name, link: source.webUrl })) : [];
+
   const impactItems = impacts.filter(i => !!i.category).map(impact => ({
     id: impact.id,
     name: impact.category.name,
@@ -37,56 +34,133 @@ export default function ProjectDetail(props) {
   }));
 
   return (
-    <div className="c-detail">
-      <DetailSection
-        title="Parameters"
-      >
-        <ul className="info-list">
-          <li className="info-item"><span>Name: {name}</span></li>
-          <li className="info-item"><span>Year (operational): {getYearFromDateString(operationalYear)}</span></li>
-          <li className="info-item"><span>Country: {country ? country.name : '' }</span></li>
-          <li className="info-item"><span>City: {cities && cities[0] ? cities[0].name : '' }</span></li>
-        </ul>
-      </DetailSection>
-      {situation && <DetailSection
-        title="Situation"
-      >
-        <p>{situation}</p>
-      </DetailSection>}
+    <div className='solution-detail'>
+      <div className='row'>
+        <div className='column large-12 c-text -fs-huge -fw-thin'>
+          Project Details
+        </div>
+      </div>
 
-      {solution && <DetailSection
-        title="What was done"
-      >
-        <p>{solution}</p>
-      </DetailSection>}
-      {sourcesCloud.length > 0 &&
-        <DetailSection
-          title="Where I can learn more?"
+      <div className='solution-detail-main'>
+        <DetailSection title='Snapshot' contentSeparator={false}>
+          <div className='row'>
+            <div className='column large-6'>
+              <div className='c-text -fs-big -fw-light'>
+                Environmental impact
+              </div>
+              <div className='c-text'>
+                WAITWHAT
+              </div>
+            </div>
+            <div className='column large-6'>
+              <div className='c-text -fs-big -fw-light'>
+                Social impact
+              </div>
+              <div className='c-text'>
+                WAITWHAT
+              </div>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='column large-6'>
+              <div className='c-text -fs-big -fw-light'>
+                Other
+              </div>
+              <div className='c-text'>
+                WAITWHAT
+              </div>
+            </div>
+            <div className='column large-6'>
+              <div className='c-text -fs-big -fw-light'>
+                Highlighted BMEs
+              </div>
+              <div className='c-text'>
+                WAITWHAT
+              </div>
+            </div>
+          </div>
+        </DetailSection>
+      </div>
+
+      <div className='solution-detail-rest'>
+
+        <DetailSection title='Parameters' background='white'>
+          <ul className='info-list'>
+            <li className='info-item'>
+              <b>Year (operational):</b>
+              <span>{getYearFromDateString(operationalYear)}</span>
+            </li>
+            <li className='info-item'>
+              <b>Region:</b>
+              <span>{country ? country.regionName : '' }</span>
+            </li>
+            <li className='info-item'>
+              <b>Country:</b>
+              <span>{country ? country.name : '' }</span>
+            </li>
+            <li className='info-item'>
+              <b>City:</b>
+              <span>{cities && cities[0] ? cities[0].name : '' }</span>
+            </li>
+          </ul>
+        </DetailSection>
+
+        {situation && <DetailSection title='Situation' background='white'>
+          <p>{situation}</p>
+        </DetailSection>}
+
+        {solution && <DetailSection
+          title='What was done'
         >
-          <Cloud
-            clouds={sourcesCloud}
+          <p>{solution}</p>
+        </DetailSection>}
+
+        <DetailSection title='Key Actors' background='white'>
+          <ul className='info-list'>
+            <li className='info-item'>
+              <b className='c-text -uppercase -fw-bold'>Public:</b>
+              <span>WAITWHAT</span>
+            </li>
+            <li className='info-item'>
+              <b className='c-text -uppercase -fw-bold'>Private:</b>
+              <span>WAITWHAT</span>
+            </li>
+          </ul>
+        </DetailSection>
+
+        {impactItems.length > 0 &&
+          <DetailSection
+            title='What is the reported impact to date (as of 2016)'
+          >
+            <Itemization
+              items={impactItems}
+            />
+          </DetailSection>}
+
+        {sourcesList.length > 0 &&
+          <DetailSection
+            title='Where I can learn more?'
+          >
+            <ItemList
+              items={sourcesList}
+            />
+          </DetailSection>}
+
+        {bmeTree.length > 0 &&
+          <DetailSection
+            title='Business model elements overview'
+            contentSeparator={false}
+        >
+          <BmeOverview
+            bmes={bmeTree}
           />
         </DetailSection>}
-      {impactItems.length > 0 &&
-        <DetailSection
-          title="What is the reported impact to date? (as of 2016)"
-        >
-          <Itemization
-            items={impactItems}
-          />
-        </DetailSection>}
-      {bmeTree.length > 0 &&
-        <BmeTree
-          bmes={bmeTree}
-        />}
+
+      </div>
     </div>
   );
 }
 
 ProjectDetail.propTypes = {
-  isLoading: PropTypes.bool,
-  project: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.array
-  ]).isRequired
+  project: PropTypes.object.isRequired,
 };

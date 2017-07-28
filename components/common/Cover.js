@@ -5,7 +5,12 @@ import classnames from 'classnames';
 export default function Cover(props) {
   return (
     <div
-      className={classnames('c-cover', `-${props.size}`, props.className)}
+      className={classnames(
+        'c-cover',
+        `-size-${props.size}`,
+        `-position-${props.position}`,
+        props.className
+      )}
       style={props.image && { backgroundImage: `url(${props.image})` }}
     >
       <div className="row align-bottom">
@@ -28,6 +33,7 @@ Cover.propTypes = {
   className: PropTypes.string,
   image: PropTypes.string,
   size: PropTypes.oneOf(['normal', 'short', 'shorter']),
+  position: PropTypes.oneOf(['top', 'bottom']),
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   breadcrumbs: PropTypes.PropTypes.element, // Breadcrumbs component expected
@@ -35,5 +41,6 @@ Cover.propTypes = {
 };
 
 Cover.defaultProps = {
-  size: 'normal'
+  size: 'normal',
+  position: 'top',
 };

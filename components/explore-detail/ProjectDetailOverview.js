@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import BmeOverview from 'components/explore-detail/project/BmeOverview';
+import OverviewSection from 'components/explore-detail/OverviewSection';
 
 export default function ProjectDetailOverview({ project }) {
   return (<div className='solution-detail-overview'>
@@ -21,6 +22,7 @@ export default function ProjectDetailOverview({ project }) {
         </div>
       </div>
     </div>
+    {project.bmeTree.map((bme) => (<OverviewSection key={bme.id} bme={bme} />))}
   </div>);
 }
 

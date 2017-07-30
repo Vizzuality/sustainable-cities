@@ -5,8 +5,8 @@ import BmeOverview from 'components/explore-detail/project/BmeOverview';
 import OverviewSection from 'components/explore-detail/OverviewSection';
 
 export default function SolutionOverview({ project }) {
-  return (<div className='solution-detail-overview'>
-    <div className='solution-detail-overview-summary'>
+  return (<div className='solution-overview'>
+    <div className='solution-overview-summary'>
       <div className='row'>
         <div className='column large-12 c-text -fs-huge -fw-thin'>
           Summary

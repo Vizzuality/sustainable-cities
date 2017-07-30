@@ -8,9 +8,9 @@ const flatten = (category) => {
   let flattened = [];
 
   category.children.forEach((child) =>
+    child.children && child.children.forEach((child) =>
       child.children && child.children.forEach((child) =>
-        child.children && child.children.forEach((child) =>
-          flattened.push(child))));
+        flattened.push(child))));
 
   return flattened;
 }
@@ -20,8 +20,8 @@ export default function SolutionCategory({ category }) {
 
   let summaryItems = flatten(category);
 
-  return (<div className='solution-detail-category'>
-    <div className='solution-detail-category-summary'>
+  return (<div className='solution-category'>
+    <div className='solution-category-summary'>
       <div className="row">
         <div className='column large-12 c-text -fs-huge -fw-thin'>
           Summary
@@ -31,13 +31,13 @@ export default function SolutionCategory({ category }) {
         <div className='column large-12 c-text'>
           <ul className='summary-items'>
             {summaryItems.map((item, n) => (<li key={n}>
-              <Link><a>{item.name}</a></Link>
+              <a href={`#${item.slug}`}>{item.name}</a>
             </li>))}
           </ul>
         </div>
       </div>
     </div>
-    <div className='solution-detail-category-list'>
+    <div className='solution-category-list'>
       {category.children.map((child, n) => <SummarySection
         key={child.id}
         parent={category}

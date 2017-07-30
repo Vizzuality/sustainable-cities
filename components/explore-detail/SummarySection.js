@@ -20,7 +20,7 @@ export default function SummarySection({ category, parent }) {
         {child.name}
       </div>
       <div className='column large-8'>
-        {child.children && child.children.map((child) => (<div className='subsubitem' key={child.id}>
+        {child.children && child.children.map((child) => (<div id={child.slug} className='subsubitem' key={child.id}>
           <div className='row subsubtitle'>
             <div className='column large-12 c-text -fs-big -fw-light'>
               {child.name}

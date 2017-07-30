@@ -12,7 +12,7 @@ import BmeOverview from 'components/explore-detail/project/BmeOverview';
 import { getYearFromDateString } from 'utils/common';
 
 export default function ProjectDetail({ project }) {
-  console.log(project);
+
   const {
     name,
     situation,

@@ -5,7 +5,6 @@ import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
 export default function OverviewSection({ bme }) {
   let titleColor = CATEGORY_FIRST_LEVEL_COLORS[bme.slug] || CATEGORY_FIRST_LEVEL_COLORS.default;
 
-  console.log(bme);
   return (<div className='c-overview-section'>
     <div className='row'>
       <div className='column large-12 h-first'>

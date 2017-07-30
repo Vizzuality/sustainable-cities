@@ -21,9 +21,9 @@ import Breadcrumbs from 'components/common/Breadcrumbs';
 import DownloadData from 'components/common/DownloadData';
 import RelatedContent from 'components/explore-detail/RelatedContent';
 import ContactForm from 'components/explore-detail/ContactForm';
-import ProjectDetail from 'components/explore-detail/ProjectDetail';
-import ProjectDetailOverview from 'components/explore-detail/ProjectDetailOverview';
-import ProjectDetailCategory from 'components/explore-detail/ProjectDetailCategory';
+import SolutionDetail from 'components/explore-detail/SolutionDetail';
+import SolutionOverview from 'components/explore-detail/SolutionOverview';
+import SolutionCategory from 'components/explore-detail/SolutionCategory';
 
 class SolutionDetailPage extends Page {
   static setBreadcrumbs(project) {
@@ -99,20 +99,20 @@ class SolutionDetailPage extends Page {
 
     if (!queryParams.subPage) {
       return (
-        <ProjectDetail
+        <SolutionDetail
           project={project}
         />
       )
     } else if (queryParams.subPage === "overview") {
       return (
-        <ProjectDetailOverview
+        <SolutionOverview
           project={project}
         />
       )
     } else {
       let category = project.bmeTree.find((c) => c.slug === queryParams.subPage);
       return (
-        <ProjectDetailCategory
+        <SolutionCategory
           category={category}
         />
       )

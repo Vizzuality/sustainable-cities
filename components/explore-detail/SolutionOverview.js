@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import BmeOverview from 'components/explore-detail/project/BmeOverview';
 import OverviewSection from 'components/explore-detail/OverviewSection';
 
-export default function ProjectDetailOverview({ project }) {
+export default function SolutionOverview({ project }) {
   return (<div className='solution-detail-overview'>
     <div className='solution-detail-overview-summary'>
       <div className='row'>
@@ -26,6 +26,6 @@ export default function ProjectDetailOverview({ project }) {
   </div>);
 }
 
-ProjectDetailOverview.propTypes = {
-
+SolutionOverview.propTypes = {
+  project: PropTypes.object,
 };

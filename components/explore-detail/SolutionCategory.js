@@ -16,7 +16,7 @@ const flatten = (category) => {
 }
 
 
-export default function ProjectDetailCategory({ category }) {
+export default function SolutionCategory({ category }) {
 
   let summaryItems = flatten(category);
 
@@ -47,6 +47,6 @@ export default function ProjectDetailCategory({ category }) {
   </div>);
 }
 
-ProjectDetailCategory.propTypes = {
+SolutionCategory.propTypes = {
   category: PropTypes.object,
 }

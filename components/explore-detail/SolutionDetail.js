@@ -11,7 +11,7 @@ import BmeOverview from 'components/explore-detail/project/BmeOverview';
 // utils
 import { getYearFromDateString } from 'utils/common';
 
-export default function ProjectDetail({ project }) {
+export default function SolutionDetail({ project }) {
 
   const {
     name,
@@ -163,6 +163,6 @@ export default function ProjectDetail({ project }) {
   );
 }
 
-ProjectDetail.propTypes = {
+SolutionDetail.propTypes = {
   project: PropTypes.object.isRequired,
 };

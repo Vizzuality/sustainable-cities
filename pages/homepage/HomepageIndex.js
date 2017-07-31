@@ -49,7 +49,7 @@ export default class HomePage extends Page {
             </li>
             <li className="column small-12 medium-5 medium-offset-1">
               <svg className="icon -light -in-line-left -medium -short"><use xlinkHref="#icon-home-about" /></svg>
-              <span className="c-text -fs-bigger -light -fw-light">and more</span>
+              <span className="c-text -fs-bigger -light -fw-light">more coming soon</span>
             </li>
           </ul>
         </section>

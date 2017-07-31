@@ -15,14 +15,52 @@ export default class HomePage extends Page {
       >
         <section className="l-home-header">
           <div className="row">
-            <div className="columns medium-8 medium-offset-2">
-              <h1 className="c-title -fs-huge -light -fw-thin">An initiative to accelerate the implementation of <span className="c-title -fs-huge -highlight-yellow -fw-thin">sustainable urban solutions</span> through new business models</h1>
+            <div className="columns small-10 small-offset-1 medium-12">
+              <h1 className="c-title -fs-super-huge -light -fw-thin -center">Financing Sustainable Cities</h1>
             </div>
-
+            <div className="column small-10 small-offset-1 medium-8 medium-offset-2">
+              <h2 className="c-title -fs-bigger -light -fw-light -center -subtitle">An initiative to help cities develop business models to accelerate sustainable urban solutions</h2>
+            </div>
           </div>
+          <ul className="row">
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
+              <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-bike" /></svg>
+              <span className="c-text -fs-bigger -light -fw-light">Bike sharing systems</span>
+            </li>
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
+              <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-buildings" /></svg>
+              <span className="c-text -fs-bigger -light -fw-light">Bus rapid transit systems</span>
+            </li>
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
+              <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-bus" /></svg>
+              <span className="c-text -fs-bigger -light -fw-light">Low -and zero- emissions buses</span>
+            </li>
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
+              <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-city" /></svg>
+              <span className="c-text -fs-bigger -light -fw-light">Efficient new buildings</span>
+            </li>
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
+              <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-gov" /></svg>
+              <span className="c-text -fs-bigger -light -fw-light">Municipal building retrofits</span>
+            </li>
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
+              <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-metro" /></svg>
+              <span className="c-text -fs-bigger -light -fw-light">Transit-oriented development</span>
+            </li>
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
+              <svg className="icon -light -in-line-left -medium -short"><use xlinkHref="#icon-home-about" /></svg>
+              <span className="c-text -fs-bigger -light -fw-light">more coming soon</span>
+            </li>
+          </ul>
         </section>
         <section className="l-home-main-links">
           <ul className="row">
+            <li className="columns small-12 medium-4"><Link route="explore-index">
+              <a className="main-link">
+                <svg className="icon"><use xlinkHref="#icon-home-about" /></svg>
+                <p className="c-title -dark -fs-extrabig -fw-light">Learn more about the initiative</p>
+              </a>
+            </Link></li>
             <li className="columns small-12 medium-4"><Link route="explore-index">
               <a className="main-link">
                 <svg className="icon"><use xlinkHref="#icon-home-explore" /></svg>
@@ -35,30 +73,20 @@ export default class HomePage extends Page {
                 <p className="c-title -dark -fs-extrabig -fw-light">Design a business model</p>
               </a>
             </Link></li>
-            <li className="columns small-12 medium-4"><Link route="explore-index">
-              <a className="main-link">
-                <svg className="icon"><use xlinkHref="#icon-home-about" /></svg>
-                <p className="c-title -dark -fs-extrabig -fw-light">Learn more about the initiative</p>
-              </a>
-            </Link></li>
           </ul>
         </section>
-        <section className="l-home-intro">
+        <section className="l-home-call-to-action -intro">
           <div className="row">
-            <div className="columns medium-8 medium-offset-2">
-              <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">A global movement to change how we treat the planet and each other is underway.</p>
+            <div className="columns small-12 medium-6 -flex-vertical-centered">
+              <div className="call-to-action -no-border">
+                <h3 className="c-title -dark -fs-extrabig -fw-light">A global movement</h3>
+                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Cities worldwide are experimenting with new ways to invest in smart approaches to urban mobility, land use, and urban energy.</p>
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="columns medium-10 medium-offset-1">
+            <div className="columns samll-12 medium-6">
               <div className="video-wrapper">
                 <iframe src="https://player.vimeo.com/video/210677339" height="480" width="853" allowFullScreen="allowfullscreen" frameBorder="0"></iframe>
               </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="columns medium-8 medium-offset-2">
-              <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">In the past two years, we’ve seen leaders and citizens come together to declare climate change action and sustainable living to be the sensible path forward. At the center of action are cities—places that half the world’s population call home. And millions more will join them in the decades ahead.</p>
             </div>
           </div>
         </section>
@@ -66,8 +94,8 @@ export default class HomePage extends Page {
           <div className="row">
             <div className="columns medium-8 medium-offset-4 large-6 large-offset-6">
               <div className="call-to-action">
-                <h3 className="c-title -dark -fs-extrabig -fw-light">Explore projects & business models elements</h3>
-                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa maiores adipisci enim dolore blanditiis, odio doloribus, dicta temporibus facere, ipsum tempora ducimus nobis. Libero ad commodi cumque sit mollitia, facilis.</p>
+                <h3 className="c-title -dark -fs-extrabig -fw-light">Worldwide experimentation</h3>
+                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Cities worldwide are experimenting with new ways to invest in sustainable solutions. Developing a common understanding of available business models will move us from talk to action.</p>
                 <Link route="explore-index"><a className="c-button -primary">start exploring</a></Link>
               </div>
             </div>
@@ -75,11 +103,16 @@ export default class HomePage extends Page {
         </section>
         <section className="l-home-call-to-action -builder">
           <div className="row">
-            <div className="columns medium-8 large-6">
-              <div className="call-to-action">
-                <h3 className="c-title -dark -fs-extrabig -fw-light">Business model builder</h3>
-                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa maiores adipisci enim dolore blanditiis, odio doloribus, dicta temporibus facere, ipsum tempora ducimus nobis. Libero ad commodi cumque sit mollitia, facilis.</p>
-                <Link route="explore-index"><a className="c-button -primary">start building</a></Link>
+            <div className="columns small-12 medium-8 large-6 -flex-vertical-centered">
+              <div className="call-to-action -no-border">
+                <h3 className="c-title -dark -fs-extrabig -fw-light">Business model design</h3>
+                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Get started with designing a sustainable urban project using experiences gained by cities worldwide.</p>
+                <Link route="explore-index"><a className="c-button -primary">design a project</a></Link>
+              </div>
+            </div>
+            <div className="columns small-12 medium-4 large-6">
+              <div className="picture">
+                <img src="/static/images/home-module-builder.png" alt=""/>
               </div>
             </div>
           </div>

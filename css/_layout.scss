@@ -3,3 +3,10 @@
   max-width: 1080px;
   margin: 0px auto;
 }
+
+//Grid modificators
+.-flex-vertical-centered {
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+}

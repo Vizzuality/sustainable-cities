@@ -17,7 +17,11 @@ export default function BmeOverview({ projectId, bmeTree }) {
             <a className="c-text -fs-extrabig -fw-light">{bme.name}</a>
           </Link>
           <ul className="c-text -fs-extrasmall -uppercase -fw-light">
-            {bme.children.length === 0 && (<li className="c-text -uppercase">n/a</li>)}
+            {bme.children.length === 0 && (<li className="c-text -fs-extrasmall -uppercase -fw-light">
+              <span>
+                n/a
+              </span>
+            </li>)}
             {bme.children.length > 0 && bme.children.map(child => (<li key={child.id}>
               <Link route={`/solutions/${projectId}/${bme.slug}#${child.slug}`}>
                 <a>

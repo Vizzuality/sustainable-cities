@@ -15,7 +15,7 @@ export default class HomePage extends Page {
       >
         <section className="l-home-header">
           <div className="row">
-            <div className="columns small-10 small-offset-1 medium-12">
+            <div className="columns small-10 small-offset-1 medium-offset-0 medium-12">
               <h1 className="c-title -fs-super-huge -light -fw-thin -center">Financing Sustainable Cities</h1>
             </div>
             <div className="column small-10 small-offset-1 medium-8 medium-offset-2">

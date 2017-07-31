@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 export default function RelatedContent() {
   return (
@@ -12,5 +11,3 @@ export default function RelatedContent() {
     </div>
   );
 }
-
-RelatedContent.propTypes = PropTypes.any;

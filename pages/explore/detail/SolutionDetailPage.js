@@ -96,19 +96,21 @@ class SolutionDetailPage extends Page {
 
     return (<div className="c-tabs -explore">
       <div className="row">
-         <ul className="tab-list">
-           {tabs.map((tab, n) => (
-             <li
-               key={n}
-               className={classnames("tab-item", { "-current": tabEqual(this.props.queryParams, tab.queryParams) })}
-             >
+        <ul className="tab-list">
+          {tabs.map((tab, n) => (
+            <li
+              key={n}
+              className={classnames("tab-item", { "-current": tabEqual(this.props.queryParams, tab.queryParams) })}
+            >
               <Link route={tab.queryParams.route} params={tab.queryParams.params}>
                 <a className="literal">{tab.label}</a>
               </Link>
-             {tab.className === "info" && (<div className="disclaimer-icon" onClick={() => this.toggleDisclaimer(tab.queryParams.params.subPage)}>(i)</div>)}
+              {tab.className === "info" && (<div className="c-info-icon" onClick={() => this.toggleDisclaimer(tab.queryParams.params.subPage)}>
+                (i)
+              </div>)}
             </li>
-         ))}
-         </ul>
+          ))}
+        </ul>
       </div>
     </div>);
   }

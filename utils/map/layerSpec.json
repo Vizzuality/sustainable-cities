@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "urlQuery": "/cities?include=projects&filter[contains_projects]=true&page[size]=1000",
+    "urlQuery": "/projects?include=cities&page[size]=1000",
     "type": "all-solutions",
     "legendConfig": {
       "name": "All solutions"

@@ -27,16 +27,21 @@ export default class MarkerLayer {
 
   parseData(data) {
     let parsedData = [];
-    const { category, subCategory } = this._filters;
+    const { category } = this._filters;
+
+    // removes projects without city
+    const filteredData = data.filter(d => !!d.cities[0]);
 
     switch (true) {
-      case (category === 'solutions' && !!subCategory): {
-        const projectsByCity = groupBy(data, d => d.cities[0].name);
+      case (category === 'solutions'): {
+        const projectsByCity = groupBy(filteredData, d => d.cities[0].name);
         // const citiesWithProjects = [];
         Object.keys(projectsByCity).forEach((cityName) => {
           const cityData = (projectsByCity[cityName] || []).length ?
             projectsByCity[cityName][0].cities[0] : {};
           const { lat, lng } = cityData;
+
+          if (!lat || !lng) return;
 
           parsedData.push({
             name: cityName,

@@ -9,13 +9,13 @@
   },
   {
     "id": 2,
-    "urlQuery": "/projects?page[size]=1000&filter[projects_category]={{solution_slug}}&include=cities&page[size]=1000",
+    "urlQuery": "/projects?filter[projects_category]={{solution_slug}}&include=cities&page[size]=1000",
     "type": "one-solution",
     "queryParams": ["solution_slug"]
   },
   {
     "id": 3,
-    "urlQuery": "/cities?filter[bme_slug]={{bme_slug}}&filter[contains_projects]=true&include=projects&page[size]=1000",
+    "urlQuery": "/projects?&filter[bme_slug]={{bme_slug}}&include=cities&page[size]=1000",
     "type": "bme",
     "queryParams": ["bme_slug"]
   }

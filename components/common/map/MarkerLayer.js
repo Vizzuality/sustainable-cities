@@ -1,6 +1,6 @@
 
 import GeoJSON from 'geojson';
-import groupBy from 'lodash/groupBy';
+import { groupProjectsByCity } from 'utils/project';
 
 // constants
 import { CATEGORY_FIRST_LEVEL_COLORS, CATEGORY_SOLUTIONS_COLORS } from 'constants/category';
@@ -26,43 +26,11 @@ export default class MarkerLayer {
   }
 
   parseData(data) {
-    let parsedData = [];
-    const { category } = this._filters;
-
-    // removes projects without city
-    const filteredData = data.filter(d => !!d.cities[0]);
-
-    switch (true) {
-      case (category === 'solutions'): {
-        const projectsByCity = groupBy(filteredData, d => d.cities[0].name);
-        // const citiesWithProjects = [];
-        Object.keys(projectsByCity).forEach((cityName) => {
-          const cityData = (projectsByCity[cityName] || []).length ?
-            projectsByCity[cityName][0].cities[0] : {};
-          const { lat, lng } = cityData;
-
-          if (!lat || !lng) return;
-
-          parsedData.push({
-            name: cityName,
-            lat,
-            lng,
-            projects: projectsByCity[cityName]
-          });
-        });
-        break;
-      }
-
-      default: {
-        parsedData = data;
-      }
-    }
-
-    return parsedData;
+    return groupProjectsByCity(data);
   }
 
   parseMarkerOptions({ projects }) {
-    const { category } = this._filters;
+    const { category, subCategory } = this._filters;
     let fillColor = DEFAULT_MARKER_OPTIONS.color;
     let radius = DEFAULT_MARKER_OPTIONS.radius;
     const value = projects.length;
@@ -89,7 +57,10 @@ export default class MarkerLayer {
       fillColor = CATEGORY_FIRST_LEVEL_COLORS[category];
     }
 
-    radius = value !== 0 || value !== 1 ? ((radius * Math.log(value)) + 5) : 5;
+    // applies different size but for all-solutions view
+    if ((category !== 'solutions') || (category === 'solutions' && subCategory)) {
+      radius = value !== 0 || value !== 1 ? ((radius * Math.log(value)) + 5) : 5;
+    }
 
     return {
       ...DEFAULT_MARKER_OPTIONS,

@@ -9,6 +9,7 @@ import LegendItem from 'components/common/map/LegendItem';
 // utils
 import getBreadcrumbs from 'utils/breadcrumbs';
 import uniq from 'lodash/uniq';
+import { groupProjectsByCity } from 'utils/project';
 
 // constants
 import { CATEGORY_SOLUTIONS_COLORS, CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
@@ -16,6 +17,16 @@ import { CATEGORY_SOLUTIONS_COLORS, CATEGORY_FIRST_LEVEL_COLORS } from 'constant
 const MIN_VALUE_RANGE = 1;
 
 export default class Legend extends React.Component {
+  static getMaxValue(data) {
+    let maxValue = 0;
+    const projectsByCity = groupProjectsByCity(data);
+    projectsByCity.forEach((city) => {
+      maxValue = city.projects.length > maxValue ? city.projects.length : maxValue;
+    });
+
+    return maxValue;
+  }
+
   static getLegendItems(data, filters, categories) {
     const { category, subCategory, children } = filters;
     let items = [];
@@ -28,9 +39,9 @@ export default class Legend extends React.Component {
         let projectCategories = [];
 
         // gets all level-2-categories from projects
-        data.forEach(d => d.projects.forEach((p) => {
-          if (p['category-level-2']) projectCategories.push(p['category-level-2']);
-        }));
+        data.forEach((project) => {
+          if (project['category-level-2']) projectCategories.push(project['category-level-2']);
+        });
 
         // removes duplicates
         projectCategories = uniq(projectCategories);
@@ -57,13 +68,12 @@ export default class Legend extends React.Component {
           name: solutionCategory.name,
           range: {
             min: MIN_VALUE_RANGE,
-            max: data.length
+            max: Legend.getMaxValue(data)
           },
           color: CATEGORY_SOLUTIONS_COLORS[solutionCategory.slug],
           text: 'projects',
           type: 'range'
         }];
-
         break;
       }
       // level-1-BME case
@@ -79,12 +89,11 @@ export default class Legend extends React.Component {
           color: CATEGORY_FIRST_LEVEL_COLORS[bmeCategory.slug],
           range: {
             min: MIN_VALUE_RANGE,
-            max: data.length
+            max: Legend.getMaxValue(data)
           },
           text: 'elements used',
           type: 'range'
         }];
-
         break;
       }
       // levels-2-3-BME case
@@ -106,7 +115,7 @@ export default class Legend extends React.Component {
           name: bmeCategory.name,
           range: {
             min: MIN_VALUE_RANGE,
-            max: data.length
+            max: Legend.getMaxValue(data)
           },
           color: CATEGORY_FIRST_LEVEL_COLORS[parentCategory[0].slug],
           text: 'elements used',

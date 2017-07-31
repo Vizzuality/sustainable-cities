@@ -4,6 +4,10 @@
   background-repeat: no-repeat;
   background-size: cover;
 
+  .c-title.-subtitle {
+    margin-bottom: 30px;
+  }
+
   @media (min-width: $screen-l) {
     padding: 150px 0;
 

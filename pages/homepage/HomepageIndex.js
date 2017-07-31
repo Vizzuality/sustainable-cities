@@ -15,39 +15,39 @@ export default class HomePage extends Page {
       >
         <section className="l-home-header">
           <div className="row">
-            <div className="columns medium-12">
+            <div className="columns small-10 small-offset-1 medium-12">
               <h1 className="c-title -fs-super-huge -light -fw-thin -center">Financing Sustainable Cities</h1>
             </div>
-            <div className="column medium-8 medium-offset-2">
+            <div className="column small-10 small-offset-1 medium-8 medium-offset-2">
               <h2 className="c-title -fs-bigger -light -fw-light -center -subtitle">An initiative to help cities develop business models to accelerate sustainable urban solutions</h2>
             </div>
           </div>
           <ul className="row">
-            <li className="column small-12 medium-5 medium-offset-1">
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
               <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-bike" /></svg>
               <span className="c-text -fs-bigger -light -fw-light">Bike sharing systems</span>
             </li>
-            <li className="column small-12 medium-5 medium-offset-1">
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
               <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-buildings" /></svg>
               <span className="c-text -fs-bigger -light -fw-light">Bus rapid transit systems</span>
             </li>
-            <li className="column small-12 medium-5 medium-offset-1">
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
               <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-bus" /></svg>
               <span className="c-text -fs-bigger -light -fw-light">Low -and zero- emissions buses</span>
             </li>
-            <li className="column small-12 medium-5 medium-offset-1">
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
               <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-city" /></svg>
               <span className="c-text -fs-bigger -light -fw-light">Efficient new buildings</span>
             </li>
-            <li className="column small-12 medium-5 medium-offset-1">
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
               <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-gov" /></svg>
               <span className="c-text -fs-bigger -light -fw-light">Municipal building retrofits</span>
             </li>
-            <li className="column small-12 medium-5 medium-offset-1">
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
               <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-metro" /></svg>
               <span className="c-text -fs-bigger -light -fw-light">Transit-oriented development</span>
             </li>
-            <li className="column small-12 medium-5 medium-offset-1">
+            <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
               <svg className="icon -light -in-line-left -medium -short"><use xlinkHref="#icon-home-about" /></svg>
               <span className="c-text -fs-bigger -light -fw-light">more coming soon</span>
             </li>

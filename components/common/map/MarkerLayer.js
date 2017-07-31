@@ -16,11 +16,10 @@ const DEFAULT_MARKER_OPTIONS = {
 };
 
 export default class MarkerLayer {
-  constructor(data, map, filters, categories) {
+  constructor(data, map, filters) {
     this._data = data;
     this._map = map;
     this._filters = filters;
-    this._categories = categories;
 
     return this.render();
   }
@@ -31,7 +30,7 @@ export default class MarkerLayer {
     let radius = DEFAULT_MARKER_OPTIONS.radius;
     const value = projects.length;
 
-    // all solutions / single-solution
+    // all solutions / single-solution cases
     if (category === 'solutions') {
       // temporary solution. Now is taking the first project to set the color
       // in case a city has more than one.
@@ -45,8 +44,7 @@ export default class MarkerLayer {
         };
       }
 
-      const categoryObject = this._categories.find(cat => cat.slug === categoryLevel2);
-      fillColor = CATEGORY_SOLUTIONS_COLORS[(categoryObject || {}).slug];
+      fillColor = CATEGORY_SOLUTIONS_COLORS[categoryLevel2];
     }
 
     // no solution cases

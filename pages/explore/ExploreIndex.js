@@ -20,7 +20,7 @@ import {
   resetProjectFilters
 } from 'modules/project';
 import { getBmes, setBmeFilters } from 'modules/bme';
-import { getLayer } from 'modules/map';
+import { getLayer, removeDataLayer } from 'modules/map';
 
 // selectors
 import { getCategoryTabs, getAllCategories } from 'selectors/category';
@@ -135,11 +135,11 @@ class ExploreIndex extends Page {
         <div className="l-map-container">
           <Map
             activeLayer={[activeLayer]}
-            categories={categories}
             LayerManager={LayerManager}
             filters={queryParams}
             getLayer={this.props.getLayer}
             layerData={this.props.layer}
+            removeDataLayer={this.props.removeDataLayer}
             loading={this.props.loadingMap}
           />
           {categories.length > 0 &&
@@ -235,6 +235,7 @@ export default withRedux(
     getBmes(filters) { dispatch(getBmes(filters)); },
     setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
     // map
-    getLayer(layerSpec) { dispatch(getLayer(layerSpec)); }
+    getLayer(layerSpec) { dispatch(getLayer(layerSpec)); },
+    removeDataLayer() { dispatch(removeDataLayer()); }
   })
 )(ExploreIndex);

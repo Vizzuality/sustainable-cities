@@ -60,7 +60,7 @@ export default class Legend extends React.Component {
             max: data.length
           },
           color: CATEGORY_SOLUTIONS_COLORS[solutionCategory.slug],
-          text: 'projects used',
+          text: 'projects',
           type: 'range'
         }];
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import { Link } from 'routes';
 
 import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
@@ -9,17 +8,17 @@ export default function BmeOverview({ projectId, bmes }) {
   return (
     <div className="c-bme-overview">
       {bmes.map((bme) => {
-
-        let titleColor = CATEGORY_FIRST_LEVEL_COLORS[bme.slug] || CATEGORY_FIRST_LEVEL_COLORS.default;
+        const titleColor = CATEGORY_FIRST_LEVEL_COLORS[bme.slug] ||
+          CATEGORY_FIRST_LEVEL_COLORS.default;
 
         return (<div className="c-bme-overview-item" key={bme.id}>
           <div className="c-bme-overview-strip" style={{ backgroundColor: titleColor }} />
-          <Link route='solution-detail' params={{ id: projectId, subPage: bme.slug }}>
+          <Link route="solution-detail" params={{ id: projectId, subPage: bme.slug }}>
             <a className="c-text -fs-extrabig -fw-light">{bme.name}</a>
           </Link>
           <ul className="c-text -fs-extrasmall -uppercase -fw-light">
-            {bme.children.length === 0 && (<li className='c-text -uppercase'>n/a</li>)}
-            {bme.children.length > 0 && bme.children.map((child) => (<li key={child.id}>
+            {bme.children.length === 0 && (<li className="c-text -uppercase">n/a</li>)}
+            {bme.children.length > 0 && bme.children.map(child => (<li key={child.id}>
               <Link route={`/solutions/${projectId}/${bme.slug}#${child.slug}`}>
                 <a>
                   {child.name}
@@ -27,7 +26,7 @@ export default function BmeOverview({ projectId, bmes }) {
               </Link>
             </li>))}
           </ul>
-        </div>)
+        </div>);
       })}
     </div>
   );
@@ -35,9 +34,9 @@ export default function BmeOverview({ projectId, bmes }) {
 
 BmeOverview.propTypes = {
   projectId: PropTypes.string.isRequired,
-  bmes: PropTypes.array,
+  bmes: PropTypes.array
 };
 
 BmeOverview.defaultProps = {
-  bmes: [],
+  bmes: []
 };

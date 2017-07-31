@@ -13,6 +13,9 @@ import { store } from 'store';
 import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
 import { getBmeCategories } from 'modules/category';
 
+// utils
+import { getImage } from 'utils/project';
+
 // components
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
@@ -180,7 +183,7 @@ class SolutionDetailPage extends Page {
       'investment-component': <InvestmentComponent />,
       'financial-product': <FinancialProduct />
     };
-
+console.log(project);
     return (
       <Layout
         title="Solution detail"
@@ -200,6 +203,7 @@ class SolutionDetailPage extends Page {
               breadcrumbs={breadcrumbs}
               size='shorter'
               position='bottom'
+              image={getImage(project)}
             />
 
             {this.renderTabs(tabItems)}

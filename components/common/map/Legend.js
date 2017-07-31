@@ -40,7 +40,7 @@ export default class Legend extends React.Component {
 
         // gets all level-2-categories from projects
         data.forEach((project) => {
-          if (project['category-level-2']) projectCategories.push(project['category-level-2']);
+          if (project.categoryLevel2) projectCategories.push(project.categoryLevel2);
         });
 
         // removes duplicates

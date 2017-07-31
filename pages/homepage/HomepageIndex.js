@@ -47,6 +47,10 @@ export default class HomePage extends Page {
               <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-metro" /></svg>
               <span className="c-text -fs-bigger -light -fw-light">Transit-oriented development</span>
             </li>
+            <li className="column small-12 medium-5 medium-offset-1">
+              <svg className="icon -light -in-line-left -medium -short"><use xlinkHref="#icon-home-about" /></svg>
+              <span className="c-text -fs-bigger -light -fw-light">and more</span>
+            </li>
           </ul>
         </section>
         <section className="l-home-main-links">

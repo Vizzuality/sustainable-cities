@@ -52,27 +52,25 @@ export default class MainNav extends React.Component {
             <nav className="nav">
               <ul className="nav-list" role="menubar">
                 <li
-                  className={classnames('nav-item', { '-current': EXPLORE_ROUTES.indexOf(route) !== -1 })}
-                  role="menuitem"
-                >
-                  <Link prefetch route="explore-index"><a className="literal">Projects & business models</a></Link>
-                </li>
-                <li
                   className={classnames('nav-item', { '-current': route === 'about' })}
                   role="menuitem"
                 >
-                  <Link prefetch route="about"><a className="literal">About the initiative</a></Link>
+                  <Link prefetch route="about"><a className="literal">About</a></Link>
                 </li>
-                <li className="nav-item -separator" />
+                <li
+                  className={classnames('nav-item', { '-current': EXPLORE_ROUTES.indexOf(route) !== -1 })}
+                  role="menuitem"
+                >
+                  <Link prefetch route="explore-index"><a className="literal">Solutions map</a></Link>
+                </li>
                 <li
                   className={classnames('nav-item', { '-current': route === 'builder' })}
                   role="menuitem"
                 >
-                  <Link prefetch route="builder"><a className="literal">Build a project</a></Link>
+                  <Link prefetch route="builder"><a className="literal">Design</a></Link>
                 </li>
                 <li className="nav-item" role="menuitem">
                   <a href="username" className="username">{username}</a>
-                  {!logged && <svg className="icon -username"><use xlinkHref="#icon-username" /></svg>}
                 </li>
               </ul>
             </nav>

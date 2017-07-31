@@ -57,7 +57,7 @@ export default function BmeDetail({ bme }) {
       </div>
       <div className='row'>
         <div className='column large-4 c-title -fs-extrabig -fw-light'>
-          Projects that use it
+          Examples of projects that use it
         </div>
         {bme.projects.length === 0 && (<div className='column large-8 c-text -fs-medium separator'>
           <div className='row'>

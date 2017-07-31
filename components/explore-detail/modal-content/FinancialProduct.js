@@ -8,5 +8,5 @@ export default function FinancialProduct() {
     <p className="c-text">
       Includes all reimbursable capital, including debt, equity, and other products.
     </p>
-  </section>)
-};
+  </section>);
+}

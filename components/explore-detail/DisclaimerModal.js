@@ -19,4 +19,5 @@ export default function DisclaimerModal({ onClose, children }) {
 
 DisclaimerModal.propTypes = {
   onClose: PropTypes.func.isRequired,
+  children: PropTypes.element
 };

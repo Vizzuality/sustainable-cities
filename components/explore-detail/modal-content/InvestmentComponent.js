@@ -6,7 +6,8 @@ export default function InvestmentComponent() {
       What was the investment?
     </h1>
     <p className="c-text">
-      Includes the tangible and intangible assets that are part of an investment, and processes that resulted in costs.
+      Includes the tangible and intangible assets that are part of
+      an investment, and processes that resulted in costs.
     </p>
-  </section>)
-};
+  </section>);
+}

@@ -8,5 +8,5 @@ export default function DeliveryMechanism() {
     <p className="c-text">
       Includes commercial, contractual, and institutional arrangements.
     </p>
-  </section>)
-};
+  </section>);
+}

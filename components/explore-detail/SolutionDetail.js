@@ -113,7 +113,7 @@ export default function SolutionDetail({ project }) {
           <p>{solution}</p>
         </DetailSection>}
 
-        <DetailSection title="Key Actors" background="white">
+        {/* <DetailSection title="Key Actors" background="white">
           <ul className="info-list">
             <li className="info-item">
               <b className="c-text -uppercase -fw-bold">Public:</b>
@@ -124,7 +124,7 @@ export default function SolutionDetail({ project }) {
               <span>WAITWHAT</span>
             </li>
           </ul>
-        </DetailSection>
+        </DetailSection> */}
 
         {impactItems.length > 0 &&
           <DetailSection

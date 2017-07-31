@@ -1,11 +1,12 @@
 
 import GeoJSON from 'geojson';
+import groupBy from 'lodash/groupBy';
 
+// constants
 import { CATEGORY_FIRST_LEVEL_COLORS, CATEGORY_SOLUTIONS_COLORS } from 'constants/category';
 
 // Leaflet can't be imported on the server because it's not isomorphic
 const L = (typeof window !== 'undefined') ? require('leaflet') : null;
-
 
 const DEFAULT_MARKER_OPTIONS = {
   className: 'c-marker',
@@ -22,6 +23,37 @@ export default class MarkerLayer {
     this._filters = filters;
 
     return this.render();
+  }
+
+  parseData(data) {
+    let parsedData = [];
+    const { category, subCategory } = this._filters;
+
+    switch (true) {
+      case (category === 'solutions' && !!subCategory): {
+        const projectsByCity = groupBy(data, d => d.cities[0].name);
+        // const citiesWithProjects = [];
+        Object.keys(projectsByCity).forEach((cityName) => {
+          const cityData = (projectsByCity[cityName] || []).length ?
+            projectsByCity[cityName][0].cities[0] : {};
+          const { lat, lng } = cityData;
+
+          parsedData.push({
+            name: cityName,
+            lat,
+            lng,
+            projects: projectsByCity[cityName]
+          });
+        });
+        break;
+      }
+
+      default: {
+        parsedData = data;
+      }
+    }
+
+    return parsedData;
   }
 
   parseMarkerOptions({ projects }) {
@@ -62,7 +94,8 @@ export default class MarkerLayer {
   }
 
   render() {
-    const geojson = GeoJSON.parse(this._data, { Point: ['lat', 'lng'] });
+    const parsedData = this.parseData(this._data);
+    const geojson = GeoJSON.parse(parsedData, { Point: ['lat', 'lng'] });
     return L.geoJson(geojson, {
       pointToLayer: (feature, latlng) =>
         new L.CircleMarker(latlng, this.parseMarkerOptions(feature.properties)),

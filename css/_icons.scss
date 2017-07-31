@@ -6,6 +6,23 @@
   stroke: currentColor;
   fill: currentColor;
 
+  //colors
+  &.-light {
+    fill: $color-white;
+  }
+
+  //layout
+  &.-in-line-left {
+    margin-right: 10px;
+  }
+
+  //size
+  &.-medium {
+    width: 1.5em;
+    height: 1.5em;
+  }
+
+  //specific
   &.-username {
     width: 18px;
     height: 18px;

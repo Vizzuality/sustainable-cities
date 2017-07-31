@@ -27,7 +27,7 @@ export default function SummarySection({ category, parent }) {
             </div>
           </div>
           <div className='row description'>
-            <div className='column large-12 c-text'>
+            <div className='column large-12 c-text -lh-medium'>
               {child.description}
             </div>
           </div>

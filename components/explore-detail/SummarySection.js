@@ -8,14 +8,14 @@ export default function SummarySection({ category, parent }) {
   let titleColor = CATEGORY_FIRST_LEVEL_COLORS[parent.slug] || CATEGORY_FIRST_LEVEL_COLORS.default;
 
   return (<div className='c-summary-section'>
-    <div className='row title'>
+    <div id={category.slug} className='row title'>
       <div className='column large-12 c-text -fs-huge -fw-thin'>
         <span style={{ borderBottom: `2px solid ${titleColor}` }}>
           {category.name}
         </span>
       </div>
     </div>
-    {category.children.map((child, n) => (<div key={n} className='row subtitle'>
+    {category.children.map((child, n) => (<div id={child.slug} key={n} className='row subtitle'>
       <div className='column large-4 c-text -fs-extrabig -fw-light'>
         {child.name}
       </div>

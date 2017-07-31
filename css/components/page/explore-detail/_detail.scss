@@ -99,12 +99,22 @@
 
 }
 
-.solution-detail-overview {
+.solution-overview {
+
+  .solution-overview-summary {
+    padding: 46px 0;
+    // border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
 
 }
 
-.solution-detail-category {
-  .solution-detail-category-summary {
+.solution-category {
+
+  a {
+    color: $color-text-1;
+  }
+
+  .solution-category-summary {
     padding: 46px 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 

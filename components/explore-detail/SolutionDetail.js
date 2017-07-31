@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
 
 // components
 import DetailSection from 'components/explore-detail/DetailSection';
@@ -11,9 +10,8 @@ import BmeOverview from 'components/explore-detail/project/BmeOverview';
 // utils
 import { getYearFromDateString } from 'utils/common';
 
-export default function ProjectDetail({ project }) {
+export default function SolutionDetail({ project }) {
   const {
-    name,
     situation,
     solution,
     operationalYear,
@@ -34,47 +32,47 @@ export default function ProjectDetail({ project }) {
   }));
 
   return (
-    <div className='solution-detail'>
-      <div className='row'>
-        <div className='column large-12 c-text -fs-huge -fw-thin'>
+    <div className="solution-detail">
+      <div className="row">
+        <div className="column large-12 c-text -fs-huge -fw-thin">
           Project Details
         </div>
       </div>
 
-      <div className='solution-detail-main'>
-        <DetailSection title='Snapshot' contentSeparator={false}>
-          <div className='row'>
-            <div className='column large-6'>
-              <div className='c-text -fs-big -fw-light'>
+      <div className="solution-detail-main">
+        <DetailSection title="Snapshot" contentSeparator={false}>
+          <div className="row">
+            <div className="column large-6">
+              <div className="c-text -fs-big -fw-light">
                 Environmental impact
               </div>
-              <div className='c-text'>
+              <div className="c-text">
                 WAITWHAT
               </div>
             </div>
-            <div className='column large-6'>
-              <div className='c-text -fs-big -fw-light'>
+            <div className="column large-6">
+              <div className="c-text -fs-big -fw-light">
                 Social impact
               </div>
-              <div className='c-text'>
+              <div className="c-text">
                 WAITWHAT
               </div>
             </div>
           </div>
-          <div className='row'>
-            <div className='column large-6'>
-              <div className='c-text -fs-big -fw-light'>
+          <div className="row">
+            <div className="column large-6">
+              <div className="c-text -fs-big -fw-light">
                 Other
               </div>
-              <div className='c-text'>
+              <div className="c-text">
                 WAITWHAT
               </div>
             </div>
-            <div className='column large-6'>
-              <div className='c-text -fs-big -fw-light'>
+            <div className="column large-6">
+              <div className="c-text -fs-big -fw-light">
                 Highlighted BMEs
               </div>
-              <div className='c-text'>
+              <div className="c-text">
                 WAITWHAT
               </div>
             </div>
@@ -82,55 +80,55 @@ export default function ProjectDetail({ project }) {
         </DetailSection>
       </div>
 
-      <div className='solution-detail-rest'>
+      <div className="solution-detail-rest">
 
-        <DetailSection title='Parameters' background='white'>
-          <ul className='info-list'>
-            <li className='info-item'>
+        <DetailSection title="Parameters" background="white">
+          <ul className="info-list">
+            <li className="info-item">
               <b>Year (operational):</b>
               <span>{getYearFromDateString(operationalYear)}</span>
             </li>
-            <li className='info-item'>
+            <li className="info-item">
               <b>Region:</b>
               <span>{country ? country.regionName : '' }</span>
             </li>
-            <li className='info-item'>
+            <li className="info-item">
               <b>Country:</b>
               <span>{country ? country.name : '' }</span>
             </li>
-            <li className='info-item'>
+            <li className="info-item">
               <b>City:</b>
               <span>{cities && cities[0] ? cities[0].name : '' }</span>
             </li>
           </ul>
         </DetailSection>
 
-        {situation && <DetailSection title='Situation' background='white'>
+        {situation && <DetailSection title="Situation" background="white">
           <p>{situation}</p>
         </DetailSection>}
 
         {solution && <DetailSection
-          title='What was done'
+          title="What was done"
         >
           <p>{solution}</p>
         </DetailSection>}
 
-        <DetailSection title='Key Actors' background='white'>
-          <ul className='info-list'>
-            <li className='info-item'>
-              <b className='c-text -uppercase -fw-bold'>Public:</b>
+        {/* <DetailSection title="Key Actors" background="white">
+          <ul className="info-list">
+            <li className="info-item">
+              <b className="c-text -uppercase -fw-bold">Public:</b>
               <span>WAITWHAT</span>
             </li>
-            <li className='info-item'>
-              <b className='c-text -uppercase -fw-bold'>Private:</b>
+            <li className="info-item">
+              <b className="c-text -uppercase -fw-bold">Private:</b>
               <span>WAITWHAT</span>
             </li>
           </ul>
-        </DetailSection>
+        </DetailSection> */}
 
         {impactItems.length > 0 &&
           <DetailSection
-            title='What is the reported impact to date (as of 2016)'
+            title="What is the reported impact to date (as of 2016)"
           >
             <Itemization
               items={impactItems}
@@ -139,7 +137,7 @@ export default function ProjectDetail({ project }) {
 
         {sourcesList.length > 0 &&
           <DetailSection
-            title='Where I can learn more?'
+            title="Where I can learn more?"
           >
             <ItemList
               items={sourcesList}
@@ -148,19 +146,20 @@ export default function ProjectDetail({ project }) {
 
         {bmeTree.length > 0 &&
           <DetailSection
-            title='Business model elements overview'
+            title="Business model elements overview"
             contentSeparator={false}
-        >
-          <BmeOverview
-            bmes={bmeTree}
-          />
-        </DetailSection>}
+          >
+            <BmeOverview
+              projectId={project.id}
+              bmeTree={bmeTree}
+            />
+          </DetailSection>}
 
       </div>
     </div>
   );
 }
 
-ProjectDetail.propTypes = {
-  project: PropTypes.object.isRequired,
+SolutionDetail.propTypes = {
+  project: PropTypes.object.isRequired
 };

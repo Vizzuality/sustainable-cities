@@ -1,8 +1,10 @@
 .c-bme-overview {
   width: 100%;
   display: flex;
+  align-items: top;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-between;
 
   ul {
     margin-bottom: 50px;
@@ -17,29 +19,14 @@
     width: 40px;
     height: 5px;
     margin-bottom: 20px;
-
-    &.c-color-0 {
-      background-color: #DD7D5C;
-    }
-
-    &.c-color-1 {
-      background-color: #69E191;
-    }
-
-    &.c-color-2 {
-      background-color: #28BCD4;
-    }
-
-    &.c-color-3 {
-      background-color: #F7B50C;
-    }
-  }
-
-
-
-
-  .c-bme-overview-item {
-    width: 50%;
   }
 
 }
+
+.solution-detail {
+  .c-bme-overview-item {
+    width: 300px;
+  }
+}
+
+

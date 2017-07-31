@@ -75,6 +75,15 @@
           width: 45%;
         }
       }
+
+      &.disclaimer {
+        padding-top: 50px;
+        width: 100%;
+
+        h1 {
+          margin-bottom: 20px;
+        }
+      }
     }
 
     .actions {
@@ -123,4 +132,8 @@
 
   .next { right: -60px; transform: rotate(45deg); }
   .prev { left: -60px; transform: rotate(-135deg); }
+}
+
+.no-overflow {
+ overflow: hidden;
 }

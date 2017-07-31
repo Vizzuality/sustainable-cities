@@ -11,6 +11,7 @@ import { store } from 'store';
 
 // modules
 import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
+import { getBmeCategories } from 'modules/category';
 
 // components
 import Page from 'pages/Page';
@@ -21,9 +22,16 @@ import Breadcrumbs from 'components/common/Breadcrumbs';
 import DownloadData from 'components/common/DownloadData';
 import RelatedContent from 'components/explore-detail/RelatedContent';
 import ContactForm from 'components/explore-detail/ContactForm';
-import ProjectDetail from 'components/explore-detail/ProjectDetail';
-import ProjectDetailOverview from 'components/explore-detail/ProjectDetailOverview';
-import ProjectDetailCategory from 'components/explore-detail/ProjectDetailCategory';
+import SolutionDetail from 'components/explore-detail/SolutionDetail';
+import SolutionOverview from 'components/explore-detail/SolutionOverview';
+import SolutionCategory from 'components/explore-detail/SolutionCategory';
+
+// modal and its content
+import DisclaimerModal from 'components/explore-detail/DisclaimerModal';
+import FinancialProduct from 'components/explore-detail/modal-content/FinancialProduct';
+import FundingSource from 'components/explore-detail/modal-content/FundingSource';
+import DeliveryMechanism from 'components/explore-detail/modal-content/DeliveryMechanism';
+import InvestmentComponent from 'components/explore-detail/modal-content/InvestmentComponent';
 
 class SolutionDetailPage extends Page {
   static setBreadcrumbs(project) {
@@ -44,14 +52,13 @@ class SolutionDetailPage extends Page {
     ];
   }
 
+  state = {
+    disclaimer: false
+  };
+
   componentWillMount() {
     const { id } = this.props.queryParams;
     this.props.setProjectFilters({ detailId: id });
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return (!isEqual(this.props.projectFilters, nextProps.projectFilters)) ||
-      (!isEqual(this.props.project, nextProps.project));
   }
 
   componentDidUpdate(prevProps) {
@@ -60,11 +67,19 @@ class SolutionDetailPage extends Page {
     if (!isEqual(prevProps.projectFilters, projectFilters)) {
       const { detailId } = projectFilters;
       this.props.getProjectDetail(detailId);
+      this.props.getBmeCategories();
     }
   }
 
   componentWillUnmount() {
     this.props.removeProjectDetail();
+  }
+
+  toggleDisclaimer(subPage) {
+    this.setState({ disclaimer: subPage }, () => {
+      // prevent scrolling while the modal is open
+      document.getElementsByTagName('body')[0].classList.toggle('no-overflow', !!subPage);
+    })
   }
 
   renderTabs(tabs) {
@@ -76,43 +91,45 @@ class SolutionDetailPage extends Page {
       )
     };
 
-		return (<div className="c-tabs -explore">
-			<div className="row">
-				 <ul className="tab-list">
-					 {tabs.map((tab, n) => (
-						 <li
-							 key={n}
-							 className={classnames("tab-item", { "-current": tabEqual(this.props.queryParams, tab.queryParams) })}
-						 >
+    return (<div className="c-tabs -explore">
+      <div className="row">
+         <ul className="tab-list">
+           {tabs.map((tab, n) => (
+             <li
+               key={n}
+               className={classnames("tab-item", { "-current": tabEqual(this.props.queryParams, tab.queryParams) })}
+             >
               <Link route={tab.queryParams.route} params={tab.queryParams.params}>
-							  <a className="literal">{tab.label}</a>
+                <a className="literal">{tab.label}</a>
               </Link>
-						 </li>
+             {tab.className === "info" && (<div className="disclaimer-icon" onClick={() => this.toggleDisclaimer(tab.queryParams.params.subPage)}>(i)</div>)}
+            </li>
          ))}
-				 </ul>
-			</div>
-		</div>);
+         </ul>
+      </div>
+    </div>);
   }
 
   renderContent() {
-    const { project, queryParams } = this.props;
+    const { project, categories, queryParams } = this.props;
 
     if (!queryParams.subPage) {
       return (
-        <ProjectDetail
+        <SolutionDetail
           project={project}
+          categories={categories}
         />
       )
     } else if (queryParams.subPage === "overview") {
       return (
-        <ProjectDetailOverview
+        <SolutionOverview
           project={project}
         />
       )
     } else {
       let category = project.bmeTree.find((c) => c.slug === queryParams.subPage);
       return (
-        <ProjectDetailCategory
+        <SolutionCategory
           category={category}
         />
       )
@@ -120,14 +137,15 @@ class SolutionDetailPage extends Page {
   }
 
   render() {
-    const { project, isLoading } = this.props;
+    const { project, categories, isLoading } = this.props;
+
     const breadcrumbsItems = SolutionDetailPage.setBreadcrumbs(project);
     const breadcrumbs = breadcrumbsItems ?
       <Breadcrumbs items={breadcrumbsItems} /> : null;
 
     const defaultTabItems = [{
       label: 'Project Details',
-			queryParams: {
+      queryParams: {
         route: 'solution-detail',
         params: {
           id: project.id
@@ -135,7 +153,7 @@ class SolutionDetailPage extends Page {
       },
     }, {
       label: 'Overview',
-			queryParams: {
+      queryParams: {
         route: 'solution-detail',
         params: {
           id: project.id,
@@ -144,7 +162,7 @@ class SolutionDetailPage extends Page {
       }
     }];
 
-		const tabItems = [...defaultTabItems, ...(project.bmeTree || []).map((bme) => ({
+    const tabItems = [...defaultTabItems, ...(project.bmeTree || []).map((bme) => ({
       label: bme.name,
       className: 'info',
       queryParams: {
@@ -155,6 +173,13 @@ class SolutionDetailPage extends Page {
         }
       }
     }))];
+
+    const disclaimerComponents = {
+      'funding-source': <FundingSource />,
+      'delivery-mechanism': <DeliveryMechanism />,
+      'investment-component': <InvestmentComponent />,
+      'financial-product': <FinancialProduct />
+    };
 
     return (
       <Layout
@@ -191,6 +216,9 @@ class SolutionDetailPage extends Page {
 
         </div>
 
+        {this.state.disclaimer && <DisclaimerModal onClose={() => this.toggleDisclaimer()}>
+          {disclaimerComponents[this.state.disclaimer] || <div>wait, what?</div>}
+        </DisclaimerModal>}
       </Layout>
     );
   }
@@ -207,17 +235,38 @@ SolutionDetailPage.defaultProps = {
   project: {}
 };
 
+const mix = (bmeTree, categories) => {
+  if (!bmeTree || !categories) {
+    return null;
+  }
+
+  // Ugly Number() casts used below because `id` types don't match across requests to different endpoints
+  const presentBmeIds = bmeTree.map((bme) => bme.id);
+  return {
+    bmeTree: [...bmeTree, ...categories.filter(category => !presentBmeIds.includes(Number(category.id))).map(category => ({
+      id: Number(category.id),
+      name: category.name,
+      slug: category.slug,
+      children: []
+    }))]
+  };
+};
+
 export default withRedux(
   store,
   state => ({
     // projects
     isLoading: (state.project.loading || isEmpty(state.project.detail)),
-    project: state.project.detail,
+    project: {
+      ...state.project.detail,
+      ...mix(state.project.detail.bmeTree, state.category.bme.list)
+    },
     projectFilters: state.project.filters
   }),
   dispatch => ({
     // projects
     getProjectDetail(filters) { dispatch(getProjectDetail(filters)); },
+    getBmeCategories() { dispatch(getBmeCategories()) },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
     removeProjectDetail() { dispatch(removeProjectDetail()); }
   })

@@ -42,28 +42,22 @@ class Map extends React.Component {
     this.setAttribution();
     this.setZoomControl();
     this.setBasemap();
+    this.setLayerManager(this.props);
+    this.addLayers(this.props.activeLayer, this.props.filters);
   }
 
   componentWillReceiveProps(nextProps) {
     const filtersChanged = !isEqual(nextProps.filters, this.props.filters);
     const layerDataChanged = !isEqual(nextProps.layerData, this.props.layerData);
-    // const activeLayerChanged = !isEqual(nextProps.activeLayer, this.props.activeLayer);
-    const categoriesChanged = !isEqual(nextProps.categories, this.props.categories);
 
-    // if ((filtersChanged || activeLayerChanged) && this.layerManager) {
-    //   this.removeLayers();
-    //   this.addLayers(nextProps.activeLayer, nextProps.filters);
-    // }
-
-    if (layerDataChanged) {
-      this.setMarkers(nextProps.layerData);
-    }
-
-    if (categoriesChanged || filtersChanged) {
-      // Add layers
+    if (filtersChanged) {
       if (this.layerManager) this.removeLayers();
       this.setLayerManager(nextProps);
       this.addLayers(nextProps.activeLayer, nextProps.filters);
+    }
+
+    if (layerDataChanged) {
+      this.setMarkers(nextProps.layerData);
     }
   }
 
@@ -73,11 +67,12 @@ class Map extends React.Component {
 
   componentWillUnmount() {
     this._mounted = false;
-    this.map.remove();
+    if (this.map) this.map.remove();
+    this.props.removeDataLayer();
   }
 
   // SETTERS
-  setLayerManager({ getLayer, filters, categories }) {
+  setLayerManager({ getLayer, filters }) {
     const stopLoading = () => {
       // Don't execute callback if component has been unmounted
       if (this._mounted) {
@@ -91,8 +86,7 @@ class Map extends React.Component {
       onLayerAddedSuccess: stopLoading,
       onLayerAddedError: stopLoading,
       getLayer,
-      filters,
-      categories
+      filters
     });
   }
 
@@ -166,16 +160,15 @@ class Map extends React.Component {
 }
 
 Map.propTypes = {
-  categories: PropTypes.array,
   LayerManager: PropTypes.func,
   activeLayer: PropTypes.array, // eslint-disable-line react/no-unused-prop-types
   filters: PropTypes.object,
   layerData: PropTypes.object,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  removeDataLayer: PropTypes.func
 };
 
 Map.defaultProptypes = {
-  categories: [],
   activeLayer: [],
   filters: {},
   layerData: {}

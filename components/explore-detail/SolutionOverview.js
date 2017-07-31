@@ -16,7 +16,10 @@ export default function SolutionOverview({ project }) {
         <div className='column large-12'>
           <div className='c-detail-section'>
             <div className='content'>
-              <BmeOverview projectId={project.id} bmes={project.bmeTree} itemWidth='25'  />
+              <BmeOverview
+                projectId={project.id}
+                bmes={project.bmeTree}
+              />
             </div>
           </div>
         </div>

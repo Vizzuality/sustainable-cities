@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: space-between;
 
   ul {
     margin-bottom: 50px;
@@ -17,14 +18,6 @@
     width: 40px;
     height: 5px;
     margin-bottom: 20px;
-  }
-
-  .c-bme-overview-item-50 {
-    width: 50%;
-  }
-
-  .c-bme-overview-item-25 {
-    width: 25%;
   }
 
 }

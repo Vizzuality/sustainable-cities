@@ -5,14 +5,14 @@ import { Link } from 'routes';
 
 import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
 
-export default function BmeOverview({ projectId, bmes, itemWidth }) {
+export default function BmeOverview({ projectId, bmes }) {
   return (
     <div className="c-bme-overview">
       {bmes.map((bme) => {
 
         let titleColor = CATEGORY_FIRST_LEVEL_COLORS[bme.slug] || CATEGORY_FIRST_LEVEL_COLORS.default;
 
-        return (<div className={`c-bme-overview-item-${itemWidth}`} key={bme.id}>
+        return (<div className="c-bme-overview-item" key={bme.id}>
           <div className="c-bme-overview-strip" style={{ backgroundColor: titleColor }} />
           <Link route='solution-detail' params={{ id: projectId, subPage: bme.slug }}>
             <a className="c-text -fs-extrabig -fw-light">{bme.name}</a>
@@ -36,10 +36,8 @@ export default function BmeOverview({ projectId, bmes, itemWidth }) {
 BmeOverview.propTypes = {
   projectId: PropTypes.string.isRequired,
   bmes: PropTypes.array,
-  itemWidth: PropTypes.oneOf(['25', '50'])
 };
 
 BmeOverview.defaultProps = {
   bmes: [],
-  itemWidth: '50'
 };

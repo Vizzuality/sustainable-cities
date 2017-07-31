@@ -21,11 +21,13 @@ import {
 } from 'modules/project';
 import { getBmes, setBmeFilters } from 'modules/bme';
 import { getLayer, removeDataLayer } from 'modules/map';
+import { getCities } from 'modules/city';
 
 // selectors
 import { getCategoryTabs, getAllCategories } from 'selectors/category';
 import { getParsedProjects } from 'selectors/project';
 import { getParsedBmes } from 'selectors/bme';
+import { getParsedCities } from 'selectors/city';
 
 // components
 import Page from 'pages/Page';
@@ -55,6 +57,10 @@ class ExploreIndex extends Page {
       // sets Solutions as default section
       Router.replaceRoute('explore-index', { category: 'solutions' });
     } else {
+      if (category === 'cities') {
+        this.props.getCities();
+      }
+
       this._setProjectFilters(this.props);
       this._setBmeFilters(this.props);
     }
@@ -103,6 +109,26 @@ class ExploreIndex extends Page {
     });
   }
 
+  _setItemsToDisplay() {
+    const { queryParams, parsedBmes, parsedCities, parsedProjects } = this.props;
+    const { category } = queryParams;
+    let items = [];
+
+    switch (category) {
+      case 'cities':
+        items = parsedCities;
+        break;
+
+      case 'solutions':
+        items = parsedProjects;
+        break;
+      default:
+        items = parsedBmes;
+    }
+
+    return items;
+  }
+
 
   render() {
     const {
@@ -110,16 +136,16 @@ class ExploreIndex extends Page {
       categoryTabs,
       loadingProjects,
       loadingBmes,
-      parsedProjects,
-      parsedBmes,
+      loadingCities,
       queryParams
     } = this.props;
     const { category, subCategory, children } = queryParams;
-    const isLoading = loadingProjects || loadingBmes;
+    const isLoading = loadingProjects || loadingBmes || loadingCities;
     const isSolutionView = category === 'solutions';
-    const items = isSolutionView ? parsedProjects : parsedBmes;
+    const isBmeView = (category !== 'solutions') && (category !== 'cities');
+    const isCityView = category === 'cities';
+    const items = this._setItemsToDisplay();
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
-
 
     return (
       <Layout
@@ -132,25 +158,26 @@ class ExploreIndex extends Page {
           items={categoryTabs}
           queryParams={queryParams}
         />
-        <div className="l-map-container">
-          <Map
-            activeLayer={[activeLayer]}
-            LayerManager={LayerManager}
-            categories={categories}
-            filters={queryParams}
-            getLayer={this.props.getLayer}
-            layerData={this.props.layer}
-            removeDataLayer={this.props.removeDataLayer}
-            loading={this.props.loadingMap}
-          />
-          {categories.length > 0 &&
-            <Legend
+        {!isCityView &&
+          <div className="l-map-container">
+            <Map
+              activeLayer={[activeLayer]}
+              LayerManager={LayerManager}
               categories={categories}
               filters={queryParams}
-              activeLayer={activeLayer}
+              getLayer={this.props.getLayer}
               layerData={this.props.layer}
-            />}
-        </div>
+              removeDataLayer={this.props.removeDataLayer}
+              loading={this.props.loadingMap}
+            />
+            {categories.length > 0 &&
+              <Legend
+                categories={categories}
+                filters={queryParams}
+                activeLayer={activeLayer}
+                layerData={this.props.layer}
+              />}
+          </div>}
         <div className="row">
           <div className="column small-12">
             {isLoading ?
@@ -158,8 +185,10 @@ class ExploreIndex extends Page {
               <ItemGallery
                 items={items}
                 isSolutionView={isSolutionView}
-                slider={(isSolutionView && !subCategory) || (!isSolutionView && !children)}
-                showAll={(isSolutionView && !subCategory) || (!isSolutionView && !children)}
+                slider={(isSolutionView && !subCategory) ||
+                  (isBmeView && !children) || (!isCityView)}
+                showAll={(isSolutionView && !subCategory) ||
+                  (isBmeView && !children)}
               />}
           </div>
         </div>
@@ -185,7 +214,10 @@ ExploreIndex.propTypes = {
   queryParams: PropTypes.object.isRequired,
   // map
   loadingMap: PropTypes.bool,
-  layer: PropTypes.object
+  layer: PropTypes.object,
+  // cities
+  loadingCities: PropTypes.bool,
+  getCities: PropTypes.func
 };
 
 ExploreIndex.defaultProps = {
@@ -220,7 +252,10 @@ export default withRedux(
     bmeFilters: state.bme.filters,
     // map
     loadingMap: state.map.loading,
-    layer: state.map.layer
+    layer: state.map.layer,
+    // cities
+    loadingCities: state.city.loading,
+    parsedCities: getParsedCities(state)
   }),
   dispatch => ({
     // categories
@@ -237,6 +272,8 @@ export default withRedux(
     setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
     // map
     getLayer(layerSpec) { dispatch(getLayer(layerSpec)); },
-    removeDataLayer() { dispatch(removeDataLayer()); }
+    removeDataLayer() { dispatch(removeDataLayer()); },
+    // cities
+    getCities() { dispatch(getCities()); }
   })
 )(ExploreIndex);

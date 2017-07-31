@@ -17,21 +17,35 @@
 @import 'layout';
 @import 'animations';
 
+@import "leaflet/dist/leaflet.css";
+
 // - page
 // @import 'components/page/section';
 
 // Components
 // - layout
-// @import 'components/layout/layout';
+@import 'components/layout/l-home';
+@import 'components/layout/map-container';
 // - page
 @import 'components/page/explore-detail/detail';
 @import 'components/page/explore-detail/section-detail';
+@import 'components/page/explore-detail/related-content';
+@import 'components/page/explore-detail/contact-form';
+@import 'components/page/explore-detail/summary-section';
 @import 'components/page/explore-detail/cloud';
 @import 'components/page/explore-detail/itemization';
+@import 'components/page/explore-detail/itemlist';
+@import 'components/page/explore-detail/bme-overview';
 
-@import 'components/page/home/home';
+@import 'components/page/home/call-to-action';
+@import 'components/page/home/main-link';
+@import 'components/page/home/video-wrapper';
+
+@import 'components/page/builder-index/layout';
 // @import 'components/page/section';
+
 // - common
+@import 'components/common/modal';
 @import 'components/common/title';
 @import 'components/common/texts';
 @import 'components/common/main-nav';
@@ -41,6 +55,12 @@
 @import 'components/common/grid-list';
 @import 'components/common/grid-slider';
 @import 'components/common/cover';
+@import 'components/common/download-data';
 @import 'components/common/breadcrumbs';
 @import 'components/common/button';
 @import 'components/common/item-gallery';
+@import 'components/common/spinner';
+@import 'components/common/map';
+@import 'components/common/map/legend';
+@import 'components/common/map/legend-item';
+@import 'components/common/map/marker';

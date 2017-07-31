@@ -1,0 +1,126 @@
+.c-modal {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+
+  .content {
+    position: relative;
+    background-color: $color-5;
+    width: 900px;
+    margin: 0px auto;
+
+    header {
+      background-color: $color-white;
+      h1 {
+        padding: 50px 50px 30px 50px;
+      }
+
+      .c-tabs .row {
+        margin-left: 50px;
+        .tab-item + .tab-item {
+          margin-left: 50px;
+        }
+      }
+    }
+
+    .wrapper { overflow-x: hidden; }
+
+    .tab-content {
+      position: relative;
+      display: flex;
+      width: 300%;
+
+      &.current-info { }
+      &.current-enabling-conditions { left: -100%; }
+      &.current-comment { left: -200%; }
+    }
+
+    section {
+      position: relative;
+      width: 50%;
+      padding-left: 50px;
+      padding-right: 50px;
+      h2 {
+        margin: 32px 0px 16px 0px;
+        color: rgba(44,47,51,0.9);
+      }
+
+      p, li {
+        opacity: 0.8;
+      }
+
+      textarea {
+        width: 100%;
+        height: 276px;
+      }
+
+      .maisumavezOverlay {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba($color-5, 0.8);
+
+        p {
+          text-align: center;
+          width: 45%;
+        }
+      }
+    }
+
+    .actions {
+      margin: 50px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      button {
+        width: 140px;
+
+        & + button {
+          margin-left: 20px;
+        }
+      }
+    }
+
+    .dismiss {
+      position: absolute;
+      top: 34px;
+      right: -20px;
+      height: 40px;
+      width: 40px;
+      line-height: 42px;
+      font-size: $font-size-bigger;
+      font-weight: $font-weight-light;
+      margin: 0px auto;
+      text-align: center;
+      align-items: center;
+      box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
+      background-color: #FFFFFF;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+
+  .next, .prev {
+    border: solid $color-white;
+    border-width: 3px 3px 0px 0px;
+    width: 25px;
+    height: 25px;
+    top: 50%;
+    position: absolute;
+    cursor: pointer;
+  }
+
+  .next { right: -60px; transform: rotate(45deg); }
+  .prev { left: -60px; transform: rotate(-135deg); }
+}

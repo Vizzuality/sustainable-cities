@@ -40,7 +40,7 @@ export default class Tab extends React.Component {
   renderTab(item, index) {
     const { allowAll, queryParams } = this.props;
     const { route, category } = queryParams;
-    const { children, label, query } = item;
+    const { children, label, query, id } = item;
 
     if (children) {
       let subMenuOptions = children;
@@ -57,7 +57,8 @@ export default class Tab extends React.Component {
           attachment="top center"
           targetAttachment="top center"
           targetOffset="-15px 0"
-          key={label}
+          key={id}
+          classPrefix="tab-wrap"
           constraints={[{
             to: 'target',
             attachment: 'together'
@@ -95,7 +96,7 @@ export default class Tab extends React.Component {
       <li
         className={classnames('tab-item', { '-current': query.category === category })}
         role="menuitem" tabIndex="-1"
-        key={label}
+        key={id}
       >
         <Link
           route={route}

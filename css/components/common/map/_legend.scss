@@ -1,0 +1,59 @@
+.c-legend {
+  position: absolute;
+  left: 100px;
+  bottom: 50px;
+  max-width: 430px;
+  z-index: $z-index-4;
+
+  > .toggle-container {
+      background: transparent;
+
+      > .toggle {
+      display: inline-flex;
+      align-items: center;
+      height: 25px;
+      padding: 0 25px;
+
+      box-shadow: 0 1px 3px 0 rgba($color-black, .15);
+      background: $color-5;
+      cursor: pointer;
+
+      &::after {
+        @include arrow(10px, 2px, $color-text-1, 'up');
+        transform: rotate(45deg) translate(0, 2px);
+      }
+    }
+  }
+
+
+  > .legend-content {
+    display: none;
+    padding: 15px 25px;
+    background: $color-white;
+    box-shadow: 0 1px 3px 0 rgba($color-black, .15);
+  }
+
+  .legend-title {
+    display: inline-block;
+    margin: 0 0 5px;
+
+    color: $color-text-4;
+    font-size: $font-size-bigger;
+    font-weight: $font-weight-light;
+    line-height: 28px;
+  }
+
+  &.-expanded {
+
+    > .legend-content {
+      display: inline-block;
+    }
+
+    .toggle {
+      &::after {
+        @include arrow(10px, 2px, $color-text-1, 'down');
+        transform: rotate(45deg) translate(0, -2px);
+      }
+    }
+  }
+}

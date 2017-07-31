@@ -1,38 +1,65 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
+import isEmpty from 'lodash/isEmpty';
 
 // Redux
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
 // modules
-import { getBmeDetail, setBmeFilters, removeBmeDetail } from 'modules/bme';
+import { getBmeDetail, removeBmeDetail } from 'modules/bme';
 
 // components
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
 import Breadcrumbs from 'components/common/Breadcrumbs';
+import DownloadData from 'components/common/DownloadData';
+import RelatedContent from 'components/explore-detail/RelatedContent';
 import BmeDetail from 'components/explore-detail/BmeDetail';
 
-class BmeDetailPage extends Page {
-  static setBreadcrumbs(bme) {
-    if (!bme) return null;
-
-    // TO-DO
-    return [];
+const flatten = (category, accumulator = []) => {
+  if (category) {
+    return flatten(category.parent, [category, ...accumulator]);
+  } else {
+    return accumulator;
   }
+};
+
+const getBreadcrumbs = (bme) => {
+  if (isEmpty(bme)) {
+    return null;
+  }
+
+  const routeName = 'explore-index';
+  const routeProps = ['category', 'subCategory', 'children'];
+  const flattened = flatten(bme.categories.find((c) => c.categoryType === 'Bme'));
+  const breadcrumbs = [];
+
+  flattened.forEach((current) => {
+    breadcrumbs.push({
+      name: current.name,
+      route: routeName,
+      params: {
+        ...breadcrumbs.map(b => b.params).reduce((current, accumulator) => ({
+          ...accumulator,
+          ...current
+        }), {}),
+        [routeProps[breadcrumbs.length]]: current.slug
+      }
+    });
+  });
+
+  return breadcrumbs;
+}
+
+class BmeDetailPage extends Page {
 
   componentWillMount() {
     const { id } = this.props.queryParams;
 
-    this.props.setBmeFilters({ detailId: id });
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return (!isEqual(this.props.bmeFilters, nextProps.bmeFilters)) ||
-      (!isEqual(this.props.bme, nextProps.bme));
+    this.props.getBmeDetail({ detailId: id });
   }
 
   componentDidUpdate(prevProps) {
@@ -49,37 +76,53 @@ class BmeDetailPage extends Page {
   }
 
   render() {
-    const { bme, loadingBmes } = this.props;
-    const breadcrumbsItems = BmeDetailPage.setBreadcrumbs(bme);
+    const { bme, isLoading } = this.props;
 
-    const breadcrumbs = breadcrumbsItems ?
+    const breadcrumbsItems = !isEqual(bme, {}) ?
+      getBreadcrumbs(bme) : [];
+    const breadcrumbs = !isEqual(breadcrumbsItems, []) ?
+
       <Breadcrumbs items={breadcrumbsItems} /> : null;
 
     return (
       <Layout
-        title="Business model element detail"
+        title='Business model element detail'
         queryParams={this.props.queryParams}
       >
-        <Cover
-          title={bme.name || ''}
-          breadcrumbs={breadcrumbs}
-        />
+        <div className='bme-detail-page'>
 
-        <BmeDetail
-          bme={bme}
-          isLoading={loadingBmes}
-        />
+          {isLoading && (<div>
+            Loading bme...
+          </div>)}
+
+          {!isLoading && (<div>
+            <Cover
+              size='shorter'
+              className='-blue'
+              title={bme.name || ''}
+              breadcrumbs={breadcrumbs}
+            />
+
+            <BmeDetail
+              bme={bme}
+              isLoading={isLoading}
+            />
+
+            <RelatedContent />
+
+            <DownloadData />
+
+          </div>)}
+
+        </div>
+
       </Layout>
     );
   }
 }
 
 BmeDetailPage.propTypes = {
-  // bmes
-  bme: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.array
-  ]).isRequired,
+  bme: PropTypes.object.isRequired,
   getBmeDetail: PropTypes.func,
   removeBmeDetail: PropTypes.func,
   queryParams: PropTypes.object.isRequired
@@ -91,16 +134,12 @@ BmeDetailPage.defaultProps = {
 
 export default withRedux(
   store,
-  state => ({
-    // bmes
-    loadingBmes: state.bme.loading,
-    bme: state.bme.list,
-    bmeFilters: state.bme.filters
+  (state) => ({
+    isLoading: state.bme.loading || isEmpty(state.bme.detail),
+    bme: state.bme.detail,
   }),
-  dispatch => ({
-    // bme
+  (dispatch) => ({
     getBmeDetail(filters) { dispatch(getBmeDetail(filters)); },
-    setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
     removeBmeDetail() { dispatch(removeBmeDetail()); }
   })
 )(BmeDetailPage);

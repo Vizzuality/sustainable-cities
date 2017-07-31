@@ -1,0 +1,40 @@
+.l-home-header {
+  padding: 150px 0 80px 0;
+  background-image: url('/static/images/home-header.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @media (min-width: $screen-l) {
+    padding: 320px 0 80px 0;
+  }
+}
+
+.l-home-intro {
+  padding-bottom: 50px;
+
+  @media (min-width: $screen-m) {
+    padding-bottom: 80px;
+  }
+}
+
+.l-home-main-links {
+  padding-top: 50px;
+
+  @media (min-width: $screen-m) {
+    padding: 50px 0 80px 0;
+  }
+}
+
+.l-home-call-to-action {
+  padding: 150px 0 125px 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  &.-explore {
+    background-image: url('/static/images/home-module-explore.jpg');
+  }
+
+  &.-builder {
+    background-image: url('/static/images/home-module-builder.png');
+  }
+}

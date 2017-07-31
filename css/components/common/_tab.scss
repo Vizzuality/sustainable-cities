@@ -16,6 +16,7 @@
     height: 100%;
 
     > .literal {
+      cursor: pointer;
       display: flex;
       align-items: center;
       height: 100%;
@@ -42,6 +43,7 @@
 
       > .literal {
         color: $color-text-2;
+        cursor: default;
       }
     }
   }
@@ -52,8 +54,13 @@
     }
 
     .tab-list {
-      justify-content: space-between;
+      justify-content: space-around;
       width: 100%;
     }
   }
+}
+
+// wrap where the component is setted. Used by Tether
+.tab-wrap-element {
+  z-index: $z-index-4;
 }

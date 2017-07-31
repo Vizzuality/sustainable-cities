@@ -183,7 +183,7 @@ class SolutionDetailPage extends Page {
       'investment-component': <InvestmentComponent />,
       'financial-product': <FinancialProduct />
     };
-console.log(project);
+
     return (
       <Layout
         title="Solution detail"

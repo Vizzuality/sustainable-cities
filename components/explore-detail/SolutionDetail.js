@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // components
 import DetailSection from 'components/explore-detail/DetailSection';
-import Itemization from 'components/explore-detail/Itemization';
+import ReportedImpact from 'components/explore-detail/ReportedImpact';
 import ItemList from 'components/explore-detail/ItemList';
 import BmeOverview from 'components/explore-detail/project/BmeOverview';
 
@@ -25,11 +25,7 @@ export default function SolutionDetail({ project }) {
   const sourcesList = externalSources ?
     externalSources.map(source => ({ id: source.id, name: source.name, link: source.webUrl })) : [];
 
-  const impactItems = impacts.filter(i => !!i.category).map(impact => ({
-    id: impact.id,
-    name: impact.category.name,
-    children: impacts.map(imp => ({ id: imp.id, name: `${imp.impactUnit}: ${imp.impactValue}` }))
-  }));
+  const impactItems = impacts.filter(i => !!i.category);
 
   return (
     <div className="solution-detail">
@@ -130,7 +126,7 @@ export default function SolutionDetail({ project }) {
           <DetailSection
             title="What is the reported impact to date (as of 2016)"
           >
-            <Itemization
+            <ReportedImpact
               items={impactItems}
             />
           </DetailSection>}

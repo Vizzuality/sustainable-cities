@@ -1,6 +1,10 @@
 
+import { render } from 'react-dom';
 import GeoJSON from 'geojson';
 import { groupProjectsByCity } from 'utils/project';
+
+// components
+import Infowindow from 'components/common/map/Infowindow';
 
 // constants
 import { CATEGORY_FIRST_LEVEL_COLORS, CATEGORY_SOLUTIONS_COLORS } from 'constants/category';
@@ -13,20 +17,18 @@ const DEFAULT_MARKER_OPTIONS = {
   radius: 5,
   fillColor: '#f00',
   fillOpacity: 1,
-  weight: 0
+  weight: 1,
+  color: '#fff'
 };
 
 export default class MarkerLayer {
-  constructor(data, map, filters) {
+  constructor(data, map, filters, categories) {
     this._data = data;
     this._map = map;
     this._filters = filters;
+    this._categories = categories;
 
     return this.render();
-  }
-
-  parseData(data) {
-    return groupProjectsByCity(data);
   }
 
   parseMarkerOptions({ projects }) {
@@ -40,7 +42,7 @@ export default class MarkerLayer {
       // temporary solution. Now is taking the first project to set the color
       // in case a city has more than one.
       const project = projects[0] || {};
-      const categoryLevel2 = project['category-level-2'];
+      const categoryLevel2 = project.categoryLevel2;
 
       if (!categoryLevel2) {
         return {
@@ -70,12 +72,22 @@ export default class MarkerLayer {
   }
 
   render() {
-    const parsedData = this.parseData(this._data);
-    const geojson = GeoJSON.parse(parsedData, { Point: ['lat', 'lng'] });
+    const { category } = this._filters;
+    const projectsByCity = groupProjectsByCity(this._data);
+    const geojson = GeoJSON.parse(projectsByCity, { Point: ['lat', 'lng'] });
     return L.geoJson(geojson, {
       pointToLayer: (feature, latlng) =>
         new L.CircleMarker(latlng, this.parseMarkerOptions(feature.properties)),
-      onEachFeature: (feature, layer) => layer.bindPopup(feature.properties.name)
+      onEachFeature: (feature, layer) => layer.bindPopup(
+        render(
+          Infowindow({
+            ...feature.properties,
+            type: category !== 'solutions' ? 'bme' : 'solution',
+            filters: this._filters,
+            categories: this._categories
+          })
+        , window.document.createElement('div'))
+      )
     }).addTo(this._map);
   }
 }

@@ -136,6 +136,7 @@ class ExploreIndex extends Page {
           <Map
             activeLayer={[activeLayer]}
             LayerManager={LayerManager}
+            categories={categories}
             filters={queryParams}
             getLayer={this.props.getLayer}
             layerData={this.props.layer}

@@ -151,7 +151,7 @@ export default function SolutionDetail({ project }) {
           >
             <BmeOverview
               projectId={project.id}
-              bmes={bmeTree}
+              bmeTree={bmeTree}
             />
           </DetailSection>}
 

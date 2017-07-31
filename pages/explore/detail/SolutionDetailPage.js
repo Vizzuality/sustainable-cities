@@ -11,6 +11,7 @@ import { store } from 'store';
 
 // modules
 import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
+import { getBmeCategories } from 'modules/category';
 
 // components
 import Page from 'pages/Page';
@@ -66,6 +67,7 @@ class SolutionDetailPage extends Page {
     if (!isEqual(prevProps.projectFilters, projectFilters)) {
       const { detailId } = projectFilters;
       this.props.getProjectDetail(detailId);
+      this.props.getBmeCategories();
     }
   }
 
@@ -109,12 +111,13 @@ class SolutionDetailPage extends Page {
   }
 
   renderContent() {
-    const { project, queryParams } = this.props;
+    const { project, categories, queryParams } = this.props;
 
     if (!queryParams.subPage) {
       return (
         <SolutionDetail
           project={project}
+          categories={categories}
         />
       )
     } else if (queryParams.subPage === "overview") {
@@ -134,7 +137,8 @@ class SolutionDetailPage extends Page {
   }
 
   render() {
-    const { project, isLoading } = this.props;
+    const { project, categories, isLoading } = this.props;
+
     const breadcrumbsItems = SolutionDetailPage.setBreadcrumbs(project);
     const breadcrumbs = breadcrumbsItems ?
       <Breadcrumbs items={breadcrumbsItems} /> : null;
@@ -231,17 +235,38 @@ SolutionDetailPage.defaultProps = {
   project: {}
 };
 
+const mix = (bmeTree, categories) => {
+  if (!bmeTree || !categories) {
+    return null;
+  }
+
+  // Ugly Number() casts used below because `id` types don't match across requests to different endpoints
+  const presentBmeIds = bmeTree.map((bme) => bme.id);
+  return {
+    bmeTree: [...bmeTree, ...categories.filter(category => !presentBmeIds.includes(Number(category.id))).map(category => ({
+      id: Number(category.id),
+      name: category.name,
+      slug: category.slug,
+      children: []
+    }))]
+  };
+};
+
 export default withRedux(
   store,
   state => ({
     // projects
     isLoading: (state.project.loading || isEmpty(state.project.detail)),
-    project: state.project.detail,
+    project: {
+      ...state.project.detail,
+      ...mix(state.project.detail.bmeTree, state.category.bme.list)
+    },
     projectFilters: state.project.filters
   }),
   dispatch => ({
     // projects
     getProjectDetail(filters) { dispatch(getProjectDetail(filters)); },
+    getBmeCategories() { dispatch(getBmeCategories()) },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
     removeProjectDetail() { dispatch(removeProjectDetail()); }
   })

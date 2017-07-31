@@ -4,10 +4,10 @@ import { Link } from 'routes';
 
 import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
 
-export default function BmeOverview({ projectId, bmes }) {
+export default function BmeOverview({ projectId, bmeTree }) {
   return (
     <div className="c-bme-overview">
-      {bmes.map((bme) => {
+      {bmeTree.map((bme) => {
         const titleColor = CATEGORY_FIRST_LEVEL_COLORS[bme.slug] ||
           CATEGORY_FIRST_LEVEL_COLORS.default;
 
@@ -34,9 +34,5 @@ export default function BmeOverview({ projectId, bmes }) {
 
 BmeOverview.propTypes = {
   projectId: PropTypes.string.isRequired,
-  bmes: PropTypes.array
-};
-
-BmeOverview.defaultProps = {
-  bmes: []
+  bmeTree: PropTypes.array.isRequired
 };

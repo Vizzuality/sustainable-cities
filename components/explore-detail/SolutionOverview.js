@@ -18,7 +18,7 @@ export default function SolutionOverview({ project }) {
             <div className="content">
               <BmeOverview
                 projectId={project.id}
-                bmes={project.bmeTree}
+                bmeTree={project.bmeTree}
               />
             </div>
           </div>

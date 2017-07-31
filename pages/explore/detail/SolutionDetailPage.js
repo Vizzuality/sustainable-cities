@@ -25,6 +25,13 @@ import SolutionDetail from 'components/explore-detail/SolutionDetail';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import SolutionCategory from 'components/explore-detail/SolutionCategory';
 
+// modal and its content
+import DisclaimerModal from 'components/explore-detail/DisclaimerModal';
+import FinancialProduct from 'components/explore-detail/modal-content/FinancialProduct';
+import FundingSource from 'components/explore-detail/modal-content/FundingSource';
+import DeliveryMechanism from 'components/explore-detail/modal-content/DeliveryMechanism';
+import InvestmentComponent from 'components/explore-detail/modal-content/InvestmentComponent';
+
 class SolutionDetailPage extends Page {
   static setBreadcrumbs(project) {
     if (!Object.keys(project).length) return null;
@@ -44,14 +51,13 @@ class SolutionDetailPage extends Page {
     ];
   }
 
+  state = {
+    disclaimer: false
+  };
+
   componentWillMount() {
     const { id } = this.props.queryParams;
     this.props.setProjectFilters({ detailId: id });
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return (!isEqual(this.props.projectFilters, nextProps.projectFilters)) ||
-      (!isEqual(this.props.project, nextProps.project));
   }
 
   componentDidUpdate(prevProps) {
@@ -67,6 +73,13 @@ class SolutionDetailPage extends Page {
     this.props.removeProjectDetail();
   }
 
+  toggleDisclaimer(subPage) {
+    this.setState({ disclaimer: subPage }, () => {
+      // prevent scrolling while the modal is open
+      document.getElementsByTagName('body')[0].classList.toggle('no-overflow', !!subPage);
+    })
+  }
+
   renderTabs(tabs) {
     const tabEqual = (current, tab) => {
       return !!(
@@ -76,22 +89,23 @@ class SolutionDetailPage extends Page {
       )
     };
 
-		return (<div className="c-tabs -explore">
-			<div className="row">
-				 <ul className="tab-list">
-					 {tabs.map((tab, n) => (
-						 <li
-							 key={n}
-							 className={classnames("tab-item", { "-current": tabEqual(this.props.queryParams, tab.queryParams) })}
-						 >
+    return (<div className="c-tabs -explore">
+      <div className="row">
+         <ul className="tab-list">
+           {tabs.map((tab, n) => (
+             <li
+               key={n}
+               className={classnames("tab-item", { "-current": tabEqual(this.props.queryParams, tab.queryParams) })}
+             >
               <Link route={tab.queryParams.route} params={tab.queryParams.params}>
-							  <a className="literal">{tab.label}</a>
+                <a className="literal">{tab.label}</a>
               </Link>
-						 </li>
+             {tab.className === "info" && (<div className="disclaimer-icon" onClick={() => this.toggleDisclaimer(tab.queryParams.params.subPage)}>(i)</div>)}
+            </li>
          ))}
-				 </ul>
-			</div>
-		</div>);
+         </ul>
+      </div>
+    </div>);
   }
 
   renderContent() {
@@ -127,7 +141,7 @@ class SolutionDetailPage extends Page {
 
     const defaultTabItems = [{
       label: 'Project Details',
-			queryParams: {
+      queryParams: {
         route: 'solution-detail',
         params: {
           id: project.id
@@ -135,7 +149,7 @@ class SolutionDetailPage extends Page {
       },
     }, {
       label: 'Overview',
-			queryParams: {
+      queryParams: {
         route: 'solution-detail',
         params: {
           id: project.id,
@@ -144,7 +158,7 @@ class SolutionDetailPage extends Page {
       }
     }];
 
-		const tabItems = [...defaultTabItems, ...(project.bmeTree || []).map((bme) => ({
+    const tabItems = [...defaultTabItems, ...(project.bmeTree || []).map((bme) => ({
       label: bme.name,
       className: 'info',
       queryParams: {
@@ -155,6 +169,13 @@ class SolutionDetailPage extends Page {
         }
       }
     }))];
+
+    const disclaimerComponents = {
+      'funding-source': <FundingSource />,
+      'delivery-mechanism': <DeliveryMechanism />,
+      'investment-component': <InvestmentComponent />,
+      'financial-product': <FinancialProduct />
+    };
 
     return (
       <Layout
@@ -191,6 +212,9 @@ class SolutionDetailPage extends Page {
 
         </div>
 
+        {this.state.disclaimer && <DisclaimerModal onClose={() => this.toggleDisclaimer()}>
+          {disclaimerComponents[this.state.disclaimer] || <div>wait, what?</div>}
+        </DisclaimerModal>}
       </Layout>
     );
   }

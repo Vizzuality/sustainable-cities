@@ -16,13 +16,45 @@ export default class HomePage extends Page {
         <section className="l-home-header">
           <div className="row">
             <div className="columns medium-8 medium-offset-2">
-              <h1 className="c-title -fs-huge -light -fw-thin">An initiative to accelerate the implementation of <span className="c-title -fs-huge -highlight-yellow -fw-thin">sustainable urban solutions</span> through new business models</h1>
+              <h1 className="c-title -fs-huge -light -fw-thin">Financing Sustainable Cities</h1>
+              <h2 className="c-title -fs-huge -light -fw-thin">An initiative to help cities develop business models to accelerate sustainable urban solutions</h2>
+              <ul className="solutions-list">
+                <li>
+                  <svg className="icon"><use xlinkHref="#icon-home-build" /></svg>
+                  <span>Bike sharing systems</span>
+                </li>
+                <li>
+                  <svg className="icon"><use xlinkHref="#icon-home-build" /></svg>
+                  <span>Bus rapid transit systems</span>
+                </li>
+                <li>
+                  <svg className="icon"><use xlinkHref="#icon-home-build" /></svg>
+                  <span>Low -and zero- emissions buses</span>
+                </li>
+                <li>
+                  <svg className="icon"><use xlinkHref="#icon-home-build" /></svg>
+                  <span>Efficient new buildings</span>
+                </li>
+                <li>
+                  <svg className="icon"><use xlinkHref="#icon-home-build" /></svg>
+                  <span>Municipal building retrofits</span>
+                </li>
+                <li>
+                  <svg className="icon"><use xlinkHref="#icon-home-build" /></svg>
+                  <span>Transit-oriented development</span>
+                </li>
+              </ul>
             </div>
-
           </div>
         </section>
         <section className="l-home-main-links">
           <ul className="row">
+            <li className="columns small-12 medium-4"><Link route="explore-index">
+              <a className="main-link">
+                <svg className="icon"><use xlinkHref="#icon-home-about" /></svg>
+                <p className="c-title -dark -fs-extrabig -fw-light">Learn more about the initiative</p>
+              </a>
+            </Link></li>
             <li className="columns small-12 medium-4"><Link route="explore-index">
               <a className="main-link">
                 <svg className="icon"><use xlinkHref="#icon-home-explore" /></svg>
@@ -33,12 +65,6 @@ export default class HomePage extends Page {
               <a className="main-link">
                 <svg className="icon"><use xlinkHref="#icon-home-build" /></svg>
                 <p className="c-title -dark -fs-extrabig -fw-light">Design a business model</p>
-              </a>
-            </Link></li>
-            <li className="columns small-12 medium-4"><Link route="explore-index">
-              <a className="main-link">
-                <svg className="icon"><use xlinkHref="#icon-home-about" /></svg>
-                <p className="c-title -dark -fs-extrabig -fw-light">Learn more about the initiative</p>
               </a>
             </Link></li>
           </ul>

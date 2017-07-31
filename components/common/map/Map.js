@@ -49,8 +49,9 @@ class Map extends React.Component {
   componentWillReceiveProps(nextProps) {
     const filtersChanged = !isEqual(nextProps.filters, this.props.filters);
     const layerDataChanged = !isEqual(nextProps.layerData, this.props.layerData);
+    const categoriesChanged = !isEqual(nextProps.categories, this.props.categories);
 
-    if (filtersChanged) {
+    if (filtersChanged || categoriesChanged) {
       if (this.layerManager) this.removeLayers();
       this.setLayerManager(nextProps);
       this.addLayers(nextProps.activeLayer, nextProps.filters);
@@ -72,7 +73,7 @@ class Map extends React.Component {
   }
 
   // SETTERS
-  setLayerManager({ getLayer, filters }) {
+  setLayerManager({ getLayer, filters, categories }) {
     const stopLoading = () => {
       // Don't execute callback if component has been unmounted
       if (this._mounted) {
@@ -85,6 +86,7 @@ class Map extends React.Component {
     this.layerManager = new this.props.LayerManager(this.map, {
       onLayerAddedSuccess: stopLoading,
       onLayerAddedError: stopLoading,
+      categories,
       getLayer,
       filters
     });
@@ -162,6 +164,7 @@ class Map extends React.Component {
 Map.propTypes = {
   LayerManager: PropTypes.func,
   activeLayer: PropTypes.array, // eslint-disable-line react/no-unused-prop-types
+  categories: PropTypes.array,
   filters: PropTypes.object,
   layerData: PropTypes.object,
   loading: PropTypes.bool,
@@ -170,6 +173,7 @@ Map.propTypes = {
 
 Map.defaultProptypes = {
   activeLayer: [],
+  categories: [],
   filters: {},
   layerData: {}
 };

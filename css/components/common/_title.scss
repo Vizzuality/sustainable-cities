@@ -27,6 +27,10 @@
   }
 
   // sizes
+  &.-fs-super-huge {
+    font-size: $font-size-super-huge;
+  }
+
   &.-fs-huge {
     font-size: $font-size-huge;
   }
@@ -64,5 +68,10 @@
   //Line height
   &.-lh-medium {
     line-height: 1.5em;
+  }
+
+  //Align
+  &.-center {
+    text-align: center;
   }
 }

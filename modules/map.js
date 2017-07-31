@@ -4,6 +4,7 @@ import fetch from 'isomorphic-fetch';
 /* Actions */
 // setters and getters
 const GET_LAYER = 'map/GET_LAYER';
+const REMOVE_DATA_LAYER = 'map/REMOVE_DATA_LAYER';
 // load management
 const SET_LOADING_LAYER = 'map/SET_LOADING_LAYER';
 // error management
@@ -26,6 +27,8 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, {
         layer: { id: action.payload.id, data: action.payload.data }
       });
+    case REMOVE_DATA_LAYER:
+      return Object.assign({}, state, { layer: initialState.layer });
     case SET_LOADING_LAYER:
       return Object.assign({}, state, { loading: action.payload });
     case SET_ERROR_LAYER:
@@ -65,5 +68,11 @@ export function getLayer(layerSpec = {}) {
           dispatch({ type: GET_LAYER, payload: { id, data: parsedLayerData } });
         });
     });
+  };
+}
+
+export function removeDataLayer() {
+  return (dispatch) => {
+    dispatch({ type: REMOVE_DATA_LAYER });
   };
 }

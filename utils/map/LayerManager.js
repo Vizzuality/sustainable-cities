@@ -1,8 +1,12 @@
-import GeoJSON from 'geojson';
+
+// components
+import MarkerLayer from 'components/common/map/MarkerLayer';
+
+// utils
 import substitution from 'utils/text';
 
 // Leaflet can't be imported on the server because it's not isomorphic
-const L = (typeof window !== 'undefined') ? require('leaflet') : null;
+// const L = (typeof window !== 'undefined') ? require('leaflet') : null;
 
 export default class LayerManager {
   // temporary
@@ -26,6 +30,8 @@ export default class LayerManager {
     this._onLayerAddedSuccess = options.onLayerAddedSuccess;
     this._onLayerAddedError = options.onLayerAddedError;
     this._getLayer = options.getLayer;
+    this._filters = options.filters;
+    this._categories = options.categories;
   }
 
   /*
@@ -35,6 +41,7 @@ export default class LayerManager {
     let layerConfig = {
       ...layerSpec
     };
+
     const { category, subCategory, children } = filters;
     const { queryParams } = layerConfig;
 
@@ -72,20 +79,11 @@ export default class LayerManager {
   }
 
   setMarkers(id, data) {
-    const geojson = GeoJSON.parse(data, { Point: ['lat', 'lng'] });
-    this._mapLayers[id] = L.geoJson(geojson, {
-      pointToLayer: (feature, latlng) =>
-        new L.CircleMarker(latlng, {
-          className: 'c-marker',
-          radius: 5,
-          fillColor: '#f00',
-          fillOpacity: 1,
-          color: '#000',
-          weight: 1
-        }),
-      onEachFeature: (feature, layer) => {
-        layer.bindPopup(feature.properties.name);
-      }
-    }).addTo(this._map);
+    this._mapLayers[id] = new MarkerLayer(
+      data,
+      this._map,
+      this._filters,
+      this._categories
+    );
   }
 }

@@ -42,22 +42,21 @@ class Map extends React.Component {
     this.setAttribution();
     this.setZoomControl();
     this.setBasemap();
-
-    // Add layers
-    this.setLayerManager();
+    this.setLayerManager(this.props);
     this.addLayers(this.props.activeLayer, this.props.filters);
   }
 
   componentWillReceiveProps(nextProps) {
     const filtersChanged = !isEqual(nextProps.filters, this.props.filters);
-    const activeLayerChanged = !isEqual(nextProps.activeLayer, this.props.activeLayer);
+    const layerDataChanged = !isEqual(nextProps.layerData, this.props.layerData);
 
-    if (filtersChanged || activeLayerChanged) {
-      this.removeLayers();
+    if (filtersChanged) {
+      if (this.layerManager) this.removeLayers();
+      this.setLayerManager(nextProps);
       this.addLayers(nextProps.activeLayer, nextProps.filters);
     }
 
-    if (!isEqual(nextProps.layerData, this.props.layerData)) {
+    if (layerDataChanged) {
       this.setMarkers(nextProps.layerData);
     }
   }
@@ -68,11 +67,12 @@ class Map extends React.Component {
 
   componentWillUnmount() {
     this._mounted = false;
-    this.map.remove();
+    if (this.map) this.map.remove();
+    this.props.removeDataLayer();
   }
 
   // SETTERS
-  setLayerManager() {
+  setLayerManager({ getLayer, filters }) {
     const stopLoading = () => {
       // Don't execute callback if component has been unmounted
       if (this._mounted) {
@@ -85,7 +85,8 @@ class Map extends React.Component {
     this.layerManager = new this.props.LayerManager(this.map, {
       onLayerAddedSuccess: stopLoading,
       onLayerAddedError: stopLoading,
-      getLayer: this.props.getLayer
+      getLayer,
+      filters
     });
   }
 
@@ -118,7 +119,10 @@ class Map extends React.Component {
     this.setState({
       loading: true
     });
-    this.layerManager.addLayer(layer, filters || this.props.filters);
+    this.layerManager.addLayer(
+      layer,
+      filters || this.props.filters
+    );
   }
 
   addLayers(layers, filters) {
@@ -157,11 +161,11 @@ class Map extends React.Component {
 
 Map.propTypes = {
   LayerManager: PropTypes.func,
-  activeLayer: PropTypes.array,
+  activeLayer: PropTypes.array, // eslint-disable-line react/no-unused-prop-types
   filters: PropTypes.object,
-  getLayer: PropTypes.func,
   layerData: PropTypes.object,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
+  removeDataLayer: PropTypes.func
 };
 
 Map.defaultProptypes = {

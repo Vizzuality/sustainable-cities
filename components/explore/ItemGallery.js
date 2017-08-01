@@ -14,6 +14,7 @@ export default function ItemGallery(props) {
     resultItems = resultItems.map(c => c.children)[0];
   }
 
+
   return (
     <div className="c-item-gallery">
       <ul className="gallery-list">
@@ -36,11 +37,13 @@ export default function ItemGallery(props) {
                   </Link>}
               </div>
               {(item.children || []).length > 0 ?
-                <GridSlider items={item.children} /> :
+                <GridSlider
+                  items={item.children}
+                /> :
                 <div>no data available</div>}
             </li>
           ))
-        : <GridList items={resultItems || []} />}
+        : <GridList items={resultItems || []} />}
       </ul>
     </div>
   );

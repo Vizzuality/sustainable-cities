@@ -36,11 +36,13 @@ export default function ItemGallery(props) {
                   </Link>}
               </div>
               {(item.children || []).length > 0 ?
-                <GridSlider items={item.children} /> :
+                <GridSlider
+                  items={item.children}
+                /> :
                 <div>no data available</div>}
             </li>
           ))
-        : <GridList items={resultItems || []} />}
+        : <GridList items={resultItems || []} />}
       </ul>
     </div>
   );

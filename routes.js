@@ -10,6 +10,7 @@ routes.add('home', '/', 'homepage/HomepageIndex');
 routes.add('explore-index', '/explore/:category?/:subCategory?/:children?', 'explore/ExploreIndex');
 routes.add('bme-detail', '/business-model-elements/:id', 'explore/detail/BmeDetailPage');
 routes.add('solution-detail', '/solutions/:id/:subPage?', 'explore/detail/SolutionDetailPage');
+routes.add('city-detail', '/cities/:id', 'explore/detail/CityPageDetail');
 
 // ABOUT
 routes.add('about', '/about/:section?', 'about/AboutIndex');

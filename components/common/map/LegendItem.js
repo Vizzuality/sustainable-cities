@@ -20,11 +20,15 @@ export default function LegendItem(props) {
         break;
       }
       case 'range': {
-        const { color, description, label, range, text } = item;
+        const { color, description, icon, label, range, text } = item;
         const { min, max } = range;
         content = (
           <div className="legend-item-content">
-            <span className="legend-title">{name}</span>
+            <div className="title">
+              {icon &&
+              <svg className="icon -dark -in-line-left -medium"><use xlinkHref={`#${icon}`} /></svg>}
+              <span className="legend-title">{name}</span>
+            </div>
             {label && <span className="legend-label">{label}</span>}
             {description && <p className="legend-description">{description}</p>}
             <div className="legend-range">

@@ -65,7 +65,6 @@ export function getLayer(layerSpec = {}) {
       new Deserializer({ keyForAttribute: 'camelCase' })
         .deserialize(layerData, (err, parsedLayerData) => {
           dispatch({ type: SET_LOADING_LAYER, payload: false });
-          console.log(parsedLayerData);
           dispatch({ type: GET_LAYER, payload: { id, data: parsedLayerData } });
         });
     });

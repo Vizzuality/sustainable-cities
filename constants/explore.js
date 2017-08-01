@@ -15,7 +15,8 @@ const EXPLORE_TABS = [
     },
     slug: 'Solution',
     children: [],
-    info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+    info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    allowAll: true
   },
   // BME categories come here...
   {

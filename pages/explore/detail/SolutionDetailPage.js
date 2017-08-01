@@ -13,6 +13,9 @@ import { store } from 'store';
 import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
 import { getBmeCategories } from 'modules/category';
 
+// utils
+import { getImage } from 'utils/project';
+
 // components
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
@@ -93,19 +96,21 @@ class SolutionDetailPage extends Page {
 
     return (<div className="c-tabs -explore">
       <div className="row">
-         <ul className="tab-list">
-           {tabs.map((tab, n) => (
-             <li
-               key={n}
-               className={classnames("tab-item", { "-current": tabEqual(this.props.queryParams, tab.queryParams) })}
-             >
+        <ul className="tab-list">
+          {tabs.map((tab, n) => (
+            <li
+              key={n}
+              className={classnames("tab-item", { "-current": tabEqual(this.props.queryParams, tab.queryParams) })}
+            >
               <Link route={tab.queryParams.route} params={tab.queryParams.params}>
                 <a className="literal">{tab.label}</a>
               </Link>
-             {tab.className === "info" && (<div className="disclaimer-icon" onClick={() => this.toggleDisclaimer(tab.queryParams.params.subPage)}>(i)</div>)}
+              {tab.className === "info" && (<div className="c-info-icon" onClick={() => this.toggleDisclaimer(tab.queryParams.params.subPage)}>
+                <svg className="icon"><use xlinkHref="#icon-info" /></svg>
+              </div>)}
             </li>
-         ))}
-         </ul>
+          ))}
+        </ul>
       </div>
     </div>);
   }
@@ -200,6 +205,7 @@ class SolutionDetailPage extends Page {
               breadcrumbs={breadcrumbs}
               size='shorter'
               position='bottom'
+              image={getImage(project)}
             />
 
             {this.renderTabs(tabItems)}
@@ -235,13 +241,15 @@ SolutionDetailPage.defaultProps = {
   project: {}
 };
 
-const mix = (bmeTree, categories) => {
+/* completes the bmeTree root level with missing top-level categories */
+const completeBmeTree = (bmeTree, categories) => {
   if (!bmeTree || !categories) {
     return null;
   }
 
   // Ugly Number() casts used below because `id` types don't match across requests to different endpoints
   const presentBmeIds = bmeTree.map((bme) => bme.id);
+
   return {
     bmeTree: [...bmeTree, ...categories.filter(category => !presentBmeIds.includes(Number(category.id))).map(category => ({
       id: Number(category.id),
@@ -259,7 +267,7 @@ export default withRedux(
     isLoading: (state.project.loading || isEmpty(state.project.detail)),
     project: {
       ...state.project.detail,
-      ...mix(state.project.detail.bmeTree, state.category.bme.list)
+      ...completeBmeTree(state.project.detail.bmeTree, state.category.bme.list)
     },
     projectFilters: state.project.filters
   }),

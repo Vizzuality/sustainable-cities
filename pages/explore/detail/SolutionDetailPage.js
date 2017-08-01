@@ -106,7 +106,7 @@ class SolutionDetailPage extends Page {
                 <a className="literal">{tab.label}</a>
               </Link>
               {tab.className === "info" && (<div className="c-info-icon" onClick={() => this.toggleDisclaimer(tab.queryParams.params.subPage)}>
-                (i)
+                <svg className="icon"><use xlinkHref="#icon-info" /></svg>
               </div>)}
             </li>
           ))}

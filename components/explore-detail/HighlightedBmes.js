@@ -4,15 +4,14 @@ import { Link } from 'routes';
 import groupBy from 'lodash/groupBy';
 
 export default function HighlightedBmes({ project }) {
-
   // group highlighted bmes
-  let featuredHighlightedBmes = project.projectBmes.filter(projectBme => projectBme.isFeatured);
-  let groupedHighlightedBmes = groupBy(featuredHighlightedBmes, projectBme => projectBme.bme && projectBme.bme.categoryLevel1);
+  const featuredHighlightedBmes = project.projectBmes.filter(projectBme => projectBme.isFeatured);
+  const groupedHighlightedBmes = groupBy(featuredHighlightedBmes, projectBme =>
+    projectBme.bme && projectBme.bme.categoryLevel1);
 
   return (<div className="c-highlighted-bmes">
-    {Object.keys(groupedHighlightedBmes).map(categoryLevel1 => {
-
-      let topLevelCategory = project.bmeTree.find(category => category.name === categoryLevel1);
+    {Object.keys(groupedHighlightedBmes).map((categoryLevel1) => {
+      const topLevelCategory = project.bmeTree.find(category => category.name === categoryLevel1);
       return topLevelCategory && (<div key={topLevelCategory.id} className="c-highlighted-bmes-item">
         <div className="c-text -dark -fs-big -fw-light">
           {topLevelCategory.name}
@@ -30,5 +29,5 @@ export default function HighlightedBmes({ project }) {
 }
 
 HighlightedBmes.propTypes = {
-  projects: PropTypes.array.isRequired
+  project: PropTypes.object.isRequired
 };

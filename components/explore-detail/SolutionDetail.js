@@ -28,6 +28,7 @@ export default function SolutionDetail({ project }) {
 
   const impactItems = impacts.filter(i => !!i.category);
 
+
   return (
     <div className="solution-detail">
       <div className="row">

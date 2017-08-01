@@ -21,8 +21,12 @@ export default function ItemGallery(props) {
           (items || []).map(item => (
             <li className="gallery-item" key={item.id}>
               <div className="gallery-item-header">
-                {showTitle &&
-                  <h3 className="c-title -dark -fs-extrabig -fw-light">{item.title}</h3>}
+                <div className="gallery-item-title">
+                  {item.icon &&
+                  <svg className="icon -dark -in-line-left -medium"><use xlinkHref={`#${item.icon}`} /></svg>}
+                  {showTitle &&
+                    <h3 className="c-title -dark -fs-extrabig -fw-light">{item.title}</h3>}
+                </div>
                 {showAll &&
                   <Link
                     route="explore-index"
@@ -51,7 +55,7 @@ ItemGallery.propTypes = {
   isSolutionView: PropTypes.bool,
   slider: PropTypes.bool,
   showAll: PropTypes.bool,
-  showTitle: PropTypes.bool // eslint-disable-line react/no-unused-prop-types
+  showTitle: PropTypes.bool
 };
 
 ItemGallery.defaultProps = {

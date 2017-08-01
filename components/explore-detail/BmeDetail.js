@@ -77,8 +77,8 @@ export default function BmeDetail({ bme }) {
             </div>
             <div className="row">
               <div className="column large-12 c-title -fs-smaller project-city">
-                {project.cities.length > 0 && (<span>
-                  {project.cities[0].name}
+                {(project.cities || []).length > 0 && (<span>
+                  {project.cities[0] && project.cities[0].name}
                 </span>)}
               </div>
             </div>

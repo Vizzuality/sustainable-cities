@@ -81,35 +81,39 @@ class CityDetailPage extends Page {
           title={name || ''}
           breadcrumbs={breadcrumbs}
         />
+        <div className="row">
+          <div className="column small-12">
 
-        <ItemGallery
-          title="Projects in this city"
-          items={parsedProjects}
-        />
+            <ItemGallery
+              title="Projects in this city"
+              items={parsedProjects}
+            />
 
-        <ItemGallery
-          showAll
-          items={parsedBmes['investment-component'] !== undefined ?
-            [parsedBmes['investment-component']] : []}
-        />
+            <ItemGallery
+              showAll
+              items={parsedBmes['investment-component'] !== undefined ?
+                [parsedBmes['investment-component']] : []}
+            />
 
-        <ItemGallery
-          showAll
-          items={parsedBmes['delivery-mechanism'] !== undefined ?
-            [parsedBmes['delivery-mechanism']] : []}
-        />
+            <ItemGallery
+              showAll
+              items={parsedBmes['delivery-mechanism'] !== undefined ?
+                [parsedBmes['delivery-mechanism']] : []}
+            />
 
-        <ItemGallery
-          showAll
-          items={parsedBmes['financial-product'] !== undefined ?
-            [parsedBmes['financial-product']] : []}
-        />
+            <ItemGallery
+              showAll
+              items={parsedBmes['financial-product'] !== undefined ?
+                [parsedBmes['financial-product']] : []}
+            />
 
-        <ItemGallery
-          showAll
-          items={parsedBmes['funding-source'] !== undefined ?
-            [parsedBmes['funding-source']] : []}
-        />
+            <ItemGallery
+              showAll
+              items={parsedBmes['funding-source'] !== undefined ?
+                [parsedBmes['funding-source']] : []}
+            />
+          </div>
+        </div>
 
         <DownloadData />
 

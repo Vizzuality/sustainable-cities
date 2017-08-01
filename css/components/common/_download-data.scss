@@ -1,0 +1,28 @@
+.c-download-data {
+
+  color: $color-text-6;
+  position: relative;
+  background-image: url('/static/images/download-data-module.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  .row:nth-child(1) {
+    margin-bottom: 30px;
+  }
+
+  .row:nth-child(2) {
+    margin-bottom: 50px;
+  }
+
+  .download-button {
+    background-color: #ffffff;
+  }
+
+  .download-data-content {
+    padding: 85px 0;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+}
+

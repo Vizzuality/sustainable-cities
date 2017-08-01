@@ -1,0 +1,32 @@
+.c-bme-overview {
+  width: 100%;
+  display: flex;
+  align-items: top;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  ul {
+    margin-bottom: 50px;
+    li {
+      display: block;
+      margin-top: 6px;
+    }
+  }
+
+  .c-bme-overview-strip {
+    display: block;
+    width: 40px;
+    height: 5px;
+    margin-bottom: 20px;
+  }
+
+}
+
+.solution-detail {
+  .c-bme-overview-item {
+    width: 300px;
+  }
+}
+
+

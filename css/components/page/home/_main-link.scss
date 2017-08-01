@@ -1,0 +1,31 @@
+.main-link {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px 30px;
+  margin-bottom: 30px;
+  border: solid 1px rgba($color-1, .1);
+  transition: .2s ease-in;
+
+  @media (min-width: $screen-m) {
+    height: 230px;
+    margin-bottom: 0;
+    padding: 36px 30px;
+    border: solid 1px rgba($color-white, .1);
+  }
+
+  .icon {
+    margin-bottom: 20px;
+    height: 50px;
+    width: 45px;
+    fill: $color-text-1;
+  }
+
+  &:hover {
+    background-color: $color-white;
+    border: solid 1px rgba($color-1, .1);
+    transform: scale(1.1);
+    box-shadow: 0 7px 15px 0 rgba($color-black, 0.15), 0 1px 3px 0 rgba($color-black, 0.15);
+  }
+}

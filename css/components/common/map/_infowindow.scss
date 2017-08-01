@@ -1,0 +1,54 @@
+
+.leaflet-popup-close-button {
+  display: none;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 0;
+  box-shadow: none;
+  background: $color-2;
+
+  > .leaflet-popup-content {
+    margin: 0;
+    padding: 30px 25px;
+  }
+}
+
+
+
+.c-infowindow {
+
+  > .infowindow-content {
+
+    > .resume-items {
+      margin: 5px 0 0;
+
+      font-size: $font-size-medium;
+      font-weight: $font-weight-light;
+      color: rgba($color-text-6, .8);
+    }
+
+    > .info-list {
+      margin: 15px 0 0;
+      overflow-y: auto;
+    }
+
+    > .info-list > .info-item {
+      display: block;
+
+      &:not(:first-child) {
+        margin: 10px 0 0;
+      }
+
+      > a {
+        font-size: $font-size-smaller;
+        color: rgba($color-text-6, .5);
+        text-transform: uppercase;
+
+        &:hover {
+          color: $color-text-6;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.c-overview-section {
+  padding: 46px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+  .separator {
+    width: 40px;
+    height: 5px;
+    margin-bottom: 20px;
+  }
+  .row:first-child {
+    margin-bottom: 62px;
+  }
+
+  .h-third {
+    margin-bottom: 18px;
+  }
+
+  .h-fourth {
+    opacity: 0.7;
+  }
+}

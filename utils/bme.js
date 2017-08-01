@@ -3,6 +3,7 @@
 const listBmes = bmes => bmes.map(bme => ({
   id: bme.id,
   title: bme.name,
+  image: bme.photos && bme.photos[0] ? `${process.env.API_URL}${bme.photos[0].attachment.medium.url}` : null,
   link: { route: 'bme-detail', params: { id: bme.id } }
 }));
 
@@ -15,6 +16,7 @@ const listsBmesByCategory = (categories, filters = {}) =>
     title: category.name,
     level: category.level,
     slug: category.slug,
+    image: category.photos && category.photos[0] ? `${process.env.API_URL}${category.photos[0].attachment.medium.url}` : null,
     children: listBmes(category['children-bmes'] || [])
   }
 ));

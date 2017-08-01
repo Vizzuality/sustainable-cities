@@ -1,7 +1,12 @@
 .c-main-nav {
-  height: $nav-height;
-  padding: 15px;
+  // height: $nav-height;
+  padding: 0 15px;
   background: $color-1;
+
+  .logo,
+  .literal {
+    padding: 15px 0;
+  }
 
   .nav-container {
     display: flex;
@@ -13,11 +18,23 @@
     display: flex;
 
     > a {
-      font-size: $font-size-smaller;
+      position: relative;
+      font-size: $font-size-extrasmall;
       color: $color-primary;
-      line-height: 15px;
+      line-height: 14px;
       letter-spacing: 1px;
       text-transform: uppercase;
+      padding-left: 10px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 2px;
+        background-color: $color-primary;
+      }
     }
   }
 
@@ -42,7 +59,7 @@
         &::after {
           content: '';
           position: absolute;
-          bottom: -50%;
+          bottom: 0;
           left: 50%;
           width: 50%;
           height: 5px;
@@ -80,6 +97,10 @@
         color: rgba($color-white, .5);
         text-transform: uppercase;
         cursor: pointer;
+        max-width: 130px;
+        text-align: center;
+        font-size: $font-size-smaller;
+        line-height: 16px;
       }
 
       & > .username {

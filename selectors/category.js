@@ -43,4 +43,13 @@ const getCategoryTabs = createSelector(
   }
 );
 
-export { getCategoryTabs };
+const getAllCategories = createSelector(
+  [getSolutionCategories, getBmeCategories],
+  (solutionCategories, bmeCategories) => {
+    if (!solutionCategories.length || !bmeCategories.length) return [];
+
+    return [...solutionCategories, ...bmeCategories];
+  }
+);
+
+export { getCategoryTabs, getAllCategories };

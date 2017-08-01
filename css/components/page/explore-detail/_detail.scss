@@ -1,11 +1,128 @@
+.bme-detail {
 
-.c-detail {
+  a.external {
+    color: $color-1;
+    border-bottom: 1px solid $color-1;
+    text-decoration: none;
+  }
 
-  .c-detail-section {
+  ul {
+    li {
+      display: block;
+    }
+  }
 
-    &:last-child {
-      .content {
-        border-bottom: none;
+  ul.details {
+    li {
+      margin-top: 1em;
+    }
+  }
+
+  .external-sources {
+    margin-top: 7px;
+
+    li {
+      line-height: 26px;
+      &:not(:last-child) {
+        margin-bottom: .5em;
+      }
+    }
+  }
+
+  .inverted {
+  }
+
+  .bme-detail-body {
+
+    margin: 50px 0 100px;
+
+    .separator {
+      border-bottom: 1px solid rgba(#2C2F32, 0.1);
+      padding-bottom: 40px;
+      margin-bottom: 40px;
+    }
+
+    .bme-description {
+      line-height: 32px;
+    }
+
+    .project-content {
+      .project-name {
+        line-height: 28px;
+      }
+
+      .project-city {
+        text-transform: uppercase;
+        color: $color-text-7;
+        margin: .2em 0 .7em;
+      }
+
+      .project-link {
+        text-align: right;
+      }
+
+      .project-description {
+        line-height: 26px;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 50px;
+      }
+    }
+  }
+
+
+}
+
+.solution-detail {
+  padding-top: 46px;
+
+  li.info-item {
+    b + span {
+      margin-left: 5px;
+    }
+  }
+
+  .solution-detail-main {
+    padding-top: 0px;
+    border-bottom: 1px solid rgba($color-1, .1);
+
+    .row:not(:last-child) {
+      margin-bottom: 1em;
+    }
+  }
+
+  .solution-detail-rest {
+    padding-top: 1px;
+    background-color: $color-white;
+  }
+
+}
+
+.solution-overview {
+
+  .solution-overview-summary {
+    padding: 46px 0;
+    // border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+}
+
+.solution-category {
+
+  a {
+    color: $color-text-1;
+  }
+
+  .solution-category-summary {
+    padding: 46px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    ul.summary-items {
+      margin-top: 10px;
+      li:not(:last-child)::after {
+        content: '|';
+        margin: 0 .2em;
       }
     }
   }

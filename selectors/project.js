@@ -10,18 +10,10 @@ const getParsedProjects = createSelector(
   [getProjects, getProjectFilters],
   (projectsBySolution, filters) => {
     if (!projectsBySolution.length) return [];
-    const projects = [];
-
-    if (filters.category) {
-      projectsBySolution.forEach(p =>
-        projects.push([...p.projects])
-      );
-    }
-
-
-    return !filters.category ?
-      listsProjectsBySolution(projectsBySolution) :
-      listProjects(projects[0]); // change this
+    return listsProjectsBySolution(projectsBySolution);
+    // return !filters.category ?
+    //   listsProjectsBySolution(projectsBySolution) :
+    //   listProjects(projectsBySolution);
   }
 );
 

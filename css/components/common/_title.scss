@@ -18,7 +18,19 @@
     color: $color-text-6;
   }
 
+  &.-highlight {
+    color: $color-text-7;
+  }
+
+  &.-highlight-yellow {
+    color: $color-text-8;
+  }
+
   // sizes
+  &.-fs-super-huge {
+    font-size: $font-size-super-huge;
+  }
+
   &.-fs-huge {
     font-size: $font-size-huge;
   }
@@ -29,6 +41,10 @@
 
   &.-fs-bigger {
     font-size: $font-size-bigger;
+  }
+
+  &.-fs-medium {
+    font-size: $font-size-medium;
   }
 
   &.-fs-smaller {
@@ -47,5 +63,15 @@
   // miscellaneous
   &.-uppercase {
     text-transform: uppercase;
+  }
+
+  //Line height
+  &.-lh-medium {
+    line-height: 1.5em;
+  }
+
+  //Align
+  &.-center {
+    text-align: center;
   }
 }

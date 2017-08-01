@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "urlQuery": "/projects?include=cities&page[size]=1000",
+    "type": "all-solutions",
+    "legendConfig": {
+      "name": "All solutions"
+    }
+  },
+  {
+    "id": 2,
+    "urlQuery": "/projects?filter[projects_category]={{solution_slug}}&include=cities&page[size]=1000",
+    "type": "one-solution",
+    "queryParams": ["solution_slug"]
+  },
+  {
+    "id": 3,
+    "urlQuery": "/projects?&filter[bme_slug]={{bme_slug}}&include=cities&page[size]=1000",
+    "type": "bme",
+    "queryParams": ["bme_slug"]
+  }
+]

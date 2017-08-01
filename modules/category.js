@@ -106,8 +106,9 @@ export function getBmeCategories() {
       level: [1]
     };
     const { categoryType, level } = filters;
-    const includeFilters = ['children'];
-    const categoriesFields = ['name', 'slug', 'children', 'category-type'];
+    const includeFilters = ['children', 'children.children'];
+    const categoriesFields = ['name', 'slug', 'children',
+      'category-type', 'label', 'description'];
 
     const queryParams = queryString.stringify({
       'filter[category-type]': categoryType,

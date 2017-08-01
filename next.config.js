@@ -37,7 +37,8 @@ module.exports = {
     config.plugins.push(
       new webpack.DefinePlugin({
         'process.env.API_URL': JSON.stringify(process.env.API_URL),
-        'process.env.SC_API_KEY': JSON.stringify(process.env.SC_API_KEY)
+        'process.env.SC_API_KEY': JSON.stringify(process.env.SC_API_KEY),
+        'process.env.BASEMAP_TILE_URL': JSON.stringify(process.env.BASEMAP_TILE_URL)
       })
     );
 

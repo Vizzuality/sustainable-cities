@@ -46,60 +46,31 @@ export default class MainNav extends React.Component {
           <div className="nav-container">
             <div className="logo">
               <Link prefetch route="home">
-                <a>Financing Sustainable <br /> Cities Initiative</a>
+                <a>Financing <br/> Sustainable <br/> Cities</a>
               </Link>
             </div>
             <nav className="nav">
               <ul className="nav-list" role="menubar">
-                <TetherComponent
-                  attachment="top center"
-                  targetAttachment="top center"
-                  targetOffset="-15px 50%"
-                  offset="0 25px"
-                  constraints={[{
-                    to: 'target',
-                    attachment: 'together'
-                  }]}
-                >
-                  <li
-                    ref={(node) => { this.exploreListNode = node; }}
-                    className={classnames('nav-item', { '-current': EXPLORE_ROUTES.indexOf(route) !== -1 })}
-                    role="menuitem"
-                    aria-haspopup="true"
-                    tabIndex="-1"
-                  >
-                    <a
-                      href="explore"
-                      onClick={e => this.onSelectSection(e, 'explore-index')}
-                      className="literal"
-                    >
-                    Explore
-                  </a>
-
-                  </li>
-                  {section === 'explore-index' &&
-                    <SubMenu
-                      className="-nav"
-                      parent="Explore"
-                      route="explore-index"
-                      parentNode={this.exploreListNode}
-                      items={EXPLORE_TABS}
-                      onCloseSubMenu={() => this.onCloseSubMenu()}
-                    />}
-                </TetherComponent>
                 <li
                   className={classnames('nav-item', { '-current': route === 'about' })}
                   role="menuitem"
                 >
                   <Link prefetch route="about"><a className="literal">About</a></Link>
                 </li>
-                <li className="nav-item -separator" />
-                <li className="nav-item" role="menuitem">
-                  <Link prefetch route="builder"><a className="literal">Build a project</a></Link>
+                <li
+                  className={classnames('nav-item', { '-current': EXPLORE_ROUTES.indexOf(route) !== -1 })}
+                  role="menuitem"
+                >
+                  <Link prefetch route="explore-index"><a className="literal">Solutions map</a></Link>
+                </li>
+                <li
+                  className={classnames('nav-item', { '-current': route === 'builder' })}
+                  role="menuitem"
+                >
+                  <Link prefetch route="builder"><a className="literal">Design</a></Link>
                 </li>
                 <li className="nav-item" role="menuitem">
                   <a href="username" className="username">{username}</a>
-                  {!logged && <svg className="icon -username"><use xlinkHref="#icon-username" /></svg>}
                 </li>
               </ul>
             </nav>

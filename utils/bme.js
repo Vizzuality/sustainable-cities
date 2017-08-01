@@ -1,7 +1,8 @@
+import uuidv1 from 'uuid/v1';
 
 // parses bmes in order to populate GridList component
 const listBmes = bmes => bmes.map(bme => ({
-  id: bme.id,
+  id: uuidv1(),
   title: bme.name,
   image: bme.photos && bme.photos[0] ? `${process.env.API_URL}${bme.photos[0].attachment.medium.url}` : null,
   link: { route: 'bme-detail', params: { id: bme.id } }
@@ -12,7 +13,7 @@ const listsBmesByCategory = (categories, filters = {}) =>
   categories.map(category => ({
     groupId: filters.category || undefined,
     parentId: category.level === 3 ? filters.subCategory : undefined,
-    id: category.id,
+    id: uuidv1(),
     title: category.name,
     level: category.level,
     slug: category.slug,

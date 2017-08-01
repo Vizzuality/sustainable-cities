@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import uuidv1 from 'uuid/v1';
 
 import groupBy from 'lodash/groupBy';
 
@@ -38,10 +39,10 @@ const getParsedBmes = createSelector(
 
     const categoryParentObject = {};
 
-    Object.keys(groupBmesByCategoryParent).forEach((categoryParent, i) => {
+    Object.keys(groupBmesByCategoryParent).forEach((categoryParent) => {
       const categorySlug = categoryParent.toLowerCase().replace(/\s/g, '-');
       categoryParentObject[categorySlug] = {
-        id: i,
+        id: uuidv1(),
         title: `${categoryParent} in this city`,
         link: {
           route: 'city-detail',

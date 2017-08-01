@@ -1,3 +1,4 @@
+import uuidv1 from 'uuid/v1';
 import groupBy from 'lodash/groupBy';
 
 // constants
@@ -5,7 +6,7 @@ import { CATEGORY_ICONS } from 'constants/category';
 
 // parses projects in order to populate GridList component
 const listProjects = projects => projects.map(project => ({
-  id: project.id,
+  id: uuidv1(),
   title: project.name,
   subtitle: project.cities && project.cities[0] ? project.cities[0].name : null,
   link: { route: 'solution-detail', params: { id: project.id } },
@@ -30,7 +31,7 @@ const joiningProjects = (solution) => {
 // parses projects in order to populate GridSlider component
 const listsProjectsBySolution = solutions =>
   solutions.map(solution => ({
-    id: solution.id,
+    id: uuidv1(),
     title: solution.name,
     slug: solution.slug,
     icon: CATEGORY_ICONS[solution.slug],

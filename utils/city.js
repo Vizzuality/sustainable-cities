@@ -1,7 +1,9 @@
+import uuidv1 from 'uuid/v1';
+
 
 // parses projects in order to populate GridList component
 const listCities = cities => cities.map(city => ({
-  id: city.id,
+  id: uuidv1(),
   title: city.name,
   subtitle: `${city.projectCount} projects`,
   link: { route: 'city-detail', params: { id: city.id } },
@@ -10,13 +12,13 @@ const listCities = cities => cities.map(city => ({
 
 // parses projects in order to populate GridList component
 const listProjectsByCity = (city = {}) => [({
-  id: city.id,
+  id: uuidv1(),
   title: 'Projects in this city',
   subtitle: city.name,
   link: { route: 'city-detail', params: { id: city.id, tab: 'projects' } },
   // link: { route: 'city-detail', params: { id: project.id } },
   children: (city.projects || []).map(project => ({
-    id: project.id,
+    id: uuidv1(),
     title: project.name,
     // subtitle: project.cities && project.cities[0] ? project.cities[0].name : null,
     link: { route: 'solution-detail', params: { id: project.id } },

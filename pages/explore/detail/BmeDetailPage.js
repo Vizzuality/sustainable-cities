@@ -19,12 +19,15 @@ import DownloadData from 'components/common/DownloadData';
 import RelatedContent from 'components/explore-detail/RelatedContent';
 import BmeDetail from 'components/explore-detail/BmeDetail';
 
+// constants
+import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
+
 const flatten = (category, accumulator = []) => {
   if (category) {
     return flatten(category.parent, [category, ...accumulator]);
-  } else {
-    return accumulator;
   }
+
+  return accumulator;
 };
 
 const getBreadcrumbs = (bme) => {
@@ -34,7 +37,7 @@ const getBreadcrumbs = (bme) => {
 
   const routeName = 'explore-index';
   const routeProps = ['category', 'subCategory', 'children'];
-  const flattened = flatten(bme.categories.find((c) => c.categoryType === 'Bme'));
+  const flattened = flatten(bme.categories.find(c => c.categoryType === 'Bme'));
   const breadcrumbs = [];
 
   flattened.forEach((current) => {
@@ -42,9 +45,9 @@ const getBreadcrumbs = (bme) => {
       name: current.name,
       route: routeName,
       params: {
-        ...breadcrumbs.map(b => b.params).reduce((current, accumulator) => ({
+        ...breadcrumbs.map(b => b.params).reduce((c, accumulator) => ({
           ...accumulator,
-          ...current
+          ...c
         }), {}),
         [routeProps[breadcrumbs.length]]: current.slug
       }
@@ -52,7 +55,7 @@ const getBreadcrumbs = (bme) => {
   });
 
   return breadcrumbs;
-}
+};
 
 class BmeDetailPage extends Page {
 
@@ -81,15 +84,18 @@ class BmeDetailPage extends Page {
     const breadcrumbsItems = !isEqual(bme, {}) ?
       getBreadcrumbs(bme) : [];
     const breadcrumbs = !isEqual(breadcrumbsItems, []) ?
-
       <Breadcrumbs items={breadcrumbsItems} /> : null;
+
+    const parentSlug = breadcrumbsItems && breadcrumbsItems[0] ?
+      breadcrumbsItems[0].params.category : null;
+
 
     return (
       <Layout
-        title='Business model element detail'
+        title="Business model element detail"
         queryParams={this.props.queryParams}
       >
-        <div className='bme-detail-page'>
+        <div className="bme-detail-page">
 
           {isLoading && (<div>
             Loading bme...
@@ -97,8 +103,9 @@ class BmeDetailPage extends Page {
 
           {!isLoading && (<div>
             <Cover
-              size='shorter'
-              className='-blue'
+              size="shorter"
+              color={parentSlug ?
+                CATEGORY_FIRST_LEVEL_COLORS[parentSlug] : ''}
               title={bme.name || ''}
               breadcrumbs={breadcrumbs}
             />
@@ -134,11 +141,11 @@ BmeDetailPage.defaultProps = {
 
 export default withRedux(
   store,
-  (state) => ({
+  state => ({
     isLoading: state.bme.loading || isEmpty(state.bme.detail),
-    bme: state.bme.detail,
+    bme: state.bme.detail
   }),
-  (dispatch) => ({
+  dispatch => ({
     getBmeDetail(filters) { dispatch(getBmeDetail(filters)); },
     removeBmeDetail() { dispatch(removeBmeDetail()); }
   })

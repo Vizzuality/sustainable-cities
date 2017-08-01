@@ -85,7 +85,7 @@ class BmeDetail extends React.Component {
                 <textarea placeholder="Add your comment here" />
 
                 {!this.props.selected &&
-                  <div className="maisumavezOverlay">
+                  <div className="unsaved-overlay">
                     <p className="c-text -fw-light -fs-extrabig">Save this business model element to add a comment</p>
                   </div>
                 }

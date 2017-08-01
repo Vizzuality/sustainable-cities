@@ -1,6 +1,6 @@
 .c-builder-sidebar {
   margin-top: 35px;
-  width: 300px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -8,14 +8,31 @@
   .footer {
     font-weight: $font-weight-light;
     font-size: $font-size-smaller;
+
+    .legend-item {
+      display: flex;
+
+      p, .radial-chart {
+        margin-top: 0px;
+        margin-bottom: 10px;
+      }
+    }
   }
 }
 
 .radial-chart {
-  margin-top: 50px;
-  font-weight: 300;
-  position: relative;
-  width: 800px;
+  &:not(.legend) {
+    margin-top: 50px;
+    font-weight: 300;
+    position: relative;
+    width: 800px;
+  }
+
+  &.legend {
+    height: 22px;
+    width: 22px;
+    margin-right: 5px;
+  }
 
   .tooltip {
     pointer-events: none;
@@ -33,6 +50,10 @@
       text-transform: uppercase;
       font-size: $font-size-smaller;
     }
+  }
+
+  svg {
+    display: block;
   }
 
   @each $category, $color in $color-categories {
@@ -54,12 +75,11 @@
 
     &.level-3 {
       fill-opacity: 1;
-
-      &:hover {
-        stroke: $color-white;
-        cursor: pointer;
-      }
     }
+  }
+
+  &.interactive circle.level-3:hover {
+    cursor: pointer;
   }
 
   line {
@@ -70,3 +90,93 @@
 
 .root-label { width: 16%; height: 16%; margin: 0; display: flex; align-items: center; pointer-events: none; padding: 2%; }
 .root-label p { text-align: center; width: 100%; }
+
+
+.enabling-conditions .radial-chart {
+  margin-top: 226px;
+  width: 30%;
+  p { display: none; }
+}
+
+.c-enabling-conditions-selector {
+  position: relative;
+  border-right: 1px solid rgba(44,47,51,0.1);
+  border-bottom: 1px solid rgba(44,47,51,0.1);
+  border-left: 1px solid rgba(44,47,51,0.1);
+  padding-bottom: 50px;
+  margin-right: 24px;
+  width: 70%;
+
+  header {
+    background-color: $color-white;
+    h1 {
+      padding: 50px 50px 30px 50px;
+    }
+
+    p {
+      padding: 0px 50px 30px 50px;
+      margin: 0px;
+    }
+
+    .c-tabs .row {
+      margin-left: 50px;
+      .tab-item + .tab-item {
+        margin-left: 50px;
+      }
+    }
+  }
+
+  section {
+    padding-left: 50px;
+    padding-right: 50px;
+
+    h2 {
+      margin: 32px 0px 16px 0px;
+      color: rgba(44,47,51,0.9);
+    }
+
+    p, li {
+      opacity: 0.8;
+      display: block;
+    }
+  }
+
+  .dismiss {
+    position: absolute;
+    top: 34px;
+    left: 100%;
+    line-height: 42px;
+    font-size: $font-size-smaller;
+    font-weight: $font-weight-default;
+    padding: 0px 20px 0px 61px;
+    text-align: center;
+    align-items: center;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
+    background-color: $color-1;
+    color: $color-white;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &::before {
+      content:"";
+      width: 10px;
+      height: 10px;
+      border-bottom: 2px solid $color-white;
+      border-left: 2px solid $color-white;
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      content:"";
+      width: 16px;
+      height: 8px;
+      border-bottom: 2px solid $color-white;
+      position: absolute;
+      left: 17px;
+      top: 14px;
+    }
+  }
+}

@@ -36,7 +36,7 @@ function placeLines(p0, p1, d0, d1, r0, r1) {
   });
 }
 
-class Node extends React.Component {
+class BME extends React.Component {
   static propTypes = {
     size: PropTypes.number.isRequired,
     level: PropTypes.number.isRequired,
@@ -78,7 +78,7 @@ class Node extends React.Component {
 function place(nodes, size, depth, level) {
   return nodes.map(node => ({
     ...node,
-    component: Node,
+    component: BME,
     props: {
       size: size,
       level: level,
@@ -91,12 +91,16 @@ function place(nodes, size, depth, level) {
 }
 
 function positions(nodes, depth, offset) {
-  return nodes.map((node, i, self) => ({
-    ...node,
-    x: depth * Math.cos(2 * Math.PI * (i + offset) / self.length),
-    y: depth * Math.sin(2 * Math.PI * (i + offset) / self.length),
-    angle: 2 * Math.PI * (i + offset) / self.length,
-  }));
+  return nodes.map((node, i, self) => {
+    const angle = 2 * Math.PI * (i + offset) / self.length;
+
+    return {
+      ...node,
+      angle,
+      x: depth * Math.cos(angle),
+      y: depth * Math.sin(angle),
+    }
+  });
 }
 
 function buildNodes(tree) {
@@ -145,19 +149,20 @@ class RadialChart extends React.Component {
   }
 
   nodeClick(node) {
-    if (node.id && !node["category-type"]) {
+    if (this.props.interactive && node.id && !node["category-type"]) {
       this.props.onClick(node);
     }
   }
 
   showPopup(node) {
-    if (node.id && !node["category-type"]) {
+    if (this.props.interactive && node.id && !node["category-type"]) {
+      console.log(node.y);
       this.setState({ popup: node });
     }
   }
 
   hidePopup(node) {
-    if (this.state.popup && node.id == this.state.popup.id) {
+    if (this.props.interactive && this.state.popup && node.id == this.state.popup.id) {
       this.setState({ popup: undefined });
     }
   }
@@ -166,7 +171,7 @@ class RadialChart extends React.Component {
     let nodes = buildNodes(this.props.nodes ||[]);
 
     return (
-      <div className={`active-${this.props.family} radial-chart`}>
+      <div className={classnames(`active-${this.props.family}`, "radial-chart", { interactive: this.props.interactive })}>
         <svg id="chart" viewBox="0 0 1000 1000">
           <g transform={`scale(${this.state.scale})`} onTransitionEnd={() => this.transitionEnd()} />
           <g transform={`translate(${this.state.x + 500} 500) scale(${this.state.scale})`}>
@@ -209,3 +214,4 @@ class RadialChart extends React.Component {
 }
 
 export default RadialChart;
+export { BME };

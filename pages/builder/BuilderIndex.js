@@ -71,6 +71,7 @@ class BuilderIndex extends Page {
           nodes={this.props.categories}
           selected={this.props.selectedBMEs}
           onClick={(bme) => this.showBME(bme)}
+          interactive={true}
         />
 
         {this.state.bme && <BmeDetail

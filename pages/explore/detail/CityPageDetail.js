@@ -27,24 +27,9 @@ import DownloadData from 'components/common/DownloadData';
 
 
 class CityDetailPage extends Page {
-  static setBreadcrumbs() {
-    return [
-      {
-        name: 'Explore',
-        route: 'explore-index',
-        params: { category: 'solutions' }
-      },
-      {
-        name: 'Cities',
-        route: 'explore-index',
-        params: { category: 'cities' }
-      }
-    ];
-  }
-
   componentWillMount() {
-    const { id } = this.props.queryParams;
-    this.props.setCityFilters({ detailId: id });
+    const { id, tab } = this.props.queryParams;
+    this.props.setCityFilters({ detailId: id, tab });
   }
 
   componentDidUpdate(prevProps) {
@@ -57,19 +42,57 @@ class CityDetailPage extends Page {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const queryParamsChanged = !isEqual(nextProps.queryParams, this.props.queryParams);
+
+    if (queryParamsChanged) {
+      const { id, tab } = nextProps.queryParams;
+      this.props.setCityFilters({ detailId: id, tab });
+    }
+  }
+
   componentWillUnmount() {
     this.props.resetCityFilters();
+  }
+
+  _setBreadcrumbs() {
+    const { id, tab } = this.props.queryParams;
+    const { name } = this.props.city;
+    let breadcrumbs = [
+      {
+        name: 'Explore',
+        route: 'explore-index',
+        params: { category: 'solutions' }
+      },
+      {
+        name: 'Cities',
+        route: 'explore-index',
+        params: { category: 'cities' }
+      }
+    ];
+
+    if (tab && name) {
+      breadcrumbs = [...breadcrumbs, {
+        name,
+        route: 'city-detail',
+        params: { id }
+      }];
+    }
+
+    return breadcrumbs;
   }
 
   render() {
     const {
       city,
       parsedProjects,
-      parsedBmes
+      parsedBmes,
+      queryParams
     } = this.props;
 
-    const { name } = city;
-    const breadcrumbs = <Breadcrumbs items={CityDetailPage.setBreadcrumbs()} />;
+    const { name, id } = city;
+    const { tab } = queryParams;
+    const breadcrumbs = <Breadcrumbs items={this._setBreadcrumbs()} />;
 
     return (
       <Layout
@@ -81,39 +104,96 @@ class CityDetailPage extends Page {
           title={name || ''}
           breadcrumbs={breadcrumbs}
         />
-        <div className="row">
+
+        {Object.keys(city).length > 0 && !tab &&
+          <div className="row">
+            <div className="column small-12">
+              <ItemGallery
+                showAll
+                title="Projects in this city"
+                items={parsedProjects}
+              />
+
+              <ItemGallery
+                showAll
+                link={{
+                  route: 'city-detail',
+                  params: { id, tab: 'investment-component' }
+                }}
+                items={parsedBmes['investment-component'] !== undefined ?
+                  [parsedBmes['investment-component']] : []}
+              />
+
+              <ItemGallery
+                showAll
+                link={{
+                  route: 'city-detail',
+                  params: { id, tab: 'delivery-mechanism' }
+                }}
+                items={parsedBmes['delivery-mechanism'] !== undefined ?
+                  [parsedBmes['delivery-mechanism']] : []}
+              />
+
+              <ItemGallery
+                showAll
+                link={{
+                  route: 'city-detail',
+                  params: { id, tab: 'financial-product' }
+                }}
+                items={parsedBmes['financial-product'] !== undefined ?
+                  [parsedBmes['financial-product']] : []}
+              />
+
+              <ItemGallery
+                showAll
+                link={{
+                  route: 'city-detail',
+                  params: { id, tab: 'funding-source' }
+                }}
+                items={parsedBmes['funding-source'] !== undefined ?
+                  [parsedBmes['funding-source']] : []}
+              />
+            </div>
+          </div>}
+
+        {tab && <div className="row">
           <div className="column small-12">
 
-            <ItemGallery
-              title="Projects in this city"
-              items={parsedProjects}
-            />
+            {tab === 'projects' &&
+              <ItemGallery
+                items={parsedProjects}
+              />
+            }
 
-            <ItemGallery
-              showAll
-              items={parsedBmes['investment-component'] !== undefined ?
-                [parsedBmes['investment-component']] : []}
-            />
+            {tab === 'investment-component' &&
+              <ItemGallery
+                items={parsedBmes['investment-component'] !== undefined ?
+                  [parsedBmes['investment-component']] : []}
+              />
+            }
 
-            <ItemGallery
-              showAll
-              items={parsedBmes['delivery-mechanism'] !== undefined ?
-                [parsedBmes['delivery-mechanism']] : []}
-            />
+            {tab === 'delivery-mechanism' &&
+              <ItemGallery
+                items={parsedBmes['delivery-mechanism'] !== undefined ?
+                  [parsedBmes['delivery-mechanism']] : []}
+              />
+            }
 
-            <ItemGallery
-              showAll
-              items={parsedBmes['financial-product'] !== undefined ?
-                [parsedBmes['financial-product']] : []}
-            />
+            {tab === 'financial-product' &&
+              <ItemGallery
+                items={parsedBmes['financial-product'] !== undefined ?
+                  [parsedBmes['financial-product']] : []}
+              />
+            }
 
-            <ItemGallery
-              showAll
-              items={parsedBmes['funding-source'] !== undefined ?
-                [parsedBmes['funding-source']] : []}
-            />
+            {tab === 'funding-source' &&
+              <ItemGallery
+                items={parsedBmes['funding-source'] !== undefined ?
+                  [parsedBmes['funding-source']] : []}
+              />
+            }
           </div>
-        </div>
+        </div>}
 
         <DownloadData />
 

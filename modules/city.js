@@ -21,7 +21,8 @@ const initialState = {
   list: [],
   detail: {},
   filters: {
-    detailId: null
+    detailId: null,
+    tab: null
   },
   bme: {
     list: [],

@@ -13,15 +13,17 @@ export default function Cover(props) {
       )}
       style={props.image && { backgroundImage: `url(${props.image})` }}
     >
-      <div className="row align-bottom">
-        <div className="column large-8">
-          { props.breadcrumbs && <div className="breadcrumbs">{props.breadcrumbs}</div> }
-          <h1 className="c-title -light -fs-huge -fw-thin">{props.title}</h1>
-          { props.description && <p className="description">{props.description}</p> }
-        </div>
-        <div className="column large-4">
-          <div className={classnames('actions', { '-margin': !props.description })}>
-            {props.children}
+      <div className="c-cover-veil">
+        <div className="row align-bottom">
+          <div className="column large-8">
+            { props.breadcrumbs && <div className="breadcrumbs">{props.breadcrumbs}</div> }
+            <h1 className="c-title -light -fs-huge -fw-thin">{props.title}</h1>
+            { props.description && <p className="description">{props.description}</p> }
+          </div>
+          <div className="column large-4">
+            <div className={classnames('actions', { '-margin': !props.description })}>
+              {props.children}
+            </div>
           </div>
         </div>
       </div>

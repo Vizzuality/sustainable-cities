@@ -33,7 +33,8 @@ const getCategoryTabs = createSelector(
           parentSlug: firstLevelBmeCategory.slug
         })
       ),
-      info: firstLevelBmeCategory.description
+      info: firstLevelBmeCategory.description,
+      allowAll: true
     }));
 
     // inserts BME categories

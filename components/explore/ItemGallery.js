@@ -21,26 +21,28 @@ export default function ItemGallery(props) {
           (items || []).map(item => (
             <li className="gallery-item" key={item.id}>
               <div className="gallery-item-header">
-                {showTitle &&
-                  <h3 className="c-title -dark -fs-extrabig -fw-light">{item.title}</h3>}
+                <div className="gallery-item-title">
+                  {item.icon &&
+                  <svg className="icon -dark -in-line-left -medium"><use xlinkHref={`#${item.icon}`} /></svg>}
+                  {showTitle &&
+                    <h3 className="c-title -dark -fs-extrabig -fw-light">{item.title}</h3>}
+                </div>
                 {showAll &&
                   <Link
-                    route="explore-index"
-                    params={{
-                      category: isSolutionView ? 'solutions' : item.groupId,
-                      subCategory: item.level === 3 ? item.parentId : item.slug,
-                      children: item.level === 3 ? item.slug : null
-                    }}
+                    route={item.link.route}
+                    params={item.link.params}
                   >
                     <a className="c-button -secondary">See all</a>
                   </Link>}
               </div>
               {(item.children || []).length > 0 ?
-                <GridSlider items={item.children} /> :
+                <GridSlider
+                  items={item.children}
+                /> :
                 <div>no data available</div>}
             </li>
           ))
-        : <GridList items={resultItems || []} />}
+        : <GridList items={resultItems || []} />}
       </ul>
     </div>
   );
@@ -51,7 +53,7 @@ ItemGallery.propTypes = {
   isSolutionView: PropTypes.bool,
   slider: PropTypes.bool,
   showAll: PropTypes.bool,
-  showTitle: PropTypes.bool // eslint-disable-line react/no-unused-prop-types
+  showTitle: PropTypes.bool
 };
 
 ItemGallery.defaultProps = {

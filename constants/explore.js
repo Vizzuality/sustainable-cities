@@ -15,20 +15,15 @@ const EXPLORE_TABS = [
     },
     slug: 'Solution',
     children: [],
-    info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'
+    info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+    allowAll: true
   },
   // BME categories come here...
   {
     id: 6,
     label: 'Cities',
     query: { category: 'cities' },
-    children: [
-      { label: 'Africa', query: { category: 'cities', subCategory: 'africa' } },
-      { label: 'America', query: { category: 'cities', subCategory: 'america' } },
-      { label: 'Asia', query: { category: 'cities', subCategory: 'asia' } },
-      { label: 'Europe', query: { category: 'cities', subCategory: 'europe' } },
-      { label: 'Oceania', query: { category: 'cities', subCategory: 'oceania' } }
-    ]
+    children: []
   }
 ];
 

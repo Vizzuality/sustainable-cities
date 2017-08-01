@@ -58,6 +58,14 @@
       width: 100%;
     }
   }
+
+  // (i) info icon
+  .c-info-icon {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    cursor: pointer;
+  }
 }
 
 // wrap where the component is setted. Used by Tether

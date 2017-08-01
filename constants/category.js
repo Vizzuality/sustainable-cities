@@ -19,4 +19,14 @@ const CATEGORY_SOLUTIONS_COLORS = {
   'new-efficient-constructions': '#ad6bb7'
 };
 
-export { CATEGORY_TYPE_CONVERSION, CATEGORY_FIRST_LEVEL_COLORS, CATEGORY_SOLUTIONS_COLORS };
+const CATEGORY_ICONS = {
+  'bike-sharing-systems': 'icon-bike',
+  'new-efficient-constructions': 'icon-buildings'
+};
+
+export {
+  CATEGORY_TYPE_CONVERSION,
+  CATEGORY_FIRST_LEVEL_COLORS,
+  CATEGORY_SOLUTIONS_COLORS,
+  CATEGORY_ICONS
+};

@@ -1,12 +1,19 @@
+import uuidv1 from 'uuid/v1';
 import groupBy from 'lodash/groupBy';
+
+// constants
+import { CATEGORY_ICONS } from 'constants/category';
+// pick a usable image url from a project entity deserialized payload
+const getImage = (project) => project.photos && project.photos[0] ?
+  `${process.env.API_URL}${project.photos[0].attachment.medium.url}` : null;
 
 // parses projects in order to populate GridList component
 const listProjects = projects => projects.map(project => ({
-  id: project.id,
+  id: uuidv1(),
   title: project.name,
   subtitle: project.cities && project.cities[0] ? project.cities[0].name : null,
   link: { route: 'solution-detail', params: { id: project.id } },
-  image: project.photos && project.photos[0] ? `${process.env.API_URL}${project.photos[0].attachment.medium.url}` : null
+  image: getImage(project)
 }));
 
 const joiningProjects = (solution) => {
@@ -27,9 +34,17 @@ const joiningProjects = (solution) => {
 // parses projects in order to populate GridSlider component
 const listsProjectsBySolution = solutions =>
   solutions.map(solution => ({
-    id: solution.id,
+    id: uuidv1(),
     title: solution.name,
     slug: solution.slug,
+    icon: CATEGORY_ICONS[solution.slug],
+    link: {
+      route: 'explore-index',
+      params: {
+        category: 'solutions',
+        subCategory: solution.slug
+      }
+    },
     children: joiningProjects(solution)
   })
 );
@@ -61,4 +76,4 @@ const groupProjectsByCity = (projects) => {
   return parsedData;
 };
 
-export { listProjects, listsProjectsBySolution, groupProjectsByCity };
+export { getImage, listProjects, listsProjectsBySolution, groupProjectsByCity };

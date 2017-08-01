@@ -18,18 +18,18 @@ export default function Infowindow(props) {
 
     switch (type) {
       case 'solution': {
-        const { projects } = props;
-        const { name } = projects[0] || {};
+        const { projects, name } = props;
         content = (
           <div className="infowindow-content">
             <h3 className="c-title -fs-extrabig -fw-light -light">{name}</h3>
-            {/* <span className="resume-items">{(projects || []).length} projects:</span> */}
+            <span className="resume-items">{(projects || []).length} projects:</span>
+            {_setProjects(projects)}
           </div>
         );
         break;
       }
       case 'bme': {
-        const { name } = props;
+        const { name, projects } = props;
         // const { category, subCategory } = filters;
         // let categoryObject = {};
         // // let categoryName = '';
@@ -51,8 +51,8 @@ export default function Infowindow(props) {
         content = (
           <div className="infowindow-content">
             <h3 className="c-title -fs-extrabig -fw-light -light">{name}</h3>
-            {/* <span className="resume-items">{`${categoryName}'s elements:`}</span> */}
-            {/* {_setProjects(projects)} */}
+            <span className="resume-items">{`${projects.length} projects:`}</span>
+            {_setProjects(projects)}
           </div>
         );
         break;

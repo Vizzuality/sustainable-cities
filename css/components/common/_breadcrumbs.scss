@@ -11,6 +11,16 @@
       content: '/';
     }
 
+    &:nth-last-child(2)::after {
+      color: $color-white;
+    }
+
+    &:last-child {
+      a {
+        color: $color-white;
+      }
+    }
+
     a,
     span {
       font-size: $font-size-extrasmall;

@@ -34,6 +34,13 @@ const listsProjectsBySolution = solutions =>
     title: solution.name,
     slug: solution.slug,
     icon: CATEGORY_ICONS[solution.slug],
+    link: {
+      route: 'explore-index',
+      params: {
+        category: 'solutions',
+        subCategory: solution.slug
+      }
+    },
     children: joiningProjects(solution)
   })
 );

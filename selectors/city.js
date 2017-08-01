@@ -30,9 +30,9 @@ const getParsedProjects = createSelector(
 );
 
 const getParsedBmes = createSelector(
-  [getCityBmes],
-  (bmes) => {
-    if (!Object.keys(bmes).length) return {};
+  [getCityBmes, getCity],
+  (bmes, city) => {
+    if (!Object.keys(bmes).length || !Object.keys(city).length) return {};
 
     const groupBmesByCategoryParent = groupBy(bmes.filter(bme => bme.categoryLevel1), 'categoryLevel1');
 
@@ -43,6 +43,13 @@ const getParsedBmes = createSelector(
       categoryParentObject[categorySlug] = {
         id: i,
         title: `${categoryParent} in this city`,
+        link: {
+          route: 'city-detail',
+          params: {
+            id: city.id,
+            tab: categorySlug
+          }
+        },
         children: listBmes(groupBmesByCategoryParent[categoryParent] || [])
       };
     });

@@ -13,6 +13,7 @@ const listProjectsByCity = (city = {}) => [({
   id: city.id,
   title: 'Projects in this city',
   subtitle: city.name,
+  link: { route: 'city-detail', params: { id: city.id, tab: 'projects' } },
   // link: { route: 'city-detail', params: { id: project.id } },
   children: (city.projects || []).map(project => ({
     id: project.id,

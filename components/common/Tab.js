@@ -38,9 +38,9 @@ export default class Tab extends React.Component {
   }
 
   renderTab(item, index) {
-    const { allowAll, queryParams } = this.props;
+    const { queryParams } = this.props;
     const { route, category } = queryParams;
-    const { children, label, query, id } = item;
+    const { children, label, query, id, allowAll } = item;
 
     if (children) {
       let subMenuOptions = children;
@@ -51,6 +51,31 @@ export default class Tab extends React.Component {
           ...children
         ];
       }
+
+      if (!children.length) {
+        return (
+          <li
+            className={classnames('tab-item', { '-current': query.category === category })}
+            key={id}
+            role="menuitem"
+            aria-haspopup="true"
+            tabIndex="-1"
+          >
+            <Link
+              route={route}
+              params={query}
+              prefetch
+            >
+              <a
+                className="literal"
+              >
+                {label}
+              </a>
+            </Link>
+          </li>
+        );
+      }
+
 
       return (
         <TetherComponent
@@ -134,12 +159,9 @@ export default class Tab extends React.Component {
 }
 
 Tab.propTypes = {
-  allowAll: PropTypes.bool, // adds to submenu options a "see all" option if needed
   className: PropTypes.string,
   items: PropTypes.array.isRequired,
   queryParams: PropTypes.object.isRequired
 };
 
-Tab.defaultProps = {
-  allowAll: false
-};
+Tab.defaultProps = {};

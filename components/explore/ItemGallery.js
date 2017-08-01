@@ -14,7 +14,6 @@ export default function ItemGallery(props) {
     resultItems = resultItems.map(c => c.children)[0];
   }
 
-
   return (
     <div className="c-item-gallery">
       <ul className="gallery-list">
@@ -30,12 +29,8 @@ export default function ItemGallery(props) {
                 </div>
                 {showAll &&
                   <Link
-                    route="explore-index"
-                    params={{
-                      category: isSolutionView ? 'solutions' : item.groupId,
-                      subCategory: item.level === 3 ? item.parentId : item.slug,
-                      children: item.level === 3 ? item.slug : null
-                    }}
+                    route={item.link.route}
+                    params={item.link.params}
                   >
                     <a className="c-button -secondary">See all</a>
                   </Link>}

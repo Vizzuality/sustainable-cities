@@ -41,7 +41,6 @@
 
   > .menu-list > .menu-item {
     display: block;
-    text-align: center;
     cursor: pointer;
 
     &:hover {
@@ -51,11 +50,10 @@
 
     > .literal {
       display: block;
-      padding: 8px 10px;
-      font-size: $font-size-medium;
+      padding: 8px 45px;
       color: rgba($color-1, .9);
-      font-weight: $font-weight-light;
-      line-height: 32px;
+      font-weight: $font-weight-default;
+      line-height: 26px;
     }
   }
 

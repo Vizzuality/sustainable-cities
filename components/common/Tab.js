@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { Link } from 'routes';
 import TetherComponent from 'react-tether';
 import isEqual from 'lodash/isEqual';
+import uuidv1 from 'uuid/v1';
 
 // components
 import SubMenu from 'components/common/SubMenu';
@@ -40,7 +41,7 @@ export default class Tab extends React.Component {
   renderTab(item, index) {
     const { queryParams } = this.props;
     const { route, category } = queryParams;
-    const { children, label, query, id, allowAll } = item;
+    const { children, label, query, allowAll } = item;
 
     if (children) {
       let subMenuOptions = children;
@@ -56,7 +57,7 @@ export default class Tab extends React.Component {
         return (
           <li
             className={classnames('tab-item', { '-current': query.category === category })}
-            key={id}
+            key={uuidv1()}
             role="menuitem"
             aria-haspopup="true"
             tabIndex="-1"
@@ -82,7 +83,7 @@ export default class Tab extends React.Component {
           attachment="top center"
           targetAttachment="top center"
           targetOffset="-15px 0"
-          key={id}
+          key={uuidv1()}
           classPrefix="tab-wrap"
           constraints={[{
             to: 'target',
@@ -121,7 +122,7 @@ export default class Tab extends React.Component {
       <li
         className={classnames('tab-item', { '-current': query.category === category })}
         role="menuitem" tabIndex="-1"
-        key={id}
+        key={uuidv1()}
       >
         <Link
           route={route}

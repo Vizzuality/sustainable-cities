@@ -97,7 +97,6 @@ export default class Legend extends React.Component {
             max: Legend.getMaxValue(data)
           },
           text: 'elements used',
-          icon: CATEGORY_ICONS[bmeCategory.slug],
           type: 'range'
         }];
         break;
@@ -125,7 +124,6 @@ export default class Legend extends React.Component {
           },
           color: CATEGORY_FIRST_LEVEL_COLORS[parentCategory[0].slug],
           text: 'elements used',
-          icon: CATEGORY_ICONS[parentCategory[0].slug],
           type: 'range'
         }];
 

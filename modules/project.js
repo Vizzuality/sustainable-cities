@@ -104,7 +104,18 @@ export function getProjectDetail(projectId) {
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_PROJECTS, payload: true });
 
-    const includeFields = ['category', 'cities', 'country', 'external-sources', 'photos', 'impacts', 'impacts.category'];
+    const includeFields = [
+      'category',
+      'cities',
+      'country',
+      'external-sources',
+      'photos',
+      'impacts',
+      'impacts.category',
+      'project-bmes',
+      'project-bmes.bme',
+      'project-bmes.bme.categories',
+    ];
 
     const queryParams = queryString.stringify({
       include: includeFields.join(',')

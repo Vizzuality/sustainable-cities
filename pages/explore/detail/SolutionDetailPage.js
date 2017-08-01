@@ -241,13 +241,15 @@ SolutionDetailPage.defaultProps = {
   project: {}
 };
 
-const mix = (bmeTree, categories) => {
+/* completes the bmeTree root level with missing top-level categories */
+const completeBmeTree = (bmeTree, categories) => {
   if (!bmeTree || !categories) {
     return null;
   }
 
   // Ugly Number() casts used below because `id` types don't match across requests to different endpoints
   const presentBmeIds = bmeTree.map((bme) => bme.id);
+
   return {
     bmeTree: [...bmeTree, ...categories.filter(category => !presentBmeIds.includes(Number(category.id))).map(category => ({
       id: Number(category.id),
@@ -265,7 +267,7 @@ export default withRedux(
     isLoading: (state.project.loading || isEmpty(state.project.detail)),
     project: {
       ...state.project.detail,
-      ...mix(state.project.detail.bmeTree, state.category.bme.list)
+      ...completeBmeTree(state.project.detail.bmeTree, state.category.bme.list)
     },
     projectFilters: state.project.filters
   }),

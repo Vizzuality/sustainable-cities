@@ -6,6 +6,7 @@ import DetailSection from 'components/explore-detail/DetailSection';
 import ReportedImpact from 'components/explore-detail/ReportedImpact';
 import ItemList from 'components/explore-detail/ItemList';
 import BmeOverview from 'components/explore-detail/project/BmeOverview';
+import HighlightedBmes from 'components/explore-detail/HighlightedBmes';
 
 // utils
 import { getYearFromDateString } from 'utils/common';
@@ -36,43 +37,10 @@ export default function SolutionDetail({ project }) {
       </div>
 
       <div className="solution-detail-main">
-        <DetailSection title="Snapshot" contentSeparator={false}>
-          <div className="row">
-            <div className="column large-6">
-              <div className="c-text -fs-big -fw-light">
-                Environmental impact
-              </div>
-              <div className="c-text">
-                WAITWHAT
-              </div>
-            </div>
-            <div className="column large-6">
-              <div className="c-text -fs-big -fw-light">
-                Social impact
-              </div>
-              <div className="c-text">
-                WAITWHAT
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="column large-6">
-              <div className="c-text -fs-big -fw-light">
-                Other
-              </div>
-              <div className="c-text">
-                WAITWHAT
-              </div>
-            </div>
-            <div className="column large-6">
-              <div className="c-text -fs-big -fw-light">
-                Highlighted BMEs
-              </div>
-              <div className="c-text">
-                WAITWHAT
-              </div>
-            </div>
-          </div>
+        <DetailSection title="Highlights" contentSeparator={false}>
+          <HighlightedBmes
+            project={project}
+          />
         </DetailSection>
       </div>
 

@@ -14,6 +14,7 @@ export default function ItemGallery(props) {
     resultItems = resultItems.map(c => c.children)[0];
   }
 
+
   return (
     <div className="c-item-gallery">
       <ul className="gallery-list">

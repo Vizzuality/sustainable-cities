@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 
+import groupBy from 'lodash/groupBy';
+
 // utils
 import { listCities, listProjectsByCity } from 'utils/city';
 import { listBmes } from 'utils/bme';
@@ -32,12 +34,20 @@ const getParsedBmes = createSelector(
   (bmes) => {
     if (!Object.keys(bmes).length) return {};
 
+    const groupBmesByCategoryParent = groupBy(bmes.filter(bme => bme.categoryLevel1), 'categoryLevel1');
 
-    // add more logic here
+    const categoryParentObject = {};
 
-    return {};
+    Object.keys(groupBmesByCategoryParent).forEach((categoryParent, i) => {
+      const categorySlug = categoryParent.toLowerCase().replace(/\s/g, '-');
+      categoryParentObject[categorySlug] = {
+        id: i,
+        title: `${categoryParent} in this city`,
+        children: listBmes(groupBmesByCategoryParent[categoryParent] || [])
+      };
+    });
 
-    // return listBmes(bmes || []);
+    return categoryParentObject;
   }
 );
 

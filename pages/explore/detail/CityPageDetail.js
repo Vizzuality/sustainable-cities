@@ -69,12 +69,6 @@ class CityDetailPage extends Page {
     } = this.props;
 
     const { name } = city;
-    const {
-      investmentComponents,
-      deliveryMechanism,
-      financialProduct,
-      fundingSource
-    } = parsedBmes;
     const breadcrumbs = <Breadcrumbs items={CityDetailPage.setBreadcrumbs()} />;
 
     return (
@@ -95,26 +89,26 @@ class CityDetailPage extends Page {
 
         <ItemGallery
           showAll
-          title="Investment component in this city"
-          items={investmentComponents || []}
+          items={parsedBmes['investment-component'] !== undefined ?
+            [parsedBmes['investment-component']] : []}
         />
 
         <ItemGallery
           showAll
-          title="Delivery mechanism in this city"
-          items={deliveryMechanism || []}
+          items={parsedBmes['delivery-mechanism'] !== undefined ?
+            [parsedBmes['delivery-mechanism']] : []}
         />
 
         <ItemGallery
           showAll
-          title="Financial product in this city"
-          items={financialProduct || []}
+          items={parsedBmes['financial-product'] !== undefined ?
+            [parsedBmes['financial-product']] : []}
         />
 
         <ItemGallery
           showAll
-          title="Funding source in this city"
-          items={fundingSource || []}
+          items={parsedBmes['funding-source'] !== undefined ?
+            [parsedBmes['funding-source']] : []}
         />
 
         <DownloadData />

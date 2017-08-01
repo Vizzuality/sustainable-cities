@@ -138,15 +138,12 @@ export function getCityBmes(cityId) {
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_CITY_BME, payload: true });
 
-    // change params if needed
-    const includeFilters = ['projects'];
-
     const queryParams = queryString.stringify({
-      include: includeFilters.join(','),
+      'filter[city_id]': cityId,
       'page[size]': 20
     });
 
-    fetch(`${process.env.API_URL}/cities/${cityId}?${queryParams}`, {
+    fetch(`${process.env.API_URL}/bmes?${queryParams}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

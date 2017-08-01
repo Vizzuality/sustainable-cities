@@ -102,6 +102,8 @@ class CityDetailPage extends Page {
 
         <Cover
           title={name || ''}
+          size='shorter'
+          position='bottom'
           breadcrumbs={breadcrumbs}
         />
 

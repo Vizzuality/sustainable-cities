@@ -67,8 +67,9 @@ class ExploreIndex extends Page {
   }
 
   componentWillReceiveProps(nextProps) {
+    const queryParamsChanged = !isEqual(this.props.queryParams, nextProps.queryParams);
     // updates filters
-    if (!isEqual(this.props.queryParams, nextProps.queryParams)) {
+    if (queryParamsChanged) {
       this._setProjectFilters(nextProps);
       this._setBmeFilters(nextProps);
     }
@@ -81,6 +82,10 @@ class ExploreIndex extends Page {
     // retrieves bmes if filters have been updated
     if (!isEqual(this.props.bmeFilters, nextProps.bmeFilters) && nextProps.queryParams.category !== 'solutions') {
       this.props.getBmes(nextProps.bmeFilters);
+    }
+
+    if (queryParamsChanged && nextProps.queryParams.category === 'cities') {
+      this.props.getCities();
     }
   }
 
@@ -216,8 +221,7 @@ ExploreIndex.propTypes = {
   loadingMap: PropTypes.bool,
   layer: PropTypes.object,
   // cities
-  loadingCities: PropTypes.bool,
-  getCities: PropTypes.func
+  loadingCities: PropTypes.bool
 };
 
 ExploreIndex.defaultProps = {

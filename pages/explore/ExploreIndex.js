@@ -134,6 +134,33 @@ class ExploreIndex extends Page {
     return items;
   }
 
+  _setDisplayConditions() {
+    const { category, subCategory, children } = this.props.queryParams;
+    const isSolutionView = category === 'solutions';
+    const isBmeView = (category !== 'solutions') && (category !== 'cities');
+    const isCityView = category === 'cities';
+    let conditions = null;
+
+    switch (true) {
+      case (isSolutionView): {
+        conditions = (isSolutionView && !subCategory);
+        break;
+      }
+      case (isBmeView): {
+        conditions = (isBmeView && !children);
+        break;
+      }
+      case (isCityView): {
+        conditions = !isCityView;
+        break;
+      }
+      default:
+        return conditions;
+    }
+
+    return conditions;
+  }
+
 
   render() {
     const {
@@ -144,12 +171,12 @@ class ExploreIndex extends Page {
       loadingCities,
       queryParams
     } = this.props;
-    const { category, subCategory, children } = queryParams;
+    const { category } = queryParams;
     const isLoading = loadingProjects || loadingBmes || loadingCities;
     const isSolutionView = category === 'solutions';
-    const isBmeView = (category !== 'solutions') && (category !== 'cities');
     const isCityView = category === 'cities';
     const items = this._setItemsToDisplay();
+    const conditions = this._setDisplayConditions();
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
     return (
@@ -190,10 +217,8 @@ class ExploreIndex extends Page {
               <ItemGallery
                 items={items}
                 isSolutionView={isSolutionView}
-                slider={(isSolutionView && !subCategory) ||
-                  (isBmeView && !children) || (!isCityView)}
-                showAll={(isSolutionView && !subCategory) ||
-                  (isBmeView && !children)}
+                slider={conditions}
+                showAll={conditions}
               />}
           </div>
         </div>

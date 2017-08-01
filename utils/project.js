@@ -1,5 +1,8 @@
 import groupBy from 'lodash/groupBy';
 
+// constants
+import { CATEGORY_ICONS } from 'constants/category';
+
 // parses projects in order to populate GridList component
 const listProjects = projects => projects.map(project => ({
   id: project.id,
@@ -30,6 +33,7 @@ const listsProjectsBySolution = solutions =>
     id: solution.id,
     title: solution.name,
     slug: solution.slug,
+    icon: CATEGORY_ICONS[solution.slug],
     children: joiningProjects(solution)
   })
 );

@@ -4,8 +4,7 @@ import React from 'react';
 import { getYearFromDateString } from 'utils/common';
 
 export default function SnapshotSection({ project }) {
-  console.log(project);
-  const { country, cities, operationalYear } = project;
+  const { country, cities, category, operationalYear } = project;
   const items = [
     {
       label: 'Location',
@@ -22,7 +21,7 @@ export default function SnapshotSection({ project }) {
     },
     {
       label: 'Solution type',
-      values: []
+      values: [category.name]
     }
   ];
 

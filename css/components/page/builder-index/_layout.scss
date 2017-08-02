@@ -106,7 +106,13 @@
     opacity: 0.3;
   }
 
-  &.interactive circle.level-3:hover {
+  &.interactive g g.level-3 circle:hover,
+  &.interactive.active-investment-component g g.level-0.investment-component circle:hover,
+  &.interactive.active-funding-source g g.level-0.funding-source circle:hover,
+  &.interactive.active-delivery-mechanism g g.level-0.delivery-mechanism circle:hover,
+  &.interactive.active-financial-product g g.level-0.financial-product circle:hover,
+  &.interactive.active-none g g.level-0 circle:hover,
+  {
     cursor: pointer;
   }
 

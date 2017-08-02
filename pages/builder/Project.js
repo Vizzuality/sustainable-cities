@@ -5,6 +5,7 @@ import { Link } from 'routes';
 import Layout from 'components/layout/layout';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import Cover from 'components/common/Cover';
+import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 
 import withRedux from 'next-redux-wrapper';
@@ -92,7 +93,10 @@ class Project extends Page {
           title='Project title'
           image='/static/images/download-data-module.jpg'
           breadcrumbs={<Breadcrumbs items={[{ name: 'Builder', route: 'builder', params: {} }]} />}
-        />
+        >
+          <Button secondary inverse>Share/Export</Button>
+          <Button inverse>Save project</Button>
+        </Cover>
 
         <div className="c-tabs -explore">
           <div className="row">

@@ -21,7 +21,7 @@ export default function Infowindow(props) {
         const { projects, name } = props;
         content = (
           <div className="infowindow-content">
-            <h3 className="c-title -fs-extrabig -fw-light -light">{name}</h3>
+            <h3 className="c-title -fs-big -fw-light -light">{name}</h3>
             <span className="resume-items">{(projects || []).length} projects:</span>
             {_setProjects(projects)}
           </div>
@@ -50,7 +50,7 @@ export default function Infowindow(props) {
 
         content = (
           <div className="infowindow-content">
-            <h3 className="c-title -fs-extrabig -fw-light -light">{name}</h3>
+            <h3 className="c-title -fs-big -fw-light -light">{name}</h3>
             <span className="resume-items">{`${projects.length} projects:`}</span>
             {_setProjects(projects)}
           </div>

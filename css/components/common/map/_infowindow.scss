@@ -10,7 +10,7 @@
 
   > .leaflet-popup-content {
     margin: 0;
-    padding: 30px 25px;
+    padding: 15px;
   }
 }
 
@@ -23,7 +23,7 @@
     > .resume-items {
       margin: 5px 0 0;
 
-      font-size: $font-size-medium;
+      font-size: $font-size-default;
       font-weight: $font-weight-light;
       color: rgba($color-text-6, .8);
     }

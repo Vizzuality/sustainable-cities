@@ -19,6 +19,7 @@ import {
   removeProjectDetail,
   resetProjectFilters
 } from 'modules/project';
+
 import { getBmes, setBmeFilters } from 'modules/bme';
 import { getLayer, removeDataLayer } from 'modules/map';
 import { getCities } from 'modules/city';
@@ -37,12 +38,8 @@ import Map from 'components/common/map/Map';
 import Legend from 'components/common/map/Legend';
 import ItemGallery from 'components/explore/ItemGallery';
 
-// modal and its content
-import DisclaimerModal from 'components/common/disclaimer/DisclaimerModal';
-import FinancialProduct from 'components/common/disclaimer/content/FinancialProduct';
-import FundingSource from 'components/common/disclaimer/content/FundingSource';
-import DeliveryMechanism from 'components/common/disclaimer/content/DeliveryMechanism';
-import InvestmentComponent from 'components/common/disclaimer/content/InvestmentComponent';
+// modal
+import { DisclaimerModal, DISCLAIMER_COMPONENTS } from 'components/common/disclaimer/DisclaimerModal';
 
 // utils
 import LayerManager from 'utils/map/LayerManager';
@@ -176,13 +173,6 @@ class ExploreIndex extends Page {
     return conditions;
   }
 
-  toggleDisclaimer(subPage) {
-    this.setState({ disclaimer: subPage }, () => {
-      // prevent scrolling while the modal is open
-      document.getElementsByTagName('body')[0].classList.toggle('no-overflow', !!subPage);
-    })
-  }
-
   render() {
     const {
       categories,
@@ -199,19 +189,11 @@ class ExploreIndex extends Page {
     const items = this._setItemsToDisplay();
     const conditions = this._setDisplayConditions();
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
-console.log(categoryTabs);
-
-    const disclaimerComponents = {
-      'funding-source': <FundingSource />,
-      'delivery-mechanism': <DeliveryMechanism />,
-      'investment-component': <InvestmentComponent />,
-      'financial-product': <FinancialProduct />
-    };
 
     const modifiedCategoryTabs = categoryTabs.map((tab) => ({
       ...tab,
-      modal: INFO_TAB_SLUGS.includes(tab.slug) ? {
-        onClick: () => this.toggleDisclaimer(tab.slug)
+      modal: DISCLAIMER_COMPONENTS.includes(tab.slug) ? {
+        onClick: () => this.setState({ disclaimer: tab.slug })
       } : null
     }));
 
@@ -259,9 +241,10 @@ console.log(categoryTabs);
           </div>
         </div>
 
-        {this.state.disclaimer && <DisclaimerModal onClose={() => this.toggleDisclaimer()}>
-          {disclaimerComponents[this.state.disclaimer] || <div>wait, what?</div>}
-        </DisclaimerModal>}
+        <DisclaimerModal
+          disclaimer={this.state.disclaimer}
+          onClose={() => this.setState({ disclaimer: null })}
+        />
 
       </Layout>
     );

@@ -56,11 +56,17 @@
     display: block;
   }
 
+  g {
+    transition: all 1s ease-in-out; transition-property: transform, opacity;
+  }
+
   @each $category, $color in $color-categories {
     .tooltip.#{$category} { background-color: $color; }
 
-    circle.#{$category} { fill: $color; stroke: $color; }
-    line.#{$category} { stroke: $color; }
+    .#{$category} {
+      circle { fill: $color; stroke: $color; }
+      line { stroke: $color; }
+    }
   }
 
   circle {
@@ -72,10 +78,32 @@
       fill: none;
       stroke-width: 2;
     }
+  }
 
-    &.level-3 {
-      fill-opacity: 1;
+  .level-3 circle {
+    fill-opacity: 1;
+  }
+
+  &:not(.active-undefined) {
+    circle {
+      stroke-width: 1;
+
+      &.level-3 {
+        stroke-width: 0;
+      }
+
+      &.selected {
+        stroke-width: 2;
+      }
     }
+  }
+
+  &.active-investment-component g g:not(.investment-component),
+  &.active-funding-source g g:not(.funding-source),
+  &.active-delivery-mechanism g g:not(.delivery-mechanism),
+  &.active-financial-product g g:not(.financial-product),
+  {
+    opacity: 0.3;
   }
 
   &.interactive circle.level-3:hover {
@@ -83,8 +111,8 @@
   }
 
   line {
-    stroke-width: 3;
-    opacity: 0.2;
+    stroke-width: 2;
+    stroke-opacity: 0.4;
   }
 }
 

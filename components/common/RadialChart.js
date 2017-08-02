@@ -14,28 +14,6 @@ const fitbounds = (angle) => {
   return angle;
 }
 
-function placeLines(p0, p1, d0, d1, r0, r1) {
-  return p1.map(node => {
-    var parent = p0.find(p => (p.children || p.bmes || []).map(x=>x.id).includes(node.id));
-
-    return {
-      component:"line",
-      props: {
-        x1:0, y1:0, x2:1, y2:0,
-        className: parent.family,
-        transform: [
-          `rotate(${rad2deg(parent.angle)} 0 0)`,
-          `translate(${d0} 0)`,
-          `rotate(${rad2deg(fitbounds(angleBetween(parent, node) - parent.angle))} 0 0)`,
-          `translate(${r0} 0)`,
-          `scale(${distanceBetween(parent, node) - r1 - r0} 1)`
-        ].join(" "),
-      },
-      key: `line-${parent.slug}-${parent.id}-${node.id}`,
-    };
-  });
-}
-
 class BME extends React.Component {
   static propTypes = {
     size: PropTypes.number.isRequired,
@@ -52,12 +30,12 @@ class BME extends React.Component {
     return (
       <g
         transform={`rotate(${rad2deg(this.props.angle)} 0 0) translate(${this.props.depth} 0)`}
+        className={classnames(this.props.family, `level-${this.props.level}`)}
       >
         <circle
           cx="0"
           cy="0"
           r={this.props.size}
-          className={classnames(this.props.family, `level-${this.props.level}`)}
           onClick={this.props.onClick}
           onMouseOver={this.props.onMouseOver}
           onMouseOut={this.props.onMouseOut}
@@ -73,6 +51,44 @@ class BME extends React.Component {
       </g>
     );
   }
+}
+
+class Line extends React.Component {
+  render() {
+    return (
+      <g
+        transform={[
+          `rotate(${rad2deg(this.props.parent.angle)} 0 0)`,
+          `translate(${this.props.depth} 0)`,
+          `rotate(${rad2deg(fitbounds(angleBetween(this.props.parent, this.props.node) - this.props.parent.angle))} 0 0)`,
+          `translate(${this.props.r0} 0)`,
+          `scale(${distanceBetween(this.props.parent, this.props.node) - this.props.r1 - this.props.r0} 1)`,
+        ].join(" ")}
+        className={this.props.family}
+      >
+        <line x1="0" y1="0" x2="1" y2="0" />
+      </g>
+    );
+  }
+}
+
+function placeLines(p0, p1, d0, d1, r0, r1) {
+  return p1.map(node => {
+    var parent = p0.find(p => (p.children || p.bmes || []).map(x=>x.id).includes(node.id));
+
+    return {
+      component: Line,
+      props: {
+        parent,
+        node,
+        r0,
+        r1,
+        depth: d0,
+        family: parent.family,
+      },
+      key: `line-${parent.slug}-${parent.id}-${node.id}`,
+    };
+  });
 }
 
 function place(nodes, size, depth, level) {
@@ -103,7 +119,7 @@ function positions(nodes, depth, offset) {
   });
 }
 
-function buildNodes(tree) {
+function buildNodes(tree, family) {
   let nodes = [];
   var previousPositions = null;
 
@@ -111,7 +127,7 @@ function buildNodes(tree) {
 
   if (tree.length == 0) return nodes;
 
-  const rootFamily = tree[0].family;
+  const rootFamily = family || tree[0].family;
   for (var i = 0; tree.length > 0; i++) {
     var offset = (tree.filter(n => n.family == rootFamily).length - 1) / 2;
     var index = tree.findIndex(n => n.family == rootFamily);
@@ -139,12 +155,17 @@ function buildNodes(tree) {
 
 
 class RadialChart extends React.Component {
+  static defaultProps = {
+    selected: [],
+  }
+
   constructor() {
     super();
 
     this.state = {
       scale: 1,
       x: 0,
+      zooming: false,
     }
   }
 
@@ -152,11 +173,28 @@ class RadialChart extends React.Component {
     if (this.props.interactive && node.id && !node["category-type"]) {
       this.props.onClick(node);
     }
+
+    if (this.props.interactive && node.level == 1) {
+      if (this.state.family == null) {
+        this.setState({
+          x:-500,
+          scale: 1.5,
+          family: node.family,
+          zooming: true,
+        });
+      } else if (node.family == this.state.family) {
+        this.setState({
+          x: 0,
+          scale: 1,
+          family: null,
+          zooming: true,
+        });
+      }
+    }
   }
 
   showPopup(node) {
     if (this.props.interactive && node.id && !node["category-type"]) {
-      console.log(node.y);
       this.setState({ popup: node });
     }
   }
@@ -167,11 +205,15 @@ class RadialChart extends React.Component {
     }
   }
 
+  transitionEnd() {
+    this.setState({ zooming: false });
+  }
+
   render() {
-    let nodes = buildNodes(this.props.nodes ||[]);
+    let nodes = buildNodes(this.props.nodes || [], this.state.family);
 
     return (
-      <div className={classnames(`active-${this.props.family}`, "radial-chart", { interactive: this.props.interactive })}>
+      <div className={classnames(`active-${this.state.family}`, "radial-chart", { interactive: this.props.interactive })}>
         <svg id="chart" viewBox="0 0 1000 1000">
           <g transform={`scale(${this.state.scale})`} onTransitionEnd={() => this.transitionEnd()} />
           <g transform={`translate(${this.state.x + 500} 500) scale(${this.state.scale})`}>
@@ -188,7 +230,7 @@ class RadialChart extends React.Component {
           </g>
         </svg>
 
-        {nodes.filter(node => node.level == 1).map(node =>
+        {nodes.filter(node => node.level == 1 && (!this.state.family || node.family == this.state.family)).map(node =>
           <div className={`root-label ${node.family}`} key={`label-${node.id}`} style={{
             opacity: this.state.zooming ? 0 : "",
             position: "absolute",

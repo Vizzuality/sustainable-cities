@@ -27,7 +27,6 @@ class EnablingConditions extends Page {
   }
 
   render() {
-    console.log(this.props.enablings);
     return (
       <Layout
         title="Builder"
@@ -41,7 +40,6 @@ class EnablingConditions extends Page {
 
         <RadialChart
           nodes={this.props.categories}
-          selected={this.props.selectedBMEs}
           interactive={false}
         />
       </Layout>

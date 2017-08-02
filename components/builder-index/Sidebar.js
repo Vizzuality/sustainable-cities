@@ -9,7 +9,7 @@ class Sidebar extends React.Component {
     return (
       <div className="c-builder-sidebar">
         <div className="header">
-          <p><Button primary>Generate document</Button></p>
+          <p><Button primary link={{ route: 'builder-project' }}>Generate document</Button></p>
           <p><Button secondary>Save current status</Button></p>
 
           <h2 className="c-title -fs-smaller -fw-light -uppercase">Solution</h2>

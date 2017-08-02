@@ -52,7 +52,7 @@ class SolutionDetailPage extends Page {
   }
 
   state = {
-    disclaimer: false
+    disclaimer: null
   };
 
   componentWillMount() {

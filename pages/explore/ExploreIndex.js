@@ -52,7 +52,7 @@ import { INFO_TAB_SLUGS } from 'constants/explore';
 class ExploreIndex extends Page {
 
   state = {
-    disclaimer: false
+    disclaimer: null
   };
 
   componentWillMount() {

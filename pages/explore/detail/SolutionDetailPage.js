@@ -43,7 +43,7 @@ class SolutionDetailPage extends Page {
 
     return [
       {
-        name: 'Solutions',
+        name: 'Projects',
         route: 'explore-index',
         params: { category: 'solutions' }
       },

@@ -2,6 +2,12 @@
   padding: 46px 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 
+  ul {
+    li {
+      display: block;
+    }
+  }
+
   .separator {
     width: 40px;
     height: 5px;

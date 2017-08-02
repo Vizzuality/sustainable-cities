@@ -15,13 +15,6 @@ class EnablingConditionsSelector extends React.Component {
   }
 
   render() {
-    const tabs = {
-      actor: "Actor",
-      context: "Context",
-      project: "Project",
-      other: "Other",
-    };
-
     return (
       <div className="c-enabling-conditions-selector">
         <header>

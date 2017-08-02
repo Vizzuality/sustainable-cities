@@ -29,8 +29,11 @@ import SolutionDetail from 'components/explore-detail/SolutionDetail';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import SolutionCategory from 'components/explore-detail/SolutionCategory';
 
-// modal and its content
+// modal
 import { DisclaimerModal, DISCLAIMER_COMPONENTS } from 'components/common/disclaimer/DisclaimerModal';
+
+// constants
+import { CATEGORY_ICONS } from 'constants/category';
 
 class SolutionDetailPage extends Page {
   static setBreadcrumbs(project) {
@@ -179,6 +182,7 @@ class SolutionDetailPage extends Page {
     const breadcrumbs = breadcrumbsItems ?
       <Breadcrumbs items={breadcrumbsItems} /> : null;
 
+    const categoryIcon = CATEGORY_ICONS[project.categoryLevel2];
 
     return (
       <Layout
@@ -196,6 +200,8 @@ class SolutionDetailPage extends Page {
 
             <Cover
               title={project.name || ''}
+              titleIcon={categoryIcon}
+              description={project.tagline}
               breadcrumbs={breadcrumbs}
               size='shorter'
               position='bottom'

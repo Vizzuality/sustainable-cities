@@ -37,12 +37,27 @@ import Map from 'components/common/map/Map';
 import Legend from 'components/common/map/Legend';
 import ItemGallery from 'components/explore/ItemGallery';
 
+// modal and its content
+import DisclaimerModal from 'components/common/disclaimer/DisclaimerModal';
+import FinancialProduct from 'components/common/disclaimer/content/FinancialProduct';
+import FundingSource from 'components/common/disclaimer/content/FundingSource';
+import DeliveryMechanism from 'components/common/disclaimer/content/DeliveryMechanism';
+import InvestmentComponent from 'components/common/disclaimer/content/InvestmentComponent';
+
 // utils
 import LayerManager from 'utils/map/LayerManager';
 import LayerSpec from 'utils/map/layerSpec.json';
 import getLayerType from 'utils/map/layer';
 
+// constants
+import { INFO_TAB_SLUGS } from 'constants/explore';
+
 class ExploreIndex extends Page {
+
+  state = {
+    disclaimer: false
+  };
+
   componentWillMount() {
     // retrieves solutions and BME categories to populate tabs
     this.props.getSolutionCategories();
@@ -161,6 +176,12 @@ class ExploreIndex extends Page {
     return conditions;
   }
 
+  toggleDisclaimer(subPage) {
+    this.setState({ disclaimer: subPage }, () => {
+      // prevent scrolling while the modal is open
+      document.getElementsByTagName('body')[0].classList.toggle('no-overflow', !!subPage);
+    })
+  }
 
   render() {
     const {
@@ -178,6 +199,21 @@ class ExploreIndex extends Page {
     const items = this._setItemsToDisplay();
     const conditions = this._setDisplayConditions();
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
+console.log(categoryTabs);
+
+    const disclaimerComponents = {
+      'funding-source': <FundingSource />,
+      'delivery-mechanism': <DeliveryMechanism />,
+      'investment-component': <InvestmentComponent />,
+      'financial-product': <FinancialProduct />
+    };
+
+    const modifiedCategoryTabs = categoryTabs.map((tab) => ({
+      ...tab,
+      modal: INFO_TAB_SLUGS.includes(tab.slug) ? {
+        onClick: () => this.toggleDisclaimer(tab.slug)
+      } : null
+    }));
 
     return (
       <Layout
@@ -187,7 +223,7 @@ class ExploreIndex extends Page {
         <Tab
           allowAll
           className="-explore"
-          items={categoryTabs}
+          items={modifiedCategoryTabs}
           queryParams={queryParams}
         />
         {!isCityView &&
@@ -222,6 +258,11 @@ class ExploreIndex extends Page {
               />}
           </div>
         </div>
+
+        {this.state.disclaimer && <DisclaimerModal onClose={() => this.toggleDisclaimer()}>
+          {disclaimerComponents[this.state.disclaimer] || <div>wait, what?</div>}
+        </DisclaimerModal>}
+
       </Layout>
     );
   }

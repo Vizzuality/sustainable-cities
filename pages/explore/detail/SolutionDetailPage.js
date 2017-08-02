@@ -30,11 +30,11 @@ import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import SolutionCategory from 'components/explore-detail/SolutionCategory';
 
 // modal and its content
-import DisclaimerModal from 'components/explore-detail/DisclaimerModal';
-import FinancialProduct from 'components/explore-detail/modal-content/FinancialProduct';
-import FundingSource from 'components/explore-detail/modal-content/FundingSource';
-import DeliveryMechanism from 'components/explore-detail/modal-content/DeliveryMechanism';
-import InvestmentComponent from 'components/explore-detail/modal-content/InvestmentComponent';
+import DisclaimerModal from 'components/common/disclaimer/DisclaimerModal';
+import FinancialProduct from 'components/common/disclaimer/content/FinancialProduct';
+import FundingSource from 'components/common/disclaimer/content/FundingSource';
+import DeliveryMechanism from 'components/common/disclaimer/content/DeliveryMechanism';
+import InvestmentComponent from 'components/common/disclaimer/content/InvestmentComponent';
 
 class SolutionDetailPage extends Page {
   static setBreadcrumbs(project) {

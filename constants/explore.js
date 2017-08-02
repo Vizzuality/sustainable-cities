@@ -27,4 +27,11 @@ const EXPLORE_TABS = [
   }
 ];
 
-export { EXPLORE_DESCRIPTION, EXPLORE_ROUTES, EXPLORE_TABS };
+const INFO_TAB_SLUGS = [
+  'investment-component',
+  'delivery-mechanism',
+  'financial-product',
+  'funding-source'
+];
+
+export { EXPLORE_DESCRIPTION, EXPLORE_ROUTES, EXPLORE_TABS, INFO_TAB_SLUGS };

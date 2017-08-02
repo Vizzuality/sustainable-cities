@@ -77,12 +77,16 @@
         }
       }
 
-      &.disclaimer {
+      &.disclaimer, &.builder-help {
         padding-top: 50px;
         width: 100%;
 
         h1 {
           margin-bottom: 20px;
+        }
+
+        p {
+          margin-top: 20px;
         }
       }
     }

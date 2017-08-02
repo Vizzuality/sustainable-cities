@@ -3,6 +3,7 @@ import Layout from 'components/layout/layout';
 import Sidebar from 'components/builder-index/Sidebar';
 import RadialChart from 'components/common/RadialChart';
 import BmeDetail from 'components/builder-index/BmeDetail';
+import HelpModal from 'components/builder-index/HelpModal';
 
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
@@ -58,6 +59,14 @@ class BuilderIndex extends Page {
     this.showBME((bmes.concat(bmes))[bmes.findIndex(b => b.id == bme.id) + bmes.length - 1]);
   }
 
+  showHelp() {
+    this.setState({ showHelp: true });
+  }
+
+  hideHelp() {
+    this.setState({ showHelp: false });
+  }
+
   render() {
     return (
       <Layout
@@ -65,7 +74,7 @@ class BuilderIndex extends Page {
         queryParams={this.props.queryParams}
         className="builder-index"
       >
-        <Sidebar />
+        <Sidebar onHelpClick={() => this.showHelp()} />
 
         <RadialChart
           nodes={this.props.categories}
@@ -83,6 +92,8 @@ class BuilderIndex extends Page {
           onNext={() => this.selectNext(this.state.bme)}
           onPrev={() => this.selectPrevious(this.state.bme)}
         />}
+
+      {this.state.showHelp && <HelpModal onClose={() => this.hideHelp()} />}
       </Layout>
     );
   }

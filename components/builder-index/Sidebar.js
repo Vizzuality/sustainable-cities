@@ -20,7 +20,7 @@ class Sidebar extends React.Component {
         </div>
 
         <div className="footer">
-          <p><Button secondary>Need help?</Button></p>
+          <p><Button secondary onClick={this.props.onHelpClick}>Need help?</Button></p>
 
           <div className="legend-item">
             <svg className="radial-chart legend" viewBox="0 0 28 28">

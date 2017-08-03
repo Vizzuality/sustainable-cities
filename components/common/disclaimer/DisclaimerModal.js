@@ -55,5 +55,5 @@ export class DisclaimerModal extends React.Component {
 
 DisclaimerModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  disclaimer: PropTypes.string.isRequired
+  disclaimer: PropTypes.string
 };

@@ -106,6 +106,7 @@ export function getCityDetail(cityId) {
 
     const queryParams = queryString.stringify({
       include: includeFilters.join(','),
+      'filter[contains_project]': 'true',
       'page[size]': 20
     });
 

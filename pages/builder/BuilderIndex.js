@@ -8,7 +8,7 @@ import HelpModal from 'components/builder-index/HelpModal';
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
-import { getBmes, selectBME, deselectBME } from 'modules/builder';
+import { getBmes, selectBME, deselectBME, commentBME } from 'modules/builder';
 
 const leaves = (nodes) => {
   const children = nodes.map(t => t.children || t.bmes || []).reduce((a,b) => a.concat(b), []);
@@ -45,6 +45,10 @@ class BuilderIndex extends Page {
 
   deselectBME(bme) {
     this.props.deselectBME(bme.id);
+  }
+
+  changeBMEcomment(bme, text) {
+    this.props.commentBME(bme.id, text);
   }
 
   selectNext(bme) {
@@ -85,9 +89,11 @@ class BuilderIndex extends Page {
 
         {this.state.bme && <BmeDetail
           bme={this.state.bme}
+          comment={this.props.commentedBMEs[this.state.bme.id]}
           selected={this.props.selectedBMEs.includes(this.state.bme.id)}
           onClose={() => this.hideBME()}
           onSave={() => this.selectBME(this.state.bme)}
+          onCommentChange={(text) => this.changeBMEcomment(this.state.bme, text)}
           onDelete={() => this.deselectBME(this.state.bme)}
           onNext={() => this.selectNext(this.state.bme)}
           onPrev={() => this.selectPrevious(this.state.bme)}
@@ -104,10 +110,12 @@ export default withRedux(
   state => ({
     categories: state.builder.bmeCategories,
     selectedBMEs: state.builder.selectedBMEs,
+    commentedBMEs: state.builder.commentedBMEs,
   }),
   dispatch => ({
     getCategoryTree() { dispatch(getBmes()); },
     selectBME(bmeId) { dispatch(selectBME(bmeId)); },
     deselectBME(bmeId) { dispatch(deselectBME(bmeId)); },
+    commentBME(bmeId, comment) { dispatch(commentBME(bmeId, comment)); },
   })
 )(BuilderIndex);

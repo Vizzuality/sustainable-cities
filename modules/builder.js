@@ -5,6 +5,7 @@ import * as queryString from 'query-string';
 /* Actions */
 const SELECT_BME = 'builder/SELECT_BME';
 const DESELECT_BME = 'builder/DESELECT_BME';
+const COMMENT_BME = 'builder/COMMENT_BME';
 const GET_BME_TREE = 'builder/GET_BME_TREE';
 const GET_ENABLING_TREE = 'builder/GET_ENABLING_TREE';
 const LOADING_BMES = 'builder/LOADING_BMES';
@@ -14,6 +15,7 @@ const ERROR_ENABLINGS = 'builder/ERROR_ENABLINGS';
 
 const initialState = {
   selectedBMEs: [],
+  commentedBMEs: {},
 };
 
 export default function (state = initialState, action) {
@@ -22,6 +24,8 @@ export default function (state = initialState, action) {
       return { ...state, selectedBMEs: state.selectedBMEs.concat([action.payload]) };
     case DESELECT_BME:
       return { ...state, selectedBMEs: state.selectedBMEs.filter(bme => bme != action.payload) };
+    case COMMENT_BME:
+      return { ...state, commentedBMEs: { ...state.commentedBMEs, [action.bmeId]: action.comment } }
     case GET_BME_TREE:
       return { ...state, bmeCategories: action.payload };
     case GET_ENABLING_TREE:
@@ -116,4 +120,8 @@ export function selectBME(bmeId) {
 
 export function deselectBME(bmeId) {
   return (dispatch) => dispatch({ type: DESELECT_BME, payload: bmeId });
+}
+
+export function commentBME(bmeId, comment) {
+  return (dispatch) => dispatch({ type: COMMENT_BME, bmeId, comment })
 }

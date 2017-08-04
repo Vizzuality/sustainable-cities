@@ -92,7 +92,7 @@ class Project extends Page {
           size='shorter'
           title='Project title'
           image='/static/images/download-data-module.jpg'
-          breadcrumbs={<Breadcrumbs items={[{ name: 'Builder', route: 'builder', params: {} }]} />}
+          breadcrumbs={<Breadcrumbs items={[{ name: '< Back to builder', route: 'builder', params: {} }]} />}
         >
           <Button secondary inverse>Share/Export</Button>
           <Button inverse>Save project</Button>

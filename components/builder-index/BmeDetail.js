@@ -31,6 +31,10 @@ class BmeDetail extends React.Component {
     this.setState({ activeTab: key });
   }
 
+  onChange(target, e) {
+    this.props.onCommentChange(e.target.value);
+  }
+
   render() {
     return (
       <div className="c-modal" onClick={this.onOverlayClick.bind(this)}>
@@ -82,7 +86,11 @@ class BmeDetail extends React.Component {
               <section>
                 <h2 className="c-title -fw-light -fs-extrabig">Comment</h2>
 
-                <textarea placeholder="Add your comment here" />
+                <textarea
+                  placeholder="Add your comment here"
+                  value={this.props.comment}
+                  onChange={(e) => this.onChange('comment', e)}
+                />
 
                 {!this.props.selected &&
                   <div className="unsaved-overlay">

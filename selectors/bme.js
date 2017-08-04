@@ -24,7 +24,6 @@ const getParsedBmes = createSelector(
       );
     }
 
-
     return !filters.children ?
       listsBmesByCategory(bmeList[0] || [], filters) :
       listBmes(bmeList[0] || []);

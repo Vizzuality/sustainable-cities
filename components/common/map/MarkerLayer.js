@@ -32,7 +32,7 @@ export default class MarkerLayer {
   }
 
   parseMarkerOptions({ projects }) {
-    const { category, subCategory } = this._filters;
+    const { category } = this._filters;
     let fillColor = DEFAULT_MARKER_OPTIONS.color;
     let radius = DEFAULT_MARKER_OPTIONS.radius;
     const value = projects.length;
@@ -59,10 +59,7 @@ export default class MarkerLayer {
       fillColor = CATEGORY_FIRST_LEVEL_COLORS[category];
     }
 
-    // applies different size but for all-solutions view
-    if ((category !== 'solutions') || (category === 'solutions' && subCategory)) {
-      radius = value !== 0 || value !== 1 ? ((radius * Math.log(value)) + 5) : 5;
-    }
+    radius = value !== 0 || value !== 1 ? ((radius * Math.log(value)) + 5) : 5;
 
     return {
       ...DEFAULT_MARKER_OPTIONS,

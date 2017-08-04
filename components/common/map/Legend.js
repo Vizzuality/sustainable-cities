@@ -12,7 +12,11 @@ import uniq from 'lodash/uniq';
 import { groupProjectsByCity } from 'utils/project';
 
 // constants
-import { CATEGORY_SOLUTIONS_COLORS, CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
+import {
+  CATEGORY_SOLUTIONS_COLORS,
+  CATEGORY_FIRST_LEVEL_COLORS,
+  CATEGORY_ICONS
+} from 'constants/category';
 
 const MIN_VALUE_RANGE = 1;
 
@@ -72,6 +76,7 @@ export default class Legend extends React.Component {
           },
           color: CATEGORY_SOLUTIONS_COLORS[solutionCategory.slug],
           text: 'projects',
+          icon: CATEGORY_ICONS[solutionCategory.slug],
           type: 'range'
         }];
         break;

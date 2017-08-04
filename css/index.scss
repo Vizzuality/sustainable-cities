@@ -29,6 +29,8 @@
 // - page
 @import 'components/page/explore-detail/detail';
 @import 'components/page/explore-detail/section-detail';
+@import 'components/page/explore-detail/reported-impact';
+@import 'components/page/explore-detail/highlighted-bmes';
 @import 'components/page/explore-detail/related-content';
 @import 'components/page/explore-detail/contact-form';
 @import 'components/page/explore-detail/summary-section';
@@ -43,6 +45,8 @@
 @import 'components/page/home/video-wrapper';
 
 @import 'components/page/builder-index/layout';
+
+@import 'components/page/about/about';
 
 // - common
 @import 'components/common/modal';

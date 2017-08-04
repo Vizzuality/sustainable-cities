@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { Link } from 'routes';
 import TetherComponent from 'react-tether';
 import isEqual from 'lodash/isEqual';
+import uuidv1 from 'uuid/v1';
 
 // components
 import SubMenu from 'components/common/SubMenu';
@@ -38,9 +39,9 @@ export default class Tab extends React.Component {
   }
 
   renderTab(item, index) {
-    const { allowAll, queryParams } = this.props;
+    const { queryParams } = this.props;
     const { route, category } = queryParams;
-    const { children, label, query, id } = item;
+    const { children, label, query, modal, allowAll } = item;
 
     if (children) {
       let subMenuOptions = children;
@@ -52,12 +53,36 @@ export default class Tab extends React.Component {
         ];
       }
 
+      if (!children.length) {
+        return (
+          <li
+            className={classnames('tab-item', { '-current': query.category === category })}
+            key={uuidv1()}
+            role="menuitem"
+            aria-haspopup="true"
+            tabIndex="-1"
+          >
+            <Link
+              route={route}
+              params={query}
+              prefetch
+            >
+              <a
+                className="literal"
+              >
+                {label}
+              </a>
+            </Link>
+          </li>
+        );
+      }
+
       return (
         <TetherComponent
           attachment="top center"
           targetAttachment="top center"
           targetOffset="-15px 0"
-          key={id}
+          key={uuidv1()}
           classPrefix="tab-wrap"
           constraints={[{
             to: 'target',
@@ -78,6 +103,11 @@ export default class Tab extends React.Component {
             >
               {label}
             </a>
+            {modal && (<div className="c-info-icon" onClick={modal.onClick}>
+              <svg className="icon">
+                <use xlinkHref="#icon-info" />
+              </svg>
+            </div>)}
           </li>
           {this.state.category === query.category &&
             <SubMenu
@@ -96,7 +126,7 @@ export default class Tab extends React.Component {
       <li
         className={classnames('tab-item', { '-current': query.category === category })}
         role="menuitem" tabIndex="-1"
-        key={id}
+        key={uuidv1()}
       >
         <Link
           route={route}
@@ -134,12 +164,9 @@ export default class Tab extends React.Component {
 }
 
 Tab.propTypes = {
-  allowAll: PropTypes.bool, // adds to submenu options a "see all" option if needed
   className: PropTypes.string,
   items: PropTypes.array.isRequired,
   queryParams: PropTypes.object.isRequired
 };
 
-Tab.defaultProps = {
-  allowAll: false
-};
+Tab.defaultProps = {};

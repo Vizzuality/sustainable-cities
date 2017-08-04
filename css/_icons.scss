@@ -11,12 +11,21 @@
     fill: $color-white;
   }
 
+  &.-dark {
+    fill: $color-text-1;
+  }
+
   //layout
   &.-in-line-left {
     margin-right: 10px;
   }
 
   //size
+  &.-big {
+    width: 2em;
+    height: 2em;
+  }
+
   &.-medium {
     width: 1.5em;
     height: 1.5em;

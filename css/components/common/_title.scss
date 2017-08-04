@@ -1,4 +1,5 @@
-.c-title {
+.c-title,
+.c-text  {
   margin: 0;
 
   font-family: $font-family-1;
@@ -43,12 +44,20 @@
     font-size: $font-size-bigger;
   }
 
+  &.-fs-big {
+    font-size: $font-size-big;
+  }
+
   &.-fs-medium {
     font-size: $font-size-medium;
   }
 
   &.-fs-smaller {
     font-size: $font-size-smaller;
+  }
+
+    &.-fs-extrasmall {
+    font-size: $font-size-extrasmall;
   }
 
   // weigths
@@ -60,12 +69,21 @@
     font-weight: $font-weight-thin;
   }
 
+  &.-fw-bold {
+    font-weight: $font-weight-bold;
+  }
+
   // miscellaneous
   &.-uppercase {
     text-transform: uppercase;
   }
 
   //Line height
+
+  &.-lh-default {
+    line-height: $font-size-default;
+  }
+
   &.-lh-medium {
     line-height: 1.5em;
   }

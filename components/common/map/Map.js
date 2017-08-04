@@ -49,9 +49,9 @@ class Map extends React.Component {
   componentWillReceiveProps(nextProps) {
     const filtersChanged = !isEqual(nextProps.filters, this.props.filters);
     const layerDataChanged = !isEqual(nextProps.layerData, this.props.layerData);
-    const categoriesChanged = !isEqual(nextProps.categories, this.props.categories);
+    // const categoriesChanged = !isEqual(nextProps.categories, this.props.categories);
 
-    if (filtersChanged || categoriesChanged) {
+    if (filtersChanged) {
       if (this.layerManager) this.removeLayers();
       this.setLayerManager(nextProps);
       this.addLayers(nextProps.activeLayer, nextProps.filters);
@@ -164,7 +164,7 @@ class Map extends React.Component {
 Map.propTypes = {
   LayerManager: PropTypes.func,
   activeLayer: PropTypes.array, // eslint-disable-line react/no-unused-prop-types
-  categories: PropTypes.array,
+  categories: PropTypes.array, // eslint-disable-line react/no-unused-prop-types
   filters: PropTypes.object,
   layerData: PropTypes.object,
   loading: PropTypes.bool,

@@ -19,13 +19,16 @@ import {
   removeProjectDetail,
   resetProjectFilters
 } from 'modules/project';
+
 import { getBmes, setBmeFilters } from 'modules/bme';
 import { getLayer, removeDataLayer } from 'modules/map';
+import { getCities } from 'modules/city';
 
 // selectors
 import { getCategoryTabs, getAllCategories } from 'selectors/category';
 import { getParsedProjects } from 'selectors/project';
 import { getParsedBmes } from 'selectors/bme';
+import { getParsedCities } from 'selectors/city';
 
 // components
 import Page from 'pages/Page';
@@ -35,12 +38,23 @@ import Map from 'components/common/map/Map';
 import Legend from 'components/common/map/Legend';
 import ItemGallery from 'components/explore/ItemGallery';
 
+// modal
+import { DisclaimerModal, DISCLAIMER_COMPONENTS } from 'components/common/disclaimer/DisclaimerModal';
+
 // utils
 import LayerManager from 'utils/map/LayerManager';
 import LayerSpec from 'utils/map/layerSpec.json';
 import getLayerType from 'utils/map/layer';
 
+// constants
+import { INFO_TAB_SLUGS } from 'constants/explore';
+
 class ExploreIndex extends Page {
+
+  state = {
+    disclaimer: null
+  };
+
   componentWillMount() {
     // retrieves solutions and BME categories to populate tabs
     this.props.getSolutionCategories();
@@ -55,14 +69,19 @@ class ExploreIndex extends Page {
       // sets Solutions as default section
       Router.replaceRoute('explore-index', { category: 'solutions' });
     } else {
+      if (category === 'cities') {
+        this.props.getCities();
+      }
+
       this._setProjectFilters(this.props);
       this._setBmeFilters(this.props);
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    const queryParamsChanged = !isEqual(this.props.queryParams, nextProps.queryParams);
     // updates filters
-    if (!isEqual(this.props.queryParams, nextProps.queryParams)) {
+    if (queryParamsChanged) {
       this._setProjectFilters(nextProps);
       this._setBmeFilters(nextProps);
     }
@@ -75,6 +94,10 @@ class ExploreIndex extends Page {
     // retrieves bmes if filters have been updated
     if (!isEqual(this.props.bmeFilters, nextProps.bmeFilters) && nextProps.queryParams.category !== 'solutions') {
       this.props.getBmes(nextProps.bmeFilters);
+    }
+
+    if (queryParamsChanged && nextProps.queryParams.category === 'cities') {
+      this.props.getCities();
     }
   }
 
@@ -103,6 +126,52 @@ class ExploreIndex extends Page {
     });
   }
 
+  _setItemsToDisplay() {
+    const { queryParams, parsedBmes, parsedCities, parsedProjects } = this.props;
+    const { category } = queryParams;
+    let items = [];
+
+    switch (category) {
+      case 'cities':
+        items = parsedCities;
+        break;
+
+      case 'solutions':
+        items = parsedProjects;
+        break;
+      default:
+        items = parsedBmes;
+    }
+
+    return items;
+  }
+
+  _setDisplayConditions() {
+    const { category, subCategory, children } = this.props.queryParams;
+    const isSolutionView = category === 'solutions';
+    const isBmeView = (category !== 'solutions') && (category !== 'cities');
+    const isCityView = category === 'cities';
+    let conditions = null;
+
+    switch (true) {
+      case (isSolutionView): {
+        conditions = (isSolutionView && !subCategory);
+        break;
+      }
+      case (isBmeView): {
+        conditions = (isBmeView && !children);
+        break;
+      }
+      case (isCityView): {
+        conditions = !isCityView;
+        break;
+      }
+      default:
+        return conditions;
+    }
+
+    return conditions;
+  }
 
   render() {
     const {
@@ -110,16 +179,23 @@ class ExploreIndex extends Page {
       categoryTabs,
       loadingProjects,
       loadingBmes,
-      parsedProjects,
-      parsedBmes,
+      loadingCities,
       queryParams
     } = this.props;
-    const { category, subCategory, children } = queryParams;
-    const isLoading = loadingProjects || loadingBmes;
+    const { category } = queryParams;
+    const isLoading = loadingProjects || loadingBmes || loadingCities;
     const isSolutionView = category === 'solutions';
-    const items = isSolutionView ? parsedProjects : parsedBmes;
+    const isCityView = category === 'cities';
+    const items = this._setItemsToDisplay();
+    const conditions = this._setDisplayConditions();
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
+    const modifiedCategoryTabs = categoryTabs.map((tab) => ({
+      ...tab,
+      modal: DISCLAIMER_COMPONENTS.includes(tab.slug) ? {
+        onClick: () => this.setState({ disclaimer: tab.slug })
+      } : null
+    }));
 
     return (
       <Layout
@@ -129,28 +205,29 @@ class ExploreIndex extends Page {
         <Tab
           allowAll
           className="-explore"
-          items={categoryTabs}
+          items={modifiedCategoryTabs}
           queryParams={queryParams}
         />
-        <div className="l-map-container">
-          <Map
-            activeLayer={[activeLayer]}
-            LayerManager={LayerManager}
-            categories={categories}
-            filters={queryParams}
-            getLayer={this.props.getLayer}
-            layerData={this.props.layer}
-            removeDataLayer={this.props.removeDataLayer}
-            loading={this.props.loadingMap}
-          />
-          {categories.length > 0 &&
-            <Legend
+        {!isCityView &&
+          <div className="l-map-container">
+            <Map
+              activeLayer={[activeLayer]}
+              LayerManager={LayerManager}
               categories={categories}
               filters={queryParams}
-              activeLayer={activeLayer}
+              getLayer={this.props.getLayer}
               layerData={this.props.layer}
-            />}
-        </div>
+              removeDataLayer={this.props.removeDataLayer}
+              loading={this.props.loadingMap}
+            />
+            {categories.length > 0 &&
+              <Legend
+                categories={categories}
+                filters={queryParams}
+                activeLayer={activeLayer}
+                layerData={this.props.layer}
+              />}
+          </div>}
         <div className="row">
           <div className="column small-12">
             {isLoading ?
@@ -158,11 +235,17 @@ class ExploreIndex extends Page {
               <ItemGallery
                 items={items}
                 isSolutionView={isSolutionView}
-                slider={(isSolutionView && !subCategory) || (!isSolutionView && !children)}
-                showAll={(isSolutionView && !subCategory) || (!isSolutionView && !children)}
+                slider={conditions}
+                showAll={conditions}
               />}
           </div>
         </div>
+
+        <DisclaimerModal
+          disclaimer={this.state.disclaimer}
+          onClose={() => this.setState({ disclaimer: null })}
+        />
+
       </Layout>
     );
   }
@@ -185,7 +268,9 @@ ExploreIndex.propTypes = {
   queryParams: PropTypes.object.isRequired,
   // map
   loadingMap: PropTypes.bool,
-  layer: PropTypes.object
+  layer: PropTypes.object,
+  // cities
+  loadingCities: PropTypes.bool
 };
 
 ExploreIndex.defaultProps = {
@@ -220,7 +305,10 @@ export default withRedux(
     bmeFilters: state.bme.filters,
     // map
     loadingMap: state.map.loading,
-    layer: state.map.layer
+    layer: state.map.layer,
+    // cities
+    loadingCities: state.city.loading,
+    parsedCities: getParsedCities(state)
   }),
   dispatch => ({
     // categories
@@ -237,6 +325,8 @@ export default withRedux(
     setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
     // map
     getLayer(layerSpec) { dispatch(getLayer(layerSpec)); },
-    removeDataLayer() { dispatch(removeDataLayer()); }
+    removeDataLayer() { dispatch(removeDataLayer()); },
+    // cities
+    getCities() { dispatch(getCities()); }
   })
 )(ExploreIndex);

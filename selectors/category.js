@@ -33,13 +33,12 @@ const getCategoryTabs = createSelector(
           parentSlug: firstLevelBmeCategory.slug
         })
       ),
-      info: firstLevelBmeCategory.description
+      info: firstLevelBmeCategory.description,
+      allowAll: true
     }));
 
     // inserts BME categories
-    tabs.splice(1, 0, ...bmeCategoryTabs);
-
-    return tabs;
+    return [tabs[0], ...bmeCategoryTabs, tabs[1]];
   }
 );
 

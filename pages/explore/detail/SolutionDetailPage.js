@@ -11,7 +11,7 @@ import { store } from 'store';
 
 // modules
 import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
-import { getBmeCategories } from 'modules/category';
+import { getSolutionCategories } from 'modules/category';
 
 // utils
 import { getImage } from 'utils/project';
@@ -66,7 +66,7 @@ class SolutionDetailPage extends Page {
     if (!isEqual(prevProps.projectFilters, projectFilters)) {
       const { detailId } = projectFilters;
       this.props.getProjectDetail(detailId);
-      this.props.getBmeCategories();
+      this.props.getSolutionCategories();
     }
   }
 
@@ -270,7 +270,7 @@ export default withRedux(
   dispatch => ({
     // projects
     getProjectDetail(filters) { dispatch(getProjectDetail(filters)); },
-    getBmeCategories() { dispatch(getBmeCategories()) },
+    getSolutionCategories() { dispatch(getSolutionCategories()) },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
     removeProjectDetail() { dispatch(removeProjectDetail()); }
   })

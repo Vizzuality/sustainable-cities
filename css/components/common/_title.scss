@@ -90,6 +90,10 @@
     line-height: $font-size-default;
   }
 
+  &.-lh-small {
+    line-height: 1.2em;
+  }
+
   &.-lh-medium {
     line-height: 1.5em;
   }

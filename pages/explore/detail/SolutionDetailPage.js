@@ -11,7 +11,7 @@ import { store } from 'store';
 
 // modules
 import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
-import { getSolutionCategories } from 'modules/category';
+import { getSolutionCategories, getBmeCategories } from 'modules/category';
 
 // utils
 import { getImage } from 'utils/project';
@@ -66,7 +66,7 @@ class SolutionDetailPage extends Page {
     if (!isEqual(prevProps.projectFilters, projectFilters)) {
       const { detailId } = projectFilters;
       this.props.getProjectDetail(detailId);
-      this.props.getSolutionCategories();
+      this.props.getBmeCategories();
     }
   }
 
@@ -107,7 +107,6 @@ class SolutionDetailPage extends Page {
         }
       }
     }))];
-
 
     const tabEqual = (current, tab) => {
       return !!(
@@ -178,7 +177,6 @@ class SolutionDetailPage extends Page {
     const breadcrumbsItems = SolutionDetailPage.setBreadcrumbs(project);
     const breadcrumbs = breadcrumbsItems ?
       <Breadcrumbs items={breadcrumbsItems} /> : null;
-
 
     return (
       <Layout
@@ -271,6 +269,7 @@ export default withRedux(
     // projects
     getProjectDetail(filters) { dispatch(getProjectDetail(filters)); },
     getSolutionCategories() { dispatch(getSolutionCategories()) },
+    getBmeCategories() { dispatch(getBmeCategories()) },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
     removeProjectDetail() { dispatch(removeProjectDetail()); }
   })

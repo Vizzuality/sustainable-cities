@@ -2,25 +2,28 @@ import React from 'react';
 
 import Button from 'components/common/Button';
 import { BME } from 'components/common/RadialChart';
-import { Link } from 'routes';
+import { Router } from 'routes';
 
 class Sidebar extends React.Component {
   render() {
     return (
       <div className="c-builder-sidebar">
         <div className="header">
-          <p><Button primary link={{ route: 'builder-project' }}>Generate document</Button></p>
-          <p><Button secondary>Save current status</Button></p>
+          <div onClick={this.props.onSolutionsClick} role="link">
+            <h2 className="c-title -fs-smaller -fw-light -uppercase">Solution</h2>
+            <p>{(this.props.selectedSolution || { name: "N/A"}).name}</p>
+          </div>
 
-          <h2 className="c-title -fs-smaller -fw-light -uppercase">Solution</h2>
-          <p>Bike sharing</p>
-
-          <h2 className="c-title -fs-smaller -fw-light -uppercase">Enabling conditions</h2>
-          <p><Link route="/builder/enabling-conditions">7 conditions selected</Link></p>
+          <div onClick={() => Router.pushRoute('/builder/enabling-conditions')} role="link">
+            <h2 className="c-title -fs-smaller -fw-light -uppercase">Enabling conditions</h2>
+            <p>7 conditions selected</p>
+          </div>
         </div>
 
         <div className="footer">
           <p><Button secondary onClick={this.props.onHelpClick}>Need help?</Button></p>
+          <p><Button secondary>Save current status</Button></p>
+          <p><Button primary link={{ route: 'builder-project' }}>Generate document</Button></p>
 
           <div className="legend-item">
             <svg className="radial-chart legend" viewBox="0 0 28 28">

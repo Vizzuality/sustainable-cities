@@ -3,23 +3,30 @@ import fetch from 'isomorphic-fetch';
 import * as queryString from 'query-string';
 
 /* Actions */
+const SELECT_SOLUTION = 'builder/SELECT_SOLUTION';
 const SELECT_BME = 'builder/SELECT_BME';
 const DESELECT_BME = 'builder/DESELECT_BME';
 const COMMENT_BME = 'builder/COMMENT_BME';
 const GET_BME_TREE = 'builder/GET_BME_TREE';
+const GET_SOLUTION_TREE = 'builder/GET_SOLUTION_TREE';
 const GET_ENABLING_TREE = 'builder/GET_ENABLING_TREE';
 const LOADING_BMES = 'builder/LOADING_BMES';
+const LOADING_SOLUTIONS = 'builder/LOADING_SOLUTIONS';
 const LOADING_ENABLINGS = 'builder/LOADING_ENABLINGS';
 const ERROR_BMES = 'builder/ERROR_BMES';
+const ERROR_SOLUTIONS = 'builder/ERROR_SOLUTIONS';
 const ERROR_ENABLINGS = 'builder/ERROR_ENABLINGS';
 
 const initialState = {
   selectedBMEs: [],
   commentedBMEs: {},
+  solutionCategories: [],
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case SELECT_SOLUTION:
+      return { ...state, selectedSolution: action.payload };
     case SELECT_BME:
       return { ...state, selectedBMEs: state.selectedBMEs.concat([action.payload]) };
     case DESELECT_BME:
@@ -28,6 +35,8 @@ export default function (state = initialState, action) {
       return { ...state, commentedBMEs: { ...state.commentedBMEs, [action.bmeId]: action.comment } }
     case GET_BME_TREE:
       return { ...state, bmeCategories: action.payload };
+    case GET_SOLUTION_TREE:
+      return { ...state, solutionCategories: action.payload };
     case GET_ENABLING_TREE:
       return { ...state, enablingCategories: action.payload };
     default:
@@ -35,7 +44,6 @@ export default function (state = initialState, action) {
   }
 }
 
-/* Action creators */
 export function getBmes() {
   const includeParams = ['children.children.bmes', 'children.children.bmes.enablings'];
 
@@ -70,6 +78,45 @@ export function getBmes() {
         .deserialize(bmes, (err, parsedBmes) => {
           dispatch({ type: LOADING_BMES, payload: false });
           dispatch({ type: GET_BME_TREE, payload: parsedBmes });
+        });
+    });
+  };
+}
+
+export function getSolutions() {
+  const includeParams = ['children.children.bmes'];
+
+  const queryParams = queryString.stringify({
+    'filter[category-type]': 'Solution',
+    'filter[level]': 1,
+    'include': includeParams.join(','),
+    'page[size]': 1000
+  });
+
+  return (dispatch, getState) => {
+    dispatch({ type: LOADING_SOLUTIONS, payload: true });
+
+    fetch(`${process.env.API_URL}/categories?${queryParams}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'SC-API-KEY': process.env.SC_API_KEY
+      }
+    })
+    .then((response) => {
+      if (response.ok) {
+        if (getState().project.error) dispatch({ type: ERROR_SOLUTIONS, payload: false });
+        return response.json();
+      }
+
+      dispatch({ type: ERROR_SOLUTIONS, payload: true });
+      throw new Error(response.status);
+    })
+    .then((bmes) => {
+      new Deserializer()
+        .deserialize(bmes, (err, parsedBmes) => {
+          dispatch({ type: LOADING_SOLUTIONS, payload: false });
+          dispatch({ type: GET_SOLUTION_TREE, payload: parsedBmes });
         });
     });
   };
@@ -112,6 +159,10 @@ export function getEnablings() {
         });
     });
   };
+}
+
+export function selectSolution(solutionId) {
+  return (dispatch) => dispatch({ type: SELECT_SOLUTION, payload: solutionId });
 }
 
 export function selectBME(bmeId) {

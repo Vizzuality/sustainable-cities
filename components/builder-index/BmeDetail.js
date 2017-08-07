@@ -102,14 +102,14 @@ class BmeDetail extends React.Component {
           </div>
 
           <div className="actions">
-            <Button onClick={() => this.props.onClose()} secondary>Close</Button>
+            <Button onClick={this.props.onClose} secondary>Close</Button>
             {this.props.selected
-              ? <Button onClick={() => this.props.onDelete()} primary>Delete BME</Button>
-              : <Button onClick={() => this.props.onSave()} primary>Save BME</Button>
+              ? <Button onClick={this.props.onDelete} primary>Delete BME</Button>
+              : <Button onClick={this.props.onSave} primary>Save BME</Button>
             }
           </div>
 
-          <div className="dismiss" onClick={() => this.props.onClose()}>&times;</div>
+          <div className="dismiss" onClick={this.props.onClose}>&times;</div>
           <div className="prev" onClick={this.props.onPrev}></div>
           <div className="next" onClick={this.props.onNext}></div>
         </div>

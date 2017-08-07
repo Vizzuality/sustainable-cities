@@ -1,9 +1,24 @@
 .c-builder-sidebar {
-  margin-top: 35px;
-  width: 250px;
+  position: absolute;
+  z-index: $z-index-2;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  padding-top: 35px;
+  width: 210px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  div[role="link"] {
+    cursor: pointer;
+  }
+
+  .header {
+    p {
+      margin-top: 0px;
+    }
+  }
 
   .footer {
     font-weight: $font-weight-light;
@@ -20,12 +35,42 @@
   }
 }
 
+.c-builder-solution-picker {
+  position: absolute;
+  z-index: $z-index-2;
+  top: 0px;
+  bottom: 0px;
+  left: -16px;
+
+  width: 350px;
+  background-color: $color-5;
+  border-right: 1px solid rgba(44,47,51,0.1);
+
+  header {
+    padding-top: 35px;
+    padding-right: 50px;
+    padding-bottom: 35px;
+    border-bottom: 1px solid rgba(44,47,51,0.1);
+    background-color: $color-white;
+    h1, p {
+      margin-left: 16px;
+    }
+  }
+
+  .solutions-list {
+    margin-top: 35px;
+
+    li {
+      margin-bottom: 10px;
+    }
+  }
+}
+
 .radial-chart {
   &:not(.legend) {
-    margin-top: 50px;
     font-weight: 300;
     position: relative;
-    width: 800px;
+    width: 1080px;
   }
 
   &.legend {
@@ -174,43 +219,43 @@
       display: block;
     }
   }
+}
 
-  .dismiss {
+.c-dismiss.-arrow {
+  position: absolute;
+  top: 34px;
+  left: 100%;
+  line-height: 42px;
+  font-size: $font-size-smaller;
+  font-weight: $font-weight-default;
+  padding: 0px 20px 0px 61px;
+  text-align: center;
+  align-items: center;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
+  background-color: $color-1;
+  color: $color-white;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &::before {
+    content:"";
+    width: 10px;
+    height: 10px;
+    border-bottom: 2px solid $color-white;
+    border-left: 2px solid $color-white;
     position: absolute;
-    top: 34px;
-    left: 100%;
-    line-height: 42px;
-    font-size: $font-size-smaller;
-    font-weight: $font-weight-default;
-    padding: 0px 20px 0px 61px;
-    text-align: center;
-    align-items: center;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
-    background-color: $color-1;
-    color: $color-white;
-    text-transform: uppercase;
-    cursor: pointer;
+    left: 16px;
+    top: 16px;
+    transform: rotate(45deg);
+  }
 
-    &::before {
-      content:"";
-      width: 10px;
-      height: 10px;
-      border-bottom: 2px solid $color-white;
-      border-left: 2px solid $color-white;
-      position: absolute;
-      left: 16px;
-      top: 16px;
-      transform: rotate(45deg);
-    }
-
-    &::after {
-      content:"";
-      width: 16px;
-      height: 8px;
-      border-bottom: 2px solid $color-white;
-      position: absolute;
-      left: 17px;
-      top: 14px;
-    }
+  &::after {
+    content:"";
+    width: 16px;
+    height: 8px;
+    border-bottom: 2px solid $color-white;
+    position: absolute;
+    left: 17px;
+    top: 14px;
   }
 }

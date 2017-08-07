@@ -1,6 +1,7 @@
-import Page from 'pages/Page';
+import intersection from 'lodash/intersection';
 import classnames from 'classnames';
 import { Link } from 'routes';
+import Page from 'pages/Page';
 
 import Layout from 'components/layout/layout';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
@@ -8,11 +9,13 @@ import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 
+import { leaves, flattenSolutionTree } from 'utils/builder';
+
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 import { Router } from 'routes'
 
-import { getBmes, getEnablings } from 'modules/builder';
+import { getBmes, getEnablings, getSolutions } from 'modules/builder';
 import { DisclaimerModal, DISCLAIMER_COMPONENTS } from 'components/common/disclaimer/DisclaimerModal';
 
 
@@ -24,6 +27,7 @@ const transform = (nodes, selectedBMEs) => nodes.map(node => {
     children: bmes.length > 0 ? bmes : transform(node.children || [], selectedBMEs),
   };
 }).filter(node => node.level == "1" || node.children.length > 0);
+
 
 class Project extends Page {
   constructor() {
@@ -133,13 +137,20 @@ class Project extends Page {
 
 export default withRedux(
   store,
-  state => ({
-    categories: state.builder.bmeCategories,
-    enablings: state.builder.enablingCategories || [],
-    selectedBMEs: state.builder.selectedBMEs,
-  }),
+  state => {
+    const solutions = flattenSolutionTree(state.builder.solutionCategories) || [];
+    const selectedSolution = solutions.find(solution => solution.id == state.builder.selectedSolution);
+    const selectedBMEs = selectedSolution ? intersection(state.builder.selectedBMEs, selectedSolution.bmes.map(bme => bme.id)) : state.builder.selectedBMEs;
+
+    return ({
+      categories: state.builder.bmeCategories,
+      enablings: state.builder.enablingCategories || [],
+      selectedBMEs,
+    });
+  },
   dispatch => ({
     getCategoryTree() { dispatch(getBmes()); },
     getEnablingTree() { dispatch(getEnablings()); },
+    getSolutions() { dispatch(getSolutions()); },
   })
 )(Project);

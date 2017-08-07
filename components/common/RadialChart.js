@@ -21,14 +21,15 @@ class BME extends React.Component {
     family: PropTypes.string.isRequired,
     angle: PropTypes.number.isRequired,
     depth: PropTypes.number.isRequired,
-    onClick: PropTypes.func.isRequired,
-    onMouseOver: PropTypes.func.isRequired,
-    onMouseOut: PropTypes.func.isRequired,
+    onClick: PropTypes.func,
+    onMouseOver: PropTypes.func,
+    onMouseOut: PropTypes.func,
   }
 
   render() {
     return (
       <g
+        id={this.props.id}
         transform={`rotate(${rad2deg(this.props.angle)} 0 0) translate(${this.props.depth} 0)`}
         className={classnames(this.props.family, `level-${this.props.level}`)}
       >
@@ -57,6 +58,7 @@ class Line extends React.Component {
   render() {
     return (
       <g
+        id={this.props.id}
         transform={[
           `rotate(${rad2deg(this.props.parent.angle)} 0 0)`,
           `translate(${this.props.depth} 0)`,
@@ -72,7 +74,7 @@ class Line extends React.Component {
   }
 }
 
-function placeLines(p0, p1, d0, d1, r0, r1) {
+function placeLines(p0, p1, d0, d1, r0, r1, keyPrefix) {
   return p1.map(node => {
     var parent = p0.find(p => (p.children || p.bmes || []).map(x=>x.id).includes(node.id));
 
@@ -85,13 +87,13 @@ function placeLines(p0, p1, d0, d1, r0, r1) {
         r1,
         depth: d0,
         family: parent.family,
+        id: `line-${keyPrefix}-${parent.slug}-${parent.id}-${node.id}`,
       },
-      key: `line-${parent.slug}-${parent.id}-${node.id}`,
     };
   });
 }
 
-function place(nodes, size, depth, level) {
+function place(nodes, size, depth, level, keyPrefix) {
   return nodes.map(node => ({
     ...node,
     component: BME,
@@ -101,8 +103,8 @@ function place(nodes, size, depth, level) {
       family: node.family,
       angle: node.angle,
       depth: depth,
+      id: `circle-${keyPrefix}-${node.slug}-${node.id}`,
     },
-    key: `circle-${node.slug}-${node.id}`,
   }));
 }
 
@@ -119,7 +121,7 @@ function positions(nodes, depth, offset) {
   });
 }
 
-function buildNodes(tree, family) {
+function buildNodes(tree, family, keyPrefix) {
   let nodes = [];
   var previousPositions = null;
 
@@ -133,7 +135,7 @@ function buildNodes(tree, family) {
     var index = tree.findIndex(n => n.family == rootFamily);
 
     let p = positions(tree, depths[i], -offset -index);
-    nodes = nodes.concat(place(p, sizes[i], depths[i], i));
+    nodes = nodes.concat(place(p, sizes[i], depths[i], i, keyPrefix));
 
     tree = tree.map(n =>
       (n.children || n.bmes || []).map(node => ({
@@ -143,7 +145,7 @@ function buildNodes(tree, family) {
     ).reduce((a,b) => a.concat(b), []);
 
     if (previousPositions) {
-      const lines = placeLines(previousPositions, p, depths[i-1], depths[i], sizes[i-1], sizes[i]);
+      const lines = placeLines(previousPositions, p, depths[i-1], depths[i], sizes[i-1], sizes[i], keyPrefix);
       nodes = nodes.concat(lines);
     }
 
@@ -163,8 +165,8 @@ class RadialChart extends React.Component {
     super();
 
     this.state = {
-      scale: 1,
-      x: 0,
+      scale: 0.8,
+      x: 100,
       zooming: false,
     }
   }
@@ -177,15 +179,15 @@ class RadialChart extends React.Component {
     if (this.props.interactive && node.level == 1) {
       if (this.state.family == null) {
         this.setState({
-          x:-500,
+          x:-300,
           scale: 1.5,
           family: node.family,
           zooming: true,
         });
       } else if (node.family == this.state.family) {
         this.setState({
-          x: 0,
-          scale: 1,
+          x: 100,
+          scale: 0.8,
           family: null,
           zooming: true,
         });
@@ -210,17 +212,17 @@ class RadialChart extends React.Component {
   }
 
   render() {
-    let nodes = buildNodes(this.props.nodes || [], this.state.family);
+    let nodes = buildNodes(this.props.nodes || [], this.state.family, this.props.keyPrefix);
 
     return (
       <div className={classnames(`active-${this.state.family || "none"}`, "radial-chart", { interactive: this.props.interactive })}>
         <svg id="chart" viewBox="0 0 1000 1000">
           <g transform={`scale(${this.state.scale})`} onTransitionEnd={() => this.transitionEnd()} />
-          <g transform={`translate(${this.state.x + 500} 500) scale(${this.state.scale})`}>
+          <g transform={`translate(${this.state.x + 500} 430) scale(${this.state.scale})`}>
             {nodes.map(node => (
               <node.component
                 {...node.props}
-                key={node.key}
+                key={node.props.id}
                 onClick={() => this.nodeClick(node)}
                 onMouseOver={() => this.showPopup(node)}
                 onMouseOut={() => this.hidePopup(node)}
@@ -234,7 +236,7 @@ class RadialChart extends React.Component {
           <div className={`root-label ${node.family}`} key={`label-${node.id}`} style={{
             opacity: this.state.zooming ? 0 : "",
             position: "absolute",
-            top: `${(node.y * this.state.scale + 420)/1000.0*100}%`,
+            top: `${(node.y * this.state.scale + 350)/1000.0*100}%`,
             left: `${(node.x * this.state.scale + 420 + this.state.x)/1000.0*100}%`,
           }}>
             <p>{node.name}</p>
@@ -244,7 +246,7 @@ class RadialChart extends React.Component {
         {this.state.popup &&
         <div className={`tooltip ${this.state.popup.family}`} style={{
           position: 'absolute',
-          top: `${(this.state.popup.y * this.state.scale + 500)/1000.0*100}%`,
+          top: `${(this.state.popup.y * this.state.scale + 420)/1000.0*100}%`,
           left: `${(this.state.popup.x * this.state.scale + 500 + this.state.x)/1000.0*100}%`,
         }}>
           <p>{this.state.popup.name}</p>

@@ -60,7 +60,7 @@ class EnablingConditionsSelector extends React.Component {
           </section>
         ))}
 
-        <div className="dismiss" onClick={() => this.props.onClose()}>Done</div>
+        <div className="c-dismiss -arrow" onClick={() => this.props.onClose()}>Done</div>
       </div>
     );
   }

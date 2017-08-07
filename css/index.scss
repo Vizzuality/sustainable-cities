@@ -16,6 +16,7 @@
 @import 'icons';
 @import 'layout';
 @import 'animations';
+@import 'forms';
 
 @import "leaflet/dist/leaflet.css";
 
@@ -63,6 +64,7 @@
 @import 'components/common/download-data';
 @import 'components/common/breadcrumbs';
 @import 'components/common/button';
+@import 'components/common/toggle-button';
 @import 'components/common/item-gallery';
 @import 'components/common/spinner';
 @import 'components/common/map';

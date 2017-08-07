@@ -31,6 +31,10 @@ class BmeDetail extends React.Component {
     this.setState({ activeTab: key });
   }
 
+  onChange(target, e) {
+    this.props.onCommentChange(e.target.value);
+  }
+
   render() {
     return (
       <div className="c-modal" onClick={this.onOverlayClick.bind(this)}>
@@ -82,10 +86,14 @@ class BmeDetail extends React.Component {
               <section>
                 <h2 className="c-title -fw-light -fs-extrabig">Comment</h2>
 
-                <textarea placeholder="Add your comment here" />
+                <textarea
+                  placeholder="Add your comment here"
+                  value={this.props.comment}
+                  onChange={(e) => this.onChange('comment', e)}
+                />
 
                 {!this.props.selected &&
-                  <div className="maisumavezOverlay">
+                  <div className="unsaved-overlay">
                     <p className="c-text -fw-light -fs-extrabig">Save this business model element to add a comment</p>
                   </div>
                 }
@@ -94,14 +102,14 @@ class BmeDetail extends React.Component {
           </div>
 
           <div className="actions">
-            <Button onClick={() => this.props.onClose()} secondary>Close</Button>
+            <Button onClick={this.props.onClose} secondary>Close</Button>
             {this.props.selected
-              ? <Button onClick={() => this.props.onDelete()} primary>Delete BME</Button>
-              : <Button onClick={() => this.props.onSave()} primary>Save BME</Button>
+              ? <Button onClick={this.props.onDelete} primary>Delete BME</Button>
+              : <Button onClick={this.props.onSave} primary>Save BME</Button>
             }
           </div>
 
-          <div className="dismiss" onClick={() => this.props.onClose()}>&times;</div>
+          <div className="dismiss" onClick={this.props.onClose}>&times;</div>
           <div className="prev" onClick={this.props.onPrev}></div>
           <div className="next" onClick={this.props.onNext}></div>
         </div>

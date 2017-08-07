@@ -1,6 +1,7 @@
 import Page from 'pages/Page';
 import flatMap from 'lodash/flatMap';
 import intersection from 'lodash/intersection';
+import storage from 'local-storage-fallback';
 
 import Layout from 'components/layout/layout';
 import Sidebar from 'components/builder-index/Sidebar';
@@ -43,7 +44,9 @@ class BuilderIndex extends Page {
   constructor() {
     super();
 
-    this.state = {};
+    this.state = {
+      showHelp: process.browser && !storage.getItem('builder.help-dismissed'),
+    };
   }
 
   componentWillMount() {
@@ -93,6 +96,8 @@ class BuilderIndex extends Page {
 
   hideHelp() {
     this.setState({ showHelp: false });
+
+    storage.setItem('builder.help-dismissed', true);
   }
 
   showSolutionPicker() {
@@ -147,7 +152,7 @@ class BuilderIndex extends Page {
           onPrev={() => this.selectPrevious(this.state.bme)}
         />}
 
-      {this.state.showHelp && <HelpModal onClose={() => this.hideHelp()} />}
+        {this.state.showHelp && <HelpModal onClose={() => this.hideHelp()} />}
       </Layout>
     );
   }

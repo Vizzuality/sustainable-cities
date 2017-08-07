@@ -8,7 +8,7 @@ class HelpModal extends React.Component {
       <div className="c-modal">
         <div className="content">
           <section className="builder-help">
-            <h1 className="c-title -fw-thin -fs-extrabig">Welcome to the business model framework builder</h1>
+            <h1 className="c-title -fw-thin -fs-huge">Design your business model</h1>
 
             <p className="c-text">
               Start selecting a <strong>solution</strong> and, optionally,
@@ -23,7 +23,7 @@ class HelpModal extends React.Component {
             </p>
 
             <div className="actions">
-              <Button onClick={this.props.onClose}>OK</Button>
+              <Button onClick={this.props.onClose}>Start</Button>
             </div>
 
             <div className="dismiss" onClick={() => this.props.onClose()}>&times;</div>

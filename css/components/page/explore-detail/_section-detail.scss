@@ -1,3 +1,5 @@
+$event: 'events-1', 'events-2', 'events-3', 'events-4', 'events-5', 'events-6';
+
 .c-detail-section {
   margin: 50px 0 0;
 
@@ -41,14 +43,15 @@
 
   .picture {
     position: relative;
+    width: 100%;
     padding: 235px 70px 35px;
-    margin-top: 20px;
+    margin: 20px 0;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     background-color: #ddd;
 
-    &:before {
+    &.-gradient:before {
       content: "";
       position: absolute;
       top: 0;
@@ -59,7 +62,19 @@
     }
 
     &.-buildings {
-      background-image: url("static/images/about-caption.jpg");
+      background-image: url("/static/images/about-caption.jpg");
     }
+
+    //Events pics
+    @for $i from 1 through length($event) {
+      &.-event-#{$i} {
+        background-image: url("/static/images/#{nth($event, $i)}.jpg");
+      }
+    }
+  }
+
+  .event {
+    display: block;
+    margin-bottom: 20px;
   }
 }

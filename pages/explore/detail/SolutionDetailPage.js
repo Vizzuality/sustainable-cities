@@ -11,7 +11,7 @@ import { store } from 'store';
 
 // modules
 import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
-import { getBmeCategories } from 'modules/category';
+import { getSolutionCategories, getBmeCategories } from 'modules/category';
 
 // utils
 import { getImage } from 'utils/project';
@@ -111,7 +111,6 @@ class SolutionDetailPage extends Page {
       }
     }))];
 
-
     const tabEqual = (current, tab) => {
       return !!(
         tab.route == current.route
@@ -181,7 +180,6 @@ class SolutionDetailPage extends Page {
     const breadcrumbsItems = SolutionDetailPage.setBreadcrumbs(project);
     const breadcrumbs = breadcrumbsItems ?
       <Breadcrumbs items={breadcrumbsItems} /> : null;
-
     const categoryIcon = CATEGORY_ICONS[project.categoryLevel2];
 
     return (
@@ -276,6 +274,7 @@ export default withRedux(
   dispatch => ({
     // projects
     getProjectDetail(filters) { dispatch(getProjectDetail(filters)); },
+    getSolutionCategories() { dispatch(getSolutionCategories()) },
     getBmeCategories() { dispatch(getBmeCategories()) },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
     removeProjectDetail() { dispatch(removeProjectDetail()); }

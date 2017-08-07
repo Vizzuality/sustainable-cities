@@ -61,26 +61,26 @@ export default function MoreInformation() {
             <h2 className="c-title -dark -fs-extrabig -fw-light">Continue reading</h2>
           </div>
           <div className="column small-12 medium-4">
-            <a className="main-link -border -no-height" href="#">
+            <a className="main-link -border -no-height" href="/about/events">
               <p className="c-text -dark -fs-medium -fw-light">Events</p>
               <p className="c-title -dark">Lorem ipsum casius tesebe aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur.</p>
             </a>
           </div>
           <div className="column small-12 medium-4">
-            <a className="main-link -border -no-height" href="#">
+            <a className="main-link -border -no-height" href="/about/blogs">
               <p className="c-text -dark -fs-medium -fw-light">Blogs</p>
               <p className="c-title -dark">Lorem ipsum casius tesebe aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur.</p>
             </a>
           </div>
           <div className="column small-12 medium-4"></div>
           <div className="column small-12 medium-4">
-            <a className="main-link -border -no-height" href="#">
+            <a className="main-link -border -no-height" href="/about/city-support">
               <p className="c-text -dark -fs-medium -fw-light">City Support</p>
               <p className="c-title -dark">Lorem ipsum casius tesebe aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur.</p>
             </a>
           </div>
           <div className="column small-12 medium-4">
-            <a className="main-link -border -no-height" href="#">
+            <a className="main-link -border -no-height" href="/about/more-information">
               <p className="c-text -dark -fs-medium -fw-light">More information</p>
               <p className="c-title -dark">Lorem ipsum casius tesebe aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur.</p>
             </a>

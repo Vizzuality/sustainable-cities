@@ -13,13 +13,19 @@ import {
   getBmeCategories,
   setCategoryFilters
 } from 'modules/category';
+
 import {
   getProjectsByCategory,
   setProjectFilters,
   removeProjectDetail,
   resetProjectFilters
 } from 'modules/project';
-import { getBmes, setBmeFilters } from 'modules/bme';
+
+import {
+  getBmes,
+  setBmeFilters,
+  resetBmeFilters
+} from 'modules/bme';
 import { getLayer, removeDataLayer } from 'modules/map';
 import { getCities } from 'modules/city';
 
@@ -37,12 +43,23 @@ import Map from 'components/common/map/Map';
 import Legend from 'components/common/map/Legend';
 import ItemGallery from 'components/explore/ItemGallery';
 
+// modal
+import { DisclaimerModal, DISCLAIMER_COMPONENTS } from 'components/common/disclaimer/DisclaimerModal';
+
 // utils
 import LayerManager from 'utils/map/LayerManager';
 import LayerSpec from 'utils/map/layerSpec.json';
 import getLayerType from 'utils/map/layer';
 
+// constants
+import { INFO_TAB_SLUGS } from 'constants/explore';
+
 class ExploreIndex extends Page {
+
+  state = {
+    disclaimer: null
+  };
+
   componentWillMount() {
     // retrieves solutions and BME categories to populate tabs
     this.props.getSolutionCategories();
@@ -91,6 +108,7 @@ class ExploreIndex extends Page {
 
   componentWillUnmount() {
     this.props.resetProjectFilters();
+    this.props.resetBmeFilters();
   }
 
   _setProjectFilters({ queryParams }) {
@@ -161,7 +179,6 @@ class ExploreIndex extends Page {
     return conditions;
   }
 
-
   render() {
     const {
       categories,
@@ -179,6 +196,13 @@ class ExploreIndex extends Page {
     const conditions = this._setDisplayConditions();
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
+    const modifiedCategoryTabs = categoryTabs.map((tab) => ({
+      ...tab,
+      modal: DISCLAIMER_COMPONENTS.includes(tab.slug) ? {
+        onClick: () => this.setState({ disclaimer: tab.slug })
+      } : null
+    }));
+
     return (
       <Layout
         title="Explore"
@@ -187,7 +211,7 @@ class ExploreIndex extends Page {
         <Tab
           allowAll
           className="-explore"
-          items={categoryTabs}
+          items={modifiedCategoryTabs}
           queryParams={queryParams}
         />
         {!isCityView &&
@@ -222,6 +246,12 @@ class ExploreIndex extends Page {
               />}
           </div>
         </div>
+
+        <DisclaimerModal
+          disclaimer={this.state.disclaimer}
+          onClose={() => this.setState({ disclaimer: null })}
+        />
+
       </Layout>
     );
   }
@@ -299,6 +329,7 @@ export default withRedux(
     // bmes
     getBmes(filters) { dispatch(getBmes(filters)); },
     setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
+    resetBmeFilters() { dispatch(resetBmeFilters()) },
     // map
     getLayer(layerSpec) { dispatch(getLayer(layerSpec)); },
     removeDataLayer() { dispatch(removeDataLayer()); },

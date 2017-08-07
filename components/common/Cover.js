@@ -13,15 +13,22 @@ export default function Cover(props) {
       )}
       style={props.image && { backgroundImage: `url(${props.image})` }}
     >
-      <div className="row align-bottom">
-        <div className="column large-8">
-          { props.breadcrumbs && <div className="breadcrumbs">{props.breadcrumbs}</div> }
-          <h1 className="c-title -light -fs-huge -fw-thin">{props.title}</h1>
-          { props.description && <p className="description">{props.description}</p> }
-        </div>
-        <div className="column large-4">
-          <div className={classnames('actions', { '-margin': !props.description })}>
-            {props.children}
+      <div className="c-cover-veil">
+        <div className="row align-bottom">
+          <div className="column large-8">
+            { props.breadcrumbs && <div className="breadcrumbs">{props.breadcrumbs}</div> }
+            <h1 className="c-title -light -fs-huge -fw-thin">
+              { props.titleIcon && <svg viewBox="0 0 32 32">
+                <use height="100%" xlinkHref={`#${props.titleIcon}`} />
+              </svg> }
+              {props.title}
+            </h1>
+            { props.description && <p className="c-text -fs-medium -fw-light description">{props.description}</p> }
+          </div>
+          <div className="column large-4">
+            <div className={classnames('actions', { '-margin': !props.description })}>
+              {props.children}
+            </div>
           </div>
         </div>
       </div>
@@ -35,6 +42,7 @@ Cover.propTypes = {
   size: PropTypes.oneOf(['normal', 'short', 'shorter']),
   position: PropTypes.oneOf(['top', 'bottom']),
   title: PropTypes.string.isRequired,
+  titleIcon: PropTypes.string,
   description: PropTypes.string,
   breadcrumbs: PropTypes.PropTypes.element, // Breadcrumbs component expected
   children: PropTypes.any

@@ -6,6 +6,7 @@ import * as queryString from 'query-string';
 const GET_BMES = 'bme/GET_BMES';
 const SET_BME_DETAIL = 'bme/SET_BME_DETAIL';
 const SET_FILTERS = 'bme/SET_FILTERS';
+const RESET_FILTERS = 'bme/RESET_FILTERS';
 const REMOVE_BME_DETAIL = 'bme/REMOVE_BME_DETAIL';
 
 // loading and error management
@@ -40,6 +41,9 @@ export default function (state = initialState, action) {
     case SET_FILTERS: {
       const filters = { ...state.filters, ...action.payload };
       return Object.assign({}, state, { filters });
+    }
+    case RESET_FILTERS: {
+      return { ...state, filters: initialState.filters };
     }
     case REMOVE_BME_DETAIL: {
       const filters = { ...state.filters, ...{ detailId: null } };
@@ -141,6 +145,12 @@ export function getBmeDetail(filters) {
 export function setBmeFilters(filters) {
   return (dispatch) => {
     dispatch({ type: SET_FILTERS, payload: filters });
+  };
+}
+
+export function resetBmeFilters() {
+  return (dispatch) => {
+    dispatch({ type: RESET_FILTERS });
   };
 }
 

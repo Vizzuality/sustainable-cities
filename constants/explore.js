@@ -9,7 +9,7 @@ const EXPLORE_DESCRIPTION = `Solution description lorem ipusm casius tesebe erat
 const EXPLORE_TABS = [
   {
     id: 999,
-    label: 'Solutions',
+    label: 'Projects',
     query: {
       category: 'solutions'
     },

@@ -4,10 +4,15 @@ import classnames from 'classnames';
 
 export default function DetailSection(props) {
   return (
-    <div className={classnames('c-detail-section', { '-content-separator': props.contentSeparator })}>
+    <div className={classnames('c-detail-section', {
+      '-content-separator': props.contentSeparator,
+      '-content-padding': props.contentPadding
+    })}>
       <div className="row">
         <div className="column small-4">
-          <h2 className="c-title -dark -fs-extrabig -fw-light">{props.title}</h2>
+          <h2 className="c-title -dark -fs-extrabig -fw-light">
+            {props.title}
+          </h2>
         </div>
         <div className="column small-8">
           <div className="content">
@@ -22,6 +27,7 @@ export default function DetailSection(props) {
 DetailSection.propTypes = {
   title: PropTypes.string.isRequired,
   contentSeparator: PropTypes.bool,
+  contentPadding: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
@@ -30,5 +36,6 @@ DetailSection.propTypes = {
 };
 
 DetailSection.defaultProps = {
-  contentSeparator: true
+  contentSeparator: true,
+  contentPadding: true
 };

@@ -11,7 +11,7 @@ import { store } from 'store';
 
 // modules
 import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
-import { getSolutionCategories } from 'modules/category';
+import { getSolutionCategories, getBmeCategories } from 'modules/category';
 
 // utils
 import { getImage } from 'utils/project';
@@ -29,8 +29,11 @@ import SolutionDetail from 'components/explore-detail/SolutionDetail';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import SolutionCategory from 'components/explore-detail/SolutionCategory';
 
-// modal and its content
+// modal
 import { DisclaimerModal, DISCLAIMER_COMPONENTS } from 'components/common/disclaimer/DisclaimerModal';
+
+// constants
+import { CATEGORY_ICONS } from 'constants/category';
 
 class SolutionDetailPage extends Page {
   static setBreadcrumbs(project) {
@@ -66,7 +69,7 @@ class SolutionDetailPage extends Page {
     if (!isEqual(prevProps.projectFilters, projectFilters)) {
       const { detailId } = projectFilters;
       this.props.getProjectDetail(detailId);
-      this.props.getSolutionCategories();
+      this.props.getBmeCategories();
     }
   }
 
@@ -107,7 +110,6 @@ class SolutionDetailPage extends Page {
         }
       }
     }))];
-
 
     const tabEqual = (current, tab) => {
       return !!(
@@ -178,7 +180,7 @@ class SolutionDetailPage extends Page {
     const breadcrumbsItems = SolutionDetailPage.setBreadcrumbs(project);
     const breadcrumbs = breadcrumbsItems ?
       <Breadcrumbs items={breadcrumbsItems} /> : null;
-
+    const categoryIcon = CATEGORY_ICONS[project.categoryLevel2];
 
     return (
       <Layout
@@ -196,6 +198,8 @@ class SolutionDetailPage extends Page {
 
             <Cover
               title={project.name || ''}
+              titleIcon={categoryIcon}
+              description={project.tagline}
               breadcrumbs={breadcrumbs}
               size='shorter'
               position='bottom'
@@ -271,6 +275,7 @@ export default withRedux(
     // projects
     getProjectDetail(filters) { dispatch(getProjectDetail(filters)); },
     getSolutionCategories() { dispatch(getSolutionCategories()) },
+    getBmeCategories() { dispatch(getBmeCategories()) },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
     removeProjectDetail() { dispatch(removeProjectDetail()); }
   })

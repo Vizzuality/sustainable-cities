@@ -13,6 +13,7 @@ import {
   getBmeCategories,
   setCategoryFilters
 } from 'modules/category';
+
 import {
   getProjectsByCategory,
   setProjectFilters,
@@ -20,7 +21,11 @@ import {
   resetProjectFilters
 } from 'modules/project';
 
-import { getBmes, setBmeFilters } from 'modules/bme';
+import {
+  getBmes,
+  setBmeFilters,
+  resetBmeFilters
+} from 'modules/bme';
 import { getLayer, removeDataLayer } from 'modules/map';
 import { getCities } from 'modules/city';
 
@@ -103,6 +108,7 @@ class ExploreIndex extends Page {
 
   componentWillUnmount() {
     this.props.resetProjectFilters();
+    this.props.resetBmeFilters();
   }
 
   _setProjectFilters({ queryParams }) {
@@ -323,6 +329,7 @@ export default withRedux(
     // bmes
     getBmes(filters) { dispatch(getBmes(filters)); },
     setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
+    resetBmeFilters() { dispatch(resetBmeFilters()) },
     // map
     getLayer(layerSpec) { dispatch(getLayer(layerSpec)); },
     removeDataLayer() { dispatch(removeDataLayer()); },

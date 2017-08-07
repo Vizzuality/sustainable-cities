@@ -52,7 +52,7 @@ class EnablingConditionsSelector extends React.Component {
 
                 <ul>
                   {subnode.enablings.map(enabling => (
-                    <li>{enabling.name}</li>
+                    <li key={enabling.id}>{enabling.name}</li>
                   ))}
                 </ul>
               </div>

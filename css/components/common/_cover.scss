@@ -42,11 +42,12 @@
     line-height: 1.15;
 
     > svg {
+      position: relative;
+      top: 10px;
       fill: $color-white;
-      stroke-width: 1;
+      stroke-width: .5;
       width: 60px;
       margin-right: 10px;
-
     }
   }
 

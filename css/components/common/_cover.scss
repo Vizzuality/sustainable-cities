@@ -40,11 +40,20 @@
     font-weight: $font-weight-thin;
     color: $color-text-5;
     line-height: 1.15;
+
+    > svg {
+      fill: $color-white;
+      stroke-width: 1;
+      width: 60px;
+      margin-right: 10px;
+
+    }
   }
 
   .description {
     margin: 10px 0 0 0;
-    color: $color-text-5;
+    color: $color-white;
+    line-height: 32px;
   }
 
   .breadcrumbs {

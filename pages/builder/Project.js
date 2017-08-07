@@ -5,6 +5,8 @@ import Page from 'pages/Page';
 
 import Layout from 'components/layout/layout';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
+import ProjectDetail from 'components/builder-index/ProjectDetail';
+import ProjectCategory from 'components/builder-index/ProjectCategory';
 import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
@@ -19,12 +21,15 @@ import { getBmes, getEnablings, getSolutions } from 'modules/builder';
 import { DisclaimerModal, DISCLAIMER_COMPONENTS } from 'components/common/disclaimer/DisclaimerModal';
 
 
-const transform = (nodes, selectedBMEs) => nodes.map(node => {
-  const bmes = (node.bmes || []).filter(bme => selectedBMEs.includes(bme.id));
+const transform = (nodes, selectedBMEs, commentedBMEs) => nodes.map(node => {
+  const bmes = (node.bmes || []).filter(bme => selectedBMEs.includes(bme.id)).map(bme => ({
+    ...bme,
+    comment: commentedBMEs[bme.id],
+  }));
 
   return {
     ...node,
-    children: bmes.length > 0 ? bmes : transform(node.children || [], selectedBMEs),
+    children: bmes.length > 0 ? bmes : transform(node.children || [], selectedBMEs, commentedBMEs),
   };
 }).filter(node => node.level == "1" || node.children.length > 0);
 
@@ -35,6 +40,7 @@ class Project extends Page {
 
     this.state = {
       disclaimer: null,
+      activeTab: 'details',
     };
   }
 
@@ -52,37 +58,20 @@ class Project extends Page {
       return null;
     }
 
-    const bmeTree = transform(this.props.categories, this.props.selectedBMEs)
+    const bmeTree = transform(this.props.categories, this.props.selectedBMEs, this.props.commentedBMEs);
 
     const defaultTabItems = [{
+      slug: 'details',
       label: 'Project Details',
-      queryParams: {
-        route: 'solution-detail',
-        params: {
-          id: 1
-        }
-      },
     }, {
+      slug: 'overview',
       label: 'Overview',
-      queryParams: {
-        route: 'solution-detail',
-        params: {
-          id: 1,
-          subPage: 'overview'
-        }
-      }
     }];
 
-    const tabItems = [...defaultTabItems, ...bmeTree.map((bme) => ({
-      label: bme.name,
+    const tabItems = [...defaultTabItems, ...bmeTree.map((category) => ({
+      slug: category.slug,
+      label: category.name,
       className: 'info',
-      queryParams: {
-        route: 'solution-detail',
-        params: {
-          id: 1,
-          subPage: bme.slug
-        }
-      }
     }))];
 
 
@@ -90,6 +79,7 @@ class Project extends Page {
       <Layout
         title="Builder"
         queryParams={this.props.queryParams}
+        className="c-builder-project"
       >
         <Cover
           position="bottom"
@@ -108,12 +98,10 @@ class Project extends Page {
               {tabItems.map((tab, n) => (
                 <li
                   key={n}
-                  className={classnames("tab-item", { "-current": false })}
+                  className={classnames("tab-item", { "-current": this.state.activeTab == tab.slug })}
                 >
-                  <Link route={tab.queryParams.route} params={tab.queryParams.params}>
-                    <a className="literal">{tab.label}</a>
-                  </Link>
-                  {tab.className === "info" && (<div className="c-info-icon" onClick={() => this.setState({ disclaimer: tab.queryParams.params.subPage })}>
+                  <a className="literal" onClick={() => this.setState({activeTab: tab.slug })}>{tab.label}</a>
+                  {tab.className === "info" && (<div className="c-info-icon" onClick={() => this.setState({ disclaimer: tab.slug })}>
                     <svg className="icon"><use xlinkHref="#icon-info" /></svg>
                   </div>)}
                 </li>
@@ -122,9 +110,22 @@ class Project extends Page {
           </div>
         </div>
 
-        <SolutionOverview
-          project={{ id: 2, bmeTree: transform(this.props.categories, this.props.selectedBMEs) }}
-        />
+        {this.state.activeTab == 'overview' &&
+          <SolutionOverview
+            project={{ id: 2, bmeTree }}
+          />}
+
+        {this.state.activeTab == 'details' &&
+          <ProjectDetail
+            project={{ id: 2, bmeTree, impacts: [], externalSources: [], projectBmes: [] }}
+            categories={[]}
+          />}
+
+        {(this.state.activeTab != 'overview' && this.state.activeTab != 'details') &&
+          <ProjectCategory
+            category={bmeTree.find(cat => cat.slug == this.state.activeTab)}
+          />
+        }
 
         <DisclaimerModal
           disclaimer={this.state.disclaimer}
@@ -145,6 +146,7 @@ export default withRedux(
     return ({
       categories: state.builder.bmeCategories,
       enablings: state.builder.enablingCategories || [],
+      commentedBMEs: state.builder.commentedBMEs,
       selectedBMEs,
     });
   },

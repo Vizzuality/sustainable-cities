@@ -6,4 +6,8 @@ textarea {
   font-size: $font-size-default;
 
   padding: 12px 20px;
+
+  &::placeholder {
+    color: $color-text-3;
+  }
 }

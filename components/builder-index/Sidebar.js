@@ -49,7 +49,7 @@ class Sidebar extends React.Component {
                 <BME selected={true} size={6} level={3} family="none" angle={0} depth={0} />
               </g>
             </svg>
-            <p>Element selected (commented)</p>
+            <p>Element selected</p>
           </div>
         </div>
       </div>

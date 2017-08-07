@@ -196,7 +196,7 @@ class RadialChart extends React.Component {
   }
 
   showPopup(node) {
-    if (this.props.interactive && node.id && !node["category-type"]) {
+    if (this.props.interactive && node.id && node.level != 1) {
       this.setState({ popup: node });
     }
   }

@@ -1,0 +1,24 @@
+.partnership {
+  margin-top: 70px;
+
+  .logo {
+    display: block;
+    width: 100%;
+    height: 65px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &.citi-foundation {
+      background-image: url('/static/citi-foundation-logo.jpg');
+    }
+
+    &.c40 {
+      background-image: url('/static/c40-cities.png');
+    }
+
+    &.wri {
+      background-image: url('/static/wri-ross-cities-logo.png');
+    }
+  }
+}

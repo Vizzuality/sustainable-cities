@@ -1,3 +1,6 @@
+$event: 'events-1', 'events-2', 'events-3', 'events-4', 'events-5', 'events-6';
+$post: 'post-1', 'post-2', 'post-3', 'post-4', 'post-5', 'post-6';
+
 .c-detail-section {
   margin: 50px 0 0;
 
@@ -12,8 +15,8 @@
       padding: 0 0 50px;
     }
   }
-  .content {
 
+  .content {
     * {
       font-family: $font-family-1;
       font-size: $font-size-default;
@@ -37,5 +40,49 @@
         }
       }
     }
+  }
+
+  .picture {
+    position: relative;
+    width: 100%;
+    padding: 235px 70px 35px;
+    margin: 20px 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #ddd;
+
+    &.-gradient:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-image: linear-gradient(to bottom, rgba(44, 47, 51, 0), #2c2f33), linear-gradient(rgba(44, 47, 51, 0.3), rgba(44, 47, 51, 0.3));
+    }
+
+    &.-buildings {
+      background-image: url("/static/images/about-caption.jpg");
+    }
+
+    //Events pics
+    @for $i from 1 through length($event) {
+      &.-event-#{$i} {
+        background-image: url("/static/images/#{nth($event, $i)}.jpg");
+      }
+    }
+
+    //Post pics
+    @for $i from 1 through length($post) {
+      &.-post-#{$i} {
+        background-image: url("/static/images/#{nth($post, $i)}.jpg");
+      }
+    }
+  }
+
+  .event {
+    display: block;
+    margin-bottom: 20px;
   }
 }

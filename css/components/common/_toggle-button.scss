@@ -1,0 +1,25 @@
+.c-toggle-button {
+  display: inline-block;
+  padding: 8px 15px 7px;
+  background-color: transparent;
+  border-radius: 15px;
+  font-family: $font-family-1;
+  font-size: $font-size-smaller;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid transparent;
+
+  &.selected {
+    color: $color-text-6;
+    background-color: $color-1;
+    border: 1px solid $color-1;
+  }
+
+  &:hover {
+    //color: $color-text-1;
+    border: 1px solid $color-text-3;
+  }
+}
+

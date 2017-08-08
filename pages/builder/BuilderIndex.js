@@ -6,6 +6,7 @@ import storage from 'local-storage-fallback';
 import Layout from 'components/layout/layout';
 import Sidebar from 'components/builder-index/Sidebar';
 import SolutionPicker from 'components/builder-index/SolutionPicker';
+import EnablingConditionsSelector from 'components/builder-index/EnablingConditionsSelector';
 import RadialChart from 'components/common/RadialChart';
 import BmeDetail from 'components/builder-index/BmeDetail';
 import HelpModal from 'components/builder-index/HelpModal';
@@ -21,6 +22,7 @@ import {
   deselectEnabling,
   getBmes,
   getSolutions,
+  getEnablings,
   selectBME,
   selectEnabling,
   selectSolution,
@@ -28,6 +30,7 @@ import {
 
 const transformBMEtree = (nodes, selectedSolution, selectedEnablings) => {
   const inSolution = (bme) => !selectedSolution || selectedSolution.bmes.map(b => b.id).includes(bme.id);
+
 
   return nodes.map(
     node => ({
@@ -58,6 +61,7 @@ class BuilderIndex extends Page {
     super();
 
     this.state = {
+      sidebar: "default",
       showHelp: process.browser && !storage.getItem('builder.help-dismissed'),
     };
   }
@@ -65,6 +69,7 @@ class BuilderIndex extends Page {
   componentWillMount() {
     this.props.getBMEs();
     this.props.getSolutions();
+    this.props.getEnablingTree();
   }
 
   showBME(bme) {
@@ -122,11 +127,15 @@ class BuilderIndex extends Page {
   }
 
   showSolutionPicker() {
-    this.setState({ showSolutionPicker: true })
+    this.setState({ sidebar: "solutions" });
   }
 
-  hideSolutionPicker() {
-    this.setState({ showSolutionPicker: false })
+  showEnablingsSelector() {
+    this.setState({ sidebar: "enablings" });
+  }
+
+  showSidebar() {
+    this.setState({ sidebar: "default" });
   }
 
   render() {
@@ -136,21 +145,32 @@ class BuilderIndex extends Page {
         queryParams={this.props.queryParams}
         className="builder-index"
       >
-        { !this.state.showSolutionPicker &&
+        { this.state.sidebar == "default" &&
         <Sidebar
           onHelpClick={() => this.showHelp()}
           onSolutionsClick={() => this.showSolutionPicker()}
+          onEnablingsClick={() => this.showEnablingsSelector()}
           selectedSolution={this.props.selectedSolution}
           selectedEnablings={this.props.selectedEnablings}
         />
         }
 
-        { this.state.showSolutionPicker &&
+        { this.state.sidebar == "solutions" &&
         <SolutionPicker
           onSolutionSelected={(s) => this.selectSolution(s)}
-          onClose={() => this.hideSolutionPicker()}
+          onClose={() => this.showSidebar()}
           solutions={this.props.solutions}
           selectedSolution={this.props.selectedSolution}
+        />
+        }
+
+        { this.state.sidebar == "enablings" &&
+        <EnablingConditionsSelector
+          nodes={this.props.enablings}
+          selectedEnablings={this.props.selectedEnablings}
+          onClose={() => this.showSidebar()}
+          onEnablingSelect={(enabling) => this.selectEnabling(enabling)}
+          onEnablingDeselect={(enabling) => this.deselectEnabling(enabling)}
         />
         }
 
@@ -159,7 +179,8 @@ class BuilderIndex extends Page {
           selected={this.props.selectedBMEs}
           onClick={(bme) => this.showBME(bme)}
           keyPrefix={(this.props.selectedSolution || { name: "none"}).name}
-          interactive={true}
+          interactive={this.state.sidebar == "default"}
+          thumbnail={this.state.sidebar == "enablings"}
         />
 
         {this.state.bme && <BmeDetail
@@ -193,6 +214,7 @@ export default withRedux(
     return ({
       categories: transformBMEtree(state.builder.bmeCategories, selectedSolution, state.builder.selectedEnablings),
       commentedBMEs: state.builder.commentedBMEs,
+      enablings: state.builder.enablingCategories,
       selectedBMEs,
       selectedEnablings: state.builder.selectedEnablings,
       selectedSolution,
@@ -201,6 +223,7 @@ export default withRedux(
   },
   dispatch => ({
     getBMEs() { dispatch(getBmes()); },
+    getEnablingTree() { dispatch(getEnablings()); },
     deselectBME(bmeId) { dispatch(deselectBME(bmeId)); },
     deselectEnabling(enablingId) { dispatch(deselectEnabling(enablingId)); },
     getSolutions() { dispatch(getSolutions()); },

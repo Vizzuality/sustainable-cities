@@ -24,6 +24,8 @@ const initialState = {
   commentedBMEs: {},
   solutionCategories: [],
   selectedEnablings: [],
+  enablingCategories: [],
+  bmeCategories: [],
 };
 
 export default function (state = initialState, action) {

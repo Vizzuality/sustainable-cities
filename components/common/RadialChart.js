@@ -226,7 +226,14 @@ class RadialChart extends React.Component {
     let nodes = buildNodes(this.props.nodes || [], this.state.family, this.props.keyPrefix);
 
     return (
-      <div className={classnames(`active-${this.state.family || "none"}`, "radial-chart", { interactive: this.props.interactive })}>
+      <div className={classnames(
+        `active-${this.state.family || "none"}`,
+        "radial-chart",
+        {
+          interactive: this.props.interactive,
+          thumbnail: this.props.thumbnail,
+        },
+      )}>
         <svg id="chart" viewBox="0 0 1000 1000">
           <g transform={`scale(${this.state.scale})`} onTransitionEnd={() => this.transitionEnd()} />
           <g transform={`translate(${this.state.x + 500} 430) scale(${this.state.scale})`}>

@@ -74,12 +74,69 @@
   }
 }
 
-.radial-chart {
-  &:not(.legend) {
-    font-weight: 300;
-    position: relative;
-    width: 1080px;
+.c-enabling-conditions-selector {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: $z-index-2;
+  background-color: $color-5;
+
+  border-right: 1px solid rgba(44,47,51,0.1);
+  padding-bottom: 50px;
+  margin-right: 24px;
+  width: 70%;
+
+  header {
+    background-color: $color-white;
+    h1 {
+      padding: 50px 50px 30px 50px;
+    }
+
+    p {
+      padding: 0px 50px 30px 50px;
+      margin: 0px;
+    }
+
+    .c-tabs .row {
+      margin-left: 50px;
+      .tab-item + .tab-item {
+        margin-left: 50px;
+      }
+    }
   }
+
+  section {
+    padding-left: 50px;
+    padding-right: 50px;
+
+    h2 {
+      margin: 32px 0px 16px 0px;
+      color: rgba(44,47,51,0.9);
+    }
+
+    p, li {
+      opacity: 0.8;
+      display: block;
+    }
+  }
+}
+
+
+.radial-chart {
+  &.thumbnail {
+    width: 300px;
+    margin-left: auto;
+    margin-right: 40px;
+    padding-top: 100px;
+
+    p {
+      display: none;
+    }
+  }
+
+  font-weight: 300;
+  position: relative;
+  width: 1080px;
 
   &.legend {
     height: 22px;
@@ -109,7 +166,7 @@
     display: block;
   }
 
-  g {
+  &:not(.thumbnail) g {
     transition: all 1s ease-in-out; transition-property: transform, opacity;
   }
 
@@ -189,50 +246,6 @@
   p { display: none; }
 }
 
-.c-enabling-conditions-selector {
-  position: relative;
-  border-right: 1px solid rgba(44,47,51,0.1);
-  border-bottom: 1px solid rgba(44,47,51,0.1);
-  border-left: 1px solid rgba(44,47,51,0.1);
-  padding-bottom: 50px;
-  margin-right: 24px;
-  width: 70%;
-
-  header {
-    background-color: $color-white;
-    h1 {
-      padding: 50px 50px 30px 50px;
-    }
-
-    p {
-      padding: 0px 50px 30px 50px;
-      margin: 0px;
-    }
-
-    .c-tabs .row {
-      margin-left: 50px;
-      .tab-item + .tab-item {
-        margin-left: 50px;
-      }
-    }
-  }
-
-  section {
-    padding-left: 50px;
-    padding-right: 50px;
-
-    h2 {
-      margin: 32px 0px 16px 0px;
-      color: rgba(44,47,51,0.9);
-    }
-
-    p, li {
-      opacity: 0.8;
-      display: block;
-    }
-  }
-}
-
 .c-dismiss.-arrow {
   position: absolute;
   top: 34px;
@@ -287,6 +300,8 @@
 }
 
 .c-checkbox {
+  cursor: pointer;
+
   input[type='checkbox'] {
     display: none;
   }

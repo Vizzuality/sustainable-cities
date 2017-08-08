@@ -8,7 +8,7 @@ import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 import { Router } from 'routes'
 
-import { getBmes, getEnablings } from 'modules/builder';
+import { getBmes, getEnablings, deselectEnabling, selectEnabling } from 'modules/builder';
 
 class EnablingConditions extends Page {
   constructor() {
@@ -26,6 +26,14 @@ class EnablingConditions extends Page {
     Router.pushRoute('builder');
   }
 
+  selectEnabling(enabling) {
+    this.props.selectEnabling(enabling.id);
+  }
+
+  deselectEnabling(enabling) {
+    this.props.deselectEnabling(enabling.id);
+  }
+
   render() {
     return (
       <Layout
@@ -35,7 +43,10 @@ class EnablingConditions extends Page {
       >
         <EnablingConditionsSelector
           nodes={this.props.enablings}
+          selectedEnablings={this.props.selectedEnablings}
           onClose={() => this.back()}
+          onEnablingSelect={(enabling) => this.selectEnabling(enabling)}
+          onEnablingDeselect={(enabling) => this.deselectEnabling(enabling)}
         />
 
         <RadialChart
@@ -53,10 +64,13 @@ export default withRedux(
     categories: state.builder.bmeCategories,
     enablings: state.builder.enablingCategories || [],
     selectedBMEs: state.builder.selectedBMEs,
+    selectedEnablings: state.builder.selectedEnablings,
   }),
   dispatch => ({
+    deselectEnabling(enablingId) { dispatch(deselectEnabling(enablingId)); },
     getCategoryTree() { dispatch(getBmes()); },
     getEnablingTree() { dispatch(getEnablings()); },
+    selectEnabling(enablingId) { dispatch(selectEnabling(enablingId)); },
   })
 )(EnablingConditions);
 

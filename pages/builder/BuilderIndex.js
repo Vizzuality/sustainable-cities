@@ -18,25 +18,38 @@ import { store } from 'store';
 import {
   commentBME,
   deselectBME,
+  deselectEnabling,
   getBmes,
   getSolutions,
   selectBME,
+  selectEnabling,
   selectSolution,
 } from 'modules/builder';
 
-const filterBMEtree = (bmeTree, selectedSolution) => {
-  if (!selectedSolution) {
-    return bmeTree;
-  }
+const transformBMEtree = (nodes, selectedSolution, selectedEnablings) => {
+  const inSolution = (bme) => !selectedSolution || selectedSolution.bmes.map(b => b.id).includes(bme.id);
 
-  return bmeTree.map(
-    bmeCategory => ({
-      ...bmeCategory,
-      children: bmeCategory.children ? filterBMEtree(bmeCategory.children, selectedSolution) : null,
-      bmes: (bmeCategory.bmes || []).filter(bme => selectedSolution.bmes.map(b => b.id).includes(bme.id)),
+  return nodes.map(
+    node => ({
+      ...node,
+      children: (
+        node.children ?
+        transformBMEtree(node.children, selectedSolution, selectedEnablings) :
+        node.bmes.filter(inSolution).map(
+          node => ({
+            ...node,
+            modifiers: node.enablings.filter(enabling => selectedEnablings.includes(enabling.id)).map(enabling => enabling['assessment-value']),
+          })
+        )
+      ),
     })
   ).filter(
-    bmeCategory => (bmeCategory.children || bmeCategory.bmes).length > 0
+    node => node.children.length > 0
+  ).map(
+    node => ({
+      ...node,
+      modifiers: node.modifiers || node.children.map(n => n.modifiers).reduce((a,b) => a.filter(m => b.includes(m)))
+    })
   );
 };
 
@@ -76,6 +89,14 @@ class BuilderIndex extends Page {
 
   selectSolution(solution) {
     this.props.selectSolution(solution.id);
+  }
+
+  selectEnabling(enabling) {
+    this.props.selectEnabling(enabling.id);
+  }
+
+  deselectEnabling(enabling) {
+    this.props.deselectEnabling(enabling.id);
   }
 
   selectNext(bme) {
@@ -120,6 +141,7 @@ class BuilderIndex extends Page {
           onHelpClick={() => this.showHelp()}
           onSolutionsClick={() => this.showSolutionPicker()}
           selectedSolution={this.props.selectedSolution}
+          selectedEnablings={this.props.selectedEnablings}
         />
         }
 
@@ -144,12 +166,15 @@ class BuilderIndex extends Page {
           bme={this.state.bme}
           comment={this.props.commentedBMEs[this.state.bme.id]}
           selected={this.props.selectedBMEs.includes(this.state.bme.id)}
+          selectedEnablings={this.props.selectedEnablings}
           onClose={() => this.hideBME()}
           onSave={() => this.selectBME(this.state.bme)}
           onCommentChange={(text) => this.changeBMEcomment(this.state.bme, text)}
           onDelete={() => this.deselectBME(this.state.bme)}
           onNext={() => this.selectNext(this.state.bme)}
           onPrev={() => this.selectPrevious(this.state.bme)}
+          onEnablingSelect={(enabling) => this.selectEnabling(enabling)}
+          onEnablingDeselect={(enabling) => this.deselectEnabling(enabling)}
         />}
 
         {this.state.showHelp && <HelpModal onClose={() => this.hideHelp()} />}
@@ -166,18 +191,21 @@ export default withRedux(
     const selectedBMEs = selectedSolution ? intersection(state.builder.selectedBMEs, selectedSolution.bmes.map(bme => bme.id)) : state.builder.selectedBMEs;
 
     return ({
-      categories: filterBMEtree(state.builder.bmeCategories, selectedSolution),
+      categories: transformBMEtree(state.builder.bmeCategories, selectedSolution, state.builder.selectedEnablings),
       commentedBMEs: state.builder.commentedBMEs,
       selectedBMEs,
+      selectedEnablings: state.builder.selectedEnablings,
       selectedSolution,
       solutions,
     });
   },
   dispatch => ({
     getBMEs() { dispatch(getBmes()); },
+    deselectBME(bmeId) { dispatch(deselectBME(bmeId)); },
+    deselectEnabling(enablingId) { dispatch(deselectEnabling(enablingId)); },
     getSolutions() { dispatch(getSolutions()); },
     selectBME(bmeId) { dispatch(selectBME(bmeId)); },
-    deselectBME(bmeId) { dispatch(deselectBME(bmeId)); },
+    selectEnabling(enablingId) { dispatch(selectEnabling(enablingId)); },
     commentBME(bmeId, comment) { dispatch(commentBME(bmeId, comment)); },
     selectSolution(solutionId) { dispatch(selectSolution(solutionId)); },
   })

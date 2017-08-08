@@ -16,7 +16,7 @@ class Sidebar extends React.Component {
 
           <div onClick={() => Router.pushRoute('/builder/enabling-conditions')} role="link">
             <h2 className="c-title -fs-smaller -fw-light -uppercase">Enabling conditions</h2>
-            <p>7 conditions selected</p>
+            <p>{this.props.selectedEnablings.length} conditions selected</p>
           </div>
         </div>
 

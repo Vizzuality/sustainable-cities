@@ -21,9 +21,14 @@ class BME extends React.Component {
     family: PropTypes.string.isRequired,
     angle: PropTypes.number.isRequired,
     depth: PropTypes.number.isRequired,
+    modifiers: PropTypes.array.isRequired,
     onClick: PropTypes.func,
     onMouseOver: PropTypes.func,
     onMouseOut: PropTypes.func,
+  }
+
+  static defaultProps = {
+    modifiers: [],
   }
 
   render() {
@@ -31,7 +36,7 @@ class BME extends React.Component {
       <g
         id={this.props.id}
         transform={`rotate(${rad2deg(this.props.angle)} 0 0) translate(${this.props.depth} 0)`}
-        className={classnames(this.props.family, `level-${this.props.level}`)}
+        className={classnames(this.props.family, `level-${this.props.level}`, ...this.props.modifiers)}
       >
         <circle
           cx="0"
@@ -55,6 +60,10 @@ class BME extends React.Component {
 }
 
 class Line extends React.Component {
+  static defaultProps = {
+    modifiers: [],
+  }
+
   render() {
     return (
       <g
@@ -66,7 +75,7 @@ class Line extends React.Component {
           `translate(${this.props.r0} 0)`,
           `scale(${distanceBetween(this.props.parent, this.props.node) - this.props.r1 - this.props.r0} 1)`,
         ].join(" ")}
-        className={this.props.family}
+        className={classnames(this.props.family, ...this.props.modifiers)}
       >
         <line x1="0" y1="0" x2="1" y2="0" />
       </g>
@@ -87,6 +96,7 @@ function placeLines(p0, p1, d0, d1, r0, r1, keyPrefix) {
         r1,
         depth: d0,
         family: parent.family,
+        modifiers: node.modifiers,
         id: `line-${keyPrefix}-${parent.slug}-${parent.id}-${node.id}`,
       },
     };
@@ -103,6 +113,7 @@ function place(nodes, size, depth, level, keyPrefix) {
       family: node.family,
       angle: node.angle,
       depth: depth,
+      modifiers: node.modifiers,
       id: `circle-${keyPrefix}-${node.slug}-${node.id}`,
     },
   }));

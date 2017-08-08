@@ -65,7 +65,6 @@ class SolutionDetailPage extends Page {
 
   componentDidUpdate(prevProps) {
     const { projectFilters } = this.props;
-
     if (!isEqual(prevProps.projectFilters, projectFilters)) {
       const { detailId } = projectFilters;
       this.props.getProjectDetail(detailId);
@@ -166,9 +165,12 @@ class SolutionDetailPage extends Page {
       )
     } else {
       let category = project.bmeTree.find((c) => c.slug === queryParams.subPage);
+      let projectBmes = project.projectBmes;
+
       return (
         <SolutionCategory
           category={category}
+          projectBmes={projectBmes}
         />
       )
     }

@@ -4,7 +4,7 @@ import { Link } from 'routes';
 import Page from 'pages/Page';
 
 import Layout from 'components/layout/layout';
-import SolutionOverview from 'components/explore-detail/SolutionOverview';
+import ProjectOverview from 'components/builder-index/ProjectOverview';
 import ProjectDetail from 'components/builder-index/ProjectDetail';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
 import Cover from 'components/common/Cover';
@@ -40,7 +40,7 @@ class Project extends Page {
 
     this.state = {
       disclaimer: null,
-      activeTab: 'details',
+      activeTab: 'overview',
     };
   }
 
@@ -111,7 +111,7 @@ class Project extends Page {
         </div>
 
         {this.state.activeTab == 'overview' &&
-          <SolutionOverview
+          <ProjectOverview
             project={{ id: 2, bmeTree }}
           />}
 

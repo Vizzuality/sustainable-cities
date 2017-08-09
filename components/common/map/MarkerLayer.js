@@ -32,12 +32,12 @@ export default class MarkerLayer {
   }
 
   parseMarkerOptions({ projects }) {
-    const { category } = this._filters;
+    const { category, subCategory, children } = this._filters;
     let fillColor = DEFAULT_MARKER_OPTIONS.color;
     let radius = DEFAULT_MARKER_OPTIONS.radius;
-    const value = projects.length;
+    let value = 1;
 
-    // all solutions / single-solution cases
+    // solution cases
     if (category === 'solutions') {
       // temporary solution. Now is taking the first project to set the color
       // in case a city has more than one.
@@ -52,14 +52,34 @@ export default class MarkerLayer {
       }
 
       fillColor = CATEGORY_SOLUTIONS_COLORS[categoryLevel2];
+      value = projects.length;
     }
 
     // no solution cases
     if (category !== 'solutions') {
+      const { cities } = projects[0] || {};
+      const city = cities[0] || {};
+      const { bmesQuantity } = city;
+      let currentBme = {};
+
+      if (category) {
+        currentBme = (bmesQuantity || []).find(bme => bme.slug === category) || {};
+      }
+
+      if (subCategory) {
+        currentBme = (currentBme.children || []).find(bme => bme.slug === subCategory) || {};
+      }
+
+      if (children) {
+        currentBme = (currentBme.children || []).find(bme => bme.slug === children) || {};
+      }
+
+      value = currentBme.quantity || value;
       fillColor = CATEGORY_FIRST_LEVEL_COLORS[category];
     }
 
-    radius = value !== 0 || value !== 1 ? ((radius * Math.log(value)) + 5) : 5;
+    radius = value !== 0 || value !== 1 ?
+      ((radius * Math.log(value)) + 5) : 5;
 
     return {
       ...DEFAULT_MARKER_OPTIONS,

@@ -16,21 +16,30 @@ const LOADING_ENABLINGS = 'builder/LOADING_ENABLINGS';
 const ERROR_BMES = 'builder/ERROR_BMES';
 const ERROR_SOLUTIONS = 'builder/ERROR_SOLUTIONS';
 const ERROR_ENABLINGS = 'builder/ERROR_ENABLINGS';
+const SELECT_ENABLING = 'builder/SELECT_ENABLING';
+const DESELECT_ENABLING = 'builder/DESELECT_ENABLING';
 
 const initialState = {
   selectedBMEs: [],
   commentedBMEs: {},
   solutionCategories: [],
+  selectedEnablings: [],
+  enablingCategories: [],
+  bmeCategories: [],
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case SELECT_ENABLING:
+      return { ...state, selectedEnablings: state.selectedEnablings.concat([action.enablingId]) };
     case SELECT_SOLUTION:
-      return { ...state, selectedSolution: action.payload };
+      return { ...state, selectedSolution: action.solutionId };
     case SELECT_BME:
-      return { ...state, selectedBMEs: state.selectedBMEs.concat([action.payload]) };
+      return { ...state, selectedBMEs: state.selectedBMEs.concat([action.bmeId]) };
+    case DESELECT_ENABLING:
+      return { ...state, selectedEnablings: state.selectedEnablings.filter(bme => bme != action.enablingId) };
     case DESELECT_BME:
-      return { ...state, selectedBMEs: state.selectedBMEs.filter(bme => bme != action.payload) };
+      return { ...state, selectedBMEs: state.selectedBMEs.filter(bme => bme != action.bmeId) };
     case COMMENT_BME:
       return { ...state, commentedBMEs: { ...state.commentedBMEs, [action.bmeId]: action.comment } }
     case GET_BME_TREE:
@@ -162,15 +171,23 @@ export function getEnablings() {
 }
 
 export function selectSolution(solutionId) {
-  return (dispatch) => dispatch({ type: SELECT_SOLUTION, payload: solutionId });
+  return (dispatch) => dispatch({ type: SELECT_SOLUTION, solutionId });
 }
 
 export function selectBME(bmeId) {
-  return (dispatch) => dispatch({ type: SELECT_BME, payload: bmeId });
+  return (dispatch) => dispatch({ type: SELECT_BME, bmeId });
 }
 
 export function deselectBME(bmeId) {
-  return (dispatch) => dispatch({ type: DESELECT_BME, payload: bmeId });
+  return (dispatch) => dispatch({ type: DESELECT_BME, bmeId });
+}
+
+export function selectEnabling(enablingId) {
+  return (dispatch) => dispatch({ type: SELECT_ENABLING, enablingId });
+}
+
+export function deselectEnabling(enablingId) {
+  return (dispatch) => dispatch({ type: DESELECT_ENABLING, enablingId });
 }
 
 export function commentBME(bmeId, comment) {

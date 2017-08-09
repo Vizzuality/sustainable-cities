@@ -1,6 +1,9 @@
 import React from 'react';
 import classnames from 'classnames';
 
+import EnablingCheckbox from 'components/builder-index/EnablingCheckbox';
+
+
 class EnablingConditionsSelector extends React.Component {
   constructor() {
     super();
@@ -52,7 +55,13 @@ class EnablingConditionsSelector extends React.Component {
 
                 <ul>
                   {subnode.enablings.map(enabling => (
-                    <li key={enabling.id}>{enabling.name}</li>
+                    <li key={enabling.id}>
+                      <EnablingCheckbox
+                        checked={this.props.selectedEnablings.includes(enabling.id)}
+                        enabling={enabling}
+                        onChange={(_, checked) => checked ? this.props.onEnablingDeselect(enabling) : this.props.onEnablingSelect(enabling)}
+                      />
+                    </li>
                   ))}
                 </ul>
               </div>

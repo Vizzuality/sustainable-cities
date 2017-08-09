@@ -42,17 +42,12 @@ import Tab from 'components/common/Tab';
 import Map from 'components/common/map/Map';
 import Legend from 'components/common/map/Legend';
 import ItemGallery from 'components/explore/ItemGallery';
-
-// modal
-import { DisclaimerModal, DISCLAIMER_COMPONENTS } from 'components/common/disclaimer/DisclaimerModal';
+import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
 
 // utils
 import LayerManager from 'utils/map/LayerManager';
 import LayerSpec from 'utils/map/layerSpec.json';
 import getLayerType from 'utils/map/layer';
-
-// constants
-import { INFO_TAB_SLUGS } from 'constants/explore';
 
 class ExploreIndex extends Page {
 
@@ -196,9 +191,9 @@ class ExploreIndex extends Page {
     const conditions = this._setDisplayConditions();
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
-    const modifiedCategoryTabs = categoryTabs.map((tab) => ({
+    const modifiedCategoryTabs = categoryTabs.map(tab => ({
       ...tab,
-      modal: DISCLAIMER_COMPONENTS.includes(tab.slug) ? {
+      modal: tab.hasModal ? {
         onClick: () => this.setState({ disclaimer: tab.slug })
       } : null
     }));
@@ -248,6 +243,7 @@ class ExploreIndex extends Page {
         </div>
 
         <DisclaimerModal
+          categories={categories}
           disclaimer={this.state.disclaimer}
           onClose={() => this.setState({ disclaimer: null })}
         />
@@ -329,7 +325,7 @@ export default withRedux(
     // bmes
     getBmes(filters) { dispatch(getBmes(filters)); },
     setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
-    resetBmeFilters() { dispatch(resetBmeFilters()) },
+    resetBmeFilters() { dispatch(resetBmeFilters()); },
     // map
     getLayer(layerSpec) { dispatch(getLayer(layerSpec)); },
     removeDataLayer() { dispatch(removeDataLayer()); },

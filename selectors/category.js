@@ -22,6 +22,7 @@ const getCategoryTabs = createSelector(
     // populates BME categories
     const bmeCategoryTabs = bmeCategories.map(firstLevelBmeCategory => ({
       id: firstLevelBmeCategory.id,
+      hasModal: true,
       label: firstLevelBmeCategory.name,
       query: {
         category: firstLevelBmeCategory.slug

@@ -24,7 +24,7 @@
   > .infowindow-content {
 
     .resume-items {
-      // margin: 10px 0 0;
+      margin: 10px 0 0;
       display: inline-block;
 
       font-size: $font-size-extrasmall;
@@ -48,11 +48,14 @@
         margin: 5px 0 0;
       }
 
+      > span,
       > a {
         font-size: $font-size-nano;
         color: rgba($color-text-6, .5);
         text-transform: uppercase;
+      }
 
+      > a {
         &:hover {
           color: $color-text-6;
         }

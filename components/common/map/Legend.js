@@ -20,6 +20,12 @@ import {
 } from 'constants/category';
 
 const MIN_VALUE_RANGE = 1;
+const MULTI_SOLUTION_ITEM = {
+  id: uuidv1(),
+  name: 'Multiple Solutions',
+  color: CATEGORY_SOLUTIONS_COLORS['multi-solution'],
+  type: 'single-circle'
+};
 
 export default class Legend extends React.Component {
   static getMaxValue(data, filters) {
@@ -96,6 +102,9 @@ export default class Legend extends React.Component {
             type: 'single-circle'
           });
         });
+
+        items.push(MULTI_SOLUTION_ITEM);
+
         break;
       }
       // single solution case

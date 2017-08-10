@@ -28,7 +28,8 @@ const CATEGORY_SOLUTIONS_COLORS = {
   'bus-rapid-transit-brt': '#dd7d5c', // Transit-oriented developments
   'low-and-zero-emission-buses': '#69e191', // Low emission buses
   'municipal-building-retrofits': '#f7b50c', // Building efficiency retrofits
-  'transit-oriented-development-tod': '#fabada' // A new one ^.^
+  'transit-oriented-development-tod': '#fabada', // A new one ^.^
+  'multi-solution': '#d8d8d8'
 };
 
 const CATEGORY_ICONS = {

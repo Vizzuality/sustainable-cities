@@ -50,3 +50,7 @@ DisclaimerModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   disclaimer: PropTypes.string
 };
+
+DisclaimerModal.defaultProps = {
+  categories: []
+};

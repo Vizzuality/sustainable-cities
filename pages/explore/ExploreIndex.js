@@ -186,7 +186,6 @@ class ExploreIndex extends Page {
     const { category } = queryParams;
     const isLoading = loadingProjects || loadingBmes || loadingCities;
     const isSolutionView = category === 'solutions';
-    const isCityView = category === 'cities';
     const items = this._setItemsToDisplay();
     const conditions = this._setDisplayConditions();
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
@@ -209,26 +208,30 @@ class ExploreIndex extends Page {
           items={modifiedCategoryTabs}
           queryParams={queryParams}
         />
-        {!isCityView &&
-          <div className="l-map-container">
-            <Map
-              activeLayer={[activeLayer]}
-              LayerManager={LayerManager}
-              categories={categories}
-              filters={queryParams}
-              getLayer={this.props.getLayer}
-              layerData={this.props.layer}
-              removeDataLayer={this.props.removeDataLayer}
-              loading={this.props.loadingMap}
-            />
-            {categories.length > 0 &&
-              <Legend
-                categories={categories}
-                filters={queryParams}
-                activeLayer={activeLayer}
-                layerData={this.props.layer}
-              />}
-          </div>}
+        {/* MAP */}
+        <div className="l-map-container">
+          <Map
+            activeLayer={[activeLayer]}
+            LayerManager={LayerManager}
+            categories={categories}
+            filters={queryParams}
+            getLayer={this.props.getLayer}
+            layerData={this.props.layer}
+            removeDataLayer={this.props.removeDataLayer}
+            loading={this.props.loadingMap}
+          />
+          {categories.length > 0 &&
+            <div className="row">
+              <div className="column small-12">
+                <Legend
+                  categories={categories}
+                  filters={queryParams}
+                  activeLayer={activeLayer}
+                  layerData={this.props.layer}
+                />
+              </div>
+            </div>}
+        </div>
         <div className="row">
           <div className="column small-12">
             {isLoading ?

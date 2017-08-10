@@ -2,6 +2,8 @@
 import { render } from 'react-dom';
 import GeoJSON from 'geojson';
 import { groupProjectsByCity } from 'utils/project';
+import uniq from 'lodash/uniq';
+import compact from 'lodash/compact';
 
 // components
 import Infowindow from 'components/common/map/Infowindow';
@@ -15,7 +17,7 @@ const L = (typeof window !== 'undefined') ? require('leaflet') : null;
 const DEFAULT_MARKER_OPTIONS = {
   className: 'c-marker',
   radius: 5,
-  fillColor: '#f00',
+  fillColor: '#000',
   fillOpacity: 1,
   weight: 1,
   color: '#fff'
@@ -38,11 +40,12 @@ export default class MarkerLayer {
     let value = 1;
 
     // solution cases
-    if (category === 'solutions') {
+    if (category === 'solutions' || category === 'cities') {
       // temporary solution. Now is taking the first project to set the color
       // in case a city has more than one.
       const project = projects[0] || {};
       const categoryLevel2 = project.categoryLevel2;
+      const isMultiSolution = (uniq(compact(projects.map(p => p.categoryLevel2)) || []).length > 1);
 
       if (!categoryLevel2) {
         return {
@@ -51,12 +54,13 @@ export default class MarkerLayer {
         };
       }
 
-      fillColor = CATEGORY_SOLUTIONS_COLORS[categoryLevel2];
+      fillColor = !isMultiSolution ?
+        CATEGORY_SOLUTIONS_COLORS[categoryLevel2] : CATEGORY_SOLUTIONS_COLORS['multi-solution'];
       value = projects.length;
     }
 
     // no solution cases
-    if (category !== 'solutions') {
+    if (category !== 'solutions' && category !== 'cities') {
       const { cities } = projects[0] || {};
       const city = cities[0] || {};
       const { bmesQuantity } = city;
@@ -99,7 +103,8 @@ export default class MarkerLayer {
         render(
           Infowindow({
             ...feature.properties,
-            type: category !== 'solutions' ? 'bme' : 'solution',
+            type: (category !== 'solutions' && category !== 'cities') ?
+              'bme' : 'solution',
             filters: this._filters,
             categories: this._categories
           })

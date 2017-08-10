@@ -60,11 +60,6 @@ class CityDetailPage extends Page {
     const { name } = this.props.city;
     let breadcrumbs = [
       {
-        name: 'Explore',
-        route: 'explore-index',
-        params: { category: 'solutions' }
-      },
-      {
         name: 'Cities',
         route: 'explore-index',
         params: { category: 'cities' }

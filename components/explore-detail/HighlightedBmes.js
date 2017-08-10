@@ -30,5 +30,5 @@ export default function HighlightedBmes({ project, bmes }) {
 
 HighlightedBmes.propTypes = {
   project: PropTypes.object.isRequired,
-  bmes: PropTypes.object
+  bmes: PropTypes.array
 };

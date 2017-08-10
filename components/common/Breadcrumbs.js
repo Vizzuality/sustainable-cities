@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'routes';
+import uuidv1 from 'uuid/v1';
 
 export default function Breadcrumbs(props) {
   return (
     <ul className="c-breadcrumbs">
       {props.items.map((item) => { // eslint-disable-line arrow-body-style
         return (
-          <li key={item.name}>
+          <li key={uuidv1()}>
             {!item.noLink ? <Link route={item.route} params={item.params}>
               <a>{item.name}</a>
             </Link> : <span>{item.name}</span>}

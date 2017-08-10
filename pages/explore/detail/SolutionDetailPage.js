@@ -38,9 +38,10 @@ import { CATEGORY_ICONS } from 'constants/category';
 class SolutionDetailPage extends Page {
   static setBreadcrumbs(project) {
     if (!Object.keys(project).length) return null;
-    const { name, slug } = project.category || {};
+    const { name, slug, parent } = project.category || {};
+    const { name: parentName, slug: parentSlug, level: parentLevel } = parent || {};
 
-    return [
+    const breadcrumbsItems = [
       {
         name: 'Projects',
         route: 'explore-index',
@@ -52,6 +53,22 @@ class SolutionDetailPage extends Page {
         params: { category: 'solutions', subCategory: slug }
       }
     ];
+
+    // Adds the parent category level if this is not a level-1
+    if (!!parentLevel && parentLevel !== 1) {
+      breadcrumbsItems.splice(1, 0, {
+        name: parentName,
+        route: 'explore-index',
+        params: { category: 'solutions', subCategory: parentSlug }
+      });
+
+      // Tell the breadcrumbs last item is not a link now
+      if (breadcrumbsItems[2]) {
+        breadcrumbsItems[2] = { ...breadcrumbsItems[2], noLink: true };
+      }
+    }
+
+    return breadcrumbsItems;
   }
 
   state = {

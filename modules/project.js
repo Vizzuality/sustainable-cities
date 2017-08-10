@@ -106,6 +106,7 @@ export function getProjectDetail(projectId) {
 
     const includeFields = [
       'category',
+      'category.parent',
       'cities',
       'country',
       'external-sources',

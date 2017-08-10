@@ -23,7 +23,7 @@ export default function SummarySection({ category, parent, projectBmes }) {
         {child.children && child.children.map(grandchild => (<div id={grandchild.slug} className="subsubitem" key={grandchild.id}>
           <div className="row subsubtitle">
             <div className="column large-12 c-text -fs-big -fw-light">
-              {grandchild.name}
+              <a href={`/business-model-elements/${grandchild.id}`}>{grandchild.name}</a>
             </div>
           </div>
           <div className="row description">

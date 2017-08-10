@@ -105,7 +105,7 @@
 
   &.-caption {
     position: relative;
-    padding-top: 35px; 
+    padding-top: 35px;
 
     &:before {
       content: "";
@@ -113,9 +113,13 @@
       top: 0;
       left: 0;
       height: 5px;
-      width: 60px; 
+      width: 60px;
       background-color: $color-9;
     }
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 }
 

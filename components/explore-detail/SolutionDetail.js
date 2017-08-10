@@ -99,7 +99,7 @@ export default function SolutionDetail({ project }) {
             />
           </DetailSection>}
 
-        {bmeTree.length > 0 &&
+        {/*bmeTree.length > 0 &&
           <DetailSection
             title="Business model elements overview"
             contentSeparator={false}
@@ -108,7 +108,7 @@ export default function SolutionDetail({ project }) {
               projectId={project.id}
               bmeTree={bmeTree}
             />
-          </DetailSection>}
+          </DetailSection>*/}
 
       </div>
     </div>

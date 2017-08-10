@@ -30,7 +30,7 @@ import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import SolutionCategory from 'components/explore-detail/SolutionCategory';
 
 // modal
-import { DisclaimerModal, DISCLAIMER_COMPONENTS } from 'components/common/disclaimer/DisclaimerModal';
+import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
 
 // constants
 import { CATEGORY_ICONS } from 'constants/category';
@@ -131,7 +131,7 @@ class SolutionDetailPage extends Page {
                 <a className="literal">{tab.label}</a>
               </Link>
 
-              {DISCLAIMER_COMPONENTS.includes(tab.queryParams.params.subPage) && (<div
+              {[].includes(tab.queryParams.params.subPage) && (<div
                 className="c-info-icon"
                 onClick={() => this.setState({
                   disclaimer: tab.queryParams.params.subPage

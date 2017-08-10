@@ -54,8 +54,14 @@ export default class MarkerLayer {
         };
       }
 
-      fillColor = !isMultiSolution ?
-        CATEGORY_SOLUTIONS_COLORS[categoryLevel2] : CATEGORY_SOLUTIONS_COLORS['multi-solution'];
+      if (category === 'solutions') {
+        fillColor = !isMultiSolution ?
+          CATEGORY_SOLUTIONS_COLORS[categoryLevel2] : CATEGORY_SOLUTIONS_COLORS['multi-solution'];
+      } else {
+        // cities
+        fillColor = CATEGORY_SOLUTIONS_COLORS['multi-solution'];
+      }
+
       value = projects.length;
     }
 

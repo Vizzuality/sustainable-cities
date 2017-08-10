@@ -23,8 +23,6 @@ export class DisclaimerModal extends React.Component {
     const category = categories.find(cat => cat.slug === disclaimer);
     const { label, description } = category || {};
 
-    // debugger
-
     if (!category) {
       return null;
     }

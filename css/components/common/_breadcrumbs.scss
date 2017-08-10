@@ -21,4 +21,15 @@
       color: $color-primary;
     }
   }
+
+  .-bme & {
+    li {
+      color: $color-text-6;
+    }
+
+    a,
+    span {
+      color: $color-text-6;
+    }
+  }
 }

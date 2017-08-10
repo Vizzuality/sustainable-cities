@@ -11,7 +11,10 @@ export default function Cover(props) {
         `-position-${props.position}`,
         props.className
       )}
-      style={props.image && { backgroundImage: `url(${props.image})` }}
+      style={{
+        backgroundImage: props.image ? `url(${props.image})` : undefined,
+        backgroundColor: props.color || undefined
+      }}
     >
       <div className="c-cover-veil">
         <div className="row align-bottom">
@@ -39,6 +42,7 @@ export default function Cover(props) {
 Cover.propTypes = {
   className: PropTypes.string,
   image: PropTypes.string,
+  color: PropTypes.string,
   size: PropTypes.oneOf(['normal', 'short', 'shorter']),
   position: PropTypes.oneOf(['top', 'bottom']),
   title: PropTypes.string.isRequired,

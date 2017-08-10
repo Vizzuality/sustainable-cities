@@ -188,6 +188,7 @@ class ExploreIndex extends Page {
     const isSolutionView = category === 'solutions';
     const items = this._setItemsToDisplay();
     const conditions = this._setDisplayConditions();
+    const isCityView = category === 'cities';
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
     const modifiedCategoryTabs = categoryTabs.map(tab => ({
@@ -220,7 +221,7 @@ class ExploreIndex extends Page {
             removeDataLayer={this.props.removeDataLayer}
             loading={this.props.loadingMap}
           />
-          {categories.length > 0 &&
+          {(!isCityView && categories.length > 0) &&
             <div className="row">
               <div className="column small-12">
                 <Legend

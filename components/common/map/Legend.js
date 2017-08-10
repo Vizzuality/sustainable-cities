@@ -39,7 +39,7 @@ export default class Legend extends React.Component {
         maxValue = city.projects.length > maxValue ? city.projects.length : maxValue;
       }
 
-      if (category !== 'solutions' && category !== 'cities') {
+      if (category !== 'solutions') {
         (city.projects || []).forEach((project) => {
           const { bmesQuantity } = project.cities ? project.cities[0] : {};
           let currentBme = {};
@@ -78,7 +78,7 @@ export default class Legend extends React.Component {
 
     switch (true) {
       // all-solutions case
-      case (!subCategory && (category === 'solutions' || category === 'cities')): {
+      case (!subCategory && category === 'solutions'): {
         const solutionCategories = categories.filter(cat => cat['category-type'] === 'Solution');
 
         let projectCategories = [];

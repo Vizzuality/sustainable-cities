@@ -50,5 +50,5 @@ Cover.propTypes = {
 
 Cover.defaultProps = {
   size: 'normal',
-  position: 'top',
+  position: 'top'
 };

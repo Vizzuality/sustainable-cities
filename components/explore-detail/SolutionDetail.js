@@ -23,9 +23,8 @@ export default function SolutionDetail({ project }) {
 
   const sourcesList = externalSources ?
     externalSources.map(source => ({ id: source.id, name: source.name, link: source.webUrl })) : [];
-
   const impactItems = impacts.filter(i => !!i.category);
-
+  const highlightedBmes = (project.projectBmes || []).filter(bme => bme.isFeatured);
 
   return (
     <div className="solution-detail">
@@ -45,15 +44,17 @@ export default function SolutionDetail({ project }) {
             project={project}
           />
         </DetailSection>
-        <DetailSection
-          title="Highlights"
-          contentSeparator={false}
-          contentPadding={false}
-        >
-          <HighlightedBmes
-            project={project}
-          />
-        </DetailSection>
+        {(highlightedBmes || []).length > 0 &&
+          <DetailSection
+            title="Highlights"
+            contentSeparator={false}
+            contentPadding={false}
+          >
+            <HighlightedBmes
+              project={project}
+              bmes={highlightedBmes}
+            />
+          </DetailSection>}
       </div>
 
       <div className="solution-detail-rest">

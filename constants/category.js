@@ -15,20 +15,20 @@ const CATEGORY_FIRST_LEVEL_COLORS = {
 
   'investment-components': '#f7b50c', // investment-component
   'legal-arragements': '#28bcd4', // delivery-mechanism
-  'financing': '#dd7d5c', // financial-product
-  'bme': '#69e191' // funding-source
+  financing: '#dd7d5c', // financial-product
+  bme: '#69e191' // funding-source
 };
 
 const CATEGORY_SOLUTIONS_COLORS = {
-  'bike-sharing-systems': '#28bcd4', // bike-sharing-systems
-  'new-efficient-constructions': '#ad6bb7', // new-efficient-constructions
-
-  'bike-sharing-scheme': '#28bcd4', // bike-sharing-systems
-  'efficient-new-buildings': '#ad6bb7', // new-efficient-constructions
-  'bus-rapid-transit-brt': '#dd7d5c', // Transit-oriented developments
-  'low-and-zero-emission-buses': '#69e191', // Low emission buses
-  'municipal-building-retrofits': '#f7b50c', // Building efficiency retrofits
-  'transit-oriented-development-tod': '#fabada' // A new one ^.^
+  'bike-sharing-systems': '#28bcd4', // Bike Sharing Systems
+  'new-efficient-constructions': '#ad6bb7', // New efficient Constructions
+  'bike-sharing-scheme': '#525bd7', // Bike Sharing Scheme
+  'efficient-new-buildings': '#77b70b', // Efficient New Buildings
+  'bus-rapid-transit-brt': '#dd7d5c', // Bus Rapid Transit (BRT)
+  'low-and-zero-emission-buses': '#69e191', // Low And Zero Emission Buses
+  'municipal-building-retrofits': '#f7b50c', // Building Efficiency Retrofits
+  'transit-oriented-development-tod': '#f784bd', // Transit-oriented Development (TOD)
+  'multi-solution': '#2c2f33' // multiple solutions
 };
 
 const CATEGORY_ICONS = {

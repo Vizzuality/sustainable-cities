@@ -2,13 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'routes';
-import TetherComponent from 'react-tether';
 
-// components
-import SubMenu from 'components/common/SubMenu';
-
-// constants
-import { EXPLORE_TABS, EXPLORE_ROUTES } from 'constants/explore';
+const SOLUTION_MAP_ROUTES = ['explore-index', 'solution-detail', 'bme-detail', 'city-detail'];
 
 export default class MainNav extends React.Component {
 
@@ -58,7 +53,7 @@ export default class MainNav extends React.Component {
                   <Link prefetch route="about"><a className="literal">About</a></Link>
                 </li>
                 <li
-                  className={classnames('nav-item', { '-current': EXPLORE_ROUTES.indexOf(route) !== -1 })}
+                  className={classnames('nav-item', { '-current': SOLUTION_MAP_ROUTES.indexOf(route) !== -1 })}
                   role="menuitem"
                 >
                   <Link prefetch route="explore-index"><a className="literal">Solutions map</a></Link>

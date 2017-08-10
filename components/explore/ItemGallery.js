@@ -27,7 +27,7 @@ export default function ItemGallery(props) {
                   {showTitle &&
                     <h3 className="c-title -dark -fs-extrabig -fw-light">{item.title}</h3>}
                 </div>
-                {showAll &&
+                {(showAll && (item.children || []).length > 0) &&
                   <Link
                     route={item.link.route}
                     params={item.link.params}

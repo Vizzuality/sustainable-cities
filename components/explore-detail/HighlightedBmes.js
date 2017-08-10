@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'routes';
 import groupBy from 'lodash/groupBy';
 
-export default function HighlightedBmes({ project }) {
+export default function HighlightedBmes({ project, bmes }) {
   // group highlighted bmes
-  const featuredHighlightedBmes = project.projectBmes.filter(projectBme => projectBme.isFeatured);
-  const groupedHighlightedBmes = groupBy(featuredHighlightedBmes, projectBme =>
+  const groupedHighlightedBmes = groupBy(bmes, projectBme =>
     projectBme.bme && projectBme.bme.categoryLevel1);
 
   return (<div className="c-highlighted-bmes">
@@ -17,11 +16,12 @@ export default function HighlightedBmes({ project }) {
           {topLevelCategory.name}
         </div>
         <ul>
-          {groupedHighlightedBmes[categoryLevel1].map(highlightedBme => (<li key={highlightedBme.id}>
-            <Link route={`/solutions/${project.id}/${topLevelCategory.slug}#${highlightedBme.bme.slug}`}>
-              <a>{highlightedBme.bme.name}</a>
-            </Link>
-          </li>))}
+          {groupedHighlightedBmes[categoryLevel1].map(highlightedBme => (
+            <li key={highlightedBme.id}>
+              <Link route={`/solutions/${project.id}/${topLevelCategory.slug}#${highlightedBme.bme.slug}`}>
+                <a>{highlightedBme.bme.name}</a>
+              </Link>
+            </li>))}
         </ul>
       </div>);
     })}
@@ -29,5 +29,6 @@ export default function HighlightedBmes({ project }) {
 }
 
 HighlightedBmes.propTypes = {
-  project: PropTypes.object.isRequired
+  project: PropTypes.object.isRequired,
+  bmes: PropTypes.array
 };

@@ -41,7 +41,7 @@ export default class Tab extends React.Component {
   renderTab(item, index) {
     const { queryParams } = this.props;
     const { route, category } = queryParams;
-    const { children, label, query, modal, allowAll } = item;
+    const { children, label, modal, query, allowAll } = item;
 
     if (children) {
       let subMenuOptions = children;
@@ -103,11 +103,12 @@ export default class Tab extends React.Component {
             >
               {label}
             </a>
-            {modal && (<div className="c-info-icon" onClick={modal.onClick}>
-              <svg className="icon">
-                <use xlinkHref="#icon-info" />
-              </svg>
-            </div>)}
+            {modal &&
+              <div className="c-info-icon" onClick={modal.onClick}>
+                <svg className="icon">
+                  <use xlinkHref="#icon-info" />
+                </svg>
+              </div>}
           </li>
           {this.state.category === query.category &&
             <SubMenu

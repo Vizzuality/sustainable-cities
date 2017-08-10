@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import DetailSection from 'components/explore-detail/DetailSection';
 import ReportedImpact from 'components/explore-detail/ReportedImpact';
 import ItemList from 'components/explore-detail/ItemList';
-import BmeOverview from 'components/explore-detail/project/BmeOverview';
+// import BmeOverview from 'components/explore-detail/project/BmeOverview';
 import HighlightedBmes from 'components/explore-detail/HighlightedBmes';
 import SnapshotSection from 'components/explore-detail/SnapshotSection';
 
@@ -13,12 +13,8 @@ export default function SolutionDetail({ project }) {
   const {
     situation,
     solution,
-    operationalYear,
-    cities,
-    country,
     externalSources,
-    impacts,
-    bmeTree
+    impacts
   } = project;
 
   const sourcesList = externalSources ?
@@ -100,7 +96,7 @@ export default function SolutionDetail({ project }) {
             />
           </DetailSection>}
 
-        {/*bmeTree.length > 0 &&
+        {/* bmeTree.length > 0 &&
           <DetailSection
             title="Business model elements overview"
             contentSeparator={false}

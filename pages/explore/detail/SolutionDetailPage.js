@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { Link } from 'routes';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
+import uuidv1 from 'uuid/v1';
 
 // Redux
 import withRedux from 'next-redux-wrapper';
@@ -20,7 +21,6 @@ import { getImage } from 'utils/project';
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
-import Tab from 'components/common/Tab';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import DownloadData from 'components/common/DownloadData';
 import RelatedContent from 'components/explore-detail/RelatedContent';
@@ -28,8 +28,6 @@ import ContactForm from 'components/explore-detail/ContactForm';
 import SolutionDetail from 'components/explore-detail/SolutionDetail';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import SolutionCategory from 'components/explore-detail/SolutionCategory';
-
-// modal
 import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
 
 // constants
@@ -103,7 +101,7 @@ class SolutionDetailPage extends Page {
         params: {
           id: project.id
         }
-      },
+      }
     }, {
       label: 'Overview',
       queryParams: {
@@ -115,7 +113,7 @@ class SolutionDetailPage extends Page {
       }
     }];
 
-    const tabItems = [...defaultTabItems, ...(project.bmeTree || []).map((bme) => ({
+    const tabItems = [...defaultTabItems, ...(project.bmeTree || []).map(bme => ({
       label: bme.name,
       className: 'info',
       queryParams: {
@@ -124,39 +122,41 @@ class SolutionDetailPage extends Page {
           id: project.id,
           subPage: bme.slug
         }
-      }
+      },
+      modal: bme.label ? {
+        onClick: () => this.setState({ disclaimer: bme.slug })
+      } : null
     }))];
 
-    const tabEqual = (current, tab) => {
-      return !!(
-        tab.route == current.route
-        && tab.params && tab.params.id == current.id
-        && tab.params.subPage == current.subPage
-      )
-    };
+    const tabEqual = (current, tab) => !!(
+      tab.route === current.route
+      && tab.params && tab.params.id === current.id
+      && tab.params.subPage === current.subPage
+    );
 
     return (<div className="c-tabs -explore">
       <div className="row">
         <ul className="tab-list">
-          {tabItems.map((tab, n) => (
+          {tabItems.map(tab => (
             <li
-              key={n}
-              className={classnames("tab-item", { "-current": tabEqual(this.props.queryParams, tab.queryParams) })}
+              key={uuidv1()}
+              className={classnames('tab-item', {
+                '-current': tabEqual(this.props.queryParams, tab.queryParams)
+              })}
             >
-
               <Link route={tab.queryParams.route} params={tab.queryParams.params}>
                 <a className="literal">{tab.label}</a>
               </Link>
 
-              {[].includes(tab.queryParams.params.subPage) && (<div
-                className="c-info-icon"
-                onClick={() => this.setState({
-                  disclaimer: tab.queryParams.params.subPage
-                })}
-              >
-                <svg className="icon"><use xlinkHref="#icon-info" /></svg>
-              </div>)}
-
+              {tab.modal &&
+                <div
+                  className="c-info-icon"
+                  onClick={() => this.setState({
+                    disclaimer: tab.queryParams.params.subPage
+                  })}
+                >
+                  <svg className="icon"><use xlinkHref="#icon-info" /></svg>
+                </div>}
             </li>
           ))}
         </ul>
@@ -173,33 +173,33 @@ class SolutionDetailPage extends Page {
           project={project}
           categories={categories}
         />
-      )
-    } else if (queryParams.subPage === "overview") {
+      );
+    } else if (queryParams.subPage === 'overview') {
       return (
         <SolutionOverview
           project={project}
         />
-      )
-    } else {
-      let category = project.bmeTree.find((c) => c.slug === queryParams.subPage);
-      let projectBmes = project.projectBmes;
-
-      return (
-        <SolutionCategory
-          category={category}
-          projectBmes={projectBmes}
-        />
-      )
+      );
     }
+
+    const category = project.bmeTree.find(c => c.slug === queryParams.subPage);
+    const projectBmes = project.projectBmes;
+
+    return (
+      <SolutionCategory
+        category={category}
+        projectBmes={projectBmes}
+      />
+    );
   }
 
   render() {
-    const { project, categories, isLoading } = this.props;
-
+    const { bmeCategories, project, isLoading } = this.props;
     const breadcrumbsItems = SolutionDetailPage.setBreadcrumbs(project);
     const breadcrumbs = breadcrumbsItems ?
       <Breadcrumbs items={breadcrumbsItems} /> : null;
     const categoryIcon = CATEGORY_ICONS[project.categoryLevel2];
+
 
     return (
       <Layout
@@ -207,7 +207,7 @@ class SolutionDetailPage extends Page {
         queryParams={this.props.queryParams}
       >
 
-        <div className='solution-detail-page'>
+        <div className="solution-detail-page">
 
           {isLoading && (<div>
             Loading project...
@@ -220,8 +220,8 @@ class SolutionDetailPage extends Page {
               titleIcon={categoryIcon}
               description={project.tagline}
               breadcrumbs={breadcrumbs}
-              size='shorter'
-              position='bottom'
+              size="shorter"
+              position="bottom"
               image={getImage(project)}
             />
 
@@ -240,6 +240,7 @@ class SolutionDetailPage extends Page {
         </div>
 
         <DisclaimerModal
+          categories={bmeCategories}
           disclaimer={this.state.disclaimer}
           onClose={() => this.setState({ disclaimer: null })}
         />
@@ -250,14 +251,17 @@ class SolutionDetailPage extends Page {
 }
 
 SolutionDetailPage.propTypes = {
-  // projects
+  // categories
+  categories: PropTypes.array,
+  // project
   project: PropTypes.object,
   getProjectDetail: PropTypes.func,
   queryParams: PropTypes.object.isRequired
 };
 
 SolutionDetailPage.defaultProps = {
-  project: {}
+  project: {},
+  categories: []
 };
 
 /* completes the bmeTree root level with missing top-level categories */
@@ -266,23 +270,31 @@ const completeBmeTree = (bmeTree, categories) => {
     return null;
   }
 
-  // Ugly Number() casts used below because `id` types don't match across requests to different endpoints
-  const presentBmeIds = bmeTree.map((bme) => bme.id);
+  // Ugly Number() casts used below because `id` types
+  // don't match across requests to different endpoints
+  const presentBmeIds = bmeTree.map(bme => bme.id);
 
   return {
-    bmeTree: [...bmeTree, ...categories.filter(category => !presentBmeIds.includes(Number(category.id))).map(category => ({
-      id: Number(category.id),
-      name: category.name,
-      slug: category.slug,
-      children: []
-    }))]
+    bmeTree: [
+      ...bmeTree,
+      ...categories
+        .filter(category => !presentBmeIds.includes(Number(category.id)))
+        .map(category => ({
+          id: Number(category.id),
+          name: category.name,
+          slug: category.slug,
+          children: []
+        })
+      )]
   };
 };
 
 export default withRedux(
   store,
   state => ({
-    // projects
+    // categories
+    bmeCategories: state.category.bme.list,
+    // project
     isLoading: (state.project.loading || isEmpty(state.project.detail)),
     project: {
       ...state.project.detail,
@@ -291,10 +303,9 @@ export default withRedux(
     projectFilters: state.project.filters
   }),
   dispatch => ({
-    // projects
     getProjectDetail(filters) { dispatch(getProjectDetail(filters)); },
-    getSolutionCategories() { dispatch(getSolutionCategories()) },
-    getBmeCategories() { dispatch(getBmeCategories()) },
+    getSolutionCategories() { dispatch(getSolutionCategories()); },
+    getBmeCategories() { dispatch(getBmeCategories()); },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
     removeProjectDetail() { dispatch(removeProjectDetail()); }
   })

@@ -22,6 +22,7 @@ const getCategoryTabs = createSelector(
     // populates BME categories
     const bmeCategoryTabs = bmeCategories.map(firstLevelBmeCategory => ({
       id: firstLevelBmeCategory.id,
+      hasModal: !!firstLevelBmeCategory.label,
       label: firstLevelBmeCategory.name,
       query: {
         category: firstLevelBmeCategory.slug
@@ -38,9 +39,7 @@ const getCategoryTabs = createSelector(
     }));
 
     // inserts BME categories
-    tabs.splice(1, 0, ...bmeCategoryTabs);
-
-    return tabs;
+    return [tabs[0], ...bmeCategoryTabs, tabs[1]];
   }
 );
 

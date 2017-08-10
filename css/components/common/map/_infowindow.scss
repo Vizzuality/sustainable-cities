@@ -10,41 +10,52 @@
 
   > .leaflet-popup-content {
     margin: 0;
-    padding: 30px 25px;
+    padding: 15px;
+    line-height: 1;
   }
 }
 
-
+.leaflet-popup-tip {
+  background-color: $color-2;
+}
 
 .c-infowindow {
 
   > .infowindow-content {
 
-    > .resume-items {
-      margin: 5px 0 0;
+    .resume-items {
+      margin: 10px 0 0;
+      display: inline-block;
 
-      font-size: $font-size-medium;
+      font-size: $font-size-extrasmall;
       font-weight: $font-weight-light;
       color: rgba($color-text-6, .8);
     }
 
     > .info-list {
-      margin: 15px 0 0;
+      margin: 10px 0 0;
       overflow-y: auto;
+    }
+
+    .info-item {
+      margin-top: 0;
     }
 
     > .info-list > .info-item {
       display: block;
 
       &:not(:first-child) {
-        margin: 10px 0 0;
+        margin: 5px 0 0;
+      }
+
+      > span,
+      > a {
+        font-size: $font-size-nano;
+        color: rgba($color-text-6, .5);
+        text-transform: uppercase;
       }
 
       > a {
-        font-size: $font-size-smaller;
-        color: rgba($color-text-6, .5);
-        text-transform: uppercase;
-
         &:hover {
           color: $color-text-6;
         }

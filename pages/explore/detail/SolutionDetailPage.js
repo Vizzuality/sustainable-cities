@@ -11,7 +11,7 @@ import { store } from 'store';
 
 // modules
 import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
-import { getBmeCategories } from 'modules/category';
+import { getSolutionCategories, getBmeCategories } from 'modules/category';
 
 // utils
 import { getImage } from 'utils/project';
@@ -29,12 +29,11 @@ import SolutionDetail from 'components/explore-detail/SolutionDetail';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import SolutionCategory from 'components/explore-detail/SolutionCategory';
 
-// modal and its content
-import DisclaimerModal from 'components/explore-detail/DisclaimerModal';
-import FinancialProduct from 'components/explore-detail/modal-content/FinancialProduct';
-import FundingSource from 'components/explore-detail/modal-content/FundingSource';
-import DeliveryMechanism from 'components/explore-detail/modal-content/DeliveryMechanism';
-import InvestmentComponent from 'components/explore-detail/modal-content/InvestmentComponent';
+// modal
+import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
+
+// constants
+import { CATEGORY_ICONS } from 'constants/category';
 
 class SolutionDetailPage extends Page {
   static setBreadcrumbs(project) {
@@ -43,7 +42,7 @@ class SolutionDetailPage extends Page {
 
     return [
       {
-        name: 'Solutions',
+        name: 'Projects',
         route: 'explore-index',
         params: { category: 'solutions' }
       },
@@ -56,7 +55,7 @@ class SolutionDetailPage extends Page {
   }
 
   state = {
-    disclaimer: false
+    disclaimer: null
   };
 
   componentWillMount() {
@@ -66,7 +65,6 @@ class SolutionDetailPage extends Page {
 
   componentDidUpdate(prevProps) {
     const { projectFilters } = this.props;
-
     if (!isEqual(prevProps.projectFilters, projectFilters)) {
       const { detailId } = projectFilters;
       this.props.getProjectDetail(detailId);
@@ -78,75 +76,8 @@ class SolutionDetailPage extends Page {
     this.props.removeProjectDetail();
   }
 
-  toggleDisclaimer(subPage) {
-    this.setState({ disclaimer: subPage }, () => {
-      // prevent scrolling while the modal is open
-      document.getElementsByTagName('body')[0].classList.toggle('no-overflow', !!subPage);
-    })
-  }
-
-  renderTabs(tabs) {
-    const tabEqual = (current, tab) => {
-      return !!(
-        tab.route == current.route
-        && tab.params && tab.params.id == current.id
-        && tab.params.subPage == current.subPage
-      )
-    };
-
-    return (<div className="c-tabs -explore">
-      <div className="row">
-        <ul className="tab-list">
-          {tabs.map((tab, n) => (
-            <li
-              key={n}
-              className={classnames("tab-item", { "-current": tabEqual(this.props.queryParams, tab.queryParams) })}
-            >
-              <Link route={tab.queryParams.route} params={tab.queryParams.params}>
-                <a className="literal">{tab.label}</a>
-              </Link>
-              {tab.className === "info" && (<div className="c-info-icon" onClick={() => this.toggleDisclaimer(tab.queryParams.params.subPage)}>
-                <svg className="icon"><use xlinkHref="#icon-info" /></svg>
-              </div>)}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>);
-  }
-
-  renderContent() {
-    const { project, categories, queryParams } = this.props;
-
-    if (!queryParams.subPage) {
-      return (
-        <SolutionDetail
-          project={project}
-          categories={categories}
-        />
-      )
-    } else if (queryParams.subPage === "overview") {
-      return (
-        <SolutionOverview
-          project={project}
-        />
-      )
-    } else {
-      let category = project.bmeTree.find((c) => c.slug === queryParams.subPage);
-      return (
-        <SolutionCategory
-          category={category}
-        />
-      )
-    }
-  }
-
-  render() {
-    const { project, categories, isLoading } = this.props;
-
-    const breadcrumbsItems = SolutionDetailPage.setBreadcrumbs(project);
-    const breadcrumbs = breadcrumbsItems ?
-      <Breadcrumbs items={breadcrumbsItems} /> : null;
+  renderTabs() {
+    const { project } = this.props;
 
     const defaultTabItems = [{
       label: 'Project Details',
@@ -179,12 +110,79 @@ class SolutionDetailPage extends Page {
       }
     }))];
 
-    const disclaimerComponents = {
-      'funding-source': <FundingSource />,
-      'delivery-mechanism': <DeliveryMechanism />,
-      'investment-component': <InvestmentComponent />,
-      'financial-product': <FinancialProduct />
+    const tabEqual = (current, tab) => {
+      return !!(
+        tab.route == current.route
+        && tab.params && tab.params.id == current.id
+        && tab.params.subPage == current.subPage
+      )
     };
+
+    return (<div className="c-tabs -explore">
+      <div className="row">
+        <ul className="tab-list">
+          {tabItems.map((tab, n) => (
+            <li
+              key={n}
+              className={classnames("tab-item", { "-current": tabEqual(this.props.queryParams, tab.queryParams) })}
+            >
+
+              <Link route={tab.queryParams.route} params={tab.queryParams.params}>
+                <a className="literal">{tab.label}</a>
+              </Link>
+
+              {[].includes(tab.queryParams.params.subPage) && (<div
+                className="c-info-icon"
+                onClick={() => this.setState({
+                  disclaimer: tab.queryParams.params.subPage
+                })}
+              >
+                <svg className="icon"><use xlinkHref="#icon-info" /></svg>
+              </div>)}
+
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>);
+  }
+
+  renderContent() {
+    const { project, categories, queryParams } = this.props;
+
+    if (!queryParams.subPage) {
+      return (
+        <SolutionDetail
+          project={project}
+          categories={categories}
+        />
+      )
+    } else if (queryParams.subPage === "overview") {
+      return (
+        <SolutionOverview
+          project={project}
+        />
+      )
+    } else {
+      let category = project.bmeTree.find((c) => c.slug === queryParams.subPage);
+      let projectBmes = project.projectBmes;
+
+      return (
+        <SolutionCategory
+          category={category}
+          projectBmes={projectBmes}
+        />
+      )
+    }
+  }
+
+  render() {
+    const { project, categories, isLoading } = this.props;
+
+    const breadcrumbsItems = SolutionDetailPage.setBreadcrumbs(project);
+    const breadcrumbs = breadcrumbsItems ?
+      <Breadcrumbs items={breadcrumbsItems} /> : null;
+    const categoryIcon = CATEGORY_ICONS[project.categoryLevel2];
 
     return (
       <Layout
@@ -202,13 +200,15 @@ class SolutionDetailPage extends Page {
 
             <Cover
               title={project.name || ''}
+              titleIcon={categoryIcon}
+              description={project.tagline}
               breadcrumbs={breadcrumbs}
               size='shorter'
               position='bottom'
               image={getImage(project)}
             />
 
-            {this.renderTabs(tabItems)}
+            {this.renderTabs()}
 
             {this.renderContent()}
 
@@ -222,9 +222,11 @@ class SolutionDetailPage extends Page {
 
         </div>
 
-        {this.state.disclaimer && <DisclaimerModal onClose={() => this.toggleDisclaimer()}>
-          {disclaimerComponents[this.state.disclaimer] || <div>wait, what?</div>}
-        </DisclaimerModal>}
+        <DisclaimerModal
+          disclaimer={this.state.disclaimer}
+          onClose={() => this.setState({ disclaimer: null })}
+        />
+
       </Layout>
     );
   }
@@ -274,6 +276,7 @@ export default withRedux(
   dispatch => ({
     // projects
     getProjectDetail(filters) { dispatch(getProjectDetail(filters)); },
+    getSolutionCategories() { dispatch(getSolutionCategories()) },
     getBmeCategories() { dispatch(getBmeCategories()) },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
     removeProjectDetail() { dispatch(removeProjectDetail()); }

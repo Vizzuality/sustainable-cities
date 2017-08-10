@@ -1,4 +1,5 @@
-.c-title {
+.c-title,
+.c-text  {
   margin: 0;
 
   font-family: $font-family-1;
@@ -8,6 +9,11 @@
   // colors
   &.-dark {
     color: $color-text-4;
+
+    a {
+      color: $color-primary;
+      text-decoration: underline;
+    }
   }
 
   &.-gray-light {
@@ -43,12 +49,21 @@
     font-size: $font-size-bigger;
   }
 
+  &.-fs-big {
+    font-size: $font-size-big;
+  }
+
   &.-fs-medium {
     font-size: $font-size-medium;
+    line-height: 35px;
   }
 
   &.-fs-smaller {
     font-size: $font-size-smaller;
+  }
+
+  &.-fs-extrasmall {
+    font-size: $font-size-extrasmall;
   }
 
   // weigths
@@ -60,12 +75,25 @@
     font-weight: $font-weight-thin;
   }
 
+  &.-fw-bold {
+    font-weight: $font-weight-bold;
+  }
+
   // miscellaneous
   &.-uppercase {
     text-transform: uppercase;
   }
 
   //Line height
+
+  &.-lh-default {
+    line-height: $font-size-default;
+  }
+
+  &.-lh-small {
+    line-height: 1.2em;
+  }
+
   &.-lh-medium {
     line-height: 1.5em;
   }
@@ -74,4 +102,28 @@
   &.-center {
     text-align: center;
   }
+
+  &.-caption {
+    position: relative;
+    padding-top: 35px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 5px;
+      width: 60px;
+      background-color: $color-9;
+    }
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+//Margins
+.c-text + .c-text {
+  margin-top: 20px;
 }

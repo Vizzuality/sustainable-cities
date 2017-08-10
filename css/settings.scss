@@ -47,9 +47,10 @@ $color-text-8: #FFEE40;
 
 $color-categories: (
   investment-component: #F7B50C,
-  delivery-mechanism: #28D1ED,
-  financial-product: #69E090,
-  funding-source: #DD7D5C,
+  delivery-mechanism: #28BCD4,
+  financial-product: #DD7D5C,
+  funding-source: #69E091,
+  none: #000000,
 );
 
 // Zindex
@@ -57,6 +58,7 @@ $z-index-1: 0;
 $z-index-2: 100;
 $z-index-3: 200;
 $z-index-4: 400;
+$z-index-11: 1100;
 
 /**
  * FONTS
@@ -68,6 +70,7 @@ $z-index-4: 400;
 $font-family-1: 'Yantramanav', sans-serif;
 
 // Sizes
+$font-size-nano:        10px;
 $font-size-extrasmall:  12px;
 $font-size-smaller:     14px;
 $font-size-small:       15px;

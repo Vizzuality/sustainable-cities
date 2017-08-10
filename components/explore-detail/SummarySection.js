@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
 
-export default function SummarySection({ category, parent }) {
+export default function SummarySection({ category, parent, projectBmes }) {
   const titleColor = CATEGORY_FIRST_LEVEL_COLORS[parent.slug] ||
     CATEGORY_FIRST_LEVEL_COLORS.default;
 
@@ -23,12 +23,12 @@ export default function SummarySection({ category, parent }) {
         {child.children && child.children.map(grandchild => (<div id={grandchild.slug} className="subsubitem" key={grandchild.id}>
           <div className="row subsubtitle">
             <div className="column large-12 c-text -fs-big -fw-light">
-              {grandchild.name}
+              <a href={`/business-model-elements/${grandchild.id}`}>{grandchild.name}</a>
             </div>
           </div>
           <div className="row description">
             <div className="column large-12 c-text -lh-medium">
-              {grandchild.description}
+              {(projectBmes.find((b) => b.bmeId === grandchild.id)).description}
             </div>
           </div>
         </div>))}

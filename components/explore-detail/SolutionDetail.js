@@ -7,9 +7,7 @@ import ReportedImpact from 'components/explore-detail/ReportedImpact';
 import ItemList from 'components/explore-detail/ItemList';
 import BmeOverview from 'components/explore-detail/project/BmeOverview';
 import HighlightedBmes from 'components/explore-detail/HighlightedBmes';
-
-// utils
-import { getYearFromDateString } from 'utils/common';
+import SnapshotSection from 'components/explore-detail/SnapshotSection';
 
 export default function SolutionDetail({ project }) {
   const {
@@ -38,7 +36,20 @@ export default function SolutionDetail({ project }) {
       </div>
 
       <div className="solution-detail-main">
-        <DetailSection title="Highlights" contentSeparator={false}>
+        <DetailSection
+          title="Snapshot"
+          contentSeparator={false}
+          contentPadding={false}
+        >
+          <SnapshotSection
+            project={project}
+          />
+        </DetailSection>
+        <DetailSection
+          title="Highlights"
+          contentSeparator={false}
+          contentPadding={false}
+        >
           <HighlightedBmes
             project={project}
           />
@@ -46,27 +57,6 @@ export default function SolutionDetail({ project }) {
       </div>
 
       <div className="solution-detail-rest">
-
-        <DetailSection title="Parameters" background="white">
-          <ul className="info-list">
-            <li className="info-item">
-              <b>Year (operational):</b>
-              <span>{getYearFromDateString(operationalYear)}</span>
-            </li>
-            <li className="info-item">
-              <b>Region:</b>
-              <span>{country ? country.regionName : '' }</span>
-            </li>
-            <li className="info-item">
-              <b>Country:</b>
-              <span>{country ? country.name : '' }</span>
-            </li>
-            <li className="info-item">
-              <b>City:</b>
-              <span>{cities && cities[0] ? cities[0].name : '' }</span>
-            </li>
-          </ul>
-        </DetailSection>
 
         {situation && <DetailSection title="Situation" background="white">
           <p>{situation}</p>
@@ -109,7 +99,7 @@ export default function SolutionDetail({ project }) {
             />
           </DetailSection>}
 
-        {bmeTree.length > 0 &&
+        {/*bmeTree.length > 0 &&
           <DetailSection
             title="Business model elements overview"
             contentSeparator={false}
@@ -118,7 +108,7 @@ export default function SolutionDetail({ project }) {
               projectId={project.id}
               bmeTree={bmeTree}
             />
-          </DetailSection>}
+          </DetailSection>*/}
 
       </div>
     </div>

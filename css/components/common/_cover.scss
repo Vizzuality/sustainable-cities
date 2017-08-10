@@ -1,6 +1,4 @@
 .c-cover {
-  min-height: 440px;
-  padding: 50px 0;
   background-size: cover;
   background-position: center center;
   background-color: $color-2;
@@ -14,16 +12,22 @@
   }
 
   &.-size-short {
-    min-height: 300px;
-    padding: 25px 0;
+    .c-cover-veil {
+      min-height: 300px;
+      padding: 25px 0;
+    }
   }
 
   &.-size-shorter {
-    min-height: 170px;
+    .c-cover-veil {
+      min-height: 170px;
+    }
   }
 
   &.-position-bottom {
-    padding: 180px 0 25px;
+    .c-cover-veil {
+      padding: 180px 0 25px;
+    }
   }
 
   > .row {
@@ -36,11 +40,21 @@
     font-weight: $font-weight-thin;
     color: $color-text-5;
     line-height: 1.15;
+
+    > svg {
+      position: relative;
+      top: 10px;
+      fill: $color-white;
+      stroke-width: .5;
+      width: 60px;
+      margin-right: 10px;
+    }
   }
 
   .description {
     margin: 10px 0 0 0;
-    color: $color-text-5;
+    color: $color-white;
+    line-height: 32px;
   }
 
   .breadcrumbs {
@@ -55,5 +69,22 @@
     &.-margin {
       margin-bottom: 14px;
     }
+
+    button {
+      margin-left: 10px;
+    }
+  }
+
+  .c-cover-veil {
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(44,47,51,0.7);;
+
+    min-height: 440px;
+    padding: 50px 0;
+
   }
 }

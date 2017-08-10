@@ -17,3 +17,4 @@ routes.add('about', '/about/:section?', 'about/AboutIndex');
 
 // BUILDER
 routes.add('builder', '/builder', 'builder/BuilderIndex');
+routes.add('builder-project', '/builder/project', 'builder/Project');

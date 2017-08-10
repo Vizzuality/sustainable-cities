@@ -28,4 +28,13 @@
     transform: scale(1.1);
     box-shadow: 0 7px 15px 0 rgba($color-black, 0.15), 0 1px 3px 0 rgba($color-black, 0.15);
   }
+
+  &.-no-height {
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  &.-border {
+    border: solid 1px rgba($color-1, .1);
+  }
 }

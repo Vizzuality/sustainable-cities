@@ -38,7 +38,7 @@ export default class MarkerLayer {
     let value = 1;
 
     // solution cases
-    if (category === 'solutions') {
+    if (category === 'solutions' || category === 'cities') {
       // temporary solution. Now is taking the first project to set the color
       // in case a city has more than one.
       const project = projects[0] || {};
@@ -56,7 +56,7 @@ export default class MarkerLayer {
     }
 
     // no solution cases
-    if (category !== 'solutions') {
+    if (category !== 'solutions' && category !== 'cities') {
       const { cities } = projects[0] || {};
       const city = cities[0] || {};
       const { bmesQuantity } = city;
@@ -99,7 +99,8 @@ export default class MarkerLayer {
         render(
           Infowindow({
             ...feature.properties,
-            type: category !== 'solutions' ? 'bme' : 'solution',
+            type: (category !== 'solutions' && category !== 'cities') ?
+              'bme' : 'solution',
             filters: this._filters,
             categories: this._categories
           })

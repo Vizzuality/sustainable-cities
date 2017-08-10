@@ -72,7 +72,7 @@ export default class Legend extends React.Component {
 
     switch (true) {
       // all-solutions case
-      case (!subCategory && category === 'solutions'): {
+      case (!subCategory && (category === 'solutions' || category === 'cities')): {
         const solutionCategories = categories.filter(cat => cat['category-type'] === 'Solution');
 
         let projectCategories = [];

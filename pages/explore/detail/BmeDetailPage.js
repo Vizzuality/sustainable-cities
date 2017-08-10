@@ -104,6 +104,7 @@ class BmeDetailPage extends Page {
           {!isLoading && (<div>
             <Cover
               size="shorter"
+              className={`-no-veil -${parentSlug && parentSlug}`}
               color={parentSlug ?
                 CATEGORY_FIRST_LEVEL_COLORS[parentSlug] : ''}
               title={bme.name || ''}

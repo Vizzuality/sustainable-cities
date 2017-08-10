@@ -21,4 +21,22 @@
       color: $color-primary;
     }
   }
+
+  .-investment-component &,
+  .-delivery-mechanism &,
+  .-financial-product &,
+  .-funding-source &,
+  .-financing &,
+  .-funding &,
+  .-legal-arrangements &,
+  .-technical-components & {
+    li {
+      color: $color-text-6;
+    }
+
+    a,
+    span {
+      color: $color-text-6;
+    }
+  }
 }

@@ -75,6 +75,12 @@
     }
   }
 
+  &.-no-veil {
+    .c-cover-veil {
+      background-color: transparent;
+    }
+  }
+
   .c-cover-veil {
     position: relative;
     top: 0;

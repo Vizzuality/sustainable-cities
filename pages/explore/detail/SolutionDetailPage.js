@@ -92,7 +92,7 @@ class SolutionDetailPage extends Page {
   }
 
   renderTabs() {
-    const { project } = this.props;
+    const { project, bmeCategories } = this.props;
 
     const defaultTabItems = [{
       label: 'Project Details',
@@ -113,7 +113,7 @@ class SolutionDetailPage extends Page {
       }
     }];
 
-    const tabItems = [...defaultTabItems, ...(project.bmeTree || []).map(bme => ({
+    const tabItems = [...defaultTabItems, ...(bmeCategories || []).map(bme => ({
       label: bme.name,
       className: 'info',
       queryParams: {

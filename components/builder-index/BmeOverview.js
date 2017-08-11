@@ -14,9 +14,7 @@ export default function BmeOverview({ projectId, bmeTree }) {
         return (
           <div className="c-bme-overview-item" key={bme.id}>
             <div className="c-bme-overview-strip" style={{ backgroundColor: titleColor }} />
-            <Link route="solution-detail" params={{ id: projectId, subPage: bme.slug }}>
-              <a className="c-text -fs-extrabig -fw-light">{bme.name}</a>
-            </Link>
+            <p className="c-text -fs-extrabig -fw-light">{bme.name}</p>
 
             <ul className="c-text -fs-extrasmall -uppercase -fw-light">
               {bme.children.length === 0 && (<li className="c-text -fs-extrasmall -uppercase -fw-light">
@@ -24,12 +22,8 @@ export default function BmeOverview({ projectId, bmeTree }) {
                   n/a
                 </span>
               </li>)}
-              {bme.children.length > 0 && bme.children.map(c => c.children).reduce((a,b) => a.concat(b), []).map(c => c.children).reduce((a,b) => a.concat(b), []).map(child => (<li key={child.id}>
-                <Link route={`/solutions/${projectId}/${bme.slug}#${child.slug}`}>
-                  <a>
-                    {child.name}
-                  </a>
-                </Link>
+              {bme.children.map(c => c.children).reduce((a,b) => a.concat(b), []).map(c => c.children).reduce((a,b) => a.concat(b), []).map(child => (<li key={child.id}>
+                {child.name}
               </li>))}
             </ul>
           </div>

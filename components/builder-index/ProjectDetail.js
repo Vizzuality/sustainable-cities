@@ -15,36 +15,22 @@ class ProjectDetail extends React.Component {
         </div>
 
         <DetailSection title="Title" contentSeparator={false}>
-          <textarea placeholder="Write here">{this.props.name}</textarea>
+          <input
+            type="text"
+            className="input-text u-w-100"
+            placeholder="Write here"
+            value={this.props.fields.title}
+            onChange={(e) => this.props.onFieldChange('title', e.target.value)}
+          />
         </DetailSection>
 
-        <DetailSection title="Parameters" contentSeparator={false}>
-          <ul className="info-list">
-            <li className="info-item">
-              <b>Year (operational):</b>
-              <span>{getYearFromDateString(this.props.operationalYear)}</span>
-            </li>
-            <li className="info-item">
-              <b>Region:</b>
-              <span>{this.props.country ? this.props.country.regionName : '' }</span>
-            </li>
-            <li className="info-item">
-              <b>Country:</b>
-              <span>{this.props.country ? this.props.country.name : '' }</span>
-            </li>
-            <li className="info-item">
-              <b>City:</b>
-              <span>{this.props.cities && this.props.cities[0] ? this.props.cities[0].name : '' }</span>
-            </li>
-          </ul>
-        </DetailSection>
-
-        <DetailSection title="Situation" contentSeparator={false}>
-          <textarea placeholder="Write here">{this.props.situation}</textarea>
-        </DetailSection>
-
-        <DetailSection title="What was done" contentSeparator={false}>
-          <textarea placeholder="Write here">{this.props.solution}</textarea>
+        <DetailSection title="Description" contentSeparator={false}>
+          <textarea
+            placeholder="Write here"
+            onChange={(e) => this.props.onFieldChange('description', e.target.value)}
+          >
+            {this.props.fields.description}
+          </textarea>
         </DetailSection>
       </div>
     );

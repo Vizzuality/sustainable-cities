@@ -6,7 +6,11 @@ import { Link } from 'routes';
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 
-export default class HomePage extends Page {
+import withRedux from 'next-redux-wrapper';
+import { store } from 'store';
+
+
+class HomePage extends Page {
   render() {
     return (
       <Layout
@@ -125,3 +129,5 @@ export default class HomePage extends Page {
 HomePage.propTypes = {
   queryParams: PropTypes.object.isRequired
 };
+
+export default withRedux(store)(HomePage);

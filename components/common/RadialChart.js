@@ -29,6 +29,7 @@ class BME extends React.Component {
 
   static defaultProps = {
     modifiers: [],
+    family: "none",
   }
 
   render() {
@@ -170,13 +171,14 @@ function buildNodes(tree, family, keyPrefix) {
 class RadialChart extends React.Component {
   static defaultProps = {
     selected: [],
+    showLegend: false,
   }
 
   constructor() {
     super();
 
     this.state = {
-      scale: 0.8,
+      scale: 0.7,
       x: 100,
       zooming: false,
     }
@@ -198,7 +200,7 @@ class RadialChart extends React.Component {
       } else if (node.family == this.state.family) {
         this.setState({
           x: 100,
-          scale: 0.8,
+          scale: 0.7,
           family: null,
           zooming: true,
         });
@@ -234,42 +236,75 @@ class RadialChart extends React.Component {
           thumbnail: this.props.thumbnail,
         },
       )}>
-        <svg id="chart" viewBox="0 0 1000 1000">
-          <g transform={`scale(${this.state.scale})`} onTransitionEnd={() => this.transitionEnd()} />
-          <g transform={`translate(${this.state.x + 500} 430) scale(${this.state.scale})`}>
-            {nodes.map(node => (
-              <node.component
-                {...node.props}
-                key={node.props.id}
-                onClick={() => this.nodeClick(node)}
-                onMouseOver={() => this.showPopup(node)}
-                onMouseOut={() => this.hidePopup(node)}
-                selected={node.props.level == 3 && this.props.selected.includes(node.id)}
-              />
-            ))}
-          </g>
-        </svg>
+        {!this.props.thumbnail &&
+          <div className="row">
+            <div className="column u-flex">
+              <svg className="radial-chart u-inline-block u-h-bl u-w-bl" viewBox="0 0 34 34">
+                <g transform="translate(17,17)">
+                  <BME size={6} level={3} angle={0} depth={0} />
+                </g>
+              </svg>
+              <span className="u-inline-block u-h-bl">Business model element</span>
+            </div>
 
-        {nodes.filter(node => node.level == 1 && (!this.state.family || node.family == this.state.family)).map(node =>
-          <div className={`root-label ${node.family}`} key={`label-${node.id}`} style={{
-            opacity: this.state.zooming ? 0 : "",
-            position: "absolute",
-            top: `${(node.y * this.state.scale + 350)/1000.0*100}%`,
-            left: `${(node.x * this.state.scale + 420 + this.state.x)/1000.0*100}%`,
-          }}>
-            <p>{node.name}</p>
+            <div className="column u-flex">
+              <svg className="radial-chart u-inline-block u-h-bl u-w-bl " viewBox="0 0 34 34">
+                <g transform="translate(17,17)">
+                  <BME selected={false} size={6} level={3} angle={0} depth={0} />
+                </g>
+              </svg>
+              <span>Element affected</span>
+            </div>
+
+            <div className="column u-flex">
+              <svg className="radial-chart u-inline-block u-h-bl u-w-bl" viewBox="0 0 34 34">
+                <g transform="translate(17,17)">
+                  <BME selected={true} size={6} level={3} angle={0} depth={0} />
+                </g>
+              </svg>
+              <span>Element selected</span>
+            </div>
           </div>
-        )}
-
-        {this.state.popup &&
-        <div className={`tooltip ${this.state.popup.family}`} style={{
-          position: 'absolute',
-          top: `${(this.state.popup.y * this.state.scale + 420)/1000.0*100}%`,
-          left: `${(this.state.popup.x * this.state.scale + 500 + this.state.x)/1000.0*100}%`,
-        }}>
-          <p>{this.state.popup.name}</p>
-        </div>
         }
+
+        <div className="u-relative">
+          <svg id="chart" className="u-block" viewBox="0 0 1000 1000">
+            <g transform={`scale(${this.state.scale})`} onTransitionEnd={() => this.transitionEnd()} />
+            <g transform={`translate(${this.state.x + 500} 430) scale(${this.state.scale})`}>
+              {nodes.map(node => (
+                <node.component
+                  {...node.props}
+                  key={node.props.id}
+                  onClick={() => this.nodeClick(node)}
+                  onMouseOver={() => this.showPopup(node)}
+                  onMouseOut={() => this.hidePopup(node)}
+                  selected={node.props.level == 3 && this.props.selected.includes(node.id)}
+                />
+              ))}
+            </g>
+          </svg>
+
+          {nodes.filter(node => node.level == 1 && (!this.state.family || node.family == this.state.family)).map(node =>
+            <div className={`root-label ${node.family}`} key={`label-${node.id}`} style={{
+              opacity: this.state.zooming ? 0 : "",
+              position: "absolute",
+              top: `${(node.y * this.state.scale + 355)/1000.0*100}%`,
+              left: `${(node.x * this.state.scale + 425 + this.state.x)/1000.0*100}%`,
+            }}>
+              <p>{node.name}</p>
+            </div>
+          )}
+
+          {this.state.popup &&
+          <div className={`tooltip ${this.state.popup.family}`} style={{
+            position: 'absolute',
+            top: `${(this.state.popup.y * this.state.scale + 425)/1000.0*100}%`,
+            left: `${(this.state.popup.x * this.state.scale + 500 + this.state.x)/1000.0*100}%`,
+          }}>
+            <p>{this.state.popup.name}</p>
+          </div>
+          }
+        </div>
       </div>
     );
   }

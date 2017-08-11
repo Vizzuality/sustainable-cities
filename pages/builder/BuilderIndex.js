@@ -1,5 +1,6 @@
 import Page from 'pages/Page';
 import flatMap from 'lodash/flatMap';
+import uniq from 'lodash/uniq';
 import intersection from 'lodash/intersection';
 import storage from 'local-storage-fallback';
 
@@ -20,13 +21,14 @@ import {
   commentBME,
   deselectBME,
   deselectEnabling,
-  getBmes,
-  getSolutions,
-  getEnablings,
   selectBME,
   selectEnabling,
   selectSolution,
+  reset,
 } from 'modules/builder';
+
+import { getBmes, getSolutions, getEnablings } from 'modules/builder-api';
+
 
 const transformBMEtree = (nodes, selectedSolution, selectedEnablings) => {
   const inSolution = (bme) => !selectedSolution || selectedSolution.bmes.map(b => b.id).includes(bme.id);
@@ -55,6 +57,15 @@ const transformBMEtree = (nodes, selectedSolution, selectedEnablings) => {
     })
   );
 };
+
+const filterEnablings = (enablings, bmeTree) => {
+  const availableEnablings = uniq(flatMap(leaves(bmeTree), bme => bme.enablings)).map(enabling => enabling.id);
+
+  return enablings.map(category => ({
+    ...category,
+    children: category.children.filter(enabling => availableEnablings.includes(enabling.id)),
+  })).filter(category => category.children.length > 0);
+}
 
 class BuilderIndex extends Page {
   constructor() {
@@ -138,6 +149,10 @@ class BuilderIndex extends Page {
     this.setState({ sidebar: "default" });
   }
 
+  resetProject() {
+    this.props.reset();
+  }
+
   render() {
     return (
       <Layout
@@ -150,6 +165,7 @@ class BuilderIndex extends Page {
           onHelpClick={() => this.showHelp()}
           onSolutionsClick={() => this.showSolutionPicker()}
           onEnablingsClick={() => this.showEnablingsSelector()}
+          onResetClick={() => this.resetProject()}
           selectedSolution={this.props.selectedSolution}
           selectedEnablings={this.props.selectedEnablings}
         />
@@ -207,14 +223,16 @@ class BuilderIndex extends Page {
 export default withRedux(
   store,
   state => {
-    const solutions = flattenSolutionTree(state.builder.solutionCategories) || [];
+    const solutions = flattenSolutionTree(state.builderAPI.solutionCategories) || [];
     const selectedSolution = solutions.find(solution => solution.id == state.builder.selectedSolution);
     const selectedBMEs = selectedSolution ? intersection(state.builder.selectedBMEs, selectedSolution.bmes.map(bme => bme.id)) : state.builder.selectedBMEs;
+    const bmeTree = transformBMEtree(state.builderAPI.bmeCategories, selectedSolution, state.builder.selectedEnablings);
+    const filteredEnablings = filterEnablings(state.builderAPI.enablingCategories, bmeTree);
 
     return ({
-      categories: transformBMEtree(state.builder.bmeCategories, selectedSolution, state.builder.selectedEnablings),
+      categories: bmeTree,
       commentedBMEs: state.builder.commentedBMEs,
-      enablings: state.builder.enablingCategories,
+      enablings: filteredEnablings,
       selectedBMEs,
       selectedEnablings: state.builder.selectedEnablings,
       selectedSolution,
@@ -231,5 +249,6 @@ export default withRedux(
     selectEnabling(enablingId) { dispatch(selectEnabling(enablingId)); },
     commentBME(bmeId, comment) { dispatch(commentBME(bmeId, comment)); },
     selectSolution(solutionId) { dispatch(selectSolution(solutionId)); },
+    reset() { dispatch(reset()); },
   })
 )(BuilderIndex);

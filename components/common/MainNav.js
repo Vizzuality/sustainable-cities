@@ -2,18 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'routes';
+import { connect } from 'react-redux';
+
+// components
+import Login from 'components/common/Login';
+import SignUp from 'components/common/SignUp';
 
 const SOLUTION_MAP_ROUTES = ['explore-index', 'solution-detail', 'bme-detail', 'city-detail'];
 
-export default class MainNav extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      section: ''
-    };
-  }
+class MainNav extends React.Component {
+  state = {
+    section: '',
+    modal: null,
+  };
 
   onSelectSection(e, section) {
     if (e) e.preventDefault();
@@ -31,8 +33,20 @@ export default class MainNav extends React.Component {
     });
   }
 
+  showLogin() {
+    this.setState({ modal: 'login' });
+  }
+
+  showSignUp() {
+    this.setState({ modal: 'sign-up' });
+  }
+
+  hideModals() {
+    this.setState({ modal: null });
+  }
+
   render() {
-    const { route, logged, username } = this.props;
+    const { route, token, username } = this.props;
     const { section } = this.state;
 
     return (
@@ -65,12 +79,28 @@ export default class MainNav extends React.Component {
                   <Link prefetch route="builder"><a className="literal">Design</a></Link>
                 </li>
                 <li className="nav-item" role="menuitem">
-                  <a href="username" className="username">{username}</a>
+                  {
+                    token ?
+                    <a href="profile" className="username">{token.slice(0, 5)}</a> :
+                    <a className="username" onClick={() => this.showLogin()}>Log in</a>
+                  }
                 </li>
               </ul>
             </nav>
           </div>
         </div>
+
+        {this.state.modal == 'login' && <Login
+          onClose={() => this.hideModals()}
+          onSignUp={() => this.showSignUp()}
+          onLogin={() => this.hideModals()}
+        />}
+
+        {this.state.modal == 'sign-up' && <SignUp
+          onClose={() => this.hideModals()}
+          onLogin={() => this.showLogin()}
+          onSignUp={() => this.hideModals()}
+        />}
       </div>
     );
   }
@@ -78,11 +108,8 @@ export default class MainNav extends React.Component {
 
 MainNav.propTypes = {
   route: PropTypes.string,
-  logged: PropTypes.bool,
-  username: PropTypes.string
 };
 
-MainNav.defaultProps = {
-  logged: false,
-  username: 'Log in'
-};
+export default connect(
+  state => state.auth,
+)(MainNav);

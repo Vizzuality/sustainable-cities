@@ -9,7 +9,7 @@ class EnablingConditionsSelector extends React.Component {
     super();
 
     this.state = {
-      activeTab: "stakeholder-actor",
+      activeTab: null,
     };
   }
 
@@ -31,10 +31,10 @@ class EnablingConditionsSelector extends React.Component {
           <div className="c-tabs">
             <div className="row">
                 <ul className="tab-list">
-                  {this.props.nodes.map(node => (
+                  {this.props.nodes.map((node, i) => (
                     <li
                       key={node.slug}
-                      className={classnames("tab-item", { "-current": this.state.activeTab == node.slug})}
+                      className={classnames("tab-item", { "-current": (this.state.activeTab === null && i === 0) || this.state.activeTab == node.slug})}
                       onClick={() => this.selectTab(node.slug)}
                     >
                       <span className="literal">{node.name}</span>
@@ -45,7 +45,7 @@ class EnablingConditionsSelector extends React.Component {
           </div>
         </header>
 
-        {this.props.nodes.filter(node => node.slug == this.state.activeTab).map(node => (
+        {this.props.nodes.filter((node, i) => (this.state.activeTab === null && i === 0) || this.state.activeTab == node.slug).map(node => (
           <section>
             {node.children.map(subnode => (
               <div>

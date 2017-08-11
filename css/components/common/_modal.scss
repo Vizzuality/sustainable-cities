@@ -9,11 +9,18 @@
   display: flex;
   align-items: center;
 
+  > .modal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   .content {
     position: relative;
     background-color: $color-5;
     width: 900px;
-    margin: 0px auto;
+    margin: 0 auto;
 
     header {
       background-color: $color-white;
@@ -137,6 +144,10 @@
 
   .next { right: -60px; transform: rotate(45deg); }
   .prev { left: -60px; transform: rotate(-135deg); }
+
+  &.-hidden {
+    display: none;
+  }
 }
 
 .no-overflow {

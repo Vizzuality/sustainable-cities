@@ -42,7 +42,10 @@ import Tab from 'components/common/Tab';
 import Map from 'components/common/map/Map';
 import Legend from 'components/common/map/Legend';
 import ItemGallery from 'components/explore/ItemGallery';
+import DownloadData from 'components/common/DownloadData';
+import Modal from 'components/common/Modal';
 import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
+import DownloadDataModal from 'components/common/modal/DownloadDataModal';
 
 // utils
 import LayerManager from 'utils/map/LayerManager';
@@ -52,7 +55,10 @@ import getLayerType from 'utils/map/layer';
 class ExploreIndex extends Page {
 
   state = {
-    disclaimer: null
+    disclaimer: null,
+    modal: {
+      download: false
+    }
   };
 
   componentWillMount() {
@@ -124,6 +130,14 @@ class ExploreIndex extends Page {
       category: category !== 'solutions' ? category : null,
       subCategory: category !== 'solutions' ? subCategory : null,
       children: category !== 'solutions' ? children : null
+    });
+  }
+
+  _openDownloadData() {
+    this.setState({
+      modal: {
+        download: true
+      }
     });
   }
 
@@ -246,11 +260,22 @@ class ExploreIndex extends Page {
           </div>
         </div>
 
+        <DownloadData
+          onClickButton={() => this._openDownloadData()}
+        />
+
         <DisclaimerModal
           categories={categories}
           disclaimer={this.state.disclaimer}
           onClose={() => this.setState({ disclaimer: null })}
         />
+
+        <Modal
+          open={this.state.modal.download}
+          toggleModal={v => this.setState({ modal: { download: v } })}
+        >
+          <DownloadDataModal />
+        </Modal>
 
       </Layout>
     );

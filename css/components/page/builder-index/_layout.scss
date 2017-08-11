@@ -329,3 +329,41 @@
     font-weight: $font-weight-bold;
   }
 }
+
+.c-radio {
+  input[type='radio'] {
+    display: none;
+  }
+
+  &.-checked {
+    font-weight: $font-weight-bold;
+  }
+
+  &::before {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1.1em;
+    text-align: center;
+    margin-right: 0.8em;
+    border-radius: 50%;
+  }
+
+  &:not(-checked)::before {
+    content: "";
+    border: 1px solid $color-text-7;
+    margin-bottom: -2px;
+  }
+
+  &.-checked::before {
+    width: calc(1em - 7px);
+    height: calc(1em - 7px);
+    background-color: $color-black;
+    color: $color-white;
+
+    box-shadow: 0 0 0 3px $color-white, 0 0 0 4px $color-black;
+    margin-right: calc(3px + 0.8em);
+    margin-left: 3px;
+    margin-bottom: 3px;
+  }
+}

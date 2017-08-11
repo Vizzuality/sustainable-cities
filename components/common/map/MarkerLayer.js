@@ -69,8 +69,13 @@ export default class MarkerLayer {
     if (category !== 'solutions' && category !== 'cities') {
       const { cities } = projects[0] || {};
       const city = cities[0] || {};
-      const { bmesQuantity } = city;
+      let { bmesQuantity } = city;
       let currentBme = {};
+
+      // emergency patch. REMOVE ASAP
+      if (!Array.isArray(bmesQuantity)) {
+        bmesQuantity = [];
+      }
 
       if (category) {
         currentBme = (bmesQuantity || []).find(bme => bme.slug === category) || {};

@@ -115,6 +115,7 @@ export function getBmeCategories() {
       'filter[level]': level.join(','),
       'fields[categories]': categoriesFields.join(','),
       include: includeFilters.join(','),
+      sort: 'name',
       'page[size]': 999
     });
 

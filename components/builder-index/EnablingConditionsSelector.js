@@ -45,6 +45,10 @@ class EnablingConditionsSelector extends React.Component {
           </div>
         </header>
 
+        {this.props.nodes.length == 0 && <section>
+          <h2 className="c-title -fw-light -fs-bigger">No enabling conditions available</h2>
+        </section>}
+
         {this.props.nodes.filter((node, i) => (this.state.activeTab === null && i === 0) || this.state.activeTab == node.slug).map(node => (
           <section key={node.id}>
             {node.children.map(subnode => (

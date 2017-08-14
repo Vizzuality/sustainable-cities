@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from  'prop-types';
 import classnames from 'classnames';
 
-const depths = [140, 260, 320, 485];
+const depths = [140, 260, 320, 455];
 const sizes = [80, 15, 5, 6];
 
 const distanceBetween = (p0, p1) => Math.sqrt((p1.y - p0.y)**2 + (p1.x - p0.x)**2);
@@ -179,7 +179,7 @@ class RadialChart extends React.Component {
     super();
 
     this.state = {
-      scale: 0.7,
+      scale: 1,
       x: 0,
       zooming: false,
     }
@@ -201,7 +201,7 @@ class RadialChart extends React.Component {
       } else if (node.family == this.state.family) {
         this.setState({
           x: 0,
-          scale: 0.7,
+          scale: 1,
           family: null,
           zooming: true,
         });
@@ -270,7 +270,7 @@ class RadialChart extends React.Component {
         <div className={classnames("u-relative", `active-${this.state.family || "none"}`)}>
           <svg id="chart" className="u-block" viewBox="0 0 1000 1000">
             <g transform={`scale(${this.state.scale})`} onTransitionEnd={() => this.transitionEnd()} />
-            <g transform={`translate(${this.state.x + 500} 430) scale(${this.state.scale})`}>
+            <g transform={`translate(${this.state.x + 500} 500) scale(${this.state.scale})`}>
               {nodes.map(node => (
                 <node.component
                   {...node.props}
@@ -288,8 +288,8 @@ class RadialChart extends React.Component {
             <div className={`root-label ${node.family}`} key={`label-${node.id}`} style={{
               opacity: this.state.zooming ? 0 : "",
               position: "absolute",
-              top: `${(node.y * this.state.scale + 355)/1000.0*100}%`,
-              left: `${(node.x * this.state.scale + 425 + this.state.x)/1000.0*100}%`,
+              top: `${(node.y * this.state.scale + 500)/1000.0*100}%`,
+              left: `${(node.x * this.state.scale + this.state.x + 500)/1000.0*100}%`,
             }}>
               <p>{node.name}</p>
             </div>

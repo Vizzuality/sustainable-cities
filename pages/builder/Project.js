@@ -19,7 +19,7 @@ import { store } from 'store';
 import { Router } from 'routes'
 
 import { getBmes, getEnablings, getSolutions } from 'modules/builder-api';
-import { setField } from 'modules/builder';
+import { setField, commentBME } from 'modules/builder';
 
 
 const transform = (nodes, selectedBMEs, commentedBMEs) => nodes.map(node => {
@@ -61,6 +61,8 @@ class Project extends Page {
   download = () => Router.pushRoute('builder-project-print');
 
   onFieldChange = (name, value) => this.props.setField(name, value);
+
+  changeBMEcomment = (bme, text) => this.props.commentBME(bme.id, text);
 
   render() {
     if (!this.props.categories) {
@@ -142,6 +144,7 @@ class Project extends Page {
         {(this.state.activeTab != 'overview' && this.state.activeTab != 'details') &&
           <ProjectCategory
             category={bmeTree.find(cat => cat.slug == this.state.activeTab)}
+            onCommentChange={this.changeBMEcomment}
           />
         }
 
@@ -168,6 +171,7 @@ export default withRedux(
     });
   },
   dispatch => ({
+    commentBME(bmeId, comment) { dispatch(commentBME(bmeId, comment)); },
     getCategoryTree() { dispatch(getBmes()); },
     getEnablingTree() { dispatch(getEnablings()); },
     getSolutions() { dispatch(getSolutions()); },

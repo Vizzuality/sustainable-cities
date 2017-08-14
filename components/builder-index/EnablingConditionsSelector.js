@@ -9,7 +9,7 @@ class EnablingConditionsSelector extends React.Component {
     super();
 
     this.state = {
-      activeTab: null,
+      activeTab: 0,
     };
   }
 
@@ -18,6 +18,8 @@ class EnablingConditionsSelector extends React.Component {
   }
 
   render() {
+    const isActive = (index) => this.state.activeTab === index;
+
     return (
       <div className="c-enabling-conditions-selector">
         <header>
@@ -34,8 +36,8 @@ class EnablingConditionsSelector extends React.Component {
                   {this.props.nodes.map((node, i) => (
                     <li
                       key={node.slug}
-                      className={classnames("tab-item", { "-current": (this.state.activeTab === null && i === 0) || this.state.activeTab == node.slug})}
-                      onClick={() => this.selectTab(node.slug)}
+                      className={classnames("tab-item", { "-current": isActive(i)})}
+                      onClick={() => this.selectTab(i)}
                     >
                       <span className="literal">{node.name}</span>
                     </li>
@@ -49,7 +51,7 @@ class EnablingConditionsSelector extends React.Component {
           <h2 className="c-title -fw-light -fs-bigger">No enabling conditions available</h2>
         </section>}
 
-        {this.props.nodes.filter((node, i) => (this.state.activeTab === null && i === 0) || this.state.activeTab == node.slug).map(node => (
+        {this.props.nodes.filter((node, i) => isActive(i)).map(node => (
           <section key={node.id}>
             {node.children.map(subnode => (
               <div key={subnode.id}>
@@ -59,7 +61,11 @@ class EnablingConditionsSelector extends React.Component {
 
                 <ul>
                   {subnode.children.map(enabling => (
-                    <li key={enabling.id}>
+                    <li
+                      key={enabling.id}
+                      onMouseEnter={() => this.props.onEnablingHover(enabling)}
+                      onMouseLeave={() => this.props.onEnablingHover({})}
+                    >
                       <EnablingCheckbox
                         checked={this.props.selectedEnablings.includes(enabling.id)}
                         enabling={enabling}

@@ -25,7 +25,7 @@ export default function SolutionOverview({ project }) {
         </div>
       </div>
     </div>
-    {project.bmeTree.map(bme => (<OverviewSection key={bme.id} bme={bme} />))}
+    {project.bmeTree.map(bme => (<OverviewSection key={bme.id} bme={bme} projectId={project.id}/>))}
   </div>);
 }
 

@@ -5,7 +5,7 @@ import uuidv1 from 'uuid/v1';
 const listCities = cities => cities.map(city => ({
   id: uuidv1(),
   title: city.name,
-  subtitle: `${city.projectCount} projects`,
+  subtitle: `${city.projectCount} ${(city.projectCount > 1) ? 'projects' : 'project'}`,
   link: { route: 'city-detail', params: { id: city.id } },
   layout: 'portrait'
 }));

@@ -19,3 +19,6 @@ routes.add('about', '/about/:section?', 'about/AboutIndex');
 routes.add('builder', '/builder', 'builder/BuilderIndex');
 routes.add('builder-project', '/builder/project', 'builder/Project');
 routes.add('builder-project-print', '/builder/project/print', 'builder/ProjectPrint');
+
+// PROFILE
+routes.add('profile', '/profile', 'profile/ProfileIndex');

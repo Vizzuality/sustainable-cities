@@ -46,7 +46,7 @@ class MainNav extends React.Component {
   }
 
   render() {
-    const { route, token, username } = this.props;
+    const { route, token, profile } = this.props;
     const { section } = this.state;
 
     return (
@@ -78,11 +78,14 @@ class MainNav extends React.Component {
                 >
                   <Link prefetch route="builder"><a className="literal">Design</a></Link>
                 </li>
-                <li className="nav-item" role="menuitem">
+                <li
+                  className={classnames("nav-item", { '-current': route === 'profile' })}
+                  role="menuitem"
+                >
                   {
                     token ?
-                    <a href="profile" className="username">{token.slice(0, 5)}</a> :
-                    <a className="username" onClick={() => this.showLogin()}>Log in</a>
+                      <a href="/profile" className="username">{profile.name}</a> :
+                      <a className="username" onClick={() => this.showLogin()}>Log in</a>
                   }
                 </li>
               </ul>

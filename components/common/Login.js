@@ -39,13 +39,10 @@ class Login extends React.Component {
             <h1 className="c-title -fw-thin -fs-huge">Login</h1>
 
             {this.props.errors.map(error => <p>{error.title}</p>)}
-            <p className="c-text">
-              <input placeholder="Email" onChange={(e) => this.onChange('email', e.target.value)} />
-            </p>
 
-            <p className="c-text">
-              <input type="password" placeholder="Password" onChange={(e) => this.onChange('password', e.target.value)} />
-            </p>
+            <input className="u-block u-w-100 input-text" placeholder="Email" onChange={(e) => this.onChange('email', e.target.value)} />
+
+            <input className="u-block u-w-100 u-mt-1 input-text" type="password" placeholder="Password" onChange={(e) => this.onChange('password', e.target.value)} />
 
             <div className="actions">
               <Button secondary onClick={this.props.onSignUp}>Sign up</Button>

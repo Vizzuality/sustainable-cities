@@ -22,6 +22,7 @@
 .u-mb-1\/2 { margin-bottom: 0.5em; }
 .u-ml-1 { margin-left: 1em; }
 .u-mr-1 { margin-right: 1em; }
+.u-ml-a { margin-left: auto; }
 
 .u-flex-column {
   display: flex;
@@ -30,6 +31,7 @@
 }
 
 .u-w-100 { width: 100%; }
+.u-w-30 { width: 30%; }
 .u-w-bl { width: #{$base-line-height}em; }
 .u-h-bl { height: #{$base-line-height}em; }
 

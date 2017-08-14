@@ -1,9 +1,10 @@
-import Page from 'pages/Page';
+import classnames from 'classnames';
 import flatMap from 'lodash/flatMap';
 import uniq from 'lodash/uniq';
 import intersection from 'lodash/intersection';
 import storage from 'local-storage-fallback';
 
+import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 import Sidebar from 'components/builder-index/Sidebar';
 import SolutionPicker from 'components/builder-index/SolutionPicker';
@@ -55,8 +56,9 @@ class BuilderIndex extends Page {
     super();
 
     this.state = {
-      sidebar: "default",
+      sidebar: "enablings",
       showHelp: process.browser && !storage.getItem('builder.help-dismissed'),
+      hoveredEnabling: null,
     };
   }
 
@@ -136,6 +138,10 @@ class BuilderIndex extends Page {
     this.props.reset();
   }
 
+  showEnablingBMEs(enabling) {
+    this.setState({ hoveredEnabling: enabling.id });
+  }
+
   render() {
     return (
       <Layout
@@ -168,10 +174,15 @@ class BuilderIndex extends Page {
           onClose={() => this.showSidebar()}
           onEnablingSelect={(enabling) => this.selectEnabling(enabling)}
           onEnablingDeselect={(enabling) => this.deselectEnabling(enabling)}
+          onEnablingHover={(enabling) => this.showEnablingBMEs(enabling)}
         />
         }
 
-        <div className="u-w-100 u-mt-2">
+        <div className={classnames(
+          "u-mt-2",
+          "u-ml-a",
+          this.state.sidebar == "enablings" ? "u-w-30" : "u-w-100",
+        )}>
           <RadialChart
             nodes={this.props.categories}
             selected={this.props.selectedBMEs}
@@ -180,6 +191,20 @@ class BuilderIndex extends Page {
             interactive={this.state.sidebar == "default"}
             thumbnail={this.state.sidebar == "enablings"}
           />
+
+          { this.state.hoveredEnabling &&
+              <div className="u-ml-1">
+                <h1 className="c-title -fw-light -fs-bigger">Success factor for</h1>
+
+                <ul>
+                  {
+                    leaves(this.props.categories).
+                      filter(bme => bme.enablings.find(enabling => enabling && enabling.id == this.state.hoveredEnabling)).
+                      map(bme => <li className="c-text -fs-smaller -uppercase">{bme.name}</li>)
+                  }
+                </ul>
+              </div>
+          }
         </div>
 
         {this.state.bme && <BmeDetail

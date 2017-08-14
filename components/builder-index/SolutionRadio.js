@@ -11,7 +11,7 @@ class SolutionRadio extends React.Component {
       <label className={classnames("c-radio", { "-checked": checked })}>
         <input
           type="radio"
-          checked={checked}
+          checked={checked || false}
           name="builder-selected-solution"
           onChange={(e) => onChange(solution, !e.target.checked)}
         />

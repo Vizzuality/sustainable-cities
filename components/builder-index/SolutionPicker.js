@@ -20,6 +20,13 @@ class SolutionPicker extends React.Component {
         </header>
 
         <ul className="solutions-list">
+          <li className="u-block">
+            <SolutionRadio
+              solution={{ name: "All solutions" }}
+              checked={!this.props.selectedSolution}
+              onChange={() => this.props.onSolutionSelected({ id: undefined })}
+            />
+          </li>
           {this.props.solutions.map(solution => (
             <li key={solution.slug} className="u-block">
               <SolutionRadio

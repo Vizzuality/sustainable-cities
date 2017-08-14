@@ -112,7 +112,8 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll
+                showAll={parsedBmes['investment-component'] !== undefined && parsedBmes['investment-component'].length > 4 ?
+                  true : false }
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'investment-component' }
@@ -122,7 +123,8 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll
+                showAll={parsedBmes['delivery-mechanism'] !== undefined && parsedBmes['delivery-mechanism'].length > 4 ?
+                  true : false }
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'delivery-mechanism' }
@@ -132,7 +134,8 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll
+                showAll={parsedBmes['financial-product'] !== undefined && parsedBmes['financial-product'].length > 4 ?
+                  true : false }
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'financial-product' }
@@ -142,7 +145,8 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll
+                showAll={parsedBmes['funding-source'] !== undefined && parsedBmes['funding-source'].length > 4 ?
+                  true : false }
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'funding-source' }
@@ -151,9 +155,9 @@ class CityDetailPage extends Page {
                   [parsedBmes['funding-source']] : []}
               />
 
-              // PRO
               <ItemGallery
-                showAll
+                showAll={parsedBmes['financing'] !== undefined && parsedBmes['financing'].length > 4 ?
+                  true : false }
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'financing' }
@@ -163,7 +167,8 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll
+                showAll={parsedBmes['funding'] !== undefined && parsedBmes['funding'].length > 4 ?
+                  true : false }
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'funding' }
@@ -173,7 +178,8 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll
+                showAll={parsedBmes['legal-arrangements'] !== undefined && parsedBmes['legal-arrangements'].length > 4 ?
+                  true : false }
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'legal-arrangements' }
@@ -183,7 +189,8 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll
+                showAll={parsedBmes['technical-components'] !== undefined && parsedBmes['technical-components'].length > 4 ?
+                  true : false }
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'technical-components' }

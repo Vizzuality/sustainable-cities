@@ -32,15 +32,36 @@ export default class DownloadDataModal extends React.Component {
 
   onChangeDropwdown(name, values) {
     if (name === 'bmes') {
-      console.log(values)
-      const checkedBmes = values.map(v => v.id);
+      console.log(values);
+      const checkedBmes = values.map(v => ({ id: v.id, children: v._children, checked: v.checked }));
 
       const recursive = (bme) => {
-        bme.checked = checkedBmes.includes(bme.id);
-        // (bme.children || []).forEach((b) => {
-        //   // b.checked = checkedBmes.includes(b.id);
-        //   recursive(b);
-        // });
+        const checkedBme = checkedBmes.find(cb => cb.id === bme.id);
+
+        bme.checked = checkedBme ? checkedBme.checked : false;
+
+        // if (checkedBme) {
+        //   bme.checked = checkedBme.checked || false;
+        //   return;
+        // }
+
+        if (checkedBme) return;
+
+        (bme.children || []).forEach((b) => {
+          recursive(b);
+        });
+
+        // if (checkedBme && (checkedBme.children || []).length) {
+        //   (bme.children || []).forEach((b) => {
+        //     b.checked = true;
+        //     recursive(b);
+        //   });
+        // } else {
+        //   (bme.children || []).forEach((b) => {
+        //     // b.checked = checkedBmes.includes(b.id);
+        //     recursive(b);
+        //   });
+        // }
       };
 
       this.bmes.forEach((bmeOption) => {

@@ -56,7 +56,7 @@ class BuilderIndex extends Page {
     super();
 
     this.state = {
-      sidebar: "enablings",
+      sidebar: "default",
       showHelp: process.browser && !storage.getItem('builder.help-dismissed'),
       hoveredEnabling: null,
     };

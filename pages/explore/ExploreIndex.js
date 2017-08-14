@@ -34,6 +34,7 @@ import { getCategoryTabs, getAllCategories } from 'selectors/category';
 import { getParsedProjects } from 'selectors/project';
 import { getParsedBmes } from 'selectors/bme';
 import { getParsedCities } from 'selectors/city';
+import { bmesAsDownload, citiesAsDownload, solutionsAsDownload } from 'selectors/download';
 
 // components
 import Page from 'pages/Page';
@@ -75,9 +76,7 @@ class ExploreIndex extends Page {
       // sets Solutions as default section
       Router.replaceRoute('explore-index', { category: 'solutions' });
     } else {
-      if (category === 'cities') {
-        this.props.getCities();
-      }
+      this.props.getCities();
 
       this._setProjectFilters(this.props);
       this._setBmeFilters(this.props);
@@ -190,19 +189,22 @@ class ExploreIndex extends Page {
 
   render() {
     const {
+      bmesDownloadOptions,
       categories,
       categoryTabs,
+      cityDownloadOptions,
       loadingProjects,
       loadingBmes,
       loadingCities,
-      queryParams
+      queryParams,
+      solutionsDownloadOptions
     } = this.props;
     const { category } = queryParams;
-    const isLoading = loadingProjects || loadingBmes || loadingCities;
     const isSolutionView = category === 'solutions';
     const items = this._setItemsToDisplay();
     const conditions = this._setDisplayConditions();
     const isCityView = category === 'cities';
+    const isLoading = loadingProjects || loadingBmes || (isCityView ? loadingCities : false);
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
     const modifiedCategoryTabs = categoryTabs.map(tab => ({
@@ -273,8 +275,14 @@ class ExploreIndex extends Page {
         <Modal
           open={this.state.modal.download}
           toggleModal={v => this.setState({ modal: { download: v } })}
+          loading={loadingBmes || loadingCities}
         >
-          <DownloadDataModal />
+          <DownloadDataModal
+            bmes={bmesDownloadOptions}
+            cities={cityDownloadOptions}
+            solutions={solutionsDownloadOptions}
+            onClose={() => this.setState({ modal: { download: false } })}
+          />
         </Modal>
 
       </Layout>
@@ -301,7 +309,11 @@ ExploreIndex.propTypes = {
   loadingMap: PropTypes.bool,
   layer: PropTypes.object,
   // cities
-  loadingCities: PropTypes.bool
+  loadingCities: PropTypes.bool,
+  // download
+  cityDownloadOptions: PropTypes.array,
+  solutionsDownloadOptions: PropTypes.array,
+  bmesDownloadOptions: PropTypes.array
 };
 
 ExploreIndex.defaultProps = {
@@ -314,7 +326,11 @@ ExploreIndex.defaultProps = {
   bmes: [],
   parsedBmes: [],
   // map
-  layer: {}
+  layer: {},
+  // download
+  cityDownloadOptions: [],
+  solutionsDownloadOptions: [],
+  bmesDownloadOptions: []
 };
 
 export default withRedux(
@@ -339,7 +355,11 @@ export default withRedux(
     layer: state.map.layer,
     // cities
     loadingCities: state.city.loading,
-    parsedCities: getParsedCities(state)
+    parsedCities: getParsedCities(state),
+    // download
+    cityDownloadOptions: citiesAsDownload(state),
+    solutionsDownloadOptions: solutionsAsDownload(state),
+    bmesDownloadOptions: bmesAsDownload(state)
   }),
   dispatch => ({
     // categories

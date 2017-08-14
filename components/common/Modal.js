@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Spinner from 'components/common/Spinner';
 
 export default class Modal extends React.Component {
 
@@ -16,16 +17,17 @@ export default class Modal extends React.Component {
   }
 
   render() {
-    const { open, children } = this.props;
+    const { open, children, loading, toggleModal } = this.props;
     return (
       <section ref={(node) => { this.el = node; }} className={`c-modal ${open ? '' : '-hidden'}`}>
         <div className="modal-container">
-          <button className="dismiss" onClick={() => this.props.toggleModal(false)}>x</button>
+          <button className="dismiss" onClick={() => toggleModal(false)}>x</button>
           <div className="content">
+            <Spinner isLoading={loading} />
             {children}
           </div>
         </div>
-        <area className="modal-backdrop" onClick={() => this.props.toggleModal(false)} />
+        <area className="modal-backdrop" onClick={() => toggleModal(false)} />
       </section>
     );
   }
@@ -34,5 +36,6 @@ export default class Modal extends React.Component {
 Modal.propTypes = {
   open: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
+  loading: PropTypes.bool,
   toggleModal: PropTypes.func.isRequired
 };

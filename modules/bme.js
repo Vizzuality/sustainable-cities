@@ -10,7 +10,6 @@ const RESET_FILTERS = 'bme/RESET_FILTERS';
 const REMOVE_BME_DETAIL = 'bme/REMOVE_BME_DETAIL';
 
 // loading and error management
-const SET_BME_CATEGORY_ID = 'bme/SET_BME_CATEGORY_ID';
 const SET_LOADING_BMES = 'bme/SET_LOADING_BMES';
 const SET_ERROR_BMES = 'bme/SET_ERROR_BMES';
 

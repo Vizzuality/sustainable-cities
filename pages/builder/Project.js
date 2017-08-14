@@ -8,6 +8,7 @@ import ProjectOverview from 'components/builder-index/ProjectOverview';
 import ProjectDetail from 'components/builder-index/ProjectDetail';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
 import ShareModal from 'components/builder-index/ShareModal';
+import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
 import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
@@ -149,6 +150,12 @@ class Project extends Page {
         }
 
         {this.state.modal == 'share' && <ShareModal onClose={this.hideModal} onDownload={this.download} />}
+
+        <DisclaimerModal
+          categories={bmeTree}
+          disclaimer={this.state.disclaimer}
+          onClose={() => this.setState({ disclaimer: null })}
+        />
     </Layout>
     );
   }

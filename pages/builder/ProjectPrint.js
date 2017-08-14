@@ -84,7 +84,7 @@ class ProjectPrint extends Page {
           project={{ id: 2, bmeTree }}
         />
 
-        {bmeTree.map(category => <ProjectCategory key={category.id} category={category} />)}
+        {bmeTree.map(category => <ProjectCategory key={category.id} category={category} readonly={true} />)}
       </div>
     );
   }

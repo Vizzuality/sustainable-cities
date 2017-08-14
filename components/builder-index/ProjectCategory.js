@@ -13,6 +13,7 @@ class ProjectCategory extends React.Component {
             parent={this.props.category}
             category={child}
             onCommentChange={this.props.onCommentChange}
+            readonly={this.props.readonly}
           />)}
         </div>)}
       </div>

@@ -38,8 +38,7 @@ const withModifiers = (nodes, selectedEnablings) => nodes.map(node => ({
 }));
 
 const transformBMEtree = (nodes, selectedSolution, selectedEnablings) => {
-  const solutionBMEs = selectedSolution ? selectedSolution.bmes.filter(bme => bme).map(bme => bme.id) : [];
-  const inSolution = (bme) => solutionBMEs.includes(bme.id);
+  const inSolution = (bme) => !selectedSolution || selectedSolution.bmes.filter(bme => bme).map(bme => bme.id).includes(bme.id);
 
   return withModifiers(recursiveFilter(nodes, inSolution), selectedEnablings);
 };

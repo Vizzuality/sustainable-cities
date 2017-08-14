@@ -106,8 +106,8 @@ class CityDetailPage extends Page {
           <div className="row">
             <div className="column small-12">
               <ItemGallery
-                showAll
-                title="Projects in this city"
+                showAll={parsedProjects.length > 4 ? true : false}
+                title={parsedProjects.length > 1 ? "Projects in this city" : "Project in this city"}
                 items={parsedProjects}
               />
 
@@ -150,6 +150,48 @@ class CityDetailPage extends Page {
                 items={parsedBmes['funding-source'] !== undefined ?
                   [parsedBmes['funding-source']] : []}
               />
+
+              // PRO
+              <ItemGallery
+                showAll
+                link={{
+                  route: 'city-detail',
+                  params: { id, tab: 'financing' }
+                }}
+                items={parsedBmes['financing'] !== undefined ?
+                  [parsedBmes['financing']] : []}
+              />
+
+              <ItemGallery
+                showAll
+                link={{
+                  route: 'city-detail',
+                  params: { id, tab: 'funding' }
+                }}
+                items={parsedBmes['funding'] !== undefined ?
+                  [parsedBmes['funding']] : []}
+              />
+
+              <ItemGallery
+                showAll
+                link={{
+                  route: 'city-detail',
+                  params: { id, tab: 'legal-arrangements' }
+                }}
+                items={parsedBmes['legal-arrangements'] !== undefined ?
+                  [parsedBmes['legal-arrangements']] : []}
+              />
+
+              <ItemGallery
+                showAll
+                link={{
+                  route: 'city-detail',
+                  params: { id, tab: 'technical-components' }
+                }}
+                items={parsedBmes['technical-components'] !== undefined ?
+                  [parsedBmes['technical-components']] : []}
+              />
+
             </div>
           </div>}
 

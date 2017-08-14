@@ -8,16 +8,20 @@ const getCities = state => state.city.list;
 const bmesAsDownload = createSelector(
   [getBmeCategories],
   (bmes) => {
+    const recursive = bme => (bme.children || []).map(child => ({
+      id: child.id,
+      label: child.name,
+      value: child.id,
+      expanded: true,
+      children: recursive(child)
+    }));
+
     return (bmes || []).map(bme => ({
       id: bme.id,
       label: bme.name,
       value: bme.id,
       expanded: true,
-      children: (bme.children || []).map(child => ({
-        id: child.id,
-        label: child.name,
-        value: child.id
-      }))
+      children: recursive(bme)
     }));
   }
 );

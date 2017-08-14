@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import DropdownTreeSelect from 'react-dropdown-tree-select';
 import Button from 'components/common/Button';
 
+import isEqual from 'lodash/isEqual';
+
 export default class DownloadDataModal extends React.Component {
 
   constructor(props) {
@@ -12,6 +14,14 @@ export default class DownloadDataModal extends React.Component {
       radio: 'projects',
       dropdowns: {}
     };
+
+    this.bmes = props.bmes;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!isEqual(this.props.bmes, nextProps.bmes)) {
+      this.bmes = nextProps.bmes;
+    }
   }
 
   onSelectRadio(value) {
@@ -21,6 +31,27 @@ export default class DownloadDataModal extends React.Component {
   }
 
   onChangeDropwdown(name, values) {
+    if (name === 'bmes') {
+      console.log(values)
+      const checkedBmes = values.map(v => v.id);
+
+      const recursive = (bme) => {
+        bme.checked = checkedBmes.includes(bme.id);
+        // (bme.children || []).forEach((b) => {
+        //   // b.checked = checkedBmes.includes(b.id);
+        //   recursive(b);
+        // });
+      };
+
+      this.bmes.forEach((bmeOption) => {
+        recursive(bmeOption);
+      });
+
+      console.log(values)
+      console.log(this.bmes);
+    }
+
+
     this.setState({
       dropdowns:
       { ...this.state.dropdowns,
@@ -70,19 +101,26 @@ export default class DownloadDataModal extends React.Component {
   }
 
   render() {
-    const { bmes, cities, onClose, solutions } = this.props;
+    const { cities, onClose, solutions } = this.props;
     const { radio, dropdowns } = this.state;
     const checkedCities = (dropdowns.cities || []).map(city => city.id);
-    const checkedBmes = (dropdowns.bmes || []).map(bme => bme.id);
+    // const checkedBmes = (dropdowns.bmes || []).map(bme => bme.id);
     const checkedSolution = (dropdowns.solutions || []).map(solution => solution.id);
+    // const recursive = (bme) => {
+    //   bme.checked = checkedBmes.includes(bme.id);
+    //   (bme.children || []).forEach((b) => {
+    //     b.checked = checkedBmes.includes(b.id);
+    //     recursive(b);
+    //   });
+    // };
 
     cities.forEach((cityOption) => {
       cityOption.checked = checkedCities.includes(cityOption.id);
     });
 
-    bmes.forEach((bmeOption) => {
-      bmeOption.checked = checkedBmes.includes(bmeOption.id);
-    });
+    // bmes.forEach((bmeOption) => {
+    //   recursive(bmeOption);
+    // });
 
     solutions.forEach((solutionOption) => {
       solutionOption.checked = checkedSolution.includes(solutionOption.id);
@@ -127,7 +165,7 @@ export default class DownloadDataModal extends React.Component {
           <DropdownTreeSelect
             placeholderText={radio === 'projects' ?
               'Any business model element or category used' : 'All business model elements'}
-            data={bmes}
+            data={this.bmes}
             onChange={(currentNode, selectedNodes) => this.onChangeDropwdown('bmes', selectedNodes)}
           />
 

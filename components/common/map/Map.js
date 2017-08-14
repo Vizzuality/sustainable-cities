@@ -49,15 +49,14 @@ class Map extends React.Component {
   componentWillReceiveProps(nextProps) {
     const filtersChanged = !isEqual(nextProps.filters, this.props.filters);
     const layerDataChanged = !isEqual(nextProps.layerData, this.props.layerData);
-    // const categoriesChanged = !isEqual(nextProps.categories, this.props.categories);
 
-    if (filtersChanged) {
-      if (this.layerManager) this.removeLayers();
+    if (filtersChanged || layerDataChanged) {
       this.setLayerManager(nextProps);
+      this.removeLayers();
       this.addLayers(nextProps.activeLayer, nextProps.filters);
     }
 
-    if (layerDataChanged || filtersChanged) {
+    if (layerDataChanged) {
       this.setMarkers(nextProps.layerData);
     }
   }

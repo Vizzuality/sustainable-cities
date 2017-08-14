@@ -42,17 +42,12 @@ import Tab from 'components/common/Tab';
 import Map from 'components/common/map/Map';
 import Legend from 'components/common/map/Legend';
 import ItemGallery from 'components/explore/ItemGallery';
-
-// modal
-import { DisclaimerModal, DISCLAIMER_COMPONENTS } from 'components/common/disclaimer/DisclaimerModal';
+import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
 
 // utils
 import LayerManager from 'utils/map/LayerManager';
 import LayerSpec from 'utils/map/layerSpec.json';
 import getLayerType from 'utils/map/layer';
-
-// constants
-import { INFO_TAB_SLUGS } from 'constants/explore';
 
 class ExploreIndex extends Page {
 
@@ -191,14 +186,14 @@ class ExploreIndex extends Page {
     const { category } = queryParams;
     const isLoading = loadingProjects || loadingBmes || loadingCities;
     const isSolutionView = category === 'solutions';
-    const isCityView = category === 'cities';
     const items = this._setItemsToDisplay();
     const conditions = this._setDisplayConditions();
+    const isCityView = category === 'cities';
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
-    const modifiedCategoryTabs = categoryTabs.map((tab) => ({
+    const modifiedCategoryTabs = categoryTabs.map(tab => ({
       ...tab,
-      modal: DISCLAIMER_COMPONENTS.includes(tab.slug) ? {
+      modal: tab.hasModal ? {
         onClick: () => this.setState({ disclaimer: tab.slug })
       } : null
     }));
@@ -214,26 +209,30 @@ class ExploreIndex extends Page {
           items={modifiedCategoryTabs}
           queryParams={queryParams}
         />
-        {!isCityView &&
-          <div className="l-map-container">
-            <Map
-              activeLayer={[activeLayer]}
-              LayerManager={LayerManager}
-              categories={categories}
-              filters={queryParams}
-              getLayer={this.props.getLayer}
-              layerData={this.props.layer}
-              removeDataLayer={this.props.removeDataLayer}
-              loading={this.props.loadingMap}
-            />
-            {categories.length > 0 &&
-              <Legend
-                categories={categories}
-                filters={queryParams}
-                activeLayer={activeLayer}
-                layerData={this.props.layer}
-              />}
-          </div>}
+        {/* MAP */}
+        <div className="l-map-container">
+          <Map
+            activeLayer={[activeLayer]}
+            LayerManager={LayerManager}
+            categories={categories}
+            filters={queryParams}
+            getLayer={this.props.getLayer}
+            layerData={this.props.layer}
+            removeDataLayer={this.props.removeDataLayer}
+            loading={this.props.loadingMap}
+          />
+          {(!isCityView && categories.length > 0) &&
+            <div className="row">
+              <div className="column small-12">
+                <Legend
+                  categories={categories}
+                  filters={queryParams}
+                  activeLayer={activeLayer}
+                  layerData={this.props.layer}
+                />
+              </div>
+            </div>}
+        </div>
         <div className="row">
           <div className="column small-12">
             {isLoading ?
@@ -248,6 +247,7 @@ class ExploreIndex extends Page {
         </div>
 
         <DisclaimerModal
+          categories={categories}
           disclaimer={this.state.disclaimer}
           onClose={() => this.setState({ disclaimer: null })}
         />
@@ -329,7 +329,7 @@ export default withRedux(
     // bmes
     getBmes(filters) { dispatch(getBmes(filters)); },
     setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
-    resetBmeFilters() { dispatch(resetBmeFilters()) },
+    resetBmeFilters() { dispatch(resetBmeFilters()); },
     // map
     getLayer(layerSpec) { dispatch(getLayer(layerSpec)); },
     removeDataLayer() { dispatch(removeDataLayer()); },

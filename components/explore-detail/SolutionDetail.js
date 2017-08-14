@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import DetailSection from 'components/explore-detail/DetailSection';
 import ReportedImpact from 'components/explore-detail/ReportedImpact';
 import ItemList from 'components/explore-detail/ItemList';
-import BmeOverview from 'components/explore-detail/project/BmeOverview';
+// import BmeOverview from 'components/explore-detail/project/BmeOverview';
 import HighlightedBmes from 'components/explore-detail/HighlightedBmes';
 import SnapshotSection from 'components/explore-detail/SnapshotSection';
 
@@ -13,19 +13,14 @@ export default function SolutionDetail({ project }) {
   const {
     situation,
     solution,
-    operationalYear,
-    cities,
-    country,
     externalSources,
-    impacts,
-    bmeTree
+    impacts
   } = project;
 
   const sourcesList = externalSources ?
     externalSources.map(source => ({ id: source.id, name: source.name, link: source.webUrl })) : [];
-
   const impactItems = impacts.filter(i => !!i.category);
-
+  const highlightedBmes = (project.projectBmes || []).filter(bme => bme.isFeatured);
 
   return (
     <div className="solution-detail">
@@ -45,15 +40,17 @@ export default function SolutionDetail({ project }) {
             project={project}
           />
         </DetailSection>
-        <DetailSection
-          title="Highlights"
-          contentSeparator={false}
-          contentPadding={false}
-        >
-          <HighlightedBmes
-            project={project}
-          />
-        </DetailSection>
+        {(highlightedBmes || []).length > 0 &&
+          <DetailSection
+            title="Highlights"
+            contentSeparator={false}
+            contentPadding={false}
+          >
+            <HighlightedBmes
+              project={project}
+              bmes={highlightedBmes}
+            />
+          </DetailSection>}
       </div>
 
       <div className="solution-detail-rest">
@@ -99,7 +96,7 @@ export default function SolutionDetail({ project }) {
             />
           </DetailSection>}
 
-        {bmeTree.length > 0 &&
+        {/* bmeTree.length > 0 &&
           <DetailSection
             title="Business model elements overview"
             contentSeparator={false}
@@ -108,7 +105,7 @@ export default function SolutionDetail({ project }) {
               projectId={project.id}
               bmeTree={bmeTree}
             />
-          </DetailSection>}
+          </DetailSection>*/}
 
       </div>
     </div>

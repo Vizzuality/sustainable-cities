@@ -106,6 +106,7 @@ export function getProjectDetail(projectId) {
 
     const includeFields = [
       'category',
+      'category.parent',
       'cities',
       'country',
       'external-sources',
@@ -114,7 +115,7 @@ export function getProjectDetail(projectId) {
       'impacts.category',
       'project-bmes',
       'project-bmes.bme',
-      'project-bmes.bme.categories',
+      'project-bmes.bme.categories'
     ];
 
     const queryParams = queryString.stringify({

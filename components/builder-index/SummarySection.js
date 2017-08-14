@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
 
-export default function SummarySection({ category, parent }) {
+export default function SummarySection({ category, parent, onCommentChange }) {
   const titleColor = CATEGORY_FIRST_LEVEL_COLORS[parent.slug] ||
     CATEGORY_FIRST_LEVEL_COLORS.default;
 
@@ -20,18 +20,23 @@ export default function SummarySection({ category, parent }) {
         {child.name}
       </div>
       <div className="column large-8">
-        {child.children && child.children.map(grandchild => (<div id={grandchild.slug} className="subsubitem" key={grandchild.id}>
-          <div className="row subsubtitle">
-            <div className="column large-12 c-text -fs-big -fw-light">
-              {grandchild.name}
+        {child.children && child.children.map(grandchild => (
+          <div id={grandchild.slug} className="subsubitem" key={grandchild.id}>
+            <div className="row subsubtitle">
+              <div className="column large-12 c-text -fs-big -fw-light">
+                {grandchild.name}
+              </div>
+            </div>
+            <div className="row description">
+              <div className="column large-12 c-text -lh-medium">
+                <textarea
+                  placeholder="Write here..."
+                  onChange={(e) => onCommentChange(grandchild, e.target.value)}
+                >{grandchild.comment}</textarea>
+              </div>
             </div>
           </div>
-          <div className="row description">
-            <div className="column large-12 c-text -lh-medium">
-              <textarea placeholder="Write here...">{grandchild.comment}</textarea>
-            </div>
-          </div>
-        </div>))}
+        ))}
       </div>
     </div>))}
   </div>);

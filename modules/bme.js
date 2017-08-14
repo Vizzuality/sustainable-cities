@@ -137,9 +137,9 @@ export function getBmeDetail(filters) {
         .deserialize(bme, (err, parsedBme) => {
           dispatch({ type: SET_LOADING_BMES, payload: false });
           dispatch({ type: SET_BME_DETAIL, payload: parsedBme });
-        })
+        });
     });
-  }
+  };
 }
 
 export function setBmeFilters(filters) {

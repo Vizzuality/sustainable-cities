@@ -11,3 +11,14 @@ textarea {
     color: $color-text-3;
   }
 }
+
+.input-text {
+  height: 50px;
+  padding: 12px 20px;
+  box-shadow: 0 1px 3px 1px rgba($color-black, 0.25);
+  border: none;
+
+  &::placeholder {
+    color: $color-text-3;
+  }
+}

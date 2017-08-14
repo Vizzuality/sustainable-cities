@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'routes';
+import withRedux from 'next-redux-wrapper';
+
+import { store } from 'store';
 
 // components
 import Page from 'pages/Page';
@@ -43,7 +46,7 @@ const tabs = [
   }
 ]
 
-export default class AboutPage extends Page {
+class AboutPage extends Page {
 
   renderTabs() {
     return (<div className="c-tabs -explore">
@@ -100,3 +103,5 @@ export default class AboutPage extends Page {
 AboutPage.propTypes = {
   queryParams: PropTypes.object.isRequired
 };
+
+export default withRedux(store)(AboutPage);

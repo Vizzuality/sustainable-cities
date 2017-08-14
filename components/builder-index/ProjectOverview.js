@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import BmeOverview from 'components/explore-detail/project/BmeOverview';
+import BmeOverview from 'components/builder-index/BmeOverview';
 import OverviewSection from 'components/explore-detail/OverviewSection';
+import RadialChart from 'components/common/RadialChart';
 
-export default function SolutionOverview({ project }) {
+export default function ProjectOverview({ project }) {
   return (<div className="solution-overview">
     <div className="solution-overview-summary">
       <div className="row">
         <div className="column large-12 c-text -fs-huge -fw-thin">
-          Summary
+          Overview
         </div>
       </div>
       <div className="row">
-        <div className="column large-12">
+        <div className="column large-8">
           <div className="c-detail-section">
             <div className="content">
               <BmeOverview
@@ -23,12 +24,22 @@ export default function SolutionOverview({ project }) {
             </div>
           </div>
         </div>
+        <div className="column large-4">
+          <RadialChart
+            nodes={project.bmeTree}
+            selected={[]}
+            onClick={() => {}}
+            keyPrefix="none"
+            interactive={false}
+            thumbnail={true}
+          />
+        </div>
       </div>
     </div>
-    {project.bmeTree.map(bme => (<OverviewSection key={bme.id} bme={bme} projectId={project.id}/>))}
   </div>);
 }
 
-SolutionOverview.propTypes = {
+ProjectOverview.propTypes = {
   project: PropTypes.object
 };
+

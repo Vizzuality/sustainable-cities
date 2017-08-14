@@ -12,6 +12,7 @@ class ProjectCategory extends React.Component {
             key={child.id}
             parent={this.props.category}
             category={child}
+            onCommentChange={this.props.onCommentChange}
           />)}
         </div>)}
       </div>

@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'routes';
+import uuidv1 from 'uuid/v1';
 
 export default function Breadcrumbs(props) {
   return (
     <ul className="c-breadcrumbs">
       {props.items.map((item) => { // eslint-disable-line arrow-body-style
         return (
-          <li key={item.name}>
-            <Link route={item.route} params={item.params}>
+          <li key={uuidv1()}>
+            {!item.noLink ? <Link route={item.route} params={item.params}>
               <a>{item.name}</a>
-            </Link>
+            </Link> : <span>{item.name}</span>}
           </li>
         );
       })}
@@ -23,7 +24,8 @@ Breadcrumbs.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       route: PropTypes.string,
-      params: PropTypes.object
+      params: PropTypes.object,
+      noLink: PropTypes.bool
     })
   )
 };

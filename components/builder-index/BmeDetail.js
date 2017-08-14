@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import Tab from 'components/common/Tab';
 import Button from 'components/common/Button';
 import groupBy from 'lodash/groupBy';
+import EnablingCheckbox from 'components/builder-index/EnablingCheckbox';
 
 
 const tabs = {
@@ -37,7 +38,7 @@ class BmeDetail extends React.Component {
 
   render() {
     return (
-      <div className="c-modal" onClick={this.onOverlayClick.bind(this)}>
+      <div className="c-modal c-builder-bme-detail" onClick={this.onOverlayClick.bind(this)}>
         <div className="content">
           <header>
             <h1 className="c-title -fw-thin -fs-huge">{this.props.bme.name}</h1>
@@ -73,11 +74,19 @@ class BmeDetail extends React.Component {
               </section>
 
               <section>
-                {Object.entries(groupBy(this.props.bme.enablings, enabling => enabling["assessment-value"])).map(([value, enablings]) =>
+                {Object.entries(groupBy(this.props.bme.enablings.filter(e => e), enabling => enabling["assessment-value"])).map(([value, enablings]) =>
                   <div key={value}>
                     <h2 className="c-title -fw-light -fs-extrabig">{value}</h2>
                     <ul>
-                      {enablings.map(enabling => <li key={enabling.id}>{enabling.name}</li>)}
+                      {enablings.map(enabling => (
+                        <li key={enabling.id}>
+                          <EnablingCheckbox
+                            checked={this.props.selectedEnablings.includes(enabling.id)}
+                            enabling={enabling}
+                            onChange={(_, checked) => checked ? this.props.onEnablingDeselect(enabling) : this.props.onEnablingSelect(enabling)}
+                          />
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 )}

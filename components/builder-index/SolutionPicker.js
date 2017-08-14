@@ -3,6 +3,7 @@ import classnames from 'classnames';
 
 import Button from 'components/common/Button';
 import { BME } from 'components/common/RadialChart';
+import SolutionRadio from 'components/builder-index/SolutionRadio';
 import { Link } from 'routes';
 
 class SolutionPicker extends React.Component {
@@ -20,13 +21,13 @@ class SolutionPicker extends React.Component {
 
         <ul className="solutions-list">
           {this.props.solutions.map(solution => (
-            <li key={solution.slug}><a
-                onClick={() => this.props.onSolutionSelected(solution)}
-                className={classnames(
-                  "c-toggle-button",
-                  { selected: this.props.selectedSolution && this.props.selectedSolution.id == solution.id }
-                )}
-              >{solution.name}</a></li>
+            <li key={solution.slug} className="u-block">
+              <SolutionRadio
+                solution={solution}
+                checked={this.props.selectedSolution && this.props.selectedSolution.id === solution.id}
+                onChange={() => this.props.onSolutionSelected(solution)}
+              />
+            </li>
           ))}
         </ul>
 

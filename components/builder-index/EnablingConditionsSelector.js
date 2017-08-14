@@ -46,15 +46,15 @@ class EnablingConditionsSelector extends React.Component {
         </header>
 
         {this.props.nodes.filter((node, i) => (this.state.activeTab === null && i === 0) || this.state.activeTab == node.slug).map(node => (
-          <section>
+          <section key={node.id}>
             {node.children.map(subnode => (
-              <div>
+              <div key={subnode.id}>
                 <h2 className="c-title -fw-light -fs-bigger">
                   {subnode.name}
                 </h2>
 
                 <ul>
-                  {subnode.enablings.map(enabling => (
+                  {subnode.children.map(enabling => (
                     <li key={enabling.id}>
                       <EnablingCheckbox
                         checked={this.props.selectedEnablings.includes(enabling.id)}

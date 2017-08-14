@@ -12,7 +12,7 @@ import RadialChart from 'components/common/RadialChart';
 import BmeDetail from 'components/builder-index/BmeDetail';
 import HelpModal from 'components/builder-index/HelpModal';
 
-import { leaves, flattenSolutionTree } from 'utils/builder';
+import { leaves, flattenSolutionTree, flattenEnablingTree, recursiveFilter } from 'utils/builder';
 
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
@@ -29,43 +29,27 @@ import {
 
 import { getBmes, getSolutions, getEnablings } from 'modules/builder-api';
 
+const withModifiers = (nodes, selectedEnablings) => nodes.map(node => ({
+  ...node,
+  children: node.children ? withModifiers(node.children, selectedEnablings) : null,
+  modifiers: node.children ?
+    uniq(flatMap(node.children.map(n => n.modifiers))) :
+    node.enablings.filter(enabling => enabling && selectedEnablings.includes(enabling.id)).map(enabling => enabling['assessment-value']),
+}));
 
 const transformBMEtree = (nodes, selectedSolution, selectedEnablings) => {
-  const inSolution = (bme) => !selectedSolution || selectedSolution.bmes.map(b => b.id).includes(bme.id);
+  const solutionBMEs = selectedSolution ? selectedSolution.bmes.filter(bme => bme).map(bme => bme.id) : [];
+  const inSolution = (bme) => solutionBMEs.includes(bme.id);
 
-
-  return nodes.map(
-    node => ({
-      ...node,
-      children: (
-        node.children ?
-        transformBMEtree(node.children, selectedSolution, selectedEnablings) :
-        node.bmes.filter(inSolution).map(
-          node => ({
-            ...node,
-            modifiers: node.enablings.filter(enabling => selectedEnablings.includes(enabling.id)).map(enabling => enabling['assessment-value']),
-          })
-        )
-      ),
-    })
-  ).filter(
-    node => node.children.length > 0
-  ).map(
-    node => ({
-      ...node,
-      modifiers: node.modifiers || node.children.map(n => n.modifiers).reduce((a,b) => a.filter(m => b.includes(m)))
-    })
-  );
+  return withModifiers(recursiveFilter(nodes, inSolution), selectedEnablings);
 };
 
 const filterEnablings = (enablings, bmeTree) => {
-  const availableEnablings = uniq(flatMap(leaves(bmeTree), bme => bme.enablings)).map(enabling => enabling.id);
+  const availableEnablings = uniq(flatMap(leaves(bmeTree), bme => bme.enablings)).filter(enabling => enabling).map(enabling => enabling.id);
+  const isAvailable = (enabling) => enabling && availableEnablings.includes(enabling.id);
 
-  return enablings.map(category => ({
-    ...category,
-    children: category.children.filter(enabling => availableEnablings.includes(enabling.id)),
-  })).filter(category => category.children.length > 0);
-}
+  return recursiveFilter(enablings, isAvailable);
+};
 
 class BuilderIndex extends Page {
   constructor() {
@@ -225,7 +209,7 @@ export default withRedux(
   state => {
     const solutions = flattenSolutionTree(state.builderAPI.solutionCategories) || [];
     const selectedSolution = solutions.find(solution => solution.id == state.builder.selectedSolution);
-    const selectedBMEs = selectedSolution ? intersection(state.builder.selectedBMEs, selectedSolution.bmes.map(bme => bme.id)) : state.builder.selectedBMEs;
+    const selectedBMEs = selectedSolution ? intersection(state.builder.selectedBMEs, selectedSolution.bmes.filter(bme => bme).map(bme => bme.id)) : state.builder.selectedBMEs;
     const bmeTree = transformBMEtree(state.builderAPI.bmeCategories, selectedSolution, state.builder.selectedEnablings);
     const filteredEnablings = filterEnablings(state.builderAPI.enablingCategories, bmeTree);
 

@@ -17,5 +17,13 @@ export const flattenSolutionTree = (solutions) => {
     ...solution,
     bmes: flatMap(solution.children, s => s.bmes),
   }));
-}
+};
 
+export const recursiveFilter = (nodes, filterFn) => nodes.map(node => ({
+  ...node,
+  children: (
+    node.children ?
+    recursiveFilter(node.children, filterFn) :
+    (node.enablings || node.bmes).filter(filterFn)
+  ),
+})).filter(node => node.children.length > 0);

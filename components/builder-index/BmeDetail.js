@@ -74,7 +74,7 @@ class BmeDetail extends React.Component {
               </section>
 
               <section>
-                {Object.entries(groupBy(this.props.bme.enablings, enabling => enabling["assessment-value"])).map(([value, enablings]) =>
+                {Object.entries(groupBy(this.props.bme.enablings.filter(e => e), enabling => enabling["assessment-value"])).map(([value, enablings]) =>
                   <div key={value}>
                     <h2 className="c-title -fw-light -fs-extrabig">{value}</h2>
                     <ul>

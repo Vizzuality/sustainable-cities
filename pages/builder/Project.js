@@ -156,7 +156,7 @@ export default withRedux(
   state => {
     const solutions = flattenSolutionTree(state.builderAPI.solutionCategories) || [];
     const selectedSolution = solutions.find(solution => solution.id == state.builder.selectedSolution);
-    const selectedBMEs = selectedSolution ? intersection(state.builder.selectedBMEs, selectedSolution.bmes.map(bme => bme.id)) : state.builder.selectedBMEs;
+    const selectedBMEs = selectedSolution ? intersection(state.builder.selectedBMEs, selectedSolution.bmes.filter(bme => bme).map(bme => bme.id)) : state.builder.selectedBMEs;
 
     return ({
       categories: state.builderAPI.bmeCategories,

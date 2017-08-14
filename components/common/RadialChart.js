@@ -296,7 +296,7 @@ class RadialChart extends React.Component {
           )}
 
           {this.state.popup &&
-          <div className={`tooltip ${this.state.popup.family}`} style={{
+          <div className={`tooltip ${this.state.popup.family} level-${this.state.popup.level || 4}`} style={{
             position: 'absolute',
             top: `${(this.state.popup.y * this.state.scale + 500)/1000.0*100}%`,
             left: `${(this.state.popup.x * this.state.scale + 500 + this.state.x)/1000.0*100}%`,

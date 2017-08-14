@@ -145,13 +145,12 @@
   .tooltip {
     z-index: $z-index-11;
     pointer-events: none;
-    background-color: $color-9;
     border-radius: 15px;
     border: solid 2px $color-5;
     padding: 8px 15px 7px 15px;
     width: auto;
     display: table;
-    transform: translate(-50%, -40px);
+    transform: translate(-50%, -50%);
 
     p {
       margin: 0px;
@@ -167,7 +166,14 @@
   }
 
   @each $category, $color in $color-categories {
-    .tooltip.#{$category} { background-color: $color; }
+    .tooltip.#{$category} {
+      border: 1px solid $color;
+
+      background-color: mix($color, $color-white, 20%);
+      &.level-4 {
+        background-color: $color;
+      }
+    }
 
     .#{$category} {
       circle { fill: $color; stroke: $color; }

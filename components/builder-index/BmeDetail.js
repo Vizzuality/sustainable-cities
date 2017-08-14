@@ -97,7 +97,7 @@ class BmeDetail extends React.Component {
 
                 <textarea
                   placeholder="Add your comment here"
-                  value={this.props.comment}
+                  value={this.props.comment || ""}
                   onChange={(e) => this.onChange('comment', e)}
                 />
 

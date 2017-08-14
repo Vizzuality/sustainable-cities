@@ -37,24 +37,25 @@ class BME extends React.Component {
       <g
         id={this.props.id}
         transform={`rotate(${rad2deg(this.props.angle)} 0 0) translate(${this.props.depth} 0)`}
-        className={classnames(this.props.family, `level-${this.props.level}`, ...this.props.modifiers)}
       >
-        <circle
-          cx="0"
-          cy="0"
-          r={this.props.size}
-          onClick={this.props.onClick}
-          onMouseOver={this.props.onMouseOver}
-          onMouseOut={this.props.onMouseOut}
-        />
-        {this.props.selected &&
+        <g className={classnames("node", `level-${this.props.level}`, this.props.family, ...this.props.modifiers)}>
           <circle
             cx="0"
             cy="0"
-            r={this.props.size + 4}
-            className="selected"
+            r={this.props.size}
+            onClick={this.props.onClick}
+            onMouseOver={this.props.onMouseOver}
+            onMouseOut={this.props.onMouseOut}
           />
-        }
+          {this.props.selected &&
+            <circle
+              cx="0"
+              cy="0"
+              r={this.props.size + 4}
+              className="selected"
+            />
+          }
+        </g>
       </g>
     );
   }
@@ -179,7 +180,7 @@ class RadialChart extends React.Component {
 
     this.state = {
       scale: 0.7,
-      x: 100,
+      x: 0,
       zooming: false,
     }
   }
@@ -192,14 +193,14 @@ class RadialChart extends React.Component {
     if (this.props.interactive && node.level == 1) {
       if (this.state.family == null) {
         this.setState({
-          x:-300,
+          x:-400,
           scale: 1.5,
           family: node.family,
           zooming: true,
         });
       } else if (node.family == this.state.family) {
         this.setState({
-          x: 100,
+          x: 0,
           scale: 0.7,
           family: null,
           zooming: true,
@@ -229,7 +230,6 @@ class RadialChart extends React.Component {
 
     return (
       <div className={classnames(
-        `active-${this.state.family || "none"}`,
         "radial-chart",
         {
           interactive: this.props.interactive,
@@ -237,29 +237,29 @@ class RadialChart extends React.Component {
         },
       )}>
         {!this.props.thumbnail &&
-          <div className="row">
-            <div className="column u-flex">
+          <div className="row u-flex-center">
+            <div className="u-flex u-ml-1 u-mr-1">
               <svg className="radial-chart u-inline-block u-h-bl u-w-bl" viewBox="0 0 34 34">
                 <g transform="translate(17,17)">
-                  <BME size={6} level={3} angle={0} depth={0} />
+                  <BME size={5} level={3} angle={0} depth={0} />
                 </g>
               </svg>
-              <span className="u-inline-block u-h-bl">Business model element</span>
+              <span className="u-inline-block u-h-bl">Element</span>
             </div>
 
-            <div className="column u-flex">
-              <svg className="radial-chart u-inline-block u-h-bl u-w-bl " viewBox="0 0 34 34">
-                <g transform="translate(17,17)">
-                  <BME selected={false} size={6} level={3} angle={0} depth={0} />
-                </g>
-              </svg>
-              <span>Element affected</span>
-            </div>
-
-            <div className="column u-flex">
+            <div className="u-flex u-ml-1 u-mr-1">
               <svg className="radial-chart u-inline-block u-h-bl u-w-bl" viewBox="0 0 34 34">
                 <g transform="translate(17,17)">
-                  <BME selected={true} size={6} level={3} angle={0} depth={0} />
+                  <BME size={5} level={3} angle={0} depth={0} modifiers={["Success"]} />
+                </g>
+              </svg>
+              <span>Success factor</span>
+            </div>
+
+            <div className="u-flex u-ml-1 u-mr-1">
+              <svg className="radial-chart u-inline-block u-h-bl u-w-bl" viewBox="0 0 34 34">
+                <g transform="translate(17,17)">
+                  <BME size={5} level={3} angle={0} depth={0} selected={true} />
                 </g>
               </svg>
               <span>Element selected</span>
@@ -267,7 +267,7 @@ class RadialChart extends React.Component {
           </div>
         }
 
-        <div className="u-relative">
+        <div className={classnames("u-relative", `active-${this.state.family || "none"}`)}>
           <svg id="chart" className="u-block" viewBox="0 0 1000 1000">
             <g transform={`scale(${this.state.scale})`} onTransitionEnd={() => this.transitionEnd()} />
             <g transform={`translate(${this.state.x + 500} 430) scale(${this.state.scale})`}>

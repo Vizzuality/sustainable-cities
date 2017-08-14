@@ -144,7 +144,6 @@ class BuilderIndex extends Page {
         queryParams={this.props.queryParams}
         className="builder-index"
       >
-        { this.state.sidebar == "default" &&
         <Sidebar
           onHelpClick={() => this.showHelp()}
           onSolutionsClick={() => this.showSolutionPicker()}
@@ -153,7 +152,6 @@ class BuilderIndex extends Page {
           selectedSolution={this.props.selectedSolution}
           selectedEnablings={this.props.selectedEnablings}
         />
-        }
 
         { this.state.sidebar == "solutions" &&
         <SolutionPicker
@@ -174,14 +172,16 @@ class BuilderIndex extends Page {
         />
         }
 
-        <RadialChart
-          nodes={this.props.categories}
-          selected={this.props.selectedBMEs}
-          onClick={(bme) => this.showBME(bme)}
-          keyPrefix={(this.props.selectedSolution || { name: "none"}).name}
-          interactive={this.state.sidebar == "default"}
-          thumbnail={this.state.sidebar == "enablings"}
-        />
+        <div className="u-w-100 u-mt-2">
+          <RadialChart
+            nodes={this.props.categories}
+            selected={this.props.selectedBMEs}
+            onClick={(bme) => this.showBME(bme)}
+            keyPrefix={(this.props.selectedSolution || { slug: "none"}).slug}
+            interactive={this.state.sidebar == "default"}
+            thumbnail={this.state.sidebar == "enablings"}
+          />
+        </div>
 
         {this.state.bme && <BmeDetail
           bme={this.state.bme}

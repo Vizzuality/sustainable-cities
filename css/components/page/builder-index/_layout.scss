@@ -1,10 +1,14 @@
+.l-main.builder-index {
+  display: flex;
+}
+
+
 .c-builder-sidebar {
-  position: absolute;
+  //position: absolute;
+  flex-shrink: 0;
   z-index: $z-index-2;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  padding-top: 35px;
+  padding-top: 2em;
+  padding-left: 1px;
   width: 250px;
   display: flex;
   flex-direction: column;
@@ -78,6 +82,7 @@
   position: absolute;
   top: 0px;
   left: 0px;
+  bottom: 0px;
   z-index: $z-index-2;
   background-color: $color-5;
 
@@ -126,7 +131,6 @@
   &.thumbnail {
     width: 340px;
     margin-left: auto;
-    margin-right: 40px;
     padding-top: 100px;
 
     p {
@@ -136,7 +140,7 @@
 
   font-weight: 300;
   position: relative;
-  width: 1080px;
+  //width: 1080px;
 
   .tooltip {
     z-index: $z-index-11;
@@ -204,22 +208,37 @@
     opacity: 0.3;
   }
 
-  &.active-investment-component g g:not(.investment-component),
-  &.active-funding-source g g:not(.funding-source),
-  &.active-delivery-mechanism g g:not(.delivery-mechanism),
-  &.active-financial-product g g:not(.financial-product),
-  {
-    opacity: 0.3;
+  g.node.Success {
+    transform: scale(2);
   }
 
-  &.interactive g g.level-3 circle:hover,
-  &.interactive.active-investment-component g g.level-0.investment-component circle:hover,
-  &.interactive.active-funding-source g g.level-0.funding-source circle:hover,
-  &.interactive.active-delivery-mechanism g g.level-0.delivery-mechanism circle:hover,
-  &.interactive.active-financial-product g g.level-0.financial-product circle:hover,
-  &.interactive.active-none g g.level-0 circle:hover,
-  {
-    cursor: pointer;
+  @each $category, $color in $color-categories {
+    @if $category != 'none' {
+      .active-#{$category} g.node:not(.#{$category}) {
+        opacity: 0.3;
+      }
+    }
+  }
+
+  &.interactive {
+    .active-none g.node {
+      &.level-3, &.level-0 {
+        circle:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    @each $category, $color in $color-categories {
+      @if $category != 'none' {
+        .active-#{$category} g.node.#{$category} {
+          &.level-3, &.level-0 {
+            circle:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
   }
 
   line {

@@ -46,12 +46,12 @@ export default function SummarySection({ category, parent, onCommentChange, read
               <div className="row description">
                 <div className="column large-12 c-text -lh-medium">
                   {
-                    !readonly && grandchild.enablings.filter(e => e).length > 0 &&
+                    !readonly && grandchild.selectedEnablings.length > 0 &&
                       <a
                         className="c-title -uppercase -fw-light -fs-smaller u-mb-1 u-block u-pointer"
                         onClick={() => onBMEDisplay(grandchild, 'enabling-conditions')}
                       >
-                        {enablingLabel(grandchild.enablings.filter(e => e).length)}
+                        {enablingLabel(grandchild.selectedEnablings.length)}
                       </a>
                   }
 

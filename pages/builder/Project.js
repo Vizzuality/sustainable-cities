@@ -24,15 +24,16 @@ import { getBmes, getEnablings, getSolutions } from 'modules/builder-api';
 import { setField, commentBME } from 'modules/builder';
 
 
-const transform = (nodes, selectedBMEs, commentedBMEs) => nodes.map(node => {
+const transform = (nodes, selectedBMEs, commentedBMEs, selectedEnablings) => nodes.map(node => {
   const bmes = (node.bmes || []).filter(bme => selectedBMEs.includes(bme.id)).map(bme => ({
     ...bme,
     comment: commentedBMEs[bme.id],
+    selectedEnablings: bme.enablings.filter(enabling => enabling && selectedEnablings.includes(enabling.id)),
   }));
 
   return {
     ...node,
-    children: bmes.length > 0 ? bmes : transform(node.children || [], selectedBMEs, commentedBMEs),
+    children: bmes.length > 0 ? bmes : transform(node.children || [], selectedBMEs, commentedBMEs, selectedEnablings),
   };
 }).filter(node => node.level == "1" || node.children.length > 0);
 
@@ -73,7 +74,12 @@ class Project extends Page {
       return null;
     }
 
-    const bmeTree = transform(this.props.categories, this.props.selectedBMEs, this.props.commentedBMEs);
+    const bmeTree = transform(
+      this.props.categories,
+      this.props.selectedBMEs,
+      this.props.commentedBMEs,
+      this.props.selectedEnablings,
+    );
 
     const defaultTabItems = [
       {
@@ -191,6 +197,7 @@ export default withRedux(
       enablings: state.builderAPI.enablingCategories || [],
       commentedBMEs: state.builder.commentedBMEs,
       selectedBMEs,
+      selectedEnablings: state.builder.selectedEnablings,
       title: state.builder.title,
       description: state.builder.description,
     });

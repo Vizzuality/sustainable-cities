@@ -63,7 +63,8 @@ export function getBmes(filters = {}) {
   const queryParams = queryString.stringify({
     'filter[slug]': subCategory || category || undefined,
     include: includeParams.join(','),
-    'page[size]': 1000
+    'page[size]': 1000,
+    sort: 'name'
   });
 
   return (dispatch, getState) => {

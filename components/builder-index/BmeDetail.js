@@ -74,6 +74,10 @@ class BmeDetail extends React.Component {
               </section>
 
               <section>
+                {this.props.bme.enablings.filter(e => e).length == 0 &&
+                  <h2 className="c-title -fw-light -fs-extrabig">No enabling conditions for this element</h2>
+                }
+
                 {Object.entries(groupBy(this.props.bme.enablings.filter(e => e), enabling => enabling["assessment-value"])).map(([value, enablings]) =>
                   <div key={value}>
                     <h2 className="c-title -fw-light -fs-extrabig">{value}</h2>

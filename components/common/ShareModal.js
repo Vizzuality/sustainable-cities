@@ -6,6 +6,7 @@ import Button from 'components/common/Button';
 class ShareModal extends React.Component {
   static defaultProps = {
     url: "https://financingsustainablecities.org/asd123?fghjkl",
+    publicProject: false,
   }
 
   onCopyClick = () => {
@@ -22,7 +23,9 @@ class ShareModal extends React.Component {
             <div className="row">
               <div className="column u-flex-column u-pr-2">
                 <div>
-                  <h2 className="c-title -fw-light -fs-extrabig">Private URL to share</h2>
+                  <h2 className="c-title -fw-light -fs-extrabig">
+                    {this.props.publicProject ? "URL to share" : "Private URL to share"}
+                  </h2>
 
                   <input
                     className="u-block u-w-100 input-text u-mb-1"
@@ -30,10 +33,12 @@ class ShareModal extends React.Component {
                     value={this.props.url}
                   />
 
-                  <label className="u-block u-mb-1">
-                    <input type="checkbox" />
-                    Share editable project (allow changes)
-                  </label>
+                  { !this.props.publicProject &&
+                      <label className="u-block u-mb-1">
+                        <input type="checkbox" />
+                        Share editable project (allow changes)
+                      </label>
+                  }
                 </div>
 
                 <div>

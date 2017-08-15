@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Link } from 'routes';
+import { Link, Router } from 'routes';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import uuidv1 from 'uuid/v1';
@@ -21,6 +21,7 @@ import { getImage } from 'utils/project';
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
+import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import DownloadData from 'components/common/DownloadData';
 import RelatedContent from 'components/explore-detail/RelatedContent';
@@ -29,6 +30,7 @@ import SolutionDetail from 'components/explore-detail/SolutionDetail';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import SolutionCategory from 'components/explore-detail/SolutionCategory';
 import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
+import ShareModal from 'components/common/ShareModal';
 
 // constants
 import { CATEGORY_ICONS } from 'constants/category';
@@ -223,7 +225,15 @@ class SolutionDetailPage extends Page {
               size="shorter"
               position="bottom"
               image={getImage(project)}
-            />
+            >
+              <Button
+                primary
+                inverse
+                onClick={() => this.setState({ modal: 'share' })}
+              >
+                Share
+              </Button>
+            </Cover>
 
             {this.renderTabs()}
 
@@ -245,6 +255,14 @@ class SolutionDetailPage extends Page {
           onClose={() => this.setState({ disclaimer: null })}
         />
 
+      {this.state.modal == 'share' && (
+        <ShareModal
+          publicProject={true}
+          url={window.location}
+          onClose={() => this.setState({ modal: null })}
+          onDownload={() => Router.pushRoute('solution-detail-print', { id: project.id })}
+        />
+      )}
       </Layout>
     );
   }

@@ -1,0 +1,17 @@
+.footer-nav {
+  margin-top: 50px;
+
+  @media (min-width: 640px) {
+    margin-top: 0;
+  }
+
+  li {
+    text-align: right;
+    margin-right: 20px;
+
+    @media (min-width: 640px) {
+      display: block;
+      margin-right: 0;
+    } 
+  }
+}

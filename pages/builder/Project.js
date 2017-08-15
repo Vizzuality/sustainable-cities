@@ -7,7 +7,7 @@ import Layout from 'components/layout/layout';
 import ProjectOverview from 'components/builder-index/ProjectOverview';
 import ProjectDetail from 'components/builder-index/ProjectDetail';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
-import ShareModal from 'components/builder-index/ShareModal';
+import ShareModal from 'components/common/ShareModal';
 import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
 import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';

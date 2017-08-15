@@ -70,7 +70,8 @@ export function getCities() {
     const queryParams = queryString.stringify({
       include: includeFilters.join(','),
       'filter[contains_projects]': 'true',
-      'page[size]': 1000
+      'page[size]': 1000,
+      sort: 'name'
     });
 
     fetch(`${process.env.API_URL}/cities?${queryParams}`, {

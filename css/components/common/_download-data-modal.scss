@@ -42,6 +42,10 @@
 
   > .dropdown {
 
+    input[type="text"] {
+      pointer-events: none;
+    }
+
     .dropdown-content {
       display: none;
     }

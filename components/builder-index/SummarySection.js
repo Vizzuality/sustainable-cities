@@ -31,8 +31,16 @@ export default function SummarySection({ category, parent, onCommentChange, read
           {child.children && child.children.map(grandchild => (
             <div id={grandchild.slug} className="subsubitem" key={grandchild.id}>
               <div className="row subsubtitle">
-                <div className="column large-12 c-text -fs-big -fw-light">
-                  {grandchild.name}
+                <div className="column large-12 c-text -fs-big -fw-light u-flex">
+                  <div>{grandchild.name}</div>
+                  {!readonly &&
+                      <div
+                        className="c-info-icon u-inline-block u-ml-1/2 u-pointer"
+                        onClick={() => onBMEDisplay(grandchild, 'info')}
+                      >
+                        <svg className="icon"><use xlinkHref="#icon-info" /></svg>
+                      </div>
+                  }
                 </div>
               </div>
               <div className="row description">
@@ -40,7 +48,7 @@ export default function SummarySection({ category, parent, onCommentChange, read
                   {
                     !readonly && grandchild.enablings.filter(e => e).length > 0 &&
                       <a
-                        className="c-title -uppercase -fw-light -fs-smaller u-mb-1 u-block"
+                        className="c-title -uppercase -fw-light -fs-smaller u-mb-1 u-block u-pointer"
                         onClick={() => onBMEDisplay(grandchild, 'enabling-conditions')}
                       >
                         {enablingLabel(grandchild.enablings.filter(e => e).length)}

@@ -14,17 +14,15 @@ const tabs = {
 };
 
 class BmeDetail extends React.Component {
+  static defaultProps = {
+    initialTab: "info",
+  };
+
+  state = {};
+
   onOverlayClick(e) {
     if (e.currentTarget == e.target) {
       this.props.onClose();
-    }
-  }
-
-  constructor() {
-    super();
-
-    this.state = {
-      activeTab: "info",
     }
   }
 
@@ -34,6 +32,10 @@ class BmeDetail extends React.Component {
 
   onChange(target, e) {
     this.props.onCommentChange(e.target.value);
+  }
+
+  activeTab() {
+    return this.state.activeTab || this.props.initialTab;
   }
 
   render() {
@@ -49,7 +51,7 @@ class BmeDetail extends React.Component {
                     {Object.entries(tabs).map(([key, label]) => (
                       <li
                         key={key}
-                        className={classnames("tab-item", { "-current": this.state.activeTab == key})}
+                        className={classnames("tab-item", { "-current": this.activeTab() == key})}
                         onClick={() => this.selectTab(key)}
                       >
                         <span className="literal">{label}</span>
@@ -61,7 +63,7 @@ class BmeDetail extends React.Component {
           </header>
 
           <div className="wrapper">
-            <div className={`tab-content current-${this.state.activeTab}`}>
+            <div className={`tab-content current-${this.activeTab()}`}>
               <section>
                 <h2 className="c-title -fw-light -fs-extrabig">
                   What is it &amp; how does it work?

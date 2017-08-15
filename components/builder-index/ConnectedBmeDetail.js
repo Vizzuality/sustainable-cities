@@ -22,10 +22,12 @@ class ConnectedBmeDetail extends React.Component {
   };
 
   render() {
-    const { bmeId } = this.props;
+    const { bmeId, initialTab } = this.props;
 
     return (
       <BmeDetail
+        initialTab={initialTab}
+
         onClose={this.props.onClose}
         onNext={this.props.onNext}
         onPrev={this.props.onPrev}

@@ -3,6 +3,10 @@
   padding: 0 15px;
   background: $color-1;
 
+  .logo {
+    width: auto !important;
+  }
+
   .logo,
   .literal {
     padding: 15px 0;

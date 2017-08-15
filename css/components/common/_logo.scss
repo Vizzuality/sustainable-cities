@@ -1,0 +1,56 @@
+.logo {
+  display: inline-block;
+  width: 100%;
+  height: 65px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &.-footer {
+    &.c40 {
+      width: 65px;
+    }
+
+    &.wri {
+      width: 275px;
+      height: 110px;
+    }
+
+    &.citi-foundation {
+      position: relative;
+      top: 18px;
+      width: 106px;
+      height: 75px;
+    }
+  }
+
+  &.citi-foundation {
+    background-image: url('/static/citi-foundation-logo.jpg');
+  }
+
+  &.citi-foundation-bw {
+    background-image: url('/static/citi-foundation-logo-bw.png');
+  }
+
+  &.c40 {
+    background-image: url('/static/c40-cities.png');
+  }
+
+  &.c40-bw {
+    background-image: url('/static/c40-cities-bw.png');
+  }
+
+  &.wri {
+    background-image: url('/static/wri-ross-cities-logo.png');
+  }
+
+  &.wri-bw {
+    background-image: url('/static/wri-ross-cities-logo-bw.png');
+  }
+}
+
+.logos-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

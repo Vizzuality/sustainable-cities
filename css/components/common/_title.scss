@@ -129,6 +129,12 @@
       text-decoration: underline;
     }
   }
+
+  &.-tagline {
+    font-style: italic;
+    margin-bottom: 40px;
+    line-height: 1.2em;
+  }
 }
 
 //Margins

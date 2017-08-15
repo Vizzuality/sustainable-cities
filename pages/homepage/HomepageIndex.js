@@ -28,7 +28,7 @@ class HomePage extends Page {
           </div>
           <ul className="row">
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
-              <Link route="/explore/solutions/bike-sharing-scheme">
+              <Link route="explore-index" params={{ category: 'solutions', subCategory: 'bike-sharing-scheme' }}>
                 <a>
                   <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-bike" /></svg>
                   <span className="c-text -fs-bigger -light -fw-light">Bike sharing systems</span>
@@ -36,7 +36,7 @@ class HomePage extends Page {
               </Link>
             </li>
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
-              <Link route="/explore/solutions/bus-rapid-transit-brt">
+              <Link route="explore-index" params={{ category: 'solutions', subCategory: 'bus-rapid-transit-brt' }}>
                 <a>
                   <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-buildings" /></svg>
                   <span className="c-text -fs-bigger -light -fw-light">Bus rapid transit systems</span>
@@ -44,7 +44,7 @@ class HomePage extends Page {
               </Link>
             </li>
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
-              <Link route="/explore/solutions/low-and-zero-emission-buses">
+              <Link route="explore-index" params={{ category: 'solutions', subCategory: 'low-and-zero-emission-buses' }}>
                 <a>
                   <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-bus" /></svg>
                   <span className="c-text -fs-bigger -light -fw-light">Low -and zero- emissions buses</span>
@@ -52,7 +52,7 @@ class HomePage extends Page {
               </Link>
             </li>
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
-              <Link route="/explore/solutions/efficient-new-buildings">
+              <Link route="explore-index" params={{ category: 'solutions', subCategory: 'efficient-new-buildings' }}>
                 <a>
                   <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-city" /></svg>
                   <span className="c-text -fs-bigger -light -fw-light">Efficient new buildings</span>
@@ -60,7 +60,7 @@ class HomePage extends Page {
               </Link>
             </li>
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
-              <Link route="/explore/solutions/municipal-building-retrofits">
+              <Link route="explore-index" params={{ category: 'solutions', subCategory: 'municipal-building-retrofits' }}>
                 <a>
                   <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-gov" /></svg>
                   <span className="c-text -fs-bigger -light -fw-light">Municipal building retrofits</span>
@@ -68,7 +68,7 @@ class HomePage extends Page {
               </Link>
             </li>
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
-              <Link route="/explore/solutions/transit-oriented-development-tod">
+              <Link route="explore-index" params={{ category: 'solutions', subCategory: 'transit-oriented-development-tod' }}>
                 <a>
                   <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-metro" /></svg>
                   <span className="c-text -fs-bigger -light -fw-light">Transit-oriented development</span>

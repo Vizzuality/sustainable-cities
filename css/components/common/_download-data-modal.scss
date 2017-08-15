@@ -1,0 +1,125 @@
+.c-download-data-modal {
+  padding: 50px;
+
+  .selector {
+    margin-top: 15px;
+
+    label {
+      display: inline-block;
+      width: 49%;
+
+      & + label {
+        margin-left: 2%;
+      }
+
+      &:checked {
+        border: 2px solid $color-black;
+      }
+    }
+  }
+
+  .filters {
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+
+  .input-item,
+  .dropdown-trigger {
+    padding: 12px 20px;
+    background-color: $color-white;
+    box-shadow: 0 1px 3px 0 rgba($color-black, .15);
+    transition: .2s ease-in;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 1px 3px 0 rgba($color-black, .15), 0 7px 15px 0 rgba($color-black, .15);
+    }
+  }
+
+  .dropdown-trigger {
+    display: block;
+    position: relative;
+    width: 100%;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 12px;
+      right: 20px;
+      width: 10px;
+      height: 10px;
+      border-top: 1px solid $color-black;
+      border-right: 1px solid $color-black;
+      transform: rotate(135deg);
+      pointer-events: none;
+    }
+
+    input {
+      appearance: none;
+      margin: 0;
+      border: 0;
+      line-height: 1em;
+    }
+  }
+
+  .tag-item {
+    margin-right: 10px;
+  }
+
+  .dropdown {
+    margin-bottom: 10px;
+  }
+
+  .dropdown-content {
+    // display: none;
+    position: relative;
+    z-index: 1;
+    padding: 20px 10px;
+    background-color: $color-white;
+    box-shadow: 0 7px 15px 0 rgba($color-black, .15), 0 1px 3px 0 rgba($color-black, 0.15);
+    max-height: 200px;
+    overflow: auto;
+
+    ul {
+      li {
+        display: block;
+      }
+
+      li > label {
+        cursor: pointer;
+      }
+    }
+  }
+
+
+  .buttons {
+    width: 100%;
+    margin-top: 30px;
+    text-align: center;
+
+    a {
+      margin-left: 20px;
+    }
+  }
+}
+
+.react-dropdown-tree-select {
+
+  > .dropdown {
+
+    input[type="text"] {
+      pointer-events: none;
+    }
+
+    .dropdown-content {
+      display: none;
+    }
+
+    &.dropdown--active {
+
+      .dropdown-content {
+        display: block;
+      }
+    }
+  }
+}

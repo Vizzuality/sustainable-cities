@@ -8,11 +8,20 @@ export default function Blogs() {
           <h2 className="c-title -dark -fs-huge -fw-thin">FSCI Posts</h2>
         </div>
 
+
         <div className="column small-12 medium-4">
           <a target="_blank" href="http://thecityfix.com/blog/to-improve-core-services-cities-should-embrace-disruptive-business-models/?utm_source=rss&utm_medium=rss&utm_campaign=to-improve-core-services-cities-should-embrace-disruptive-business-models" className="post">
               <div className="picture -post-7"></div>
               <p className="c-text -dark -fs-medium -fw-light -lh-small">To Improve Core Services, Cities Should Embrace Disruption</p>
               <span className="c-text -dark -fs-smaller -fw-light -uppercase">july 26, 2017</span>
+            </a>
+        </div>
+        
+        <div className="column small-12 medium-4">
+          <a target="_blank" href="http://citiscope.org/commentary/2017/07/three-ways-localize-financing-sustainable-urban-development" className="post">
+              <div className="picture -post-8"></div>
+              <p className="c-text -dark -fs-medium -fw-light -lh-small">Three ways to ‘localize’ financing for sustainable urban development</p>
+              <span className="c-text -dark -fs-smaller -fw-light -uppercase">july 24, 2017</span>
             </a>
         </div>
 

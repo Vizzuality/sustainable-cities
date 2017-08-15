@@ -1,23 +1,15 @@
 import intersection from 'lodash/intersection';
-import classnames from 'classnames';
-import { Link } from 'routes';
 import Page from 'pages/Page';
 
-import Layout from 'components/layout/layout';
 import Head from 'components/layout/head';
 import ProjectOverview from 'components/builder-index/ProjectOverview';
-import ProjectDetail from 'components/builder-index/ProjectDetail';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
-import ShareModal from 'components/common/ShareModal';
-import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
-import Breadcrumbs from 'components/common/Breadcrumbs';
 
-import { leaves, flattenSolutionTree } from 'utils/builder';
+import { flattenSolutionTree } from 'utils/builder';
 
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
-import { Router } from 'routes'
 
 import { getBmes, getEnablings, getSolutions } from 'modules/builder-api';
 
@@ -36,22 +28,9 @@ const transform = (nodes, selectedBMEs, commentedBMEs) => nodes.map(node => {
 
 
 class ProjectPrint extends Page {
-  constructor() {
-    super();
-
-    this.state = {
-      modal: null,
-      activeTab: 'overview',
-    };
-  }
-
   componentWillMount() {
     this.props.getCategoryTree();
     this.props.getEnablingTree();
-  }
-
-  back() {
-    Router.pushRoute('builder');
   }
 
   render() {
@@ -65,7 +44,13 @@ class ProjectPrint extends Page {
       <div>
         <Head />
 
-        <div className="row u-mt-4">
+        <div className="row u-mt-2">
+          <div className="u-flex u-ml-a u-hide-print">
+            <Button primary onClick={() => window.print()}>
+              Print
+            </Button>
+          </div>
+
           <div className="u-w-100 u-flex u-flex-sb u-pt-2 u-pb-2 u-bottom-separator u-align-items-center">
             <h1 className="c-title -fs-huge -fw-thin">{this.props.title}</h1>
 
@@ -84,7 +69,14 @@ class ProjectPrint extends Page {
           project={{ id: 2, bmeTree }}
         />
 
-        {bmeTree.filter(category => category.children.length > 0).map(category => <ProjectCategory key={category.id} category={category} readonly={true} />)}
+        {bmeTree.filter(category => category.children.length > 0).map(category => (
+          <ProjectCategory
+            key={category.id}
+            category={category}
+            readonly={true}
+            bmeDescription={bme => bme.comment}
+          />
+        ))}
       </div>
     );
   }

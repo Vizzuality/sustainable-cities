@@ -8,6 +8,7 @@ import ProjectOverview from 'components/builder-index/ProjectOverview';
 import ProjectDetail from 'components/builder-index/ProjectDetail';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
 import ShareModal from 'components/common/ShareModal';
+import ConnectedBmeDetail from 'components/builder-index/ConnectedBmeDetail';
 import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
 import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
@@ -23,15 +24,16 @@ import { getBmes, getEnablings, getSolutions } from 'modules/builder-api';
 import { setField, commentBME } from 'modules/builder';
 
 
-const transform = (nodes, selectedBMEs, commentedBMEs) => nodes.map(node => {
+const transform = (nodes, selectedBMEs, commentedBMEs, selectedEnablings) => nodes.map(node => {
   const bmes = (node.bmes || []).filter(bme => selectedBMEs.includes(bme.id)).map(bme => ({
     ...bme,
     comment: commentedBMEs[bme.id],
+    selectedEnablings: bme.enablings.filter(enabling => enabling && selectedEnablings.includes(enabling.id)),
   }));
 
   return {
     ...node,
-    children: bmes.length > 0 ? bmes : transform(node.children || [], selectedBMEs, commentedBMEs),
+    children: bmes.length > 0 ? bmes : transform(node.children || [], selectedBMEs, commentedBMEs, selectedEnablings),
   };
 }).filter(node => node.level == "1" || node.children.length > 0);
 
@@ -65,12 +67,19 @@ class Project extends Page {
 
   changeBMEcomment = (bme, text) => this.props.commentBME(bme.id, text);
 
+  showBMEModal = (bme, tab) => this.setState({ modal: 'bme', modalArgs: { bme, tab } });
+
   render() {
     if (!this.props.categories) {
       return null;
     }
 
-    const bmeTree = transform(this.props.categories, this.props.selectedBMEs, this.props.commentedBMEs);
+    const bmeTree = transform(
+      this.props.categories,
+      this.props.selectedBMEs,
+      this.props.commentedBMEs,
+      this.props.selectedEnablings,
+    );
 
     const defaultTabItems = [
       {
@@ -92,7 +101,6 @@ class Project extends Page {
       })),
       defaultTabItems[1],
     ];
-
 
     return (
       <Layout
@@ -146,10 +154,24 @@ class Project extends Page {
           <ProjectCategory
             category={bmeTree.find(cat => cat.slug == this.state.activeTab)}
             onCommentChange={this.changeBMEcomment}
+            onBMEDisplay={this.showBMEModal}
+            bmeDescription={bme => bme.comment}
           />
         }
 
-        {this.state.modal == 'share' && <ShareModal onClose={this.hideModal} onDownload={this.download} />}
+        {
+          this.state.modal == 'share' &&
+            <ShareModal onClose={this.hideModal} onDownload={this.download} />
+        }
+
+        {
+          this.state.modal == 'bme' &&
+            <ConnectedBmeDetail
+              bmeId={this.state.modalArgs.bme.id}
+              initialTab={this.state.modalArgs.tab}
+              onClose={() => this.hideModal()}
+          />
+        }
 
         <DisclaimerModal
           categories={bmeTree}
@@ -173,6 +195,7 @@ export default withRedux(
       enablings: state.builderAPI.enablingCategories || [],
       commentedBMEs: state.builder.commentedBMEs,
       selectedBMEs,
+      selectedEnablings: state.builder.selectedEnablings,
       title: state.builder.title,
       description: state.builder.description,
     });

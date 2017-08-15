@@ -60,7 +60,8 @@ export default function SummarySection({ category, parent, onCommentChange, read
                       <textarea
                         placeholder="Write here..."
                         onChange={(e) => onCommentChange(grandchild, e.target.value)}
-                      >{grandchild.comment}</textarea>
+                        value={grandchild.comment}
+                      />
                   }
                 </div>
               </div>

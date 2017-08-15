@@ -17,8 +17,8 @@ class ConnectedBmeDetail extends React.Component {
   static propTypes = {
     bmeId: PropTypes.number.isRequired,
     onClose: PropTypes.func.isRequired,
-    onNext: PropTypes.func.isRequired,
-    onPrev: PropTypes.func.isRequired,
+    onNext: PropTypes.func,
+    onPrev: PropTypes.func,
   };
 
   render() {

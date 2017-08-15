@@ -170,8 +170,6 @@ class Project extends Page {
               bmeId={this.state.modalArgs.bme.id}
               initialTab={this.state.modalArgs.tab}
               onClose={() => this.hideModal()}
-              onNext={() => this.selectNext(this.state.bme)}
-              onPrev={() => this.selectPrevious(this.state.bme)}
           />
         }
 

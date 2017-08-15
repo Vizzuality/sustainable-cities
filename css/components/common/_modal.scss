@@ -9,11 +9,18 @@
   display: flex;
   align-items: center;
 
+  > .modal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   .content {
     position: relative;
     background-color: $color-5;
     width: 900px;
-    margin: 0px auto;
+    margin: 0 auto;
 
     header {
       background-color: $color-white;
@@ -107,24 +114,27 @@
         }
       }
     }
+  }
 
-    .dismiss {
-      position: absolute;
-      top: 34px;
-      right: -20px;
-      height: 40px;
-      width: 40px;
-      line-height: 42px;
-      font-size: $font-size-bigger;
-      font-weight: $font-weight-light;
-      margin: 0px auto;
-      text-align: center;
-      align-items: center;
-      box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
-      background-color: #FFFFFF;
-      border-radius: 50%;
-      cursor: pointer;
-    }
+  .dismiss {
+    position: absolute;
+    top: 34px;
+    right: -20px;
+    height: 40px;
+    width: 40px;
+    line-height: 42px;
+    font-size: $font-size-bigger;
+    font-weight: $font-weight-light;
+    margin: 0px auto;
+    text-align: center;
+    align-items: center;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+    appearance: none;
+    border: 0;
   }
 
   .next, .prev {
@@ -139,6 +149,10 @@
 
   .next { right: -60px; transform: rotate(45deg); }
   .prev { left: -60px; transform: rotate(-135deg); }
+
+  &.-hidden {
+    display: none;
+  }
 }
 
 .no-overflow {

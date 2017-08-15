@@ -38,7 +38,6 @@
   .tag-item {
     position: relative;
     width: 100%;
-    margin-bottom: 10px;
 
     &:after {
       content: "";
@@ -62,8 +61,23 @@
     }
   }
 
+  .dropdown {
+    margin-bottom: 10px;
+  }
+
   .dropdown-content {
-    display: none;
+    // display: none;
+    position: relative;
+    z-index: 1;
+    padding: 20px 10px;
+    background-color: $color-white;
+    box-shadow: 0 7px 15px 0 rgba($color-black, .15), 0 1px 3px 0 rgba($color-black, 0.15);
+
+    ul {
+      li {
+        display: block;
+      }
+    }
   }
 
 

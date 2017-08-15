@@ -21,13 +21,13 @@ const CATEGORY_FIRST_LEVEL_COLORS = {
 
 const CATEGORY_SOLUTIONS_COLORS = {
   'bike-sharing-systems': '#28bcd4', // Bike Sharing Systems
+  'bike-sharing-scheme': '#28bcd4', // Bike Sharing Scheme
   'new-efficient-constructions': '#ad6bb7', // New efficient Constructions
-  'bike-sharing-scheme': '#525bd7', // Bike Sharing Scheme
-  'efficient-new-buildings': '#77b70b', // Efficient New Buildings
+  'efficient-new-buildings': '#ad6bb7', // Efficient New Buildings
   'bus-rapid-transit-brt': '#dd7d5c', // Bus Rapid Transit (BRT)
   'low-and-zero-emission-buses': '#69e191', // Low And Zero Emission Buses
   'municipal-building-retrofits': '#f7b50c', // Building Efficiency Retrofits
-  'transit-oriented-development-tod': '#f784bd', // Transit-oriented Development (TOD)
+  'transit-oriented-development-tod': '#dd7d5c', // Transit-oriented Development (TOD)
   'multi-solution': '#2c2f33' // multiple solutions
 };
 

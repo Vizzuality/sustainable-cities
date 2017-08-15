@@ -26,6 +26,7 @@
 // Components
 // - layout
 @import 'components/layout/l-home';
+@import 'components/layout/l-footer';
 @import 'components/layout/map-container';
 // - page
 @import 'components/page/explore-detail/detail';
@@ -72,3 +73,7 @@
 @import 'components/common/map/legend-item';
 @import 'components/common/map/marker';
 @import 'components/common/map/infowindow';
+@import 'components/common/logo';
+@import 'components/common/footer-nav';
+
+@import 'utils';

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'routes';
 import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
 
-export default function OverviewSection({ bme }) {
+export default function OverviewSection({ bme, projectId }) {
   const titleColor = CATEGORY_FIRST_LEVEL_COLORS[bme.slug] || CATEGORY_FIRST_LEVEL_COLORS.default;
 
   return (<div className="c-overview-section">
@@ -29,9 +30,11 @@ export default function OverviewSection({ bme }) {
           </div>
           <ul>
             {grandchild.children.map(grandgrandchild => (<li key={grandgrandchild.id}>
-              <div className="c-text -fs-extrasmall -uppercase h-fourth">
-                {grandgrandchild.name}
-              </div>
+              <Link route={`/solutions/${projectId}/${bme.slug}#${grandgrandchild.slug}`}>
+                <a className="c-text -fs-extrasmall -uppercase h-fourth -dark">
+                  {grandgrandchild.name}
+                </a>
+              </Link>
             </li>))}
           </ul>
         </div>))}
@@ -41,5 +44,6 @@ export default function OverviewSection({ bme }) {
 }
 
 OverviewSection.propTypes = {
+  projectId: PropTypes.string.isRequired,
   bme: PropTypes.object.isRequired
 };

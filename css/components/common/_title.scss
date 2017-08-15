@@ -84,6 +84,10 @@
     text-transform: uppercase;
   }
 
+  &.-underline {
+    text-decoration: underline;
+  }
+
   //Line height
 
   &.-lh-default {
@@ -117,9 +121,19 @@
       background-color: $color-9;
     }
   }
+ 
+  a {
+    color: inherit;
 
-  a:hover {
-    text-decoration: underline;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &.-tagline {
+    font-style: italic;
+    margin-bottom: 40px;
+    line-height: 1.2em;
   }
 }
 

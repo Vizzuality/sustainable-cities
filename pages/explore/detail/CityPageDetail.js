@@ -106,13 +106,14 @@ class CityDetailPage extends Page {
           <div className="row">
             <div className="column small-12">
               <ItemGallery
-                showAll
-                title="Projects in this city"
+                showAll={parsedProjects.length > 4 ? true : false}
+                title={parsedProjects.length > 1 ? "Projects in this city" : "Project in this city"}
                 items={parsedProjects}
               />
 
               <ItemGallery
-                showAll
+                showAll={parsedBmes['investment-component'] !== undefined && parsedBmes['investment-component'].length > 4 ?
+                  true : false }
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'investment-component' }
@@ -122,7 +123,8 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll
+                showAll={parsedBmes['delivery-mechanism'] !== undefined && parsedBmes['delivery-mechanism'].length > 4 ?
+                  true : false }
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'delivery-mechanism' }
@@ -132,7 +134,8 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll
+                showAll={parsedBmes['financial-product'] !== undefined && parsedBmes['financial-product'].length > 4 ?
+                  true : false }
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'financial-product' }
@@ -142,7 +145,8 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll
+                showAll={parsedBmes['funding-source'] !== undefined && parsedBmes['funding-source'].length > 4 ?
+                  true : false }
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'funding-source' }
@@ -150,6 +154,51 @@ class CityDetailPage extends Page {
                 items={parsedBmes['funding-source'] !== undefined ?
                   [parsedBmes['funding-source']] : []}
               />
+
+              <ItemGallery
+                showAll={parsedBmes['financing'] !== undefined && parsedBmes['financing'].length > 4 ?
+                  true : false }
+                link={{
+                  route: 'city-detail',
+                  params: { id, tab: 'financing' }
+                }}
+                items={parsedBmes['financing'] !== undefined ?
+                  [parsedBmes['financing']] : []}
+              />
+
+              <ItemGallery
+                showAll={parsedBmes['funding'] !== undefined && parsedBmes['funding'].length > 4 ?
+                  true : false }
+                link={{
+                  route: 'city-detail',
+                  params: { id, tab: 'funding' }
+                }}
+                items={parsedBmes['funding'] !== undefined ?
+                  [parsedBmes['funding']] : []}
+              />
+
+              <ItemGallery
+                showAll={parsedBmes['legal-arrangements'] !== undefined && parsedBmes['legal-arrangements'].length > 4 ?
+                  true : false }
+                link={{
+                  route: 'city-detail',
+                  params: { id, tab: 'legal-arrangements' }
+                }}
+                items={parsedBmes['legal-arrangements'] !== undefined ?
+                  [parsedBmes['legal-arrangements']] : []}
+              />
+
+              <ItemGallery
+                showAll={parsedBmes['technical-components'] !== undefined && parsedBmes['technical-components'].length > 4 ?
+                  true : false }
+                link={{
+                  route: 'city-detail',
+                  params: { id, tab: 'technical-components' }
+                }}
+                items={parsedBmes['technical-components'] !== undefined ?
+                  [parsedBmes['technical-components']] : []}
+              />
+
             </div>
           </div>}
 

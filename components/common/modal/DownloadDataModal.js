@@ -78,7 +78,7 @@ export default class DownloadDataModal extends React.Component {
     return (
       <div className="c-download-data-modal">
         <h2 className="c-title -fw-thin -fs-huge">Download</h2>
-        <p className="c-text -fs-small -fw-light">Select the part of the dataset you are interested on, then click download to get the file</p>
+        <p className="c-text -fs-small -fw-light">Select the part of the dataset you are interested in, then click download to get the file</p>
         <div className="selector">
           <label htmlFor="projects" className="c-text -fs-small -dark input-item">
             <input

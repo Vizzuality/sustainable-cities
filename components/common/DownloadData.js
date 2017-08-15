@@ -15,13 +15,12 @@ export default function DownloadData(props) {
         </div>
         <div className="row">
           <div className="column large-12 c-text -fs-medium">
-            <p>Lorem ipsum cras mattis consectetur purus sit amet fermentum.</p>
-            <p>Praesent commodo cursus magna, vel scelerisque.</p>
+            <p>Select the part of the dataset you are interested in and download it to your computer</p>
           </div>
         </div>
         <div className="row">
           <div className="column large-12">
-            <Button className="download-button" secondary onClick={onClickButton}>select data</Button>
+            <Button className="download-button" secondary onClick={onClickButton}>select data to download</Button>
           </div>
         </div>
       </div>

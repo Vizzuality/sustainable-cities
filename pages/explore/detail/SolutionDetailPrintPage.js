@@ -3,6 +3,7 @@ import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 
 import Head from 'components/layout/head';
+import Button from 'components/common/Button';
 import SolutionDetail from 'components/explore-detail/SolutionDetail';
 import ProjectOverview from 'components/builder-index/ProjectOverview';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
@@ -39,7 +40,12 @@ class SolutionDetailPrintPage extends Page {
       <div>
         <Head title="Solution detail" defaultDescription="" />
 
-        <div className="row u-mt-4">
+        <div className="row u-mt-2">
+          <div className="u-flex u-ml-a u-hide-print">
+            <Button primary onClick={window.print}>
+              Print
+            </Button>
+          </div>
           <div className="u-w-100 u-flex u-flex-sb u-pt-2 u-pb-2 u-bottom-separator u-align-items-center">
             <h1 className="c-title -fs-huge -fw-thin">{this.props.project.name}</h1>
 

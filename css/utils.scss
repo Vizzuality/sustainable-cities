@@ -46,6 +46,7 @@
 .u-flex-sb { justify-content: space-between; }
 .u-flex-center { justify-content: center; }
 .u-align-items-center { align-items: center; }
+.u-align-items-right { align-items: right; }
 
 .u-block { display: block; }
 .u-inline { display: inline; }
@@ -63,3 +64,7 @@
 .u-bc-cc { border-color: currentColor; }
 
 .u-pointer { cursor: pointer; }
+
+@media print {
+  .u-hide-print { display: none; }
+}

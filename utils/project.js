@@ -1,18 +1,14 @@
 import uuidv1 from 'uuid/v1';
 import groupBy from 'lodash/groupBy';
 
+// utils
+import { sortByName } from 'utils/common';
+
 // constants
 import { CATEGORY_ICONS } from 'constants/category';
 // pick a usable image url from a project entity deserialized payload
 const getImage = (project) => project.photos && project.photos[0] ?
   `${process.env.API_URL}${project.photos[0].attachment.medium.url}` : null;
-
-
-const sortByName = (a, b) => {
-  if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
-  if (b.name.toLowerCase() > a.name.toLowerCase()) return -1;
-  return 0;
-};
 
 // parses projects in order to populate GridList component
 const listProjects = projects => projects.map(project => ({

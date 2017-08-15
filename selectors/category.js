@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 import { EXPLORE_TABS } from 'constants/explore';
 
 // utils
+import { sortByName } from 'utils/common';
 import { parseCategoryToTab } from 'utils/category';
 
 const getSolutionCategories = state => state.category.solution.list;
@@ -28,7 +29,7 @@ const getCategoryTabs = createSelector(
         category: firstLevelBmeCategory.slug
       },
       slug: firstLevelBmeCategory.slug,
-      children: (firstLevelBmeCategory.children || [])
+      children: (firstLevelBmeCategory.children || []).sort(sortByName)
         .map(bmeCategory => parseCategoryToTab({
           ...bmeCategory,
           parentSlug: firstLevelBmeCategory.slug

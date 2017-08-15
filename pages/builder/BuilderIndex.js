@@ -11,6 +11,7 @@ import SolutionPicker from 'components/builder-index/SolutionPicker';
 import EnablingConditionsSelector from 'components/builder-index/EnablingConditionsSelector';
 import RadialChart from 'components/common/RadialChart';
 import BmeDetail from 'components/builder-index/BmeDetail';
+import ConnectedBmeDetail from 'components/builder-index/ConnectedBmeDetail';
 import HelpModal from 'components/builder-index/HelpModal';
 
 import { leaves, flattenSolutionTree, flattenEnablingTree, recursiveFilter } from 'utils/builder';
@@ -207,19 +208,11 @@ class BuilderIndex extends Page {
           }
         </div>
 
-        {this.state.bme && <BmeDetail
-          bme={this.state.bme}
-          comment={this.props.commentedBMEs[this.state.bme.id]}
-          selected={this.props.selectedBMEs.includes(this.state.bme.id)}
-          selectedEnablings={this.props.selectedEnablings}
+        {this.state.bme && <ConnectedBmeDetail
+          bmeId={this.state.bme.id}
           onClose={() => this.hideBME()}
-          onSave={() => this.selectBME(this.state.bme)}
-          onCommentChange={(text) => this.changeBMEcomment(this.state.bme, text)}
-          onDelete={() => this.deselectBME(this.state.bme)}
           onNext={() => this.selectNext(this.state.bme)}
           onPrev={() => this.selectPrevious(this.state.bme)}
-          onEnablingSelect={(enabling) => this.selectEnabling(enabling)}
-          onEnablingDeselect={(enabling) => this.deselectEnabling(enabling)}
         />}
 
         {this.state.showHelp && <HelpModal onClose={() => this.hideHelp()} />}

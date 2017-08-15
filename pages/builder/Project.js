@@ -8,6 +8,7 @@ import ProjectOverview from 'components/builder-index/ProjectOverview';
 import ProjectDetail from 'components/builder-index/ProjectDetail';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
 import ShareModal from 'components/common/ShareModal';
+import ConnectedBmeDetail from 'components/builder-index/ConnectedBmeDetail';
 import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
 import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
@@ -64,6 +65,8 @@ class Project extends Page {
   onFieldChange = (name, value) => this.props.setField(name, value);
 
   changeBMEcomment = (bme, text) => this.props.commentBME(bme.id, text);
+
+  showBMEModal = (bme, tab) => this.setState({ modal: 'bme', modalArgs: { bme, tab } });
 
   render() {
     if (!this.props.categories) {
@@ -146,10 +149,24 @@ class Project extends Page {
           <ProjectCategory
             category={bmeTree.find(cat => cat.slug == this.state.activeTab)}
             onCommentChange={this.changeBMEcomment}
+            onBMEDisplay={this.showBMEModal}
           />
         }
 
-        {this.state.modal == 'share' && <ShareModal onClose={this.hideModal} onDownload={this.download} />}
+        {
+          this.state.modal == 'share' &&
+            <ShareModal onClose={this.hideModal} onDownload={this.download} />
+        }
+
+        {
+          this.state.modal == 'bme' &&
+            <ConnectedBmeDetail
+              bmeId={this.state.modalArgs.bme.id}
+              onClose={() => this.hideModal()}
+              onNext={() => this.selectNext(this.state.bme)}
+              onPrev={() => this.selectPrevious(this.state.bme)}
+          />
+        }
 
         <DisclaimerModal
           categories={bmeTree}

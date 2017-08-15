@@ -114,11 +114,13 @@ export default class DownloadDataModal extends React.Component {
     const checkedCities = (cities || []).map(city => city.id);
     const checkedBmes = (bmes || []).map(bme => bme.id);
     const checkedSolution = (solutions || []).map(solution => solution.id);
-    const bmesString = checkedBmes.length ? `?bme_ids=${checkedBmes.toString()}` : '';
-    const citiesString = checkedCities.length ? `&city_ids=${checkedCities.toString()}` : '';
-    const solutionString = checkedSolution.length ? `&solution_ids=${checkedSolution.toString()}` : '';
+    const bmesString = checkedBmes.length ? `bme_ids=${checkedBmes.toString()}` : '';
+    const citiesString = checkedCities.length ? `city_ids=${checkedCities.toString()}` : '';
+    const solutionString = checkedSolution.length ? `solution_ids=${checkedSolution.toString()}` : '';
 
-    return `${process.env.API_URL}/csvs/${radio}${bmesString}${citiesString}${solutionString}`;
+    const params = [bmesString, citiesString, solutionString].filter(s => s.length).join('&');
+
+    return `${process.env.API_URL}/csvs/${radio}?${params}`;
   }
 
   render() {

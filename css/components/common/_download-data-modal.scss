@@ -6,14 +6,14 @@
 
     label {
       display: inline-block;
-      width: 49%; 
-      
+      width: 49%;
+
       & + label {
         margin-left: 2%;
       }
 
       &:checked {
-
+        border: 2px solid $color-black;
       }
     }
   }
@@ -24,18 +24,19 @@
   }
 
   .input-item,
-  .tag-item input {
+  .dropdown-trigger {
     padding: 12px 20px;
     background-color: $color-white;
     box-shadow: 0 1px 3px 0 rgba($color-black, .15);
     transition: .2s ease-in;
-    
+
     &:hover {
       box-shadow: 0 1px 3px 0 rgba($color-black, .15), 0 7px 15px 0 rgba($color-black, .15);
     }
   }
 
-  .tag-item {
+  .dropdown-trigger {
+    display: block;
     position: relative;
     width: 100%;
 
@@ -53,12 +54,16 @@
     }
 
     input {
-      width: 100%;
+      // width: 100%;
       appearance: none;
       margin: 0;
       border: 0;
       line-height: 1em;
     }
+  }
+
+  .tag-item {
+    margin-right: 10px;
   }
 
   .dropdown {
@@ -72,6 +77,8 @@
     padding: 20px 10px;
     background-color: $color-white;
     box-shadow: 0 7px 15px 0 rgba($color-black, .15), 0 1px 3px 0 rgba($color-black, 0.15);
+    max-height: 200px;
+    overflow: auto;
 
     ul {
       li {
@@ -88,6 +95,23 @@
 
     a {
       margin-left: 20px;
+    }
+  }
+}
+
+.react-dropdown-tree-select {
+
+  > .dropdown {
+
+    .dropdown-content {
+      display: none;
+    }
+
+    &.dropdown--active {
+
+      .dropdown-content {
+        display: block;
+      }
     }
   }
 }

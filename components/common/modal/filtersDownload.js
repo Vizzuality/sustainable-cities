@@ -27,7 +27,7 @@ export default class DownloadFilters extends React.Component {
         />
 
         <DropdownTreeSelect
-          className="c-text -fs-small -dark input-item"
+          showDropdown
           placeholderText="All business model element categories"
           data={bmes}
           onChange={(currentNode, selectedNodes) => onChangeDropwdown('bmes', selectedNodes)}

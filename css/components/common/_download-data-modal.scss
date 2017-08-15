@@ -6,14 +6,14 @@
 
     label {
       display: inline-block;
-      width: 49%; 
-      
+      width: 49%;
+
       & + label {
         margin-left: 2%;
       }
 
       &:checked {
-         
+
       }
     }
 
@@ -31,9 +31,26 @@
     background-color: $color-white;
     box-shadow: 0 1px 3px 0 rgba($color-black, .15);
     transition: .2s ease-in;
-    
+
     &:hover {
       box-shadow: 0 1px 3px 0 rgba($color-black, .15), 0 7px 15px 0 rgba($color-black, .15);
+    }
+  }
+}
+
+.react-dropdown-tree-select {
+
+  > .dropdown {
+
+    .dropdown-content {
+      display: none;
+    }
+
+    &.dropdown--active {
+
+      .dropdown-content {
+        display: block;
+      }
     }
   }
 }

@@ -69,10 +69,6 @@ class BmeDetail extends React.Component {
                   What is it &amp; how does it work?
                 </h2>
                 <p>{this.props.bme.description}</p>
-
-                <h2 className="c-title -fw-light -fs-extrabig">
-                  Real world examples
-                </h2>
               </section>
 
               <section>

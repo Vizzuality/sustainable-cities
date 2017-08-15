@@ -155,6 +155,7 @@ class Project extends Page {
             category={bmeTree.find(cat => cat.slug == this.state.activeTab)}
             onCommentChange={this.changeBMEcomment}
             onBMEDisplay={this.showBMEModal}
+            bmeDescription={bme => bme.comment}
           />
         }
 

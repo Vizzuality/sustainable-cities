@@ -1,9 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SummarySection from 'components/builder-index/SummarySection';
 
 
 class ProjectCategory extends React.Component {
+  static propTypes = {
+    bmeDescription: PropTypes.func.isRequired,
+  };
+
   render() {
     return (
       <div className="solution-category">
@@ -21,6 +26,7 @@ class ProjectCategory extends React.Component {
             onCommentChange={this.props.onCommentChange}
             onBMEDisplay={this.props.onBMEDisplay}
             readonly={this.props.readonly}
+            bmeDescription={this.props.bmeDescription}
           />)}
         </div>}
       </div>

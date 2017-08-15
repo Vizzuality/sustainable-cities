@@ -10,70 +10,82 @@ const enablingLabel = (count) => (
   `${count} enabling conditions`
 );
 
-export default function SummarySection({ category, parent, onCommentChange, readonly, onBMEDisplay }) {
+export default function SummarySection({
+  category,
+  parent,
+  onCommentChange,
+  readonly,
+  onBMEDisplay,
+  bmeDescription,
+}) {
   const titleColor = CATEGORY_FIRST_LEVEL_COLORS[parent.slug] ||
     CATEGORY_FIRST_LEVEL_COLORS.default;
 
-  return (<div className="c-summary-section">
-    <div id={category.slug} className="row title">
-      <div className="column large-12 c-text -fs-huge -fw-thin">
-        <span style={{ borderBottom: `2px solid ${titleColor}` }}>
-          {category.name}
-        </span>
-      </div>
-    </div>
-    {category.children.map(child => (
-      <div id={child.slug} key={child.id} className="row subtitle">
-        <div className="column large-4 c-text -fs-extrabig -fw-light">
-          {child.name}
+  return (
+    <div className="c-summary-section">
+      <div id={category.slug} className="row title">
+        <div className="column large-12 c-text -fs-huge -fw-thin">
+          <span style={{ borderBottom: `2px solid ${titleColor}` }}>
+            {category.name}
+          </span>
         </div>
-        <div className="column large-8">
-          {child.children && child.children.map(grandchild => (
-            <div id={grandchild.slug} className="subsubitem" key={grandchild.id}>
-              <div className="row subsubtitle">
-                <div className="column large-12 c-text -fs-big -fw-light u-flex">
-                  <div>{grandchild.name}</div>
-                  {!readonly &&
-                      <div
-                        className="c-info-icon u-inline-block u-ml-1/2 u-pointer"
-                        onClick={() => onBMEDisplay(grandchild, 'info')}
-                      >
-                        <svg className="icon"><use xlinkHref="#icon-info" /></svg>
-                      </div>
-                  }
+      </div>
+      {category.children.map(child => (
+        <div id={child.slug} key={child.id} className="row subtitle">
+          <div className="column large-4 c-text -fs-extrabig -fw-light">
+            {child.name}
+          </div>
+          <div className="column large-8">
+            {child.children && child.children.map(grandchild => (
+              <div id={grandchild.slug} className="subsubitem" key={grandchild.id}>
+                <div className="row subsubtitle">
+                  <div className="column large-12 c-text -fs-big -fw-light u-flex">
+                    <div>{grandchild.name}</div>
+                    {!readonly &&
+                        <div
+                          className="c-info-icon u-inline-block u-ml-1/2 u-pointer"
+                          onClick={() => onBMEDisplay(grandchild, 'info')}
+                        >
+                          <svg className="icon"><use xlinkHref="#icon-info" /></svg>
+                        </div>
+                    }
+                  </div>
                 </div>
-              </div>
-              <div className="row description">
-                <div className="column large-12 c-text -lh-medium">
-                  {
-                    !readonly && grandchild.selectedEnablings.length > 0 &&
-                      <a
-                        className="c-title -uppercase -fw-light -fs-smaller u-mb-1 u-block u-pointer"
-                        onClick={() => onBMEDisplay(grandchild, 'enabling-conditions')}
-                      >
-                        {enablingLabel(grandchild.selectedEnablings.length)}
-                      </a>
-                  }
+                <div className="row description">
+                  <div className="column large-12 c-text -lh-medium">
+                    {
+                      !readonly && grandchild.selectedEnablings.length > 0 &&
+                        <a
+                          className="c-title -uppercase -fw-light -fs-smaller u-mb-1 u-block u-pointer"
+                          onClick={() => onBMEDisplay(grandchild, 'enabling-conditions')}
+                        >
+                          {enablingLabel(grandchild.selectedEnablings.length)}
+                        </a>
+                    }
 
-                  { readonly ?
-                      <div className="u-mt-1">{grandchild.comment}</div> :
-                      <textarea
-                        placeholder="Write here..."
-                        onChange={(e) => onCommentChange(grandchild, e.target.value)}
-                        value={grandchild.comment}
-                      />
-                  }
+                    { readonly ?
+                        <div className="u-mt-1">
+                          {bmeDescription(grandchild)}
+                        </div> :
+                        <textarea
+                          placeholder="Write here..."
+                          onChange={(e) => onCommentChange(grandchild, e.target.value)}
+                          value={grandchild.comment}
+                        />
+                    }
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    ))}
-  </div>);
+      ))}
+    </div>
+  );
 }
 
 SummarySection.propTypes = {
   parent: PropTypes.object.isRequired,
-  category: PropTypes.object.isRequired
+  category: PropTypes.object.isRequired,
+  bmeDescription: PropTypes.func.isRequired,
 };

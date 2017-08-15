@@ -3,6 +3,7 @@ import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 
 import Head from 'components/layout/head';
+import SolutionDetail from 'components/explore-detail/SolutionDetail';
 import ProjectOverview from 'components/builder-index/ProjectOverview';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
 
@@ -13,7 +14,7 @@ import { getProjectDetail, setProjectFilters } from 'modules/project';
 import { getBmeCategories } from 'modules/category';
 
 
-class ProjectPrint extends Page {
+class SolutionDetailPrintPage extends Page {
   componentWillMount() {
     const { id } = this.props.queryParams;
 
@@ -40,7 +41,7 @@ class ProjectPrint extends Page {
 
         <div className="row u-mt-4">
           <div className="u-w-100 u-flex u-flex-sb u-pt-2 u-pb-2 u-bottom-separator u-align-items-center">
-            <h1 className="c-title -fs-huge -fw-thin">{this.props.title}</h1>
+            <h1 className="c-title -fs-huge -fw-thin">{this.props.project.name}</h1>
 
             <div className="c-text u-flex -fw-bold -uppercase -fs-extrasmall">
               <div className="u-pr-1/2">powered by</div>
@@ -53,6 +54,11 @@ class ProjectPrint extends Page {
           </div>
         </div>
 
+        <SolutionDetail
+          project={this.props.project}
+          categories={this.props.bmeTree}
+        />
+
         <ProjectOverview
           project={this.props.project}
         />
@@ -64,6 +70,7 @@ class ProjectPrint extends Page {
               key={category.id}
               category={category}
               readonly={true}
+              bmeDescription={bme => bme.description}
             />
           ))}
       </div>
@@ -114,4 +121,4 @@ export default withRedux(
     getBmeCategories() { dispatch(getBmeCategories()); },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
   })
-)(ProjectPrint);
+)(SolutionDetailPrintPage);

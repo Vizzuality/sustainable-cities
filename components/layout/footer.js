@@ -7,20 +7,19 @@ export default () => (
       <div className="columns small-12">
         <div className="l-footer">
           <div className="row">
-            <div className="columns small-12 medium-8">
-              <p className="c-text -dark -fs-big -fw-light -tagline">"An initiative to help cities develop business models to accelerate sustainable urban solutions"</p>
+            <div className="columns small-12">
+              <p className="c-text -dark -fs-big -fw-light -tagline">&ldquo;An initiative to help cities develop business models to accelerate sustainable urban solutions&rdquo;</p>
             </div>
-            <div className="columns small-12 medium-4"></div>
             <div className="columns small-12 medium-4">
               <p className="c-text -fs-small -dark">A partnership between: </p>
               <div className="logos-wrap">
-                <a href="http://www.c40.org/" target="_blank" className="logo -footer c40"></a>
-                <a href="http://www.wrirosscities.org/" target="_blank" className="logo -footer wri"></a>
+                <a href="http://www.c40.org/" target="_blank" rel="noopener noreferrer" className="logo -footer c40" />
+                <a href="http://www.wrirosscities.org/" target="_blank" rel="noopener noreferrer" className="logo -footer wri" />
               </div>
             </div>
             <div className="columns small-12 medium-2">
               <p className="c-text -fs-small -dark">Founded by: </p>
-              <a href="http://www.citigroup.com/citi/foundation/" target="_blank" className="logo -footer citi-foundation"></a>
+              <a href="http://www.citigroup.com/citi/foundation/" target="_blank" rel="noopener noreferrer" className="logo -footer citi-foundation" />
             </div>
             <div className="columns small-12 medium-4 medium-offset-2">
               <ul className="footer-nav">

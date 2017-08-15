@@ -151,41 +151,46 @@ export default class DownloadDataModal extends React.Component {
 
     return (
       <div className="c-download-data-modal">
-        <h2 className="modal-title">Download</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, eos quod et, quos,
-          mollitia ad quis maxime facere sunt rem aperiam vitae aliquid. Ratione hic voluptatum
-          quidem repellat nihil illum!</p>
-        <label htmlFor="projects">
-          <input
-            name="projects"
-            type="radio"
-            value="projects"
-            checked={radio === 'projects'}
-            onChange={e => this.onSelectRadio(e.target.value)}
-          />
-          Projects
-        </label>
-        <label htmlFor="bmes">
-          <input
-            name="bmes"
-            type="radio"
-            value="bmes"
-            checked={radio === 'bmes'}
-            onChange={e => this.onSelectRadio(e.target.value)}
-          />
-          Business Model Elements
-        </label>
+        <h2 className="c-title -fw-thin -fs-huge">Download</h2>
+        <p className="c-text -fs-small -fw-light">Select the part of the dataset you are interested on, then click download to get the file</p>
+        <div className="selector">
+          <label htmlFor="projects" className="c-text -fs-small -dark input-item">
+            <input
+              name="projects"
+              id="projects"
+              type="radio"
+              value="projects"
+              checked={radio === 'projects'}
+              onChange={e => this.onSelectRadio(e.target.value)}
+            />
+            Projects
+          </label>
+          <label htmlFor="bmes" className="c-text -fs-small -dark input-item">
+            <input
+              name="bmes"
+              id="bmes"
+              type="radio"
+              value="bmes"
+              checked={radio === 'bmes'}
+              onChange={e => this.onSelectRadio(e.target.value)}
+            />
+            Business Model Elements
+          </label>
+        </div>
 
-        <span>Filtered by</span>
 
         <div className="filters">
+          <span className="c-text -fs-medium -fw-light">Filtered by</span>
+
           <DropdownTreeSelect
+            className="c-text -fs-small -dark input-item"
             placeholderText={radio === 'projects' ? 'Any city' : 'Used in any city'}
             data={cities}
             onChange={(currentNode, selectedNodes) => this.onChangeDropwdown('cities', selectedNodes)}
           />
 
           <DropdownTreeSelect
+            className="c-text -fs-small -dark input-item"
             placeholderText={radio === 'projects' ?
               'Any business model element or category used' : 'All business model elements'}
             data={this.bmes}
@@ -193,6 +198,7 @@ export default class DownloadDataModal extends React.Component {
           />
 
           <DropdownTreeSelect
+            className="c-text -fs-small -dark input-item"
             placeholderText={radio === 'projects' ?
               'Any solution' : 'Used in any solution'}
             data={solutions}

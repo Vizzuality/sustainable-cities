@@ -4087,7 +4087,7 @@ react-dom@^15.5.4:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-dropdown-tree-select@^0.0.1-beta.11:
+react-dropdown-tree-select@0.0.1-beta.11:
   version "0.0.1-beta.11"
   resolved "https://registry.yarnpkg.com/react-dropdown-tree-select/-/react-dropdown-tree-select-0.0.1-beta.11.tgz#bbcc463fc946fba4c508d177d19b08a338dabfa1"
   dependencies:

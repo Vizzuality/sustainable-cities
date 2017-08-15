@@ -54,9 +54,6 @@ class Map extends React.Component {
       this.setLayerManager(nextProps);
       this.removeLayers();
       this.addLayers(nextProps.activeLayer, nextProps.filters);
-    }
-
-    if (layerDataChanged) {
       this.setMarkers(nextProps.layerData);
     }
   }

@@ -60,11 +60,12 @@ const groupProjectsByCity = (projects) => {
   Object.keys(projectsByCity).forEach((cityId) => {
     const cityData = (projectsByCity[cityId] || []).length ?
       projectsByCity[cityId][0].cities[0] : {};
-    const { name, lat, lng } = cityData;
+    const { name, lat, lng, id } = cityData;
 
     if (!lat || !lng) return;
 
     parsedData.push({
+      id,
       name,
       lat,
       lng,

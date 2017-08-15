@@ -102,6 +102,27 @@ export default function Infowindow(props) {
         );
         break;
       }
+      case 'city': {
+        const { projects, name, id } = props;
+        content = (
+          <div className="infowindow-content">
+            <Link
+              route="city-detail"
+              params={{
+                id
+              }}
+            >
+              <h3 className="c-title -fs-big -fw-light -light">
+                <a>{name}</a>
+              </h3>
+            </Link>
+
+            <span className="resume-items">{(projects || []).length} projects:</span>
+            {_setProjects(projects)}
+          </div>
+        );
+        break;
+      }
       default:
         content = null;
     }

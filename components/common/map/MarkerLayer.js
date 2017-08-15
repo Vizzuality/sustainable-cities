@@ -24,6 +24,23 @@ const DEFAULT_MARKER_OPTIONS = {
 };
 
 export default class MarkerLayer {
+  static _getType({ category }) {
+    let type = 'bme';
+
+    switch (category) {
+      case 'solutions':
+        type = 'solution';
+        break;
+      case 'cities':
+        type = 'city';
+        break;
+      default:
+        type = 'bme';
+    }
+
+    return type;
+  }
+
   constructor(data, map, filters, categories) {
     this._data = data;
     this._map = map;
@@ -104,7 +121,6 @@ export default class MarkerLayer {
   }
 
   render() {
-    const { category } = this._filters;
     const projectsByCity = groupProjectsByCity(this._data);
     const geojson = GeoJSON.parse(projectsByCity, { Point: ['lat', 'lng'] });
     return L.geoJson(geojson, {
@@ -114,8 +130,7 @@ export default class MarkerLayer {
         render(
           Infowindow({
             ...feature.properties,
-            type: (category !== 'solutions' && category !== 'cities') ?
-              'bme' : 'solution',
+            type: MarkerLayer._getType(this._filters),
             filters: this._filters,
             categories: this._categories
           })

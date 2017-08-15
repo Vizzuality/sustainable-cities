@@ -1,24 +1,24 @@
-import classnames from 'classnames';
-import { Link } from 'routes';
+import React from 'react';
+// import classnames from 'classnames';
+// import { Link } from 'routes';
 import Page from 'pages/Page';
 
 import Layout from 'components/layout/layout';
-import ProjectOverview from 'components/builder-index/ProjectOverview';
-import ProjectDetail from 'components/builder-index/ProjectDetail';
-import ProjectCategory from 'components/builder-index/ProjectCategory';
-import ShareModal from 'components/builder-index/ShareModal';
+// import ProjectOverview from 'components/builder-index/ProjectOverview';
+// import ProjectDetail from 'components/builder-index/ProjectDetail';
+// import ProjectCategory from 'components/builder-index/ProjectCategory';
 import Cover from 'components/common/Cover';
-import Button from 'components/common/Button';
-import Breadcrumbs from 'components/common/Breadcrumbs';
+// import Button from 'components/common/Button';
+// import Breadcrumbs from 'components/common/Breadcrumbs';
 
-import { leaves, flattenSolutionTree } from 'utils/builder';
+// import { leaves, flattenSolutionTree } from 'utils/builder';
 
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
-import { Router } from 'routes'
+// import { Router } from 'routes'
 
-import { getBmes, getEnablings, getSolutions } from 'modules/builder-api';
-import { setField, commentBME } from 'modules/builder';
+// import { getBmes, getEnablings, getSolutions } from 'modules/builder-api';
+// import { setField, commentBME } from 'modules/builder';
 
 
 class ProfileIndex extends Page {
@@ -27,7 +27,7 @@ class ProfileIndex extends Page {
 
     this.state = {
       modal: null,
-      activeTab: 'overview',
+      activeTab: 'overview'
     };
   }
 
@@ -41,9 +41,9 @@ class ProfileIndex extends Page {
         className="c-builder-project"
       >
         <Cover
-          size='shorter'
+          size="shorter"
           title="My profile"
-          image='/static/images/download-data-module.jpg'
+          image="/static/images/download-data-module.jpg"
         />
 
         <div className="row u-mt-2">
@@ -79,7 +79,6 @@ class ProfileIndex extends Page {
 export default withRedux(
   store,
   state => state.auth,
-  dispatch => ({
-  })
+  () => ({})
 )(ProfileIndex);
 

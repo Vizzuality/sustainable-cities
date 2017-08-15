@@ -102,7 +102,6 @@ class Project extends Page {
       defaultTabItems[1],
     ];
 
-
     return (
       <Layout
         title="Builder"

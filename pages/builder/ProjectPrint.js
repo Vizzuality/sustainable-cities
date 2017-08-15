@@ -46,7 +46,7 @@ class ProjectPrint extends Page {
 
         <div className="row u-mt-2">
           <div className="u-flex u-ml-a u-hide-print">
-            <Button primary onClick={window.print}>
+            <Button primary onClick={() => window.print()}>
               Print
             </Button>
           </div>

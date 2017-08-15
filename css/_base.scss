@@ -10,7 +10,7 @@ body {
   color: $color-text-1;
   font-size: $font-size-default;
   font-weight: $font-weight-default;
-  line-height: 1.62;
+  line-height: $base-line-height;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

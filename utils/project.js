@@ -1,6 +1,9 @@
 import uuidv1 from 'uuid/v1';
 import groupBy from 'lodash/groupBy';
 
+// utils
+import { sortByName } from 'utils/common';
+
 // constants
 import { CATEGORY_ICONS } from 'constants/category';
 // pick a usable image url from a project entity deserialized payload
@@ -18,6 +21,7 @@ const listProjects = projects => projects.map(project => ({
 
 const joiningProjects = (solution) => {
   const result = solution.projects || [];
+
   if (solution.children && solution.children.length) {
     for (let index = 0, len = solution.children.length; index < len; index++) {
       if (solution.children[index].projects && solution.children[index].projects.length) {
@@ -28,6 +32,7 @@ const joiningProjects = (solution) => {
       }
     }
   }
+  (result || []).sort(sortByName);
   return listProjects(result);
 };
 
@@ -60,11 +65,12 @@ const groupProjectsByCity = (projects) => {
   Object.keys(projectsByCity).forEach((cityId) => {
     const cityData = (projectsByCity[cityId] || []).length ?
       projectsByCity[cityId][0].cities[0] : {};
-    const { name, lat, lng } = cityData;
+    const { name, lat, lng, id } = cityData;
 
     if (!lat || !lng) return;
 
     parsedData.push({
+      id,
       name,
       lat,
       lng,

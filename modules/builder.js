@@ -7,25 +7,18 @@ const SELECT_SOLUTION = 'builder/SELECT_SOLUTION';
 const SELECT_BME = 'builder/SELECT_BME';
 const DESELECT_BME = 'builder/DESELECT_BME';
 const COMMENT_BME = 'builder/COMMENT_BME';
-const GET_BME_TREE = 'builder/GET_BME_TREE';
-const GET_SOLUTION_TREE = 'builder/GET_SOLUTION_TREE';
-const GET_ENABLING_TREE = 'builder/GET_ENABLING_TREE';
-const LOADING_BMES = 'builder/LOADING_BMES';
-const LOADING_SOLUTIONS = 'builder/LOADING_SOLUTIONS';
-const LOADING_ENABLINGS = 'builder/LOADING_ENABLINGS';
-const ERROR_BMES = 'builder/ERROR_BMES';
-const ERROR_SOLUTIONS = 'builder/ERROR_SOLUTIONS';
-const ERROR_ENABLINGS = 'builder/ERROR_ENABLINGS';
 const SELECT_ENABLING = 'builder/SELECT_ENABLING';
 const DESELECT_ENABLING = 'builder/DESELECT_ENABLING';
+const SET_FIELD = 'builder/SET_FIELD';
+const RESET = 'builder/RESET';
 
 const initialState = {
-  selectedBMEs: [],
   commentedBMEs: {},
-  solutionCategories: [],
+  selectedBMEs: [],
+  selectedSolution: null,
   selectedEnablings: [],
-  enablingCategories: [],
-  bmeCategories: [],
+  title: "Project title",
+  description: "",
 };
 
 export default function (state = initialState, action) {
@@ -42,132 +35,13 @@ export default function (state = initialState, action) {
       return { ...state, selectedBMEs: state.selectedBMEs.filter(bme => bme != action.bmeId) };
     case COMMENT_BME:
       return { ...state, commentedBMEs: { ...state.commentedBMEs, [action.bmeId]: action.comment } }
-    case GET_BME_TREE:
-      return { ...state, bmeCategories: action.payload };
-    case GET_SOLUTION_TREE:
-      return { ...state, solutionCategories: action.payload };
-    case GET_ENABLING_TREE:
-      return { ...state, enablingCategories: action.payload };
+    case RESET:
+      return { ...initialState };
+    case SET_FIELD:
+      return { ...state, [action.field]: action.value };
     default:
       return state;
   }
-}
-
-export function getBmes() {
-  const includeParams = ['children.children.bmes', 'children.children.bmes.enablings'];
-
-  const queryParams = queryString.stringify({
-    'filter[category-type]': 'Bme',
-    'filter[level]': 1,
-    'include': includeParams.join(','),
-    'page[size]': 1000
-  });
-
-  return (dispatch, getState) => {
-    dispatch({ type: LOADING_BMES, payload: true });
-
-    fetch(`${process.env.API_URL}/categories?${queryParams}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'SC-API-KEY': process.env.SC_API_KEY
-      }
-    })
-    .then((response) => {
-      if (response.ok) {
-        if (getState().project.error) dispatch({ type: ERROR_BMES, payload: false });
-        return response.json();
-      }
-
-      dispatch({ type: ERROR_BMES, payload: true });
-      throw new Error(response.status);
-    })
-    .then((bmes) => {
-      new Deserializer()
-        .deserialize(bmes, (err, parsedBmes) => {
-          dispatch({ type: LOADING_BMES, payload: false });
-          dispatch({ type: GET_BME_TREE, payload: parsedBmes });
-        });
-    });
-  };
-}
-
-export function getSolutions() {
-  const includeParams = ['children.children.bmes'];
-
-  const queryParams = queryString.stringify({
-    'filter[category-type]': 'Solution',
-    'filter[level]': 1,
-    'include': includeParams.join(','),
-    'page[size]': 1000
-  });
-
-  return (dispatch, getState) => {
-    dispatch({ type: LOADING_SOLUTIONS, payload: true });
-
-    fetch(`${process.env.API_URL}/categories?${queryParams}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'SC-API-KEY': process.env.SC_API_KEY
-      }
-    })
-    .then((response) => {
-      if (response.ok) {
-        if (getState().project.error) dispatch({ type: ERROR_SOLUTIONS, payload: false });
-        return response.json();
-      }
-
-      dispatch({ type: ERROR_SOLUTIONS, payload: true });
-      throw new Error(response.status);
-    })
-    .then((bmes) => {
-      new Deserializer()
-        .deserialize(bmes, (err, parsedBmes) => {
-          dispatch({ type: LOADING_SOLUTIONS, payload: false });
-          dispatch({ type: GET_SOLUTION_TREE, payload: parsedBmes });
-        });
-    });
-  };
-}
-
-export function getEnablings() {
-  const includeParams = ['children.enablings'];
-
-  const queryParams = queryString.stringify({
-    'filter[category-type]': 'Enabling',
-    'filter[level]': 1,
-    'include': includeParams.join(','),
-    'page[size]': 1000
-  });
-
-  return (dispatch, getState) => {
-    dispatch({ type: LOADING_ENABLINGS, payload: true });
-
-    fetch(`${process.env.API_URL}/categories?${queryParams}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'SC-API-KEY': process.env.SC_API_KEY
-      }
-    })
-    .then((response) => {
-      if (response.ok) {
-        if (getState().project.error) dispatch({ type: ERROR_ENABLINGS, payload: false });
-        return response.json();
-      }
-
-      dispatch({ type: ERROR_ENABLINGS, payload: true });
-      throw new Error(response.status);
-    })
-    .then((bmes) => {
-      new Deserializer()
-        .deserialize(bmes, (err, parsed) => {
-          dispatch({ type: LOADING_ENABLINGS, payload: false });
-          dispatch({ type: GET_ENABLING_TREE, payload: parsed });
-        });
-    });
-  };
 }
 
 export function selectSolution(solutionId) {
@@ -191,5 +65,13 @@ export function deselectEnabling(enablingId) {
 }
 
 export function commentBME(bmeId, comment) {
-  return (dispatch) => dispatch({ type: COMMENT_BME, bmeId, comment })
+  return (dispatch) => dispatch({ type: COMMENT_BME, bmeId, comment });
+}
+
+export function reset() {
+  return (dispatch) => dispatch({ type: RESET });
+}
+
+export function setField(field, value) {
+  return (dispatch) => dispatch({ type: SET_FIELD, field, value });
 }

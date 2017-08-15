@@ -14,18 +14,21 @@ export default class DownloadFilters extends React.Component {
   }
 
   render() {
-    console.log(this.props.bmes);
     const { bmes, cities, solutions, onChangeDropwdown } = this.props;
     const radio = 'projects';
     return (
       <div className="filters">
+        <span className="c-text -fs-medium -fw-light">Filtered by</span>
+
         <DropdownTreeSelect
+          className="c-text -fs-small -dark input-item"
           placeholderText={radio === 'projects' ? 'Any city' : 'Used in any city'}
           data={cities}
           onChange={(currentNode, selectedNodes) => onChangeDropwdown('cities', selectedNodes)}
         />
 
         <DropdownTreeSelect
+          className="c-text -fs-small -dark input-item"
           placeholderText={radio === 'projects' ?
             'Any business model element or category used' : 'All business model elements'}
           data={bmes}
@@ -33,6 +36,7 @@ export default class DownloadFilters extends React.Component {
         />
 
         <DropdownTreeSelect
+          className="c-text -fs-small -dark input-item"
           placeholderText={radio === 'projects' ?
             'Any solution' : 'Used in any solution'}
           data={solutions}

@@ -67,7 +67,8 @@ export function getSolutionCategories() {
       'filter[level]': level.join(','),
       'fields[categories]': categoriesFields.join(','),
       include: includeFilters.join(','),
-      'page[size]': 999
+      'page[size]': 999,
+      sort: 'name'
     });
 
     fetch(`${process.env.API_URL}/categories?${queryParams}`, {

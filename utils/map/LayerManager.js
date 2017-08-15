@@ -5,11 +5,12 @@ import MarkerLayer from 'components/common/map/MarkerLayer';
 // utils
 import substitution from 'utils/text';
 
+const mapLayers = {};
+
 export default class LayerManager {
 
   constructor(map, options = {}) {
     this._map = map;
-    this._mapLayers = {};
     this._onLayerAddedSuccess = options.onLayerAddedSuccess;
     this._onLayerAddedError = options.onLayerAddedError;
     this._getLayer = options.getLayer;
@@ -46,23 +47,22 @@ export default class LayerManager {
   }
 
   removeLayer(layerId) {
-    if (this._mapLayers[layerId]) {
-      this._map.removeLayer(this._mapLayers[layerId]);
-      delete this._mapLayers[layerId];
+    if (mapLayers[layerId]) {
+      this._map.removeLayer(mapLayers[layerId]);
+      delete mapLayers[layerId];
     }
   }
 
   removeLayers() {
-    Object.keys(this._mapLayers).forEach((id) => {
-      if (this._mapLayers[id]) {
-        this._map.removeLayer(this._mapLayers[id]);
-        delete this._mapLayers[id];
+    Object.keys(mapLayers).forEach((id) => {
+      if (mapLayers[id]) {
+        this.removeLayer(id);
       }
     });
   }
 
   setMarkers(id, data) {
-    this._mapLayers[id] = new MarkerLayer(
+    mapLayers[id] = new MarkerLayer(
       data,
       this._map,
       this._filters,

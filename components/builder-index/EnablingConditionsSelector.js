@@ -9,7 +9,7 @@ class EnablingConditionsSelector extends React.Component {
     super();
 
     this.state = {
-      activeTab: "stakeholder-actor",
+      activeTab: 0,
     };
   }
 
@@ -18,6 +18,8 @@ class EnablingConditionsSelector extends React.Component {
   }
 
   render() {
+    const isActive = (index) => this.state.activeTab === index;
+
     return (
       <div className="c-enabling-conditions-selector">
         <header>
@@ -31,11 +33,11 @@ class EnablingConditionsSelector extends React.Component {
           <div className="c-tabs">
             <div className="row">
                 <ul className="tab-list">
-                  {this.props.nodes.map(node => (
+                  {this.props.nodes.map((node, i) => (
                     <li
                       key={node.slug}
-                      className={classnames("tab-item", { "-current": this.state.activeTab == node.slug})}
-                      onClick={() => this.selectTab(node.slug)}
+                      className={classnames("tab-item", { "-current": isActive(i)})}
+                      onClick={() => this.selectTab(i)}
                     >
                       <span className="literal">{node.name}</span>
                     </li>
@@ -45,17 +47,25 @@ class EnablingConditionsSelector extends React.Component {
           </div>
         </header>
 
-        {this.props.nodes.filter(node => node.slug == this.state.activeTab).map(node => (
-          <section>
+        {this.props.nodes.length == 0 && <section>
+          <h2 className="c-title -fw-light -fs-bigger">No enabling conditions available</h2>
+        </section>}
+
+        {this.props.nodes.filter((node, i) => isActive(i)).map(node => (
+          <section key={node.id}>
             {node.children.map(subnode => (
-              <div>
+              <div key={subnode.id}>
                 <h2 className="c-title -fw-light -fs-bigger">
                   {subnode.name}
                 </h2>
 
                 <ul>
-                  {subnode.enablings.map(enabling => (
-                    <li key={enabling.id}>
+                  {subnode.children.map(enabling => (
+                    <li
+                      key={enabling.id}
+                      onMouseEnter={() => this.props.onEnablingHover(enabling)}
+                      onMouseLeave={() => this.props.onEnablingHover({})}
+                    >
                       <EnablingCheckbox
                         checked={this.props.selectedEnablings.includes(enabling.id)}
                         enabling={enabling}

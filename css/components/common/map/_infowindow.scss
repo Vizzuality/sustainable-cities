@@ -23,6 +23,19 @@
 
   > .infowindow-content {
 
+    .c-title {
+      &.-light {
+        > a  {
+          color: $color-text-6;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+    }
+
     .resume-items {
       margin: 10px 0 0;
       display: inline-block;

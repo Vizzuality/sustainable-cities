@@ -4,9 +4,12 @@ import { Link } from 'routes';
 import Page from 'pages/Page';
 
 import Layout from 'components/layout/layout';
-import SolutionOverview from 'components/explore-detail/SolutionOverview';
+import ProjectOverview from 'components/builder-index/ProjectOverview';
 import ProjectDetail from 'components/builder-index/ProjectDetail';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
+import ShareModal from 'components/common/ShareModal';
+import ConnectedBmeDetail from 'components/builder-index/ConnectedBmeDetail';
+import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
 import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
@@ -17,19 +20,20 @@ import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 import { Router } from 'routes'
 
-import { getBmes, getEnablings, getSolutions } from 'modules/builder';
-import { DisclaimerModal, DISCLAIMER_COMPONENTS } from 'components/common/disclaimer/DisclaimerModal';
+import { getBmes, getEnablings, getSolutions } from 'modules/builder-api';
+import { setField, commentBME } from 'modules/builder';
 
 
-const transform = (nodes, selectedBMEs, commentedBMEs) => nodes.map(node => {
+const transform = (nodes, selectedBMEs, commentedBMEs, selectedEnablings) => nodes.map(node => {
   const bmes = (node.bmes || []).filter(bme => selectedBMEs.includes(bme.id)).map(bme => ({
     ...bme,
     comment: commentedBMEs[bme.id],
+    selectedEnablings: bme.enablings.filter(enabling => enabling && selectedEnablings.includes(enabling.id)),
   }));
 
   return {
     ...node,
-    children: bmes.length > 0 ? bmes : transform(node.children || [], selectedBMEs, commentedBMEs),
+    children: bmes.length > 0 ? bmes : transform(node.children || [], selectedBMEs, commentedBMEs, selectedEnablings),
   };
 }).filter(node => node.level == "1" || node.children.length > 0);
 
@@ -39,8 +43,8 @@ class Project extends Page {
     super();
 
     this.state = {
-      disclaimer: null,
-      activeTab: 'details',
+      modal: null,
+      activeTab: 'overview',
     };
   }
 
@@ -53,26 +57,50 @@ class Project extends Page {
     Router.pushRoute('builder');
   }
 
+  showShareModal = () => this.setState({ modal: 'share' });
+
+  hideModal = () => this.setState({ modal: null });
+
+  download = () => Router.pushRoute('builder-project-print');
+
+  onFieldChange = (name, value) => this.props.setField(name, value);
+
+  changeBMEcomment = (bme, text) => this.props.commentBME(bme.id, text);
+
+  showBMEModal = (bme, tab) => this.setState({ modal: 'bme', modalArgs: { bme, tab } });
+
   render() {
     if (!this.props.categories) {
       return null;
     }
 
-    const bmeTree = transform(this.props.categories, this.props.selectedBMEs, this.props.commentedBMEs);
+    const bmeTree = transform(
+      this.props.categories,
+      this.props.selectedBMEs,
+      this.props.commentedBMEs,
+      this.props.selectedEnablings,
+    );
 
-    const defaultTabItems = [{
-      slug: 'details',
-      label: 'Project Details',
-    }, {
-      slug: 'overview',
-      label: 'Overview',
-    }];
+    const defaultTabItems = [
+      {
+        slug: 'overview',
+        label: 'Overview',
+      },
+      {
+        slug: 'details',
+        label: 'Project Details',
+      },
+    ];
 
-    const tabItems = [...defaultTabItems, ...bmeTree.map((category) => ({
-      slug: category.slug,
-      label: category.name,
-      className: 'info',
-    }))];
+    const tabItems = [
+      defaultTabItems[0],
+      ...bmeTree.map((category) => ({
+        slug: category.slug,
+        label: category.name,
+        className: 'info',
+      })),
+      defaultTabItems[1],
+    ];
 
 
     return (
@@ -84,11 +112,11 @@ class Project extends Page {
         <Cover
           position="bottom"
           size='shorter'
-          title='Project title'
+          title={this.props.title || "Project title"}
           image='/static/images/download-data-module.jpg'
           breadcrumbs={<Breadcrumbs items={[{ name: '< Back to builder', route: 'builder', params: {} }]} />}
         >
-          <Button secondary inverse>Share/Export</Button>
+          <Button secondary inverse onClick={this.showShareModal}>Share/Export</Button>
           <Button inverse>Save project</Button>
         </Cover>
 
@@ -111,7 +139,7 @@ class Project extends Page {
         </div>
 
         {this.state.activeTab == 'overview' &&
-          <SolutionOverview
+          <ProjectOverview
             project={{ id: 2, bmeTree }}
           />}
 
@@ -119,15 +147,34 @@ class Project extends Page {
           <ProjectDetail
             project={{ id: 2, bmeTree, impacts: [], externalSources: [], projectBmes: [] }}
             categories={[]}
+            fields={{ title: this.props.title, description: this.props.description }}
+            onFieldChange={this.onFieldChange}
           />}
 
         {(this.state.activeTab != 'overview' && this.state.activeTab != 'details') &&
           <ProjectCategory
             category={bmeTree.find(cat => cat.slug == this.state.activeTab)}
+            onCommentChange={this.changeBMEcomment}
+            onBMEDisplay={this.showBMEModal}
+          />
+        }
+
+        {
+          this.state.modal == 'share' &&
+            <ShareModal onClose={this.hideModal} onDownload={this.download} />
+        }
+
+        {
+          this.state.modal == 'bme' &&
+            <ConnectedBmeDetail
+              bmeId={this.state.modalArgs.bme.id}
+              initialTab={this.state.modalArgs.tab}
+              onClose={() => this.hideModal()}
           />
         }
 
         <DisclaimerModal
+          categories={bmeTree}
           disclaimer={this.state.disclaimer}
           onClose={() => this.setState({ disclaimer: null })}
         />
@@ -139,20 +186,25 @@ class Project extends Page {
 export default withRedux(
   store,
   state => {
-    const solutions = flattenSolutionTree(state.builder.solutionCategories) || [];
+    const solutions = flattenSolutionTree(state.builderAPI.solutionCategories) || [];
     const selectedSolution = solutions.find(solution => solution.id == state.builder.selectedSolution);
-    const selectedBMEs = selectedSolution ? intersection(state.builder.selectedBMEs, selectedSolution.bmes.map(bme => bme.id)) : state.builder.selectedBMEs;
+    const selectedBMEs = selectedSolution ? intersection(state.builder.selectedBMEs, selectedSolution.bmes.filter(bme => bme).map(bme => bme.id)) : state.builder.selectedBMEs;
 
     return ({
-      categories: state.builder.bmeCategories,
-      enablings: state.builder.enablingCategories || [],
+      categories: state.builderAPI.bmeCategories,
+      enablings: state.builderAPI.enablingCategories || [],
       commentedBMEs: state.builder.commentedBMEs,
       selectedBMEs,
+      selectedEnablings: state.builder.selectedEnablings,
+      title: state.builder.title,
+      description: state.builder.description,
     });
   },
   dispatch => ({
+    commentBME(bmeId, comment) { dispatch(commentBME(bmeId, comment)); },
     getCategoryTree() { dispatch(getBmes()); },
     getEnablingTree() { dispatch(getEnablings()); },
     getSolutions() { dispatch(getSolutions()); },
+    setField(field, value) { dispatch(setField(field, value)); },
   })
 )(Project);

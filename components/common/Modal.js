@@ -21,7 +21,7 @@ export default class Modal extends React.Component {
     return (
       <section ref={(node) => { this.el = node; }} className={`c-modal ${open ? '' : '-hidden'}`}>
         <div className="modal-container">
-          <button className="dismiss" onClick={() => toggleModal(false)}>x</button>
+          <div className="dismiss" onClick={() => toggleModal(false)}>×</div>
           <div className="content">
             <Spinner isLoading={loading} />
             {children}

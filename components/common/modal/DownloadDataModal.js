@@ -14,7 +14,6 @@ export default class DownloadDataModal extends React.Component {
     };
   }
 
-
   onSelectRadio(value) {
     this.setState({
       radio: value
@@ -112,11 +111,11 @@ export default class DownloadDataModal extends React.Component {
           onChangeDropwdown={(name, values) => this.onChangeDropwdown(name, values)}
         />
 
-        {this._getResume()}
+        <p className="c-text -fs-small -fw-light">{this._getResume()}</p>
 
         <div className="buttons">
           <Button secondary onClick={onClose}>Cancel</Button>
-          <a href={this._getDownloadLink()} download="a">Download</a>
+          <a className="c-button -primary" href={this._getDownloadLink()} download="a">Download</a>
         </div>
       </div>
     );

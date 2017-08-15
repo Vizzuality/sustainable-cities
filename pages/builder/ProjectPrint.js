@@ -84,7 +84,14 @@ class ProjectPrint extends Page {
           project={{ id: 2, bmeTree }}
         />
 
-        {bmeTree.filter(category => category.children.length > 0).map(category => <ProjectCategory key={category.id} category={category} readonly={true} />)}
+        {bmeTree.filter(category => category.children.length > 0).map(category => (
+          <ProjectCategory
+            key={category.id}
+            category={category}
+            readonly={true}
+            bmeDescription={bme => bme.comment}
+          />
+        ))}
       </div>
     );
   }

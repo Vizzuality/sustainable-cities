@@ -7,6 +7,13 @@ import { CATEGORY_ICONS } from 'constants/category';
 const getImage = (project) => project.photos && project.photos[0] ?
   `${process.env.API_URL}${project.photos[0].attachment.medium.url}` : null;
 
+
+const sortByName = (a, b) => {
+  if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+  if (b.name.toLowerCase() > a.name.toLowerCase()) return -1;
+  return 0;
+};
+
 // parses projects in order to populate GridList component
 const listProjects = projects => projects.map(project => ({
   id: uuidv1(),
@@ -18,6 +25,7 @@ const listProjects = projects => projects.map(project => ({
 
 const joiningProjects = (solution) => {
   const result = solution.projects || [];
+
   if (solution.children && solution.children.length) {
     for (let index = 0, len = solution.children.length; index < len; index++) {
       if (solution.children[index].projects && solution.children[index].projects.length) {
@@ -28,6 +36,7 @@ const joiningProjects = (solution) => {
       }
     }
   }
+  (result || []).sort(sortByName);
   return listProjects(result);
 };
 

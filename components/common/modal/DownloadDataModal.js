@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DropdownTreeSelect from 'react-dropdown-tree-select';
 import Button from 'components/common/Button';
-
-import isEqual from 'lodash/isEqual';
+import DownloadFilters from 'components/common/modal/filtersDownload';
 
 export default class DownloadDataModal extends React.Component {
 
@@ -14,15 +12,8 @@ export default class DownloadDataModal extends React.Component {
       radio: 'projects',
       dropdowns: {}
     };
-
-    this.bmes = props.bmes;
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!isEqual(this.props.bmes, nextProps.bmes)) {
-      this.bmes = nextProps.bmes;
-    }
-  }
 
   onSelectRadio(value) {
     this.setState({
@@ -31,48 +22,6 @@ export default class DownloadDataModal extends React.Component {
   }
 
   onChangeDropwdown(name, values) {
-    if (name === 'bmes') {
-      console.log(values);
-      const checkedBmes = values.map(v => ({ id: v.id, children: v._children, checked: v.checked }));
-
-      const recursive = (bme) => {
-        const checkedBme = checkedBmes.find(cb => cb.id === bme.id);
-
-        bme.checked = checkedBme ? checkedBme.checked : false;
-
-        // if (checkedBme) {
-        //   bme.checked = checkedBme.checked || false;
-        //   return;
-        // }
-
-        if (checkedBme) return;
-
-        (bme.children || []).forEach((b) => {
-          recursive(b);
-        });
-
-        // if (checkedBme && (checkedBme.children || []).length) {
-        //   (bme.children || []).forEach((b) => {
-        //     b.checked = true;
-        //     recursive(b);
-        //   });
-        // } else {
-        //   (bme.children || []).forEach((b) => {
-        //     // b.checked = checkedBmes.includes(b.id);
-        //     recursive(b);
-        //   });
-        // }
-      };
-
-      this.bmes.forEach((bmeOption) => {
-        recursive(bmeOption);
-      });
-
-      console.log(values)
-      console.log(this.bmes);
-    }
-
-
     this.setState({
       dropdowns:
       { ...this.state.dropdowns,
@@ -124,30 +73,8 @@ export default class DownloadDataModal extends React.Component {
   }
 
   render() {
-    const { cities, onClose, solutions } = this.props;
-    const { radio, dropdowns } = this.state;
-    const checkedCities = (dropdowns.cities || []).map(city => city.id);
-    // const checkedBmes = (dropdowns.bmes || []).map(bme => bme.id);
-    const checkedSolution = (dropdowns.solutions || []).map(solution => solution.id);
-    // const recursive = (bme) => {
-    //   bme.checked = checkedBmes.includes(bme.id);
-    //   (bme.children || []).forEach((b) => {
-    //     b.checked = checkedBmes.includes(b.id);
-    //     recursive(b);
-    //   });
-    // };
-
-    cities.forEach((cityOption) => {
-      cityOption.checked = checkedCities.includes(cityOption.id);
-    });
-
-    // bmes.forEach((bmeOption) => {
-    //   recursive(bmeOption);
-    // });
-
-    solutions.forEach((solutionOption) => {
-      solutionOption.checked = checkedSolution.includes(solutionOption.id);
-    });
+    const { bmes, cities, onClose, solutions } = this.props;
+    const { radio } = this.state;
 
     return (
       <div className="c-download-data-modal">
@@ -178,27 +105,12 @@ export default class DownloadDataModal extends React.Component {
 
         <span>Filtered by</span>
 
-        <div className="filters">
-          <DropdownTreeSelect
-            placeholderText={radio === 'projects' ? 'Any city' : 'Used in any city'}
-            data={cities}
-            onChange={(currentNode, selectedNodes) => this.onChangeDropwdown('cities', selectedNodes)}
-          />
-
-          <DropdownTreeSelect
-            placeholderText={radio === 'projects' ?
-              'Any business model element or category used' : 'All business model elements'}
-            data={this.bmes}
-            onChange={(currentNode, selectedNodes) => this.onChangeDropwdown('bmes', selectedNodes)}
-          />
-
-          <DropdownTreeSelect
-            placeholderText={radio === 'projects' ?
-              'Any solution' : 'Used in any solution'}
-            data={solutions}
-            onChange={(currentNode, selectedNodes) => this.onChangeDropwdown('solutions', selectedNodes)}
-          />
-        </div>
+        <DownloadFilters
+          bmes={bmes}
+          solutions={solutions}
+          cities={cities}
+          onChangeDropwdown={(name, values) => this.onChangeDropwdown(name, values)}
+        />
 
         {this._getResume()}
 

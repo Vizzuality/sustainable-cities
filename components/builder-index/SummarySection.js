@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
 
-export default function SummarySection({ category, parent, onCommentChange }) {
+export default function SummarySection({ category, parent, onCommentChange, readonly }) {
   const titleColor = CATEGORY_FIRST_LEVEL_COLORS[parent.slug] ||
     CATEGORY_FIRST_LEVEL_COLORS.default;
 
@@ -29,10 +29,13 @@ export default function SummarySection({ category, parent, onCommentChange }) {
             </div>
             <div className="row description">
               <div className="column large-12 c-text -lh-medium">
+                { readonly ?
+                    <div className="u-mt-1">{grandchild.comment}</div> :
                 <textarea
                   placeholder="Write here..."
                   onChange={(e) => onCommentChange(grandchild, e.target.value)}
                 >{grandchild.comment}</textarea>
+                }
               </div>
             </div>
           </div>

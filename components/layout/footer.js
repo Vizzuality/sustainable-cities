@@ -19,7 +19,7 @@ export default () => (
               <a href="http://www.citigroup.com/citi/foundation/" target="_blank" rel="noopener noreferrer" className="logo -footer citi-foundation" />
             </div>
 
-            <div className="columns small-12 medium-4">
+            <div className="columns small-12 medium-6">
               <ul className="footer-nav">
                 <li>
                   <Link prefetch route="about"><a className="c-text -dark -uppercase -fs-default">about</a></Link>
@@ -35,7 +35,7 @@ export default () => (
                 </li>
               </ul>
             </div>
-            
+
             <div className="columns small-12 medium-8">
               <p className="c-text -dark -fs-big -fw-light -tagline">&ldquo;An initiative to help cities develop business models to accelerate sustainable urban solutions&rdquo;</p>
             </div>

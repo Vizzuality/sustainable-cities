@@ -9,6 +9,14 @@ class ShareModal extends React.Component {
     publicProject: false,
   }
 
+  state = {
+    showEditableURL: false,
+  };
+
+  onEditableClick = (showEditableURL) => {
+    this.setState({ showEditableURL });
+  }
+
   onCopyClick = () => {
     copy(this.props.url);
   }
@@ -30,12 +38,16 @@ class ShareModal extends React.Component {
                   <input
                     className="u-block u-w-100 input-text u-mb-1"
                     type="text"
-                    value={this.props.url}
+                    value={this.state.showEditableURL ? this.props.urlEditable : this.props.url}
+                    readOnly={true}
                   />
 
                   { !this.props.publicProject &&
                       <label className="u-block u-mb-1">
-                        <input type="checkbox" />
+                        <input
+                          type="checkbox"
+                          onChange={(e) => this.onEditableClick(e.target.checked)}
+                        />
                         Share editable project (allow changes)
                       </label>
                   }
@@ -76,4 +88,3 @@ class ShareModal extends React.Component {
 }
 
 export default ShareModal;
-

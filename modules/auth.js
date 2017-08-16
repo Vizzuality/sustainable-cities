@@ -2,6 +2,7 @@ import { Deserializer } from 'jsonapi-serializer';
 import fetch from 'isomorphic-fetch';
 import * as queryString from 'query-string';
 import jwtDecode from 'jwt-decode';
+import { apiRequest } from 'modules/helpers';
 
 const LOGIN = 'auth/LOGIN';
 const LOGIN_LOADING = 'auth/LOGIN_LOADING';
@@ -38,15 +39,6 @@ export default function (state = initialState, action) {
       return state;
   }
 };
-
-const apiRequest = (url, options) => fetch(`${process.env.API_URL}/${url}`, {
-  ...options,
-  headers: {
-    'Content-Type': 'application/json',
-    'SC-API-KEY': process.env.SC_API_KEY,
-    ...(options.headers || {}),
-  }
-})
 
 export function login(email, password) {
   return (dispatch, getState) => {

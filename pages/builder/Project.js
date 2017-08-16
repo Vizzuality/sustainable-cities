@@ -1,8 +1,9 @@
-import intersection from 'lodash/intersection';
 import classnames from 'classnames';
 import { Link } from 'routes';
-import Page from 'pages/Page';
+import { connect } from 'react-redux';
+import withRedux from 'next-redux-wrapper';
 
+import BuilderPage from 'pages/builder/BuilderPage';
 import Layout from 'components/layout/layout';
 import ProjectOverview from 'components/builder-index/ProjectOverview';
 import ProjectDetail from 'components/builder-index/ProjectDetail';
@@ -14,54 +15,25 @@ import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 
-import { leaves, flattenSolutionTree } from 'utils/builder';
+import builderSelector from 'selectors/builder';
 
-import withRedux from 'next-redux-wrapper';
-import { store } from 'store';
 import { Router } from 'routes'
 
-import { getBmes, getEnablings, getSolutions } from 'modules/builder-api';
-import { setField, commentBME } from 'modules/builder';
+import { setField, commentBME, update } from 'modules/builder';
+import { withSlice } from 'utils/builder';
 
 
-const transform = (nodes, selectedBMEs, commentedBMEs, selectedEnablings) => nodes.map(node => {
-  const bmes = (node.bmes || []).filter(bme => selectedBMEs.includes(bme.id)).map(bme => ({
-    ...bme,
-    comment: commentedBMEs[bme.id],
-    selectedEnablings: bme.enablings.filter(enabling => enabling && selectedEnablings.includes(enabling.id)),
-  }));
-
-  return {
-    ...node,
-    children: bmes.length > 0 ? bmes : transform(node.children || [], selectedBMEs, commentedBMEs, selectedEnablings),
+class Project extends React.Component {
+  state = {
+    modal: null,
+    activeTab: 'overview',
   };
-}).filter(node => node.level == "1" || node.children.length > 0);
-
-
-class Project extends Page {
-  constructor() {
-    super();
-
-    this.state = {
-      modal: null,
-      activeTab: 'overview',
-    };
-  }
-
-  componentWillMount() {
-    this.props.getCategoryTree();
-    this.props.getEnablingTree();
-  }
-
-  back() {
-    Router.pushRoute('builder');
-  }
 
   showShareModal = () => this.setState({ modal: 'share' });
 
   hideModal = () => this.setState({ modal: null });
 
-  download = () => Router.pushRoute('builder-project-print');
+  download = () => Router.pushRoute('builder-project-print', this.props.bmRouteParams);
 
   onFieldChange = (name, value) => this.props.setField(name, value);
 
@@ -69,18 +41,24 @@ class Project extends Page {
 
   showBMEModal = (bme, tab) => this.setState({ modal: 'bme', modalArgs: { bme, tab } });
 
+  saveProject = () => this.props.update(
+    this.props.project.writableId,
+    {
+      title: this.props.project.title,
+      description: this.props.project.description,
+      solution_id: this.props.project.selectedSolution,
+      enabling_ids: this.props.project.selectedEnablings,
+      business_model_bmes_attributes: this.props.project.selectedBMEs.map(bmeId => ({
+        bme_id: bmeId,
+        comment_attributes: {
+          body: this.props.project.commentedBMEs[bmeId]
+        }
+      })),
+    },
+    this.props.auth.token,
+  );
+
   render() {
-    if (!this.props.categories) {
-      return null;
-    }
-
-    const bmeTree = transform(
-      this.props.categories,
-      this.props.selectedBMEs,
-      this.props.commentedBMEs,
-      this.props.selectedEnablings,
-    );
-
     const defaultTabItems = [
       {
         slug: 'overview',
@@ -94,7 +72,7 @@ class Project extends Page {
 
     const tabItems = [
       defaultTabItems[0],
-      ...bmeTree.map((category) => ({
+      ...this.props.filteredBmeTree.map((category) => ({
         slug: category.slug,
         label: category.name,
         className: 'info',
@@ -111,12 +89,16 @@ class Project extends Page {
         <Cover
           position="bottom"
           size='shorter'
-          title={this.props.title || "Project title"}
+          title={this.props.project.title || "Project title"}
           image='/static/images/download-data-module.jpg'
-          breadcrumbs={<Breadcrumbs items={[{ name: '< Back to builder', route: 'builder', params: {} }]} />}
+          breadcrumbs={<Breadcrumbs items={[{
+            name: '< Back to builder',
+            route: 'builder',
+            params: this.props.bmRouteParams,
+          }]} />}
         >
           <Button secondary inverse onClick={this.showShareModal}>Share/Export</Button>
-          <Button inverse>Save project</Button>
+          {!this.props.project.readonly && <Button inverse onClick={this.saveProject}>Save project</Button>}
         </Cover>
 
         <div className="c-tabs -explore">
@@ -139,34 +121,43 @@ class Project extends Page {
 
         {this.state.activeTab == 'overview' &&
           <ProjectOverview
-            project={{ id: 2, bmeTree }}
+            project={{ id: 2, bmeTree: this.props.filteredBmeTree }}
           />}
 
         {this.state.activeTab == 'details' &&
           <ProjectDetail
-            project={{ id: 2, bmeTree, impacts: [], externalSources: [], projectBmes: [] }}
+            project={{ id: 2, bmeTree: this.props.filteredBmeTree, impacts: [], externalSources: [], projectBmes: [] }}
             categories={[]}
-            fields={{ title: this.props.title, description: this.props.description }}
+            fields={this.props.project}
             onFieldChange={this.onFieldChange}
+            readonly={this.props.project.readonly}
           />}
 
         {(this.state.activeTab != 'overview' && this.state.activeTab != 'details') &&
           <ProjectCategory
-            category={bmeTree.find(cat => cat.slug == this.state.activeTab)}
+            category={this.props.filteredBmeTree.find(cat => cat.slug == this.state.activeTab)}
             onCommentChange={this.changeBMEcomment}
             onBMEDisplay={this.showBMEModal}
             bmeDescription={bme => bme.comment}
+            readonly={this.props.project.readonly}
           />
         }
 
         {
           this.state.modal == 'share' &&
-            <ShareModal onClose={this.hideModal} onDownload={this.download} />
+            <ShareModal
+              onClose={this.hideModal}
+              onDownload={this.download}
+              url={document.location.origin + "/builder/" + this.props.project.readableId}
+              urlEditable={document.location.origin + "/builder/" + this.props.project.writableId}
+            />
         }
 
         {
           this.state.modal == 'bme' &&
             <ConnectedBmeDetail
+              businessModelId={this.props.businessModelId}
+              slice={this.props.slice}
               bmeId={this.state.modalArgs.bme.id}
               initialTab={this.state.modalArgs.tab}
               onClose={() => this.hideModal()}
@@ -174,7 +165,7 @@ class Project extends Page {
         }
 
         <DisclaimerModal
-          categories={bmeTree}
+          categories={this.props.filteredBmeTree}
           disclaimer={this.state.disclaimer}
           onClose={() => this.setState({ disclaimer: null })}
         />
@@ -183,28 +174,13 @@ class Project extends Page {
   }
 }
 
-export default withRedux(
-  store,
-  state => {
-    const solutions = flattenSolutionTree(state.builderAPI.solutionCategories) || [];
-    const selectedSolution = solutions.find(solution => solution.id == state.builder.selectedSolution);
-    const selectedBMEs = selectedSolution ? intersection(state.builder.selectedBMEs, selectedSolution.bmes.filter(bme => bme).map(bme => bme.id)) : state.builder.selectedBMEs;
-
-    return ({
-      categories: state.builderAPI.bmeCategories,
-      enablings: state.builderAPI.enablingCategories || [],
-      commentedBMEs: state.builder.commentedBMEs,
-      selectedBMEs,
-      selectedEnablings: state.builder.selectedEnablings,
-      title: state.builder.title,
-      description: state.builder.description,
-    });
-  },
-  dispatch => ({
-    commentBME(bmeId, comment) { dispatch(commentBME(bmeId, comment)); },
-    getCategoryTree() { dispatch(getBmes()); },
-    getEnablingTree() { dispatch(getEnablings()); },
-    getSolutions() { dispatch(getSolutions()); },
-    setField(field, value) { dispatch(setField(field, value)); },
-  })
-)(Project);
+export default BuilderPage(
+  connect(
+    builderSelector,
+    withSlice({
+      commentBME,
+      setField,
+      update,
+    }),
+  )(Project)
+);

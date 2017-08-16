@@ -2,6 +2,8 @@ import { Deserializer } from 'jsonapi-serializer';
 import fetch from 'isomorphic-fetch';
 import * as queryString from 'query-string';
 
+import { apiRequest } from 'modules/helpers';
+
 
 const GET_BME_TREE = 'builder/GET_BME_TREE';
 const GET_SOLUTION_TREE = 'builder/GET_SOLUTION_TREE';
@@ -20,7 +22,6 @@ const initialState = {
   enablingCategories: [],
   bmeCategories: [],
 };
-
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -67,7 +68,6 @@ export function getBmes() {
     .then((bmes) => {
       new Deserializer()
         .deserialize(bmes, (err, parsedBmes) => {
-          dispatch({ type: LOADING_BMES, payload: false });
           dispatch({ type: GET_BME_TREE, payload: parsedBmes });
         });
     });
@@ -106,7 +106,6 @@ export function getSolutions() {
     .then((bmes) => {
       new Deserializer()
         .deserialize(bmes, (err, parsedBmes) => {
-          dispatch({ type: LOADING_SOLUTIONS, payload: false });
           dispatch({ type: GET_SOLUTION_TREE, payload: parsedBmes });
         });
     });
@@ -145,7 +144,6 @@ export function getEnablings() {
     .then((bmes) => {
       new Deserializer()
         .deserialize(bmes, (err, parsed) => {
-          dispatch({ type: LOADING_ENABLINGS, payload: false });
           dispatch({ type: GET_ENABLING_TREE, payload: parsed });
         });
     });

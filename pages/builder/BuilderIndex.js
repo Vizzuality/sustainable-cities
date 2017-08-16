@@ -1,10 +1,13 @@
 import classnames from 'classnames';
-import flatMap from 'lodash/flatMap';
-import uniq from 'lodash/uniq';
-import intersection from 'lodash/intersection';
+import { connect } from 'react-redux';
+import React from 'react';
 import storage from 'local-storage-fallback';
+import withRedux from 'next-redux-wrapper';
 
-import Page from 'pages/Page';
+import BuilderPage from 'pages/builder/BuilderPage';
+import { Router } from 'routes';
+import { store } from 'store';
+
 import Layout from 'components/layout/layout';
 import Sidebar from 'components/builder-index/Sidebar';
 import SolutionPicker from 'components/builder-index/SolutionPicker';
@@ -14,80 +17,24 @@ import BmeDetail from 'components/builder-index/BmeDetail';
 import ConnectedBmeDetail from 'components/builder-index/ConnectedBmeDetail';
 import HelpModal from 'components/builder-index/HelpModal';
 
-import { leaves, flattenSolutionTree, flattenEnablingTree, recursiveFilter } from 'utils/builder';
-
-import withRedux from 'next-redux-wrapper';
-import { store } from 'store';
+import builderSelector from 'selectors/builder';
+import { leaves, withSlice } from 'utils/builder';
 
 import {
-  commentBME,
-  deselectBME,
   deselectEnabling,
-  selectBME,
   selectEnabling,
   selectSolution,
   reset,
+  create,
 } from 'modules/builder';
 
-import { getBmes, getSolutions, getEnablings } from 'modules/builder-api';
 
-const withModifiers = (nodes, selectedEnablings) => nodes.map(node => ({
-  ...node,
-  children: node.children ? withModifiers(node.children, selectedEnablings) : null,
-  modifiers: node.children ?
-    uniq(flatMap(node.children.map(n => n.modifiers))) :
-    node.enablings.filter(enabling => enabling && selectedEnablings.includes(enabling.id)).map(enabling => enabling['assessment-value']),
-}));
-
-const transformBMEtree = (nodes, selectedSolution, selectedEnablings) => {
-  const inSolution = (bme) => !selectedSolution || selectedSolution.bmes.filter(bme => bme).map(bme => bme.id).includes(bme.id);
-
-  return withModifiers(recursiveFilter(nodes, inSolution), selectedEnablings);
-};
-
-const filterEnablings = (enablings, bmeTree) => {
-  const availableEnablings = uniq(flatMap(leaves(bmeTree), bme => bme.enablings)).filter(enabling => enabling).map(enabling => enabling.id);
-  const isAvailable = (enabling) => enabling && availableEnablings.includes(enabling.id);
-
-  return recursiveFilter(enablings, isAvailable);
-};
-
-class BuilderIndex extends Page {
-  constructor() {
-    super();
-
-    this.state = {
-      sidebar: "default",
-      showHelp: process.browser && !storage.getItem('builder.help-dismissed'),
-      hoveredEnabling: null,
-    };
-  }
-
-  componentWillMount() {
-    this.props.getBMEs();
-    this.props.getSolutions();
-    this.props.getEnablingTree();
-  }
-
-  showBME(bme) {
-    this.setState({ bme });
-  }
-
-  hideBME() {
-    this.setState({ bme: undefined });
-  }
-
-  selectBME(bme) {
-    this.props.selectBME(bme.id);
-  }
-
-  deselectBME(bme) {
-    this.props.deselectBME(bme.id);
-  }
-
-  changeBMEcomment(bme, text) {
-    this.props.commentBME(bme.id, text);
-  }
+class BuilderIndex extends React.Component {
+  state = {
+    sidebar: "default",
+    showHelp: process.browser && !storage.getItem('builder.help-dismissed'),
+    hoveredEnabling: null,
+  };
 
   selectSolution(solution) {
     this.props.selectSolution(solution.id);
@@ -102,45 +49,41 @@ class BuilderIndex extends Page {
   }
 
   selectNext(bme) {
-    const bmes = leaves(this.props.categories);
+    const bmes = leaves(this.props.bmeTree);
 
     this.showBME((bmes.concat(bmes))[bmes.findIndex(b => b.id == bme.id) + 1]);
   }
 
   selectPrevious(bme) {
-    const bmes = leaves(this.props.categories);
+    const bmes = leaves(this.props.bmeTree);
 
     this.showBME((bmes.concat(bmes))[bmes.findIndex(b => b.id == bme.id) + bmes.length - 1]);
   }
 
-  showHelp() {
-    this.setState({ showHelp: true });
-  }
+  showBME = (bme) => this.setState({ bme });
 
-  hideHelp() {
+  hideBME = () => this.setState({ bme: undefined });
+
+  showHelp = () => this.setState({ showHelp: true });
+
+  hideHelp = () => {
     this.setState({ showHelp: false });
 
     storage.setItem('builder.help-dismissed', true);
   }
 
-  showSolutionPicker() {
-    this.setState({ sidebar: "solutions" });
-  }
+  showSolutionPicker = () => this.setState({ sidebar: "solutions" });
 
-  showEnablingsSelector() {
-    this.setState({ sidebar: "enablings" });
-  }
+  showEnablingsSelector = () => this.setState({ sidebar: "enablings" });
 
-  showSidebar() {
-    this.setState({ sidebar: "default" });
-  }
+  showResults = () => Router.pushRoute('builder-project', this.props.bmRouteParams);
 
-  resetProject() {
-    this.props.reset();
-  }
+  showSidebar = () => this.setState({ sidebar: "default" });
 
-  showEnablingBMEs(enabling) {
-    this.setState({ hoveredEnabling: enabling.id });
+  showEnablingBMEs = (enabling) => this.setState({ hoveredEnabling: enabling.id });
+
+  save = () => {
+    this.props.create(this.props.project, this.props.auth.token);
   }
 
   render() {
@@ -151,32 +94,35 @@ class BuilderIndex extends Page {
         className="builder-index"
       >
         <Sidebar
-          onHelpClick={() => this.showHelp()}
-          onSolutionsClick={() => this.showSolutionPicker()}
-          onEnablingsClick={() => this.showEnablingsSelector()}
-          onResetClick={() => this.resetProject()}
+          readonly={this.props.project.readonly}
+          onHelpClick={this.showHelp}
+          onSolutionsClick={this.showSolutionPicker}
+          onEnablingsClick={this.showEnablingsSelector}
+          onShowResultsClick={this.showResults}
+          onSaveClick={this.save}
+          onResetClick={this.props.reset}
           selectedSolution={this.props.selectedSolution}
           selectedEnablings={this.props.selectedEnablings}
         />
 
         { this.state.sidebar == "solutions" &&
-        <SolutionPicker
-          onSolutionSelected={(s) => this.selectSolution(s)}
-          onClose={() => this.showSidebar()}
-          solutions={this.props.solutions}
-          selectedSolution={this.props.selectedSolution}
-        />
+            <SolutionPicker
+              onSolutionSelected={(s) => this.selectSolution(s)}
+              onClose={this.showSidebar}
+              solutions={this.props.solutions}
+              selectedSolution={this.props.selectedSolution}
+            />
         }
 
         { this.state.sidebar == "enablings" &&
-        <EnablingConditionsSelector
-          nodes={this.props.enablings}
-          selectedEnablings={this.props.selectedEnablings}
-          onClose={() => this.showSidebar()}
-          onEnablingSelect={(enabling) => this.selectEnabling(enabling)}
-          onEnablingDeselect={(enabling) => this.deselectEnabling(enabling)}
-          onEnablingHover={(enabling) => this.showEnablingBMEs(enabling)}
-        />
+            <EnablingConditionsSelector
+              nodes={this.props.enablings}
+              selectedEnablings={this.props.selectedEnablings}
+              onClose={this.showSidebar}
+              onEnablingSelect={(enabling) => this.selectEnabling(enabling)}
+              onEnablingDeselect={(enabling) => this.deselectEnabling(enabling)}
+              onEnablingHover={(enabling) => this.showEnablingBMEs(enabling)}
+            />
         }
 
         <div className={classnames(
@@ -184,10 +130,11 @@ class BuilderIndex extends Page {
           "u-ml-a",
           this.state.sidebar == "enablings" ? "u-w-30" : "u-w-100",
         )}>
+
           <RadialChart
-            nodes={this.props.categories}
+            nodes={this.props.bmeTree}
             selected={this.props.selectedBMEs}
-            onClick={(bme) => this.showBME(bme)}
+            onClick={this.showBME}
             keyPrefix={(this.props.selectedSolution || { slug: "none"}).slug}
             interactive={this.state.sidebar == "default"}
             thumbnail={this.state.sidebar == "enablings"}
@@ -199,57 +146,39 @@ class BuilderIndex extends Page {
 
                 <ul>
                   {
-                    leaves(this.props.categories).
+                    leaves(this.props.bmeTree).
                       filter(bme => bme.enablings.find(enabling => enabling && enabling.id == this.state.hoveredEnabling)).
                       map(bme => <li className="c-text -fs-smaller -uppercase">{bme.name}</li>)
                   }
-                </ul>
-              </div>
+              </ul>
+            </div>
           }
         </div>
 
         {this.state.bme && <ConnectedBmeDetail
+          businessModelId={this.props.businessModelId}
+          slice={this.props.slice}
           bmeId={this.state.bme.id}
-          onClose={() => this.hideBME()}
+          onClose={this.hideBME}
           onNext={() => this.selectNext(this.state.bme)}
           onPrev={() => this.selectPrevious(this.state.bme)}
         />}
 
-        {this.state.showHelp && <HelpModal onClose={() => this.hideHelp()} />}
+        {this.state.showHelp && <HelpModal onClose={this.hideHelp} />}
       </Layout>
     );
   }
 }
 
-export default withRedux(
-  store,
-  state => {
-    const solutions = flattenSolutionTree(state.builderAPI.solutionCategories) || [];
-    const selectedSolution = solutions.find(solution => solution.id == state.builder.selectedSolution);
-    const selectedBMEs = selectedSolution ? intersection(state.builder.selectedBMEs, selectedSolution.bmes.filter(bme => bme).map(bme => bme.id)) : state.builder.selectedBMEs;
-    const bmeTree = transformBMEtree(state.builderAPI.bmeCategories, selectedSolution, state.builder.selectedEnablings);
-    const filteredEnablings = filterEnablings(state.builderAPI.enablingCategories, bmeTree);
-
-    return ({
-      categories: bmeTree,
-      commentedBMEs: state.builder.commentedBMEs,
-      enablings: filteredEnablings,
-      selectedBMEs,
-      selectedEnablings: state.builder.selectedEnablings,
-      selectedSolution,
-      solutions,
-    });
-  },
-  dispatch => ({
-    getBMEs() { dispatch(getBmes()); },
-    getEnablingTree() { dispatch(getEnablings()); },
-    deselectBME(bmeId) { dispatch(deselectBME(bmeId)); },
-    deselectEnabling(enablingId) { dispatch(deselectEnabling(enablingId)); },
-    getSolutions() { dispatch(getSolutions()); },
-    selectBME(bmeId) { dispatch(selectBME(bmeId)); },
-    selectEnabling(enablingId) { dispatch(selectEnabling(enablingId)); },
-    commentBME(bmeId, comment) { dispatch(commentBME(bmeId, comment)); },
-    selectSolution(solutionId) { dispatch(selectSolution(solutionId)); },
-    reset() { dispatch(reset()); },
-  })
-)(BuilderIndex);
+export default BuilderPage(
+  connect(
+    builderSelector,
+    withSlice({
+      deselectEnabling,
+      selectEnabling,
+      selectSolution,
+      reset,
+      create,
+    }),
+  )(BuilderIndex)
+);

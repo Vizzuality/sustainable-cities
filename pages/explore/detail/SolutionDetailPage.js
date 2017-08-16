@@ -13,6 +13,10 @@ import { store } from 'store';
 // modules
 import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
 import { getSolutionCategories, getBmeCategories } from 'modules/category';
+import { getCities } from 'modules/city';
+
+// selectors
+import { bmesAsDownload, citiesAsDownload, solutionsAsDownload } from 'selectors/download';
 
 // utils
 import { getImage } from 'utils/project';
@@ -24,13 +28,15 @@ import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import DownloadData from 'components/common/DownloadData';
+import Modal from 'components/common/Modal';
+import DownloadDataModal from 'components/common/modal/DownloadDataModal';
+import ShareModal from 'components/common/ShareModal';
 import RelatedContent from 'components/explore-detail/RelatedContent';
 import ContactForm from 'components/explore-detail/ContactForm';
 import SolutionDetail from 'components/explore-detail/SolutionDetail';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import SolutionCategory from 'components/explore-detail/SolutionCategory';
 import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
-import ShareModal from 'components/common/ShareModal';
 
 // constants
 import { CATEGORY_ICONS } from 'constants/category';
@@ -72,12 +78,18 @@ class SolutionDetailPage extends Page {
   }
 
   state = {
-    disclaimer: null
+    disclaimer: null,
+    modal: {
+      download: false
+    }
   };
 
   componentWillMount() {
     const { id } = this.props.queryParams;
     this.props.setProjectFilters({ detailId: id });
+
+    this.props.getSolutionCategories();
+    this.props.getCities();
   }
 
   componentDidUpdate(prevProps) {
@@ -196,7 +208,17 @@ class SolutionDetailPage extends Page {
   }
 
   render() {
-    const { bmeCategories, project, isLoading } = this.props;
+    const {
+      bmeCategories,
+      project,
+      isLoading,
+      loadingBmes,
+      loadingCities,
+      loadingSolutions,
+      bmesDownloadOptions,
+      cityDownloadOptions,
+      solutionsDownloadOptions
+    } = this.props;
     const breadcrumbsItems = SolutionDetailPage.setBreadcrumbs(project);
     const breadcrumbs = breadcrumbsItems ?
       <Breadcrumbs items={breadcrumbsItems} /> : null;
@@ -243,7 +265,22 @@ class SolutionDetailPage extends Page {
 
             <RelatedContent />
 
-            <DownloadData />
+            <DownloadData
+              onClickButton={() => this.setState({ modal: { download: true } })}
+            />
+
+            <Modal
+              open={this.state.modal.download}
+              toggleModal={v => this.setState({ modal: { download: v } })}
+              loading={loadingBmes || loadingSolutions || loadingCities}
+            >
+              <DownloadDataModal
+                bmes={bmesDownloadOptions}
+                cities={cityDownloadOptions}
+                solutions={solutionsDownloadOptions}
+                onClose={() => this.setState({ modal: { download: false } })}
+              />
+            </Modal>
 
           </div>)}
 
@@ -255,13 +292,13 @@ class SolutionDetailPage extends Page {
           onClose={() => this.setState({ disclaimer: null })}
         />
 
-      {this.state.modal == 'share' && (
-        <ShareModal
-          publicProject={true}
-          url={window.location}
-          onClose={() => this.setState({ modal: null })}
-          onDownload={() => Router.pushRoute('solution-detail-print', { id: project.id })}
-        />
+        {this.state.modal === 'share' && (
+          <ShareModal
+            publicProject
+            url={window.location}
+            onClose={() => this.setState({ modal: null })}
+            onDownload={() => Router.pushRoute('solution-detail-print', { id: project.id })}
+          />
       )}
       </Layout>
     );
@@ -274,12 +311,26 @@ SolutionDetailPage.propTypes = {
   // project
   project: PropTypes.object,
   getProjectDetail: PropTypes.func,
-  queryParams: PropTypes.object.isRequired
+  queryParams: PropTypes.object.isRequired,
+  // cities
+  loadingCities: PropTypes.bool,
+  // bmes
+  loadingBmes: PropTypes.bool,
+  // solutions
+  loadingSolutions: PropTypes.bool,
+  // download
+  cityDownloadOptions: PropTypes.array,
+  solutionsDownloadOptions: PropTypes.array,
+  bmesDownloadOptions: PropTypes.array
 };
 
 SolutionDetailPage.defaultProps = {
   project: {},
-  categories: []
+  categories: [],
+  // download
+  cityDownloadOptions: [],
+  solutionsDownloadOptions: [],
+  bmesDownloadOptions: []
 };
 
 /* completes the bmeTree root level with missing top-level categories */
@@ -318,13 +369,23 @@ export default withRedux(
       ...state.project.detail,
       ...completeBmeTree(state.project.detail.bmeTree, state.category.bme.list)
     },
-    projectFilters: state.project.filters
+    projectFilters: state.project.filters,
+    // download
+    cityDownloadOptions: citiesAsDownload(state),
+    solutionsDownloadOptions: solutionsAsDownload(state),
+    bmesDownloadOptions: bmesAsDownload(state),
+    // loadings
+    loadingBmes: state.category.bme.loading,
+    loadingSolution: state.category.solution.loading,
+    loadingCities: state.city.loading
   }),
   dispatch => ({
     getProjectDetail(filters) { dispatch(getProjectDetail(filters)); },
     getSolutionCategories() { dispatch(getSolutionCategories()); },
     getBmeCategories() { dispatch(getBmeCategories()); },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
-    removeProjectDetail() { dispatch(removeProjectDetail()); }
+    removeProjectDetail() { dispatch(removeProjectDetail()); },
+    // cities
+    getCities() { dispatch(getCities()); }
   })
 )(SolutionDetailPage);

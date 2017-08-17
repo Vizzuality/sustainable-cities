@@ -17,9 +17,9 @@ routes.add('city-detail', '/cities/:id/:tab?', 'explore/detail/CityPageDetail');
 routes.add('about', '/about/:section?', 'about/AboutIndex');
 
 // BUILDER
-routes.add('builder', '/builder', 'builder/BuilderIndex');
-routes.add('builder-project', '/builder/project', 'builder/Project');
-routes.add('builder-project-print', '/builder/project/print', 'builder/ProjectPrint');
+routes.add('builder-project-print', '/builder/:id?/project/print', 'builder/ProjectPrint');
+routes.add('builder-project', '/builder/:id?/project', 'builder/Project');
+routes.add('builder', '/builder/:id?', 'builder/BuilderIndex');
 
 // PROFILE
 routes.add('profile', '/profile', 'profile/ProfileIndex');

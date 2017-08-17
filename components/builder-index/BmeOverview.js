@@ -4,7 +4,7 @@ import { Link } from 'routes';
 
 import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
 
-export default function BmeOverview({ projectId, bmeTree }) {
+export default function BmeOverview({ bmeTree }) {
   return (
     <div className="c-bme-overview">
       {bmeTree.map((bme) => {
@@ -34,7 +34,6 @@ export default function BmeOverview({ projectId, bmeTree }) {
 }
 
 BmeOverview.propTypes = {
-  projectId: PropTypes.string.isRequired,
   bmeTree: PropTypes.array.isRequired
 };
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import BmeDetail from 'components/builder-index/BmeDetail'
 
-import { leaves } from 'utils/builder';
+import { leaves, withSlice } from 'utils/builder';
 import {
   commentBME,
   deselectBME,
@@ -47,19 +47,18 @@ class ConnectedBmeDetail extends React.Component {
   }
 }
 
-
 export default connect(
   (state, ownProps) => ({
     bme: leaves(state.builderAPI.bmeCategories).find(bme => bme.id === ownProps.bmeId),
-    comment: state.builder.commentedBMEs[ownProps.bmeId],
-    selected: state.builder.selectedBMEs.includes(ownProps.bmeId),
-    selectedEnablings: state.builder.selectedEnablings,
+    comment: state.builder[ownProps.slice].commentedBMEs[ownProps.bmeId],
+    selected: state.builder[ownProps.slice].selectedBMEs.includes(ownProps.bmeId),
+    selectedEnablings: state.builder[ownProps.slice].selectedEnablings,
   }),
-  {
+  withSlice({
     commentBME,
     deselectBME,
     deselectEnabling,
     selectBME,
     selectEnabling,
-  },
+  }),
 )(ConnectedBmeDetail);

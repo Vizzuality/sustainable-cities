@@ -15,22 +15,27 @@ class ProjectDetail extends React.Component {
         </div>
 
         <DetailSection title="Title" contentSeparator={false}>
-          <input
-            type="text"
-            className="input-text u-w-100"
-            placeholder="Write here"
-            value={this.props.fields.title}
-            onChange={(e) => this.props.onFieldChange('title', e.target.value)}
-          />
+          { this.props.readonly ?
+            <p>{this.props.fields.title}</p> :
+            <input
+              type="text"
+              className="input-text u-w-100"
+              placeholder="Write here"
+              value={this.props.fields.title}
+              onChange={(e) => this.props.onFieldChange('title', e.target.value)}
+            />
+          }
         </DetailSection>
 
         <DetailSection title="Description" contentSeparator={false}>
-          <textarea
-            placeholder="Write here"
-            onChange={(e) => this.props.onFieldChange('description', e.target.value)}
-          >
-            {this.props.fields.description}
-          </textarea>
+          { this.props.readonly ?
+            <p>{this.props.fields.description}</p> :
+            <textarea
+              placeholder="Write here"
+              onChange={(e) => this.props.onFieldChange('description', e.target.value)}
+              value={this.props.fields.description}
+            />
+          }
         </DetailSection>
       </div>
     );

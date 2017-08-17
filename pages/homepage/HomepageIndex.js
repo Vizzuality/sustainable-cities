@@ -20,10 +20,10 @@ class HomePage extends Page {
         <section className="l-home-header">
           <div className="row">
             <div className="columns small-10 small-offset-1 medium-offset-0 medium-12">
-              <h1 className="c-title -fs-super-huge -light -fw-thin -center">Financing Sustainable Cities</h1>
+              <h1 className="c-title -fs-super-huge -light -fw-thin -center">Financing Sustainable Cities Initiative</h1>
             </div>
             <div className="column small-10 small-offset-1 medium-8 medium-offset-2">
-              <h2 className="c-title -fs-bigger -light -fw-light -center -subtitle">An initiative to help cities develop business models to accelerate sustainable urban solutions</h2>
+              <h2 className="c-title -fs-bigger -light -fw-light -center -subtitle">Helping cities develop business models to accelerate sustainable urban solutions</h2>
             </div>
           </div>
           <ul className="row">

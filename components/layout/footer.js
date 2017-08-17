@@ -31,13 +31,13 @@ export default () => (
                   <Link prefetch route="builder"><a className="c-text -dark -uppercase -fs-default">Design</a></Link>
                 </li>
                 <li>
-                  <a className="c-text -dark -uppercase -fs-default">Contact</a>
+                  <a className="c-text -dark -uppercase -fs-default" href="mailto:amaassen@wri.org?subject=Hello from the fsci site">Contact</a>
                 </li>
               </ul>
             </div>
 
-            <div className="columns small-12 medium-8">
-              <p className="c-text -dark -fs-big -fw-light -tagline">&ldquo;An initiative to help cities develop business models to accelerate sustainable urban solutions&rdquo;</p>
+            <div className="columns small-12 medium-7">
+              <p className="c-text -dark -fs-big -fw-light -tagline">Helping cities develop business models to accelerate sustainable urban solutions</p>
             </div>
 
           </div>

@@ -125,7 +125,14 @@ export function commentBME(slice, bmeId, comment) {
 }
 
 export function reset(slice) {
-  return (dispatch) => dispatch({ type: RESET, slice });
+  return (dispatch, getState) => {
+    const id = getState().builder[slice].writableId;
+
+    dispatch({ type: RESET, slice });
+    if (slice === SLICE_EXISTING) {
+      fetchBM(`w${id}`)(dispatch);
+    }
+  }
 }
 
 export function setField(slice, field, value) {

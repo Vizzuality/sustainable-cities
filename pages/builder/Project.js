@@ -19,7 +19,7 @@ import builderSelector from 'selectors/builder';
 
 import { Router } from 'routes'
 
-import { setField, commentBME, update } from 'modules/builder';
+import { setField, commentBME, create, reset, update } from 'modules/builder';
 import { withSlice } from 'utils/builder';
 
 
@@ -33,6 +33,10 @@ class Project extends React.Component {
 
   hideModal = () => this.setState({ modal: null });
 
+  showLogin = () => this.setState({ modal: 'login' });
+
+  showSignUp = () => this.setState({ modal: 'sign-up' });
+
   download = () => Router.pushRoute('builder-project-print', this.props.bmRouteParams);
 
   onFieldChange = (name, value) => this.props.setField(name, value);
@@ -41,7 +45,35 @@ class Project extends React.Component {
 
   showBMEModal = (bme, tab) => this.setState({ modal: 'bme', modalArgs: { bme, tab } });
 
-  saveProject = () => this.props.update(this.props.project, this.props.auth.token);
+  saveProject = () => {
+    if (this.props.auth.token) {
+      if (this.props.project.writableId) {
+        this.props.update(this.props.project, this.props.auth.token);
+      } else {
+        create(
+          this.props.project,
+          this.props.auth.token,
+        ).then(writableId => {
+          this.props.reset();
+          Router.pushRoute(document.location.origin + `/builder/w${writableId}/project`);
+        });
+      }
+    } else {
+      this.showLogin();
+    }
+  }
+
+  projectUrl(readonly) {
+    if (readonly && this.props.project.readableId) {
+      return document.location.origin + "/builder/r" + this.props.project.readableId;
+    }
+
+    if (!readonly && this.props.project.writableId) {
+      return document.location.origin + "/builder/w" + this.props.project.writableId;
+    }
+
+    return null;
+  }
 
   render() {
     const defaultTabItems = [
@@ -133,8 +165,9 @@ class Project extends React.Component {
             <ShareModal
               onClose={this.hideModal}
               onDownload={this.download}
-              url={document.location.origin + "/builder/r" + this.props.project.readableId}
-              urlEditable={document.location.origin + "/builder/w" + this.props.project.writableId}
+              onSave={this.saveProject}
+              url={this.projectUrl(true)}
+              urlEditable={this.projectUrl(false)}
             />
         }
 
@@ -145,9 +178,21 @@ class Project extends React.Component {
               slice={this.props.slice}
               bmeId={this.state.modalArgs.bme.id}
               initialTab={this.state.modalArgs.tab}
-              onClose={() => this.hideModal()}
+              onClose={this.hideModal}
           />
         }
+
+        {this.state.modal == 'login' && <Login
+          onClose={this.hideModals}
+          onSignUp={this.showSignUp}
+          onLogin={this.hideModals}
+        />}
+
+        {this.state.modal == 'sign-up' && <SignUp
+          onClose={this.hideModals}
+          onLogin={this.showLogin}
+          onSignUp={this.hideModals}
+        />}
 
         <DisclaimerModal
           categories={this.props.filteredBmeTree}
@@ -166,6 +211,7 @@ export default BuilderPage(
       commentBME,
       setField,
       update,
+      reset,
     }),
   )(Project)
 );

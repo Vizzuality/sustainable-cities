@@ -20,6 +20,12 @@ export default (Component) => {
       this.props.getEnablings();
     }
 
+    componentWillReceiveProps(nextProps) {
+      if (this.props.businessModelId !== nextProps.businessModelId) {
+        this.props.fetchBM(nextProps.businessModelId);
+      }
+    }
+
     render() {
       return (
         <Component

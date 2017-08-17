@@ -1,5 +1,7 @@
 import uuidv1 from 'uuid/v1';
 
+const getImage = (city) => city.photos && city.photos[0] ?
+  `${process.env.API_URL}${city.photos[0].attachment.medium.url}` : null;
 
 // parses projects in order to populate GridList component
 const listCities = cities => cities.map(city => ({
@@ -7,7 +9,8 @@ const listCities = cities => cities.map(city => ({
   title: city.name,
   subtitle: `${city.projectCount} ${(city.projectCount > 1) ? 'projects' : 'project'}`,
   link: { route: 'city-detail', params: { id: city.id } },
-  layout: 'portrait'
+  layout: 'portrait',
+  image: getImage(city),
 }));
 
 // parses projects in order to populate GridList component

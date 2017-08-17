@@ -65,7 +65,7 @@ export function getCities() {
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_CITY, payload: true });
 
-    const includeFilters = ['projects'];
+    const includeFilters = ['projects', 'photos'];
 
     const queryParams = queryString.stringify({
       include: includeFilters.join(','),

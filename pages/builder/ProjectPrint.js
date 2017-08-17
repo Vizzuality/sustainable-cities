@@ -20,6 +20,10 @@ class ProjectPrint extends React.Component {
 
         <div className="row u-mt-2">
           <div className="u-flex u-ml-a u-hide-print">
+            <Button secondary link={{ route: 'builder-project', params: this.props.bmRouteParams }} className="u-mr-1">
+              Go back
+            </Button>
+
             <Button primary onClick={() => window.print()}>
               Print
             </Button>

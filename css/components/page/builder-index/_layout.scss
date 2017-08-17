@@ -187,7 +187,7 @@
 
     &.selected {
       stroke: black;
-      fill: none;
+      fill: none !important;
       stroke-width: 2;
     }
   }

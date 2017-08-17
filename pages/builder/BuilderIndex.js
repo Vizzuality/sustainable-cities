@@ -153,7 +153,7 @@ class BuilderIndex extends React.Component {
         )}>
 
           <RadialChart
-            nodes={this.props.bmeTree}
+            nodes={this.props.project.readonly ? this.props.filteredBmeTree : this.props.bmeTree}
             selected={this.props.selectedBMEs}
             onClick={this.showBME}
             keyPrefix={(this.props.selectedSolution || { slug: "none"}).slug}

@@ -36,7 +36,7 @@ export default function Solutions() {
         <div className="column small-12 medium-4">
           <svg className="icon -dark -in-line-left -big"><use xlinkHref="#icon-city" /></svg>
           <h2 className="c-title -dark -fs-extrabig -fw-light">Efficient new buildings</h2>
-          <p>Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Etiam porta sem malesuada magna mollis euismod. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id ultricies vehicula ut id elit.</p>
+          <p>Buildings consume one-third of the world’s energy and use large amounts of other resources, including materials and water. Cities worldwide are taking action to make new buildings more resource efficient. Increases in new building stock is expected predominantly in emerging and developing cities, where most of urban growth is expected. These cities need to find creative ways to drive real estate development toward delivering efficient new buildings.</p>
         </div>
         <div className="column small-12 medium-4"></div>
         <div className="column small-12 medium-4">
@@ -67,26 +67,26 @@ export default function Solutions() {
           <h2 className="c-title -dark -fs-extrabig -fw-light">Continue reading</h2>
         </div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -no-height" href="/about/events">
+          <a className="main-link -border -about" href="/about/events">
             <p className="c-text -dark -fs-medium -fw-light">Events</p>
             <p className="c-title -dark">FSCI's forums, workshops and events</p>
           </a>
         </div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -no-height" href="/about/blogs">
+          <a className="main-link -border -about" href="/about/blogs">
             <p className="c-text -dark -fs-medium -fw-light">Blogs</p>
             <p className="c-title -dark">FSCI's news, discussion and announcements</p>
           </a>
         </div>
         <div className="column small-12 medium-4"></div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -no-height" href="/about/city-support">
+          <a className="main-link -border -about" href="/about/city-support">
             <p className="c-text -dark -fs-medium -fw-light">City Support</p>
             <p className="c-title -dark">FSCI's forums, workshops, on-the-ground technical support and long-term engagements.</p>
           </a>
         </div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -no-height" href="/about/more-information">
+          <a className="main-link -border -about" href="/about/more-information">
             <p className="c-text -dark -fs-medium -fw-light">More information</p>
             <p className="c-title -dark">The initiative's partners, research methodology and data policy.</p>
           </a>

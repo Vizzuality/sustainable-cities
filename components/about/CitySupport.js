@@ -40,26 +40,26 @@ export default function CitySupport() {
           <h2 className="c-title -dark -fs-extrabig -fw-light">Continue reading</h2>
         </div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -no-height" href="/about/blogs">
+          <a className="main-link -border -about" href="/about/blogs">
             <p className="c-text -dark -fs-medium -fw-light">Blogs</p>
             <p className="c-title -dark">FSCI's news, discussion and announcements</p>
           </a>
         </div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -no-height" href="/about/more-information">
+          <a className="main-link -border -about" href="/about/more-information">
             <p className="c-text -dark -fs-medium -fw-light">More information</p>
             <p className="c-title -dark">The initiative's partners, research methodology and data policy.</p>
           </a>
         </div>
         <div className="column small-12 medium-4"></div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -no-height" href="/about">
+          <a className="main-link -border -about" href="/about">
             <p className="c-text -dark -fs-medium -fw-light">About the initiative</p>
             <p className="c-title -dark">Background information about FSCI and its partners.</p>
           </a>
         </div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -no-height" href="/about/events">
+          <a className="main-link -border -about" href="/about/events">
             <p className="c-text -dark -fs-medium -fw-light">Events</p>
             <p className="c-title -dark">FSCI's forums, workshops and events</p>
           </a>

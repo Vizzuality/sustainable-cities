@@ -253,7 +253,7 @@ class RadialChart extends React.Component {
                   <BME size={5} level={3} angle={0} depth={0} modifiers={["Success"]} />
                 </g>
               </svg>
-              <span>Success factor</span>
+              <span>Enabling condition applied</span>
             </div>
 
             <div className="u-flex u-ml-1 u-mr-1">

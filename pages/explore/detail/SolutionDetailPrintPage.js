@@ -42,6 +42,10 @@ class SolutionDetailPrintPage extends Page {
 
         <div className="row u-mt-2">
           <div className="u-flex u-ml-a u-hide-print">
+            <Button secondary link={{ route: 'solution-detail', params: { id: this.props.queryParams.id }}} className="u-mr-1">
+              Go back
+            </Button>
+
             <Button primary onClick={() => window.print()}>
               Print
             </Button>

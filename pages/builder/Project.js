@@ -177,10 +177,12 @@ class Project extends React.Component {
 export default BuilderPage(
   connect(
     builderSelector,
-    withSlice({
-      commentBME,
-      setField,
+    {
+      ...withSlice({
+        commentBME,
+        setField,
+      }),
       update,
-    }),
+    }
   )(Project)
 );

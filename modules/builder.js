@@ -136,7 +136,7 @@ export function create(project, authToken) {
     })),
   };
 
-  return (dispatch) => apiRequest(`business-models`, {
+  return apiRequest(`business-models`, {
     method: 'POST',
     body: JSON.stringify({ business_model: params }),
     headers: {
@@ -144,11 +144,7 @@ export function create(project, authToken) {
     }
   }).then(response => {
     if (response.ok) {
-      return response.json().then(data => dispatch({
-        type: BM_CREATED,
-        readableId: data.messages[0].link_share,
-        writableId: data.messages[0].link_edit,
-      }));
+      return response.json().then(data => data.messages[0].link_edit);
     } else {
       return response.ok;
     }

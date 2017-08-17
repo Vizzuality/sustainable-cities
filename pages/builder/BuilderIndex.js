@@ -16,6 +16,8 @@ import RadialChart from 'components/common/RadialChart';
 import BmeDetail from 'components/builder-index/BmeDetail';
 import ConnectedBmeDetail from 'components/builder-index/ConnectedBmeDetail';
 import HelpModal from 'components/builder-index/HelpModal';
+import Login from 'components/common/Login';
+import SignUp from 'components/common/SignUp';
 
 import builderSelector from 'selectors/builder';
 import { leaves, withSlice } from 'utils/builder';
@@ -34,6 +36,7 @@ class BuilderIndex extends React.Component {
     sidebar: "default",
     showHelp: process.browser && !storage.getItem('builder.help-dismissed'),
     hoveredEnabling: null,
+    modal: null,
   };
 
   selectSolution(solution) {
@@ -82,8 +85,21 @@ class BuilderIndex extends React.Component {
 
   showEnablingBMEs = (enabling) => this.setState({ hoveredEnabling: enabling.id });
 
+  hideModals = () => this.setState({ modal: null });
+
+  showLogin = () => this.setState({ modal: 'login' });
+
+  showSignUp = () => this.setState({ modal: 'sign-up' });
+
   save = () => {
-    this.props.create(this.props.project, this.props.auth.token);
+    if (this.props.auth.token) {
+      create(
+        this.props.project,
+        this.props.auth.token,
+      ).then(writableId => Router.pushRoute(document.location.origin + "/builder/w" + writableId));
+    } else {
+      this.showLogin();
+    }
   }
 
   render() {
@@ -165,6 +181,19 @@ class BuilderIndex extends React.Component {
         />}
 
         {this.state.showHelp && <HelpModal onClose={this.hideHelp} />}
+
+        {this.state.modal == 'login' && <Login
+          onClose={this.hideModals}
+          onSignUp={this.showSignUp}
+          onLogin={this.hideModals}
+        />}
+
+        {this.state.modal == 'sign-up' && <SignUp
+          onClose={this.hideModals}
+          onLogin={this.showLogin}
+          onSignUp={this.hideModals}
+        />}
+
       </Layout>
     );
   }
@@ -178,7 +207,6 @@ export default BuilderPage(
       selectEnabling,
       selectSolution,
       reset,
-      create,
     }),
   )(BuilderIndex)
 );

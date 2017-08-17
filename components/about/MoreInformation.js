@@ -63,26 +63,26 @@ export default function MoreInformation() {
           <div className="column small-12 medium-4">
             <a className="main-link -border -no-height" href="/about/events">
               <p className="c-text -dark -fs-medium -fw-light">Events</p>
-              <p className="c-title -dark">Lorem ipsum casius tesebe aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur.</p>
+              <p className="c-title -dark">FSCI's forums, workshops and events</p>
             </a>
           </div>
           <div className="column small-12 medium-4">
             <a className="main-link -border -no-height" href="/about/blogs">
               <p className="c-text -dark -fs-medium -fw-light">Blogs</p>
-              <p className="c-title -dark">Lorem ipsum casius tesebe aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur.</p>
+              <p className="c-title -dark">FSCI's news, discussion and announcements</p>
             </a>
           </div>
           <div className="column small-12 medium-4"></div>
           <div className="column small-12 medium-4">
             <a className="main-link -border -no-height" href="/about/city-support">
               <p className="c-text -dark -fs-medium -fw-light">City Support</p>
-              <p className="c-title -dark">Lorem ipsum casius tesebe aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur.</p>
+              <p className="c-title -dark">FSCI's forums, workshops, on-the-ground technical support and long-term engagements.</p>
             </a>
           </div>
           <div className="column small-12 medium-4">
             <a className="main-link -border -no-height" href="/about/more-information">
               <p className="c-text -dark -fs-medium -fw-light">More information</p>
-              <p className="c-title -dark">Lorem ipsum casius tesebe aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur.</p>
+              <p className="c-title -dark">Background information about FSCI and its partners.</p>
             </a>
           </div>
         </div>

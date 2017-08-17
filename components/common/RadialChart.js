@@ -136,6 +136,7 @@ function positions(nodes, depth, offset) {
 
 function buildNodes(tree, family, keyPrefix) {
   let nodes = [];
+  let lines = [];
   var previousPositions = null;
 
   tree = tree.map(node => ({ ...node, family: node.slug }));
@@ -158,14 +159,13 @@ function buildNodes(tree, family, keyPrefix) {
     ).reduce((a,b) => a.concat(b), []);
 
     if (previousPositions) {
-      const lines = placeLines(previousPositions, p, depths[i-1], depths[i], sizes[i-1], sizes[i], keyPrefix);
-      nodes = nodes.concat(lines);
+      lines = lines.concat(placeLines(previousPositions, p, depths[i-1], depths[i], sizes[i-1], sizes[i], keyPrefix));
     }
 
     previousPositions = p;
   }
 
-  return nodes;
+  return lines.concat(nodes);
 }
 
 

@@ -100,7 +100,10 @@ class BuilderIndex extends React.Component {
         create(
           this.props.project,
           this.props.auth.token,
-        ).then(writableId => Router.pushRoute(document.location.origin + "/builder/w" + writableId));
+        ).then(writableId => {
+          this.props.reset();
+          Router.pushRoute(document.location.origin + "/builder/w" + writableId);
+        });
       }
     } else {
       this.showLogin();

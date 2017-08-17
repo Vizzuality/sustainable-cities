@@ -194,7 +194,7 @@ export function update(_, project, authToken) {
     ),
   };
 
-  return (dispatch) => apiRequest(`business-models/${id}`, {
+  return (dispatch, getState) => apiRequest(`business-models/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({ business_model: params }),
     headers: {
@@ -202,8 +202,7 @@ export function update(_, project, authToken) {
     }
   }).then(response => {
     if (response.ok) {
-      reset(SLICE_EXISTING)(dispatch);
-      return fetchBM(`w${id}`)(dispatch);
+      return reset(SLICE_EXISTING)(dispatch, getState);
     } else {
       return response.ok;
     }

@@ -41,22 +41,7 @@ class Project extends React.Component {
 
   showBMEModal = (bme, tab) => this.setState({ modal: 'bme', modalArgs: { bme, tab } });
 
-  saveProject = () => this.props.update(
-    this.props.project.writableId,
-    {
-      title: this.props.project.title,
-      description: this.props.project.description,
-      solution_id: this.props.project.selectedSolution,
-      enabling_ids: this.props.project.selectedEnablings,
-      business_model_bmes_attributes: this.props.project.selectedBMEs.map(bmeId => ({
-        bme_id: bmeId,
-        comment_attributes: {
-          body: this.props.project.commentedBMEs[bmeId]
-        }
-      })),
-    },
-    this.props.auth.token,
-  );
+  saveProject = () => this.props.update(this.props.project, this.props.auth.token);
 
   render() {
     const defaultTabItems = [
@@ -177,12 +162,10 @@ class Project extends React.Component {
 export default BuilderPage(
   connect(
     builderSelector,
-    {
-      ...withSlice({
-        commentBME,
-        setField,
-      }),
+    withSlice({
+      commentBME,
+      setField,
       update,
-    }
+    }),
   )(Project)
 );

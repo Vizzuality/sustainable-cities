@@ -28,6 +28,7 @@ import {
   selectSolution,
   reset,
   create,
+  update,
 } from 'modules/builder';
 
 
@@ -93,10 +94,14 @@ class BuilderIndex extends React.Component {
 
   save = () => {
     if (this.props.auth.token) {
-      create(
-        this.props.project,
-        this.props.auth.token,
-      ).then(writableId => Router.pushRoute(document.location.origin + "/builder/w" + writableId));
+      if (this.props.project.writableId) {
+        this.props.update(this.props.project, this.props.auth.token);
+      } else {
+        create(
+          this.props.project,
+          this.props.auth.token,
+        ).then(writableId => Router.pushRoute(document.location.origin + "/builder/w" + writableId));
+      }
     } else {
       this.showLogin();
     }
@@ -207,6 +212,7 @@ export default BuilderPage(
       selectEnabling,
       selectSolution,
       reset,
+      update,
     }),
   )(BuilderIndex)
 );

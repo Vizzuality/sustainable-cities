@@ -67,6 +67,12 @@ const sliceReducer = (state = initialSliceState, action) => {
             bmbme.comment.body,
           ]))
         ),
+        bmeInternalIds: fromPairs(
+          action.project['business-model-bmes'].map(bmbme => ([
+            bmbme.bme.id,
+            bmbme.id,
+          ]))
+        ),
         selectedEnablings: action.project.enablings.map(enabling => enabling.id),
 
         readableId: action.project['link-share'],
@@ -151,7 +157,32 @@ export function create(project, authToken) {
   });
 }
 
-export function update(id, params, authToken) {
+export function update(_, project, authToken) {
+  const id = project.writableId;
+
+  const existingInternalIds = project.selectedBMEs.map(bmeId => project.bmeInternalIds[bmeId]);
+
+  const removedInternalIds = Object.values(project.bmeInternalIds).filter(id => !existingInternalIds.includes(id));
+
+  const params = {
+    title: project.title,
+    description: project.description,
+    solution_id: project.selectedSolution,
+    enabling_ids: project.selectedEnablings,
+    business_model_bmes_attributes: project.selectedBMEs.map(bmeId => ({
+      id: project.bmeInternalIds[bmeId],
+      bme_id: bmeId,
+      comment_attributes: {
+        body: project.commentedBMEs[bmeId]
+      }
+    })).concat(
+      removedInternalIds.map(id => ({
+        id,
+        _destroy: 1,
+      }))
+    ),
+  };
+
   return (dispatch) => apiRequest(`business-models/${id}`, {
     method: 'PATCH',
     body: JSON.stringify({ business_model: params }),
@@ -160,11 +191,7 @@ export function update(id, params, authToken) {
     }
   }).then(response => {
     if (response.ok) {
-      return response.json().then(data => dispatch({
-        type: BM_CREATED,
-        readableId: data.messages[0].link_share,
-        writableId: data.messages[0].link_edit,
-      }));
+      return fetchBM(`w${id}`)(dispatch);
     } else {
       return response.ok;
     }

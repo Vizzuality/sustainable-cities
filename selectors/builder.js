@@ -51,7 +51,7 @@ const selectedProject = createSelector(
   [slice, state => state.builder, (_, ownProps) => ownProps.businessModelId],
   (slice, builder, businessModelId) => ({
     ...builder[slice],
-    readonly: businessModelId && businessModelId === builder[slice].readableId,
+    readonly: businessModelId && businessModelId.slice(1) === builder[slice].readableId,
   }),
 );
 

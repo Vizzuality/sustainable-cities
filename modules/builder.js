@@ -177,8 +177,11 @@ export function update(id, params, authToken) {
 
 
 export function fetchBM(id) {
+  const resource = id[0] == "r" ? "business-models" : "business-model-edits";
+  const token = id.slice(1);
+
   return (dispatch) => apiRequest(
-    `business-models/${id}?include=enablings,business-model-bmes.comment,business-model-bmes.bme`,
+    `${resource}/${token}?include=enablings,business-model-bmes.comment,business-model-bmes.bme`,
     { method: 'GET' },
   ).then(r => r.json()).then(
     data => new Deserializer().deserialize(data, (err, project) => {

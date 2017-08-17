@@ -148,8 +148,8 @@ class Project extends React.Component {
             <ShareModal
               onClose={this.hideModal}
               onDownload={this.download}
-              url={document.location.origin + "/builder/" + this.props.project.readableId}
-              urlEditable={document.location.origin + "/builder/" + this.props.project.writableId}
+              url={document.location.origin + "/builder/r" + this.props.project.readableId}
+              urlEditable={document.location.origin + "/builder/w" + this.props.project.writableId}
             />
         }
 

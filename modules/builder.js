@@ -54,6 +54,10 @@ const sliceReducer = (state = initialSliceState, action) => {
     case BM_CREATED:
       return { ...state, writableId: action.writableId, readableId: action.readableId };
     case BM_GET:
+      if (state.readableId === action.project['link-share']) {
+        return state;
+      }
+
       return {
         ...state,
         title: action.project.title,
@@ -191,6 +195,7 @@ export function update(_, project, authToken) {
     }
   }).then(response => {
     if (response.ok) {
+      reset(SLICE_EXISTING)(dispatch);
       return fetchBM(`w${id}`)(dispatch);
     } else {
       return response.ok;

@@ -26,6 +26,7 @@
 // Components
 // - layout
 @import 'components/layout/l-home';
+@import 'components/layout/l-footer';
 @import 'components/layout/map-container';
 // - page
 @import 'components/page/explore-detail/detail';
@@ -54,7 +55,6 @@
 // - common
 @import 'components/common/modal';
 @import 'components/common/title';
-@import 'components/common/texts';
 @import 'components/common/main-nav';
 @import 'components/common/sub-menu';
 @import 'components/common/tab';
@@ -73,3 +73,8 @@
 @import 'components/common/map/legend-item';
 @import 'components/common/map/marker';
 @import 'components/common/map/infowindow';
+@import 'components/common/logo';
+@import 'components/common/footer-nav';
+@import 'components/common/download-data-modal';
+
+@import 'utils';

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 // utils
+import { sortByName } from 'utils/common';
 import { listsBmesByCategory, listBmes } from 'utils/bme';
 
 const getBmes = state => state.bme.list;
@@ -18,11 +19,14 @@ const getParsedBmes = createSelector(
     );
     }
 
+
     if (filters.children) {
-      bmes.forEach(p =>
+      (bmes || []).forEach(p =>
         bmeList.push([...p['children-bmes']])
       );
     }
+
+    (bmeList[0] || []).sort(sortByName);
 
     return !filters.children ?
       listsBmesByCategory(bmeList[0] || [], filters) :

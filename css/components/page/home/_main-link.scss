@@ -29,6 +29,11 @@
     box-shadow: 0 7px 15px 0 rgba($color-black, 0.15), 0 1px 3px 0 rgba($color-black, 0.15);
   }
 
+  &.-about {
+    height: 157px;
+    margin-bottom: 20px;
+  }
+
   &.-no-height {
     height: auto;
     margin-bottom: 20px;

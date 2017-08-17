@@ -9,6 +9,11 @@ import { store } from 'store';
 
 // modules
 import { getBmeDetail, removeBmeDetail } from 'modules/bme';
+import { getSolutionCategories, getBmeCategories } from 'modules/category';
+import { getCities } from 'modules/city';
+
+// selectors
+import { bmesAsDownload, citiesAsDownload, solutionsAsDownload } from 'selectors/download';
 
 // components
 import Page from 'pages/Page';
@@ -16,15 +21,20 @@ import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import DownloadData from 'components/common/DownloadData';
+import Modal from 'components/common/Modal';
+import DownloadDataModal from 'components/common/modal/DownloadDataModal';
 import RelatedContent from 'components/explore-detail/RelatedContent';
 import BmeDetail from 'components/explore-detail/BmeDetail';
+
+// constants
+import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
 
 const flatten = (category, accumulator = []) => {
   if (category) {
     return flatten(category.parent, [category, ...accumulator]);
-  } else {
-    return accumulator;
   }
+
+  return accumulator;
 };
 
 const getBreadcrumbs = (bme) => {
@@ -34,7 +44,7 @@ const getBreadcrumbs = (bme) => {
 
   const routeName = 'explore-index';
   const routeProps = ['category', 'subCategory', 'children'];
-  const flattened = flatten(bme.categories.find((c) => c.categoryType === 'Bme'));
+  const flattened = flatten(bme.categories.find(c => c.categoryType === 'Bme'));
   const breadcrumbs = [];
 
   flattened.forEach((current) => {
@@ -42,9 +52,9 @@ const getBreadcrumbs = (bme) => {
       name: current.name,
       route: routeName,
       params: {
-        ...breadcrumbs.map(b => b.params).reduce((current, accumulator) => ({
+        ...breadcrumbs.map(b => b.params).reduce((c, accumulator) => ({
           ...accumulator,
-          ...current
+          ...c
         }), {}),
         [routeProps[breadcrumbs.length]]: current.slug
       }
@@ -52,14 +62,27 @@ const getBreadcrumbs = (bme) => {
   });
 
   return breadcrumbs;
-}
+};
 
 class BmeDetailPage extends Page {
+  constructor(props) {
+    super(props);
+
+
+    this.state = {
+      modal: {
+        download: false
+      }
+    };
+  }
 
   componentWillMount() {
     const { id } = this.props.queryParams;
 
     this.props.getBmeDetail({ detailId: id });
+    this.props.getBmeCategories();
+    this.props.getSolutionCategories();
+    this.props.getCities();
   }
 
   componentDidUpdate(prevProps) {
@@ -76,20 +99,32 @@ class BmeDetailPage extends Page {
   }
 
   render() {
-    const { bme, isLoading } = this.props;
+    const {
+      bme,
+      isLoading,
+      bmesDownloadOptions,
+      cityDownloadOptions,
+      solutionsDownloadOptions,
+      loadingBmes,
+      loadingCities,
+      loadingSolutions
+    } = this.props;
 
     const breadcrumbsItems = !isEqual(bme, {}) ?
       getBreadcrumbs(bme) : [];
     const breadcrumbs = !isEqual(breadcrumbsItems, []) ?
-
       <Breadcrumbs items={breadcrumbsItems} /> : null;
+
+    const parentSlug = breadcrumbsItems && breadcrumbsItems[0] ?
+      breadcrumbsItems[0].params.category : null;
+
 
     return (
       <Layout
-        title='Business model element detail'
+        title="Business model element detail"
         queryParams={this.props.queryParams}
       >
-        <div className='bme-detail-page'>
+        <div className="bme-detail-page">
 
           {isLoading && (<div>
             Loading bme...
@@ -97,8 +132,10 @@ class BmeDetailPage extends Page {
 
           {!isLoading && (<div>
             <Cover
-              size='shorter'
-              className='-blue'
+              size="shorter"
+              className={'-no-veil -bme'}
+              color={parentSlug ?
+                CATEGORY_FIRST_LEVEL_COLORS[parentSlug] : ''}
               title={bme.name || ''}
               breadcrumbs={breadcrumbs}
             />
@@ -110,7 +147,22 @@ class BmeDetailPage extends Page {
 
             <RelatedContent />
 
-            <DownloadData />
+            <DownloadData
+              onClickButton={() => this.setState({ modal: { download: true } })}
+            />
+
+            <Modal
+              open={this.state.modal.download}
+              toggleModal={v => this.setState({ modal: { download: v } })}
+              loading={loadingBmes || loadingSolutions || loadingCities}
+            >
+              <DownloadDataModal
+                bmes={bmesDownloadOptions}
+                cities={cityDownloadOptions}
+                solutions={solutionsDownloadOptions}
+                onClose={() => this.setState({ modal: { download: false } })}
+              />
+            </Modal>
 
           </div>)}
 
@@ -125,21 +177,48 @@ BmeDetailPage.propTypes = {
   bme: PropTypes.object.isRequired,
   getBmeDetail: PropTypes.func,
   removeBmeDetail: PropTypes.func,
-  queryParams: PropTypes.object.isRequired
+  queryParams: PropTypes.object.isRequired,
+  // cities
+  loadingCities: PropTypes.bool,
+  // bmes
+  loadingBmes: PropTypes.bool,
+  // solutions
+  loadingSolutions: PropTypes.bool,
+  // download
+  cityDownloadOptions: PropTypes.array,
+  solutionsDownloadOptions: PropTypes.array,
+  bmesDownloadOptions: PropTypes.array
 };
 
 BmeDetailPage.defaultProps = {
-  bme: {}
+  bme: {},
+  // download
+  cityDownloadOptions: [],
+  solutionsDownloadOptions: [],
+  bmesDownloadOptions: []
 };
 
 export default withRedux(
   store,
-  (state) => ({
+  state => ({
     isLoading: state.bme.loading || isEmpty(state.bme.detail),
     bme: state.bme.detail,
+    // download
+    cityDownloadOptions: citiesAsDownload(state),
+    solutionsDownloadOptions: solutionsAsDownload(state),
+    bmesDownloadOptions: bmesAsDownload(state),
+    // loadings
+    loadingBmes: state.category.bme.loading,
+    loadingSolution: state.category.solution.loading,
+    loadingCities: state.city.loading
   }),
-  (dispatch) => ({
+  dispatch => ({
     getBmeDetail(filters) { dispatch(getBmeDetail(filters)); },
-    removeBmeDetail() { dispatch(removeBmeDetail()); }
+    removeBmeDetail() { dispatch(removeBmeDetail()); },
+    // categories
+    getBmeCategories() { dispatch(getBmeCategories()); },
+    getSolutionCategories() { dispatch(getSolutionCategories()); },
+    // cities
+    getCities() { dispatch(getCities()); }
   })
 )(BmeDetailPage);

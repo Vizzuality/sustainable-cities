@@ -7,6 +7,24 @@ export default function Blogs() {
         <div className="column small-12">
           <h2 className="c-title -dark -fs-huge -fw-thin">FSCI Posts</h2>
         </div>
+
+
+        <div className="column small-12 medium-4">
+          <a target="_blank" href="http://thecityfix.com/blog/to-improve-core-services-cities-should-embrace-disruptive-business-models/?utm_source=rss&utm_medium=rss&utm_campaign=to-improve-core-services-cities-should-embrace-disruptive-business-models" className="post">
+              <div className="picture -post-7"></div>
+              <p className="c-text -dark -fs-medium -fw-light -lh-small">To Improve Core Services, Cities Should Embrace Disruption</p>
+              <span className="c-text -dark -fs-smaller -fw-light -uppercase">july 26, 2017</span>
+            </a>
+        </div>
+
+        <div className="column small-12 medium-4">
+          <a target="_blank" href="http://citiscope.org/commentary/2017/07/three-ways-localize-financing-sustainable-urban-development" className="post">
+              <div className="picture -post-8"></div>
+              <p className="c-text -dark -fs-medium -fw-light -lh-small">Three ways to ‘localize’ financing for sustainable urban development</p>
+              <span className="c-text -dark -fs-smaller -fw-light -uppercase">july 24, 2017</span>
+            </a>
+        </div>
+
         <div className="column small-12 medium-4">
           <a target="_blank" href="http://thecityfix.com/blog/whats-holding-back-latin-american-cities-clean-bus-transition-sebastian-castellanos-anne-maassen/?utm_source=rss&utm_medium=rss&utm_campaign=whats-holding-back-latin-american-cities-clean-bus-transition-sebastian-castellanos-anne-maassen" className="post">
               <div className="picture -post-1"></div>
@@ -59,7 +77,7 @@ export default function Blogs() {
 
       <div className="column small-12 medium-8 medium-offset-4">
         <div className="content"></div>
-      </div>        
+      </div>
     </div>
 
     <div className="c-detail-section -content-padding">
@@ -68,28 +86,28 @@ export default function Blogs() {
           <h2 className="c-title -dark -fs-extrabig -fw-light">Continue reading</h2>
         </div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -no-height" href="/about/events">
+          <a className="main-link -border -about" href="/about/events">
             <p className="c-text -dark -fs-medium -fw-light">Events</p>
-            <p className="c-title -dark">Lorem ipsum casius tesebe aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur.</p>
+            <p className="c-title -dark">FSCI's forums, workshops and events</p>
           </a>
         </div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -no-height" href="/about/city-support">
+          <a className="main-link -border -about" href="/about/city-support">
             <p className="c-text -dark -fs-medium -fw-light">City Support</p>
-            <p className="c-title -dark">Lorem ipsum casius tesebe aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur.</p>
+            <p className="c-title -dark">FSCI's forums, workshops, on-the-ground technical support and long-term engagements.</p>
           </a>
         </div>
         <div className="column small-12 medium-4"></div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -no-height" href="/about/more-information">
+          <a className="main-link -border -about" href="/about/more-information">
             <p className="c-text -dark -fs-medium -fw-light">More information</p>
-            <p className="c-title -dark">Lorem ipsum casius tesebe aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur.</p>
+            <p className="c-title -dark">The initiative's partners, research methodology and data policy.</p>
           </a>
         </div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -no-height" href="/about">
+          <a className="main-link -border -about" href="/about">
             <p className="c-text -dark -fs-medium -fw-light">About the initiative</p>
-            <p className="c-title -dark">Lorem ipsum casius tesebe aenean lacinia bibendum nulla sed consectetur. Aenean lacinia bibendum nulla sed consectetur.</p>
+            <p className="c-title -dark">Background information about FSCI and its partners.</p>
           </a>
         </div>
       </div>

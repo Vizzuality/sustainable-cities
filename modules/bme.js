@@ -10,7 +10,6 @@ const RESET_FILTERS = 'bme/RESET_FILTERS';
 const REMOVE_BME_DETAIL = 'bme/REMOVE_BME_DETAIL';
 
 // loading and error management
-const SET_BME_CATEGORY_ID = 'bme/SET_BME_CATEGORY_ID';
 const SET_LOADING_BMES = 'bme/SET_LOADING_BMES';
 const SET_ERROR_BMES = 'bme/SET_ERROR_BMES';
 
@@ -63,7 +62,8 @@ export function getBmes(filters = {}) {
   const queryParams = queryString.stringify({
     'filter[slug]': subCategory || category || undefined,
     include: includeParams.join(','),
-    'page[size]': 1000
+    'page[size]': 1000,
+    sort: 'name'
   });
 
   return (dispatch, getState) => {
@@ -137,9 +137,9 @@ export function getBmeDetail(filters) {
         .deserialize(bme, (err, parsedBme) => {
           dispatch({ type: SET_LOADING_BMES, payload: false });
           dispatch({ type: SET_BME_DETAIL, payload: parsedBme });
-        })
+        });
     });
-  }
+  };
 }
 
 export function setBmeFilters(filters) {

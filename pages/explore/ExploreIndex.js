@@ -34,6 +34,7 @@ import { getCategoryTabs, getAllCategories } from 'selectors/category';
 import { getParsedProjects } from 'selectors/project';
 import { getParsedBmes } from 'selectors/bme';
 import { getParsedCities } from 'selectors/city';
+import { bmesAsDownload, citiesAsDownload, solutionsAsDownload } from 'selectors/download';
 
 // components
 import Page from 'pages/Page';
@@ -42,22 +43,23 @@ import Tab from 'components/common/Tab';
 import Map from 'components/common/map/Map';
 import Legend from 'components/common/map/Legend';
 import ItemGallery from 'components/explore/ItemGallery';
-
-// modal
-import { DisclaimerModal, DISCLAIMER_COMPONENTS } from 'components/common/disclaimer/DisclaimerModal';
+import DownloadData from 'components/common/DownloadData';
+import Modal from 'components/common/Modal';
+import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
+import DownloadDataModal from 'components/common/modal/DownloadDataModal';
 
 // utils
 import LayerManager from 'utils/map/LayerManager';
 import LayerSpec from 'utils/map/layerSpec.json';
 import getLayerType from 'utils/map/layer';
 
-// constants
-import { INFO_TAB_SLUGS } from 'constants/explore';
-
 class ExploreIndex extends Page {
 
   state = {
-    disclaimer: null
+    disclaimer: null,
+    modal: {
+      download: false
+    }
   };
 
   componentWillMount() {
@@ -74,9 +76,7 @@ class ExploreIndex extends Page {
       // sets Solutions as default section
       Router.replaceRoute('explore-index', { category: 'solutions' });
     } else {
-      if (category === 'cities') {
-        this.props.getCities();
-      }
+      this.props.getCities();
 
       this._setProjectFilters(this.props);
       this._setBmeFilters(this.props);
@@ -132,6 +132,14 @@ class ExploreIndex extends Page {
     });
   }
 
+  _openDownloadData() {
+    this.setState({
+      modal: {
+        download: true
+      }
+    });
+  }
+
   _setItemsToDisplay() {
     const { queryParams, parsedBmes, parsedCities, parsedProjects } = this.props;
     const { category } = queryParams;
@@ -181,24 +189,27 @@ class ExploreIndex extends Page {
 
   render() {
     const {
+      bmesDownloadOptions,
       categories,
       categoryTabs,
+      cityDownloadOptions,
       loadingProjects,
       loadingBmes,
       loadingCities,
-      queryParams
+      queryParams,
+      solutionsDownloadOptions
     } = this.props;
     const { category } = queryParams;
-    const isLoading = loadingProjects || loadingBmes || loadingCities;
     const isSolutionView = category === 'solutions';
-    const isCityView = category === 'cities';
     const items = this._setItemsToDisplay();
     const conditions = this._setDisplayConditions();
+    const isCityView = category === 'cities';
+    const isLoading = loadingProjects || loadingBmes || (isCityView ? loadingCities : false);
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
 
-    const modifiedCategoryTabs = categoryTabs.map((tab) => ({
+    const modifiedCategoryTabs = categoryTabs.map(tab => ({
       ...tab,
-      modal: DISCLAIMER_COMPONENTS.includes(tab.slug) ? {
+      modal: tab.hasModal ? {
         onClick: () => this.setState({ disclaimer: tab.slug })
       } : null
     }));
@@ -214,26 +225,30 @@ class ExploreIndex extends Page {
           items={modifiedCategoryTabs}
           queryParams={queryParams}
         />
-        {!isCityView &&
-          <div className="l-map-container">
-            <Map
-              activeLayer={[activeLayer]}
-              LayerManager={LayerManager}
-              categories={categories}
-              filters={queryParams}
-              getLayer={this.props.getLayer}
-              layerData={this.props.layer}
-              removeDataLayer={this.props.removeDataLayer}
-              loading={this.props.loadingMap}
-            />
-            {categories.length > 0 &&
-              <Legend
-                categories={categories}
-                filters={queryParams}
-                activeLayer={activeLayer}
-                layerData={this.props.layer}
-              />}
-          </div>}
+        {/* MAP */}
+        <div className="l-map-container">
+          <Map
+            activeLayer={[activeLayer]}
+            LayerManager={LayerManager}
+            categories={categories}
+            filters={queryParams}
+            getLayer={this.props.getLayer}
+            layerData={this.props.layer}
+            removeDataLayer={this.props.removeDataLayer}
+            loading={this.props.loadingMap}
+          />
+          {(!isCityView && categories.length > 0) &&
+            <div className="row">
+              <div className="column small-12">
+                <Legend
+                  categories={categories}
+                  filters={queryParams}
+                  activeLayer={activeLayer}
+                  layerData={this.props.layer}
+                />
+              </div>
+            </div>}
+        </div>
         <div className="row">
           <div className="column small-12">
             {isLoading ?
@@ -247,10 +262,28 @@ class ExploreIndex extends Page {
           </div>
         </div>
 
+        <DownloadData
+          onClickButton={() => this._openDownloadData()}
+        />
+
         <DisclaimerModal
+          categories={categories}
           disclaimer={this.state.disclaimer}
           onClose={() => this.setState({ disclaimer: null })}
         />
+
+        <Modal
+          open={this.state.modal.download}
+          toggleModal={v => this.setState({ modal: { download: v } })}
+          loading={loadingBmes || loadingCities}
+        >
+          <DownloadDataModal
+            bmes={bmesDownloadOptions}
+            cities={cityDownloadOptions}
+            solutions={solutionsDownloadOptions}
+            onClose={() => this.setState({ modal: { download: false } })}
+          />
+        </Modal>
 
       </Layout>
     );
@@ -276,7 +309,11 @@ ExploreIndex.propTypes = {
   loadingMap: PropTypes.bool,
   layer: PropTypes.object,
   // cities
-  loadingCities: PropTypes.bool
+  loadingCities: PropTypes.bool,
+  // download
+  cityDownloadOptions: PropTypes.array,
+  solutionsDownloadOptions: PropTypes.array,
+  bmesDownloadOptions: PropTypes.array
 };
 
 ExploreIndex.defaultProps = {
@@ -289,7 +326,11 @@ ExploreIndex.defaultProps = {
   bmes: [],
   parsedBmes: [],
   // map
-  layer: {}
+  layer: {},
+  // download
+  cityDownloadOptions: [],
+  solutionsDownloadOptions: [],
+  bmesDownloadOptions: []
 };
 
 export default withRedux(
@@ -314,7 +355,11 @@ export default withRedux(
     layer: state.map.layer,
     // cities
     loadingCities: state.city.loading,
-    parsedCities: getParsedCities(state)
+    parsedCities: getParsedCities(state),
+    // download
+    cityDownloadOptions: citiesAsDownload(state),
+    solutionsDownloadOptions: solutionsAsDownload(state),
+    bmesDownloadOptions: bmesAsDownload(state)
   }),
   dispatch => ({
     // categories
@@ -329,7 +374,7 @@ export default withRedux(
     // bmes
     getBmes(filters) { dispatch(getBmes(filters)); },
     setBmeFilters(filters) { dispatch(setBmeFilters(filters)); },
-    resetBmeFilters() { dispatch(resetBmeFilters()) },
+    resetBmeFilters() { dispatch(resetBmeFilters()); },
     // map
     getLayer(layerSpec) { dispatch(getLayer(layerSpec)); },
     removeDataLayer() { dispatch(removeDataLayer()); },

@@ -65,11 +65,13 @@ export function getCities() {
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_CITY, payload: true });
 
-    const includeFilters = ['projects'];
+    const includeFilters = ['projects', 'photos'];
 
     const queryParams = queryString.stringify({
       include: includeFilters.join(','),
-      'page[size]': 1000
+      'filter[contains_projects]': 'true',
+      'page[size]': 1000,
+      sort: 'name'
     });
 
     fetch(`${process.env.API_URL}/cities?${queryParams}`, {
@@ -106,7 +108,6 @@ export function getCityDetail(cityId) {
 
     const queryParams = queryString.stringify({
       include: includeFilters.join(','),
-      'filter[contains_project]': 'true',
       'page[size]': 20
     });
 

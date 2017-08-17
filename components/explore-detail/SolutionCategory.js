@@ -15,7 +15,7 @@ const flatten = (category) => {
 };
 
 
-export default function SolutionCategory({ category }) {
+export default function SolutionCategory({ category, projectBmes }) {
   const summaryItems = flatten(category);
 
   return (<div className="solution-category">
@@ -49,6 +49,7 @@ export default function SolutionCategory({ category }) {
         key={child.id}
         parent={category}
         category={child}
+        projectBmes={projectBmes}
       />)}
     </div>)}
   </div>);

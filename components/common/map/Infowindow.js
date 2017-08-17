@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'routes';
 
 export default function Infowindow(props) {
@@ -11,6 +12,39 @@ export default function Infowindow(props) {
           </Link>
         </li>)}
     </ul>;
+
+  const _setBmes = (bmes = []) => {
+    const { category, subCategory, children } = props.filters || {};
+
+    return (
+      <ul className="info-list">
+        {bmes.map(bme =>
+          <li className="info-item" key={bme.id}>
+            {!subCategory || !children ?
+              <Link
+                route="explore-index"
+                params={{
+                  category,
+                  subCategory: subCategory !== undefined ? subCategory : bme.slug,
+                  children: subCategory !== undefined ? bme.slug : null
+                }}
+              >
+                <a>{bme.quantity} {bme.name}</a>
+              </Link> :
+              <span>{bme.quantity} {bme.name}</span>}
+          </li>)}
+      </ul>);
+  };
+
+  const _getTotalBmes = (bmes = []) => {
+    let totalQuantities = 0;
+
+    bmes.forEach((bme) => {
+      totalQuantities += bme.quantity;
+    });
+
+    return totalQuantities;
+  };
 
   const _setContent = () => {
     let content = null;
@@ -29,29 +63,61 @@ export default function Infowindow(props) {
         break;
       }
       case 'bme': {
-        const { name, projects } = props;
-        // const { category, subCategory } = filters;
-        // let categoryObject = {};
-        // // let categoryName = '';
-        // // const cityName = projects[0] && projects[0].cities[0] ?
-        // //   projects[0].cities[0].name : '-';
+        const { name, projects, filters } = props;
+        const { bmesQuantity } = projects[0] ? projects[0].cities[0] : {};
+        const { category, subCategory, children } = filters || {};
+        let bmes = [];
+        let currentBme = {};
 
-        // if (!subCategory) {
-        //   categoryObject = categories.find(cat => cat.slug === category) || {};
-        //   // categoryName = categoryObject.name;
-        // }
+        if (category) {
+          currentBme = (bmesQuantity || []).find(bme => bme.slug === category);
+          if (currentBme && Object.keys(currentBme).length) {
+            bmes = currentBme.children;
+          }
+        }
 
-        // if (subCategory) {
-        //   const parentObject = categories.find(cat => cat.slug === category) || {};
-        //   categoryObject = (parentObject.children || [])
-        //     .find(child => child.slug === subCategory) || {};
-        // }
-        // categoryName = categoryObject.name;
+        if (subCategory) {
+          currentBme = (bmes || []).find(bme => bme.slug === subCategory);
+          if (currentBme && Object.keys(currentBme).length) {
+            bmes = currentBme.children;
+          }
+        }
+
+        if (children) {
+          currentBme = (bmes || []).find(bme => bme.slug === children);
+          if (currentBme && Object.keys(currentBme).length) {
+            bmes = [currentBme];
+          }
+        }
+
+        bmes = (bmes || []).filter(bme => bme.quantity);
+        const totalElements = _getTotalBmes(bmes);
 
         content = (
           <div className="infowindow-content">
             <h3 className="c-title -fs-medium -fw-light -light">{name}</h3>
-            <span className="resume-items">{`${projects.length} projects:`}</span>
+            <span className="resume-items">{totalElements} {totalElements > 1 ? 'elements' : 'element'}:</span>
+            {_setBmes(bmes)}
+          </div>
+        );
+        break;
+      }
+      case 'city': {
+        const { projects, name, id } = props;
+        content = (
+          <div className="infowindow-content">
+            <Link
+              route="city-detail"
+              params={{
+                id
+              }}
+            >
+              <h3 className="c-title -fs-big -fw-light -light">
+                <a>{name}</a>
+              </h3>
+            </Link>
+
+            <span className="resume-items">{(projects || []).length} projects:</span>
             {_setProjects(projects)}
           </div>
         );
@@ -70,3 +136,7 @@ export default function Infowindow(props) {
     </div>
   );
 }
+
+Infowindow.propTypes = {
+  filters: PropTypes.array // eslint-disable-line react/no-unused-prop-types
+};

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import uuidv1 from 'uuid/v1';
 
 // components
 import Breadcrumbs from 'components/common/Breadcrumbs';
@@ -19,13 +20,53 @@ import {
 } from 'constants/category';
 
 const MIN_VALUE_RANGE = 1;
+const MULTI_SOLUTION_ITEM = {
+  id: uuidv1(),
+  name: 'Multiple Solutions',
+  color: CATEGORY_SOLUTIONS_COLORS['multi-solution'],
+  type: 'single-circle'
+};
 
 export default class Legend extends React.Component {
-  static getMaxValue(data) {
-    let maxValue = 0;
+  static getMaxValue(data, filters) {
+    const { category, subCategory, children } = filters;
     const projectsByCity = groupProjectsByCity(data);
+    let maxValue = 0;
+    const maxValuePerProject = [];
+
     projectsByCity.forEach((city) => {
-      maxValue = city.projects.length > maxValue ? city.projects.length : maxValue;
+      if (category === 'solutions') {
+        maxValue = city.projects.length > maxValue ? city.projects.length : maxValue;
+      }
+
+      if (category !== 'solutions') {
+        (city.projects || []).forEach((project) => {
+          const { bmesQuantity } = project.cities ? project.cities[0] : {};
+          let currentBme = {};
+
+          if (category) {
+            currentBme = (bmesQuantity || []).find(bme => bme.slug === category) || {};
+          }
+
+          if (subCategory) {
+            currentBme = (currentBme.children || []).find(bme => bme.slug === subCategory) || {};
+          }
+
+          if (children) {
+            currentBme = (currentBme.children || []).find(bme => bme.slug === children) || {};
+          }
+
+          maxValuePerProject.push(currentBme.quantity);
+        });
+
+        const sortedValues = uniq(maxValuePerProject).sort((a, b) => {
+          if (parseInt(a, 10) > parseInt(b, 10)) return 1;
+          if (parseInt(a, 10) < parseInt(b, 10)) return -1;
+          return 0;
+        });
+
+        maxValue = sortedValues[sortedValues.length - 1];
+      }
     });
 
     return maxValue;
@@ -61,6 +102,9 @@ export default class Legend extends React.Component {
             type: 'single-circle'
           });
         });
+
+        items.push(MULTI_SOLUTION_ITEM);
+
         break;
       }
       // single solution case
@@ -72,7 +116,7 @@ export default class Legend extends React.Component {
           name: solutionCategory.name,
           range: {
             min: MIN_VALUE_RANGE,
-            max: Legend.getMaxValue(data)
+            max: Legend.getMaxValue(data, filters)
           },
           color: CATEGORY_SOLUTIONS_COLORS[solutionCategory.slug],
           text: 'projects',
@@ -94,7 +138,7 @@ export default class Legend extends React.Component {
           color: CATEGORY_FIRST_LEVEL_COLORS[bmeCategory.slug],
           range: {
             min: MIN_VALUE_RANGE,
-            max: Legend.getMaxValue(data)
+            max: Legend.getMaxValue(data, filters)
           },
           text: 'elements used',
           type: 'range'
@@ -115,17 +159,20 @@ export default class Legend extends React.Component {
           bmeCategory = (bmeCategory.children || []).find(child => child.slug === children);
         }
 
-        items = [{
-          id: bmeCategory.id,
-          name: bmeCategory.name,
-          range: {
-            min: MIN_VALUE_RANGE,
-            max: Legend.getMaxValue(data)
-          },
-          color: CATEGORY_FIRST_LEVEL_COLORS[parentCategory[0].slug],
-          text: 'elements used',
-          type: 'range'
-        }];
+        if (bmeCategory) {
+          items = [{
+            id: bmeCategory ? bmeCategory.id : uuidv1(),
+            name: bmeCategory.name,
+            range: {
+              min: MIN_VALUE_RANGE,
+              max: Legend.getMaxValue(data, filters)
+            },
+            color: CATEGORY_FIRST_LEVEL_COLORS[parentCategory[0].slug],
+            text: 'elements used',
+            type: 'range'
+          }];
+        }
+
 
         break;
       }

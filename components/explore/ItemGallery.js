@@ -6,6 +6,8 @@ import { Link } from 'routes';
 import GridSlider from 'components/common/GridSlider';
 import GridList from 'components/common/GridList';
 
+const MAX_ITEMS_PER_ROW = 4;
+
 export default function ItemGallery(props) {
   const { items, isSolutionView, slider, showAll, showTitle } = props;
 
@@ -27,13 +29,14 @@ export default function ItemGallery(props) {
                   {showTitle &&
                     <h3 className="c-title -dark -fs-extrabig -fw-light">{item.title}</h3>}
                 </div>
-                {showAll &&
-                  <Link
-                    route={item.link.route}
-                    params={item.link.params}
-                  >
-                    <a className="c-button -secondary">See all</a>
-                  </Link>}
+                {(showAll &&
+                  (item.children || []).length > MAX_ITEMS_PER_ROW) &&
+                    <Link
+                      route={item.link.route}
+                      params={item.link.params}
+                    >
+                      <a className="c-button -secondary">See all</a>
+                    </Link>}
               </div>
               {(item.children || []).length > 0 ?
                 <GridSlider

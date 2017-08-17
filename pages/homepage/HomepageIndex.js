@@ -6,7 +6,11 @@ import { Link } from 'routes';
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 
-export default class HomePage extends Page {
+import withRedux from 'next-redux-wrapper';
+import { store } from 'store';
+
+
+class HomePage extends Page {
   render() {
     return (
       <Layout
@@ -16,36 +20,60 @@ export default class HomePage extends Page {
         <section className="l-home-header">
           <div className="row">
             <div className="columns small-10 small-offset-1 medium-offset-0 medium-12">
-              <h1 className="c-title -fs-super-huge -light -fw-thin -center">Financing Sustainable Cities</h1>
+              <h1 className="c-title -fs-super-huge -light -fw-thin -center">Financing Sustainable Cities Initiative</h1>
             </div>
             <div className="column small-10 small-offset-1 medium-8 medium-offset-2">
-              <h2 className="c-title -fs-bigger -light -fw-light -center -subtitle">An initiative to help cities develop business models to accelerate sustainable urban solutions</h2>
+              <h2 className="c-title -fs-bigger -light -fw-light -center -subtitle">Helping cities develop business models to accelerate sustainable urban solutions</h2>
             </div>
           </div>
           <ul className="row">
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
-              <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-bike" /></svg>
-              <span className="c-text -fs-bigger -light -fw-light">Bike sharing systems</span>
+              <Link route="explore-index" params={{ category: 'solutions', subCategory: 'bike-sharing-scheme' }}>
+                <a>
+                  <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-bike" /></svg>
+                  <span className="c-text -fs-bigger -light -fw-light">Bike sharing systems</span>
+                </a>
+              </Link>
             </li>
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
-              <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-buildings" /></svg>
-              <span className="c-text -fs-bigger -light -fw-light">Bus rapid transit systems</span>
+              <Link route="explore-index" params={{ category: 'solutions', subCategory: 'bus-rapid-transit-brt' }}>
+                <a>
+                  <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-buildings" /></svg>
+                  <span className="c-text -fs-bigger -light -fw-light">Bus rapid transit systems</span>
+                </a>
+              </Link>
             </li>
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
-              <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-bus" /></svg>
-              <span className="c-text -fs-bigger -light -fw-light">Low -and zero- emissions buses</span>
+              <Link route="explore-index" params={{ category: 'solutions', subCategory: 'low-and-zero-emission-buses' }}>
+                <a>
+                  <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-bus" /></svg>
+                  <span className="c-text -fs-bigger -light -fw-light">Low -and zero- emissions buses</span>
+                </a>
+              </Link>
             </li>
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
-              <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-city" /></svg>
-              <span className="c-text -fs-bigger -light -fw-light">Efficient new buildings</span>
+              <Link route="explore-index" params={{ category: 'solutions', subCategory: 'efficient-new-buildings' }}>
+                <a>
+                  <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-city" /></svg>
+                  <span className="c-text -fs-bigger -light -fw-light">Efficient new buildings</span>
+                </a>
+              </Link>
             </li>
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
-              <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-gov" /></svg>
-              <span className="c-text -fs-bigger -light -fw-light">Municipal building retrofits</span>
+              <Link route="explore-index" params={{ category: 'solutions', subCategory: 'municipal-building-retrofits' }}>
+                <a>
+                  <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-gov" /></svg>
+                  <span className="c-text -fs-bigger -light -fw-light">Municipal building retrofits</span>
+                </a>
+              </Link>
             </li>
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
-              <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-metro" /></svg>
-              <span className="c-text -fs-bigger -light -fw-light">Transit-oriented development</span>
+              <Link route="explore-index" params={{ category: 'solutions', subCategory: 'transit-oriented-development-tod' }}>
+                <a>
+                  <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-metro" /></svg>
+                  <span className="c-text -fs-bigger -light -fw-light">Transit-oriented development</span>
+                </a>
+              </Link>
             </li>
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
               <svg className="icon -light -in-line-left -medium -short"><use xlinkHref="#icon-home-about" /></svg>
@@ -125,3 +153,5 @@ export default class HomePage extends Page {
 HomePage.propTypes = {
   queryParams: PropTypes.object.isRequired
 };
+
+export default withRedux(store)(HomePage);

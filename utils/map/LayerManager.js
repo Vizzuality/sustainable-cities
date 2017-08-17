@@ -5,28 +5,12 @@ import MarkerLayer from 'components/common/map/MarkerLayer';
 // utils
 import substitution from 'utils/text';
 
-// Leaflet can't be imported on the server because it's not isomorphic
-// const L = (typeof window !== 'undefined') ? require('leaflet') : null;
+const mapLayers = {};
 
 export default class LayerManager {
-  // temporary
-  static getMarkerColor(type) {
-    switch (type) {
-      case 'all-solutions':
-        return 'red';
-      case 'one-solution':
-        return 'blue';
-      case 'bme':
-        return 'green';
-      default:
-        return 'black';
-    }
-  }
 
-  // Constructor
   constructor(map, options = {}) {
     this._map = map;
-    this._mapLayers = {};
     this._onLayerAddedSuccess = options.onLayerAddedSuccess;
     this._onLayerAddedError = options.onLayerAddedError;
     this._getLayer = options.getLayer;
@@ -63,23 +47,22 @@ export default class LayerManager {
   }
 
   removeLayer(layerId) {
-    if (this._mapLayers[layerId]) {
-      this._map.removeLayer(this._mapLayers[layerId]);
-      delete this._mapLayers[layerId];
+    if (mapLayers[layerId]) {
+      this._map.removeLayer(mapLayers[layerId]);
+      delete mapLayers[layerId];
     }
   }
 
   removeLayers() {
-    Object.keys(this._mapLayers).forEach((id) => {
-      if (this._mapLayers[id]) {
-        this._map.removeLayer(this._mapLayers[id]);
-        delete this._mapLayers[id];
+    Object.keys(mapLayers).forEach((id) => {
+      if (mapLayers[id]) {
+        this.removeLayer(id);
       }
     });
   }
 
   setMarkers(id, data) {
-    this._mapLayers[id] = new MarkerLayer(
+    mapLayers[id] = new MarkerLayer(
       data,
       this._map,
       this._filters,

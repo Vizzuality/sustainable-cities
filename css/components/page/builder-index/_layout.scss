@@ -1,11 +1,15 @@
+.l-main.builder-index {
+  display: flex;
+}
+
+
 .c-builder-sidebar {
-  position: absolute;
+  //position: absolute;
+  flex-shrink: 0;
   z-index: $z-index-2;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  padding-top: 35px;
-  width: 210px;
+  padding-top: 2em;
+  padding-left: 1px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -31,6 +35,14 @@
         margin-top: 0px;
         margin-bottom: 10px;
       }
+    }
+  }
+}
+
+.c-builder-bme-detail {
+  ul {
+    li {
+      display: block;
     }
   }
 }
@@ -66,122 +78,15 @@
   }
 }
 
-.radial-chart {
-  &:not(.legend) {
-    font-weight: 300;
-    position: relative;
-    width: 1080px;
-  }
-
-  &.legend {
-    height: 22px;
-    width: 22px;
-    margin-right: 5px;
-  }
-
-  .tooltip {
-    pointer-events: none;
-    background-color: $color-9;
-    border-radius: 15px;
-    border: solid 2px $color-5;
-    padding: 8px 15px 7px 15px;
-    width: auto;
-    display: table;
-    transform: translate(-50%, -40px);
-
-    p {
-      margin: 0px;
-      line-height: 1.07;
-      text-transform: uppercase;
-      font-size: $font-size-smaller;
-    }
-  }
-
-  svg {
-    display: block;
-  }
-
-  g {
-    transition: all 1s ease-in-out; transition-property: transform, opacity;
-  }
-
-  @each $category, $color in $color-categories {
-    .tooltip.#{$category} { background-color: $color; }
-
-    .#{$category} {
-      circle { fill: $color; stroke: $color; }
-      line { stroke: $color; }
-    }
-  }
-
-  circle {
-    stroke-width: 1.5;
-    fill-opacity: 0.2;
-
-    &.selected {
-      stroke: black;
-      fill: none;
-      stroke-width: 2;
-    }
-  }
-
-  .level-3 circle {
-    fill-opacity: 1;
-  }
-
-  &:not(.active-undefined) {
-    circle {
-      stroke-width: 1;
-
-      &.level-3 {
-        stroke-width: 0;
-      }
-
-      &.selected {
-        stroke-width: 2;
-      }
-    }
-  }
-
-  &.active-investment-component g g:not(.investment-component),
-  &.active-funding-source g g:not(.funding-source),
-  &.active-delivery-mechanism g g:not(.delivery-mechanism),
-  &.active-financial-product g g:not(.financial-product),
-  {
-    opacity: 0.3;
-  }
-
-  &.interactive g g.level-3 circle:hover,
-  &.interactive.active-investment-component g g.level-0.investment-component circle:hover,
-  &.interactive.active-funding-source g g.level-0.funding-source circle:hover,
-  &.interactive.active-delivery-mechanism g g.level-0.delivery-mechanism circle:hover,
-  &.interactive.active-financial-product g g.level-0.financial-product circle:hover,
-  &.interactive.active-none g g.level-0 circle:hover,
-  {
-    cursor: pointer;
-  }
-
-  line {
-    stroke-width: 2;
-    stroke-opacity: 0.4;
-  }
-}
-
-.root-label { width: 16%; height: 16%; margin: 0; display: flex; align-items: center; pointer-events: none; padding: 2%; }
-.root-label p { text-align: center; width: 100%; }
-
-
-.enabling-conditions .radial-chart {
-  margin-top: 226px;
-  width: 30%;
-  p { display: none; }
-}
-
 .c-enabling-conditions-selector {
-  position: relative;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  z-index: $z-index-2;
+  background-color: $color-5;
+
   border-right: 1px solid rgba(44,47,51,0.1);
-  border-bottom: 1px solid rgba(44,47,51,0.1);
-  border-left: 1px solid rgba(44,47,51,0.1);
   padding-bottom: 50px;
   margin-right: 24px;
   width: 70%;
@@ -219,6 +124,155 @@
       display: block;
     }
   }
+}
+
+
+.radial-chart {
+  &.thumbnail {
+    margin-left: auto;
+    padding-top: 100px;
+
+    p {
+      display: none;
+    }
+    width: auto;
+  }
+
+  font-weight: 300;
+  position: relative;
+  max-width: 80vh;
+
+  .tooltip {
+    z-index: $z-index-11;
+    pointer-events: none;
+    border-radius: 15px;
+    border: solid 2px $color-5;
+    padding: 8px 15px 7px 15px;
+    width: auto;
+    display: table;
+    transform: translate(-50%, -150%);
+
+    p {
+      margin: 0px;
+      line-height: 1.07;
+      text-transform: uppercase;
+      font-size: $font-size-smaller;
+    }
+  }
+
+  &:not(.thumbnail) g {
+    transition: all 1s ease-in-out;
+    transition-property: transform, opacity;
+  }
+
+  @each $category, $color in $color-categories {
+    .tooltip.#{$category} {
+      border: 1px solid $color;
+
+      background-color: mix($color, $color-white, 20%);
+      &.level-4 {
+        background-color: $color;
+      }
+    }
+
+    .#{$category} {
+      circle { fill: mix($color, $color-white, 20%); stroke: $color; }
+      &.level-3 circle { fill: $color; stroke: $color; }
+      line { stroke: $color; }
+    }
+  }
+
+  circle {
+    stroke-width: 1.5;
+
+    &.selected {
+      stroke: black;
+      fill: none;
+      stroke-width: 2;
+    }
+  }
+
+  &:not(.active-undefined) {
+    circle {
+      stroke-width: 1;
+
+      &.level-3 {
+        stroke-width: 0;
+      }
+
+      &.selected {
+        stroke-width: 2;
+      }
+    }
+  }
+
+  g.Barrier {
+    opacity: 0.3;
+  }
+
+  g.node.Success {
+    transform: scale(2);
+  }
+
+  @each $category, $color in $color-categories {
+    @if $category != 'none' {
+      .active-#{$category} g.node:not(.#{$category}) {
+        opacity: 0.3;
+      }
+    }
+  }
+
+  &.interactive {
+    .active-none g.node {
+      &.level-3, &.level-0 {
+        circle:hover { cursor: pointer; }
+      }
+
+      &.level-0 circle:hover { transform: scale(1.125); }
+      &.level-1 circle:hover { transform: scale(1.25); }
+      &.level-2 circle:hover { transform: scale(1.5); }
+      &.level-3 circle:hover { transform: scale(2); }
+    }
+    @each $category, $color in $color-categories {
+      @if $category != 'none' {
+        .active-#{$category} g.node.#{$category} {
+          &.level-3, &.level-0 {
+            circle:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  line {
+    stroke-width: 2;
+    stroke-opacity: 0.4;
+  }
+}
+
+.root-label {
+  width: 16%;
+  height: 16%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+
+  transform: translate(-50%, -50%);
+
+  p {
+    text-align: center;
+    width: 100%;
+  }
+}
+
+
+.enabling-conditions .radial-chart {
+  margin-top: 226px;
+  width: 30%;
+  p { display: none; }
 }
 
 .c-dismiss.-arrow {
@@ -271,5 +325,82 @@
   textarea {
     width: 100%;
     height: 200px;
+  }
+
+  .c-bme-overview-item {
+    width: 50%;
+  }
+}
+
+.c-checkbox {
+  cursor: pointer;
+
+  input[type='checkbox'] {
+    display: none;
+  }
+
+  &.-checked::before {
+    content: "✔";
+    border: 1px solid $color-black;
+    background-color: $color-black;
+    color: $color-white;
+  }
+
+  &:not(-checked)::before {
+    content: "";
+    border: 1px solid $color-text-7;
+    margin-bottom: -2px;
+  }
+
+  &::before {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1.1em;
+    text-align: center;
+    margin-right: 0.8em;
+    border-radius: 3px;
+  }
+
+  &.-checked {
+    font-weight: $font-weight-bold;
+  }
+}
+
+.c-radio {
+  input[type='radio'] {
+    display: none;
+  }
+
+  &.-checked {
+    font-weight: $font-weight-bold;
+  }
+
+  &::before {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1.1em;
+    text-align: center;
+    margin-right: 0.8em;
+    border-radius: 50%;
+  }
+
+  &:not(-checked)::before {
+    content: "";
+    border: 1px solid $color-text-7;
+    margin-bottom: -2px;
+  }
+
+  &.-checked::before {
+    width: calc(1em - 7px);
+    height: calc(1em - 7px);
+    background-color: $color-black;
+    color: $color-white;
+
+    box-shadow: 0 0 0 3px $color-white, 0 0 0 4px $color-black;
+    margin-right: calc(3px + 0.8em);
+    margin-left: 3px;
+    margin-bottom: 3px;
   }
 }

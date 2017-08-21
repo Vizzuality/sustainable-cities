@@ -52,12 +52,19 @@ class BuilderIndex extends React.Component {
     this.props.deselectEnabling(enabling.id);
   }
 
+  relativeBME(bme, delta) {
+    const bmes = this.props.bmes;
+    const bmeIndex = bmes.findIndex(b => b.id === bme.id);
+
+    return bmes.concat(bmes)[(bmeIndex + bmes.length + delta) % bmes.length];
+  }
+
   selectNext(bme) {
-    this.showBME((this.props.bmes.concat(this.props.bmes))[this.props.bmes.findIndex(b => b.id == bme.id) + 1]);
+    this.showBME(this.relativeBME(bme, 1));
   }
 
   selectPrevious(bme) {
-    this.showBME((this.props.bmes.concat(this.props.bmes))[this.props.bmes.findIndex(b => b.id == bme.id) + this.props.bmes.length - 1]);
+    this.showBME(this.relativeBME(bme, -1));
   }
 
   showBME = (bme) => this.setState({ bme });

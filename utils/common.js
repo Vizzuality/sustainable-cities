@@ -36,5 +36,9 @@ const sortByName = (a, b) => {
   return 0;
 };
 
+// eslint-disable-next-line no-confusing-arrow
+const getImage = entity => (entity.photos || []).length ?
+  `${process.env.API_URL}${entity.photos[0].attachment.medium.url}` : null;
 
-export { isArrayEqual, getYearFromDateString, sortByName };
+
+export { isArrayEqual, getYearFromDateString, sortByName, getImage };

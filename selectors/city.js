@@ -25,7 +25,6 @@ const getParsedProjects = createSelector(
   (city) => {
     if (!Object.keys(city).length) return [];
 
-
     return listProjectsByCity(city || []);
   }
 );

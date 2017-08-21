@@ -1,4 +1,4 @@
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
 import flatMap from 'lodash/flatMap';
 import mapValues from 'lodash/mapValues';
 import { SLICE_EXISTING, SLICE_NEW } from 'modules/builder';
@@ -9,9 +9,9 @@ export const leaves = (nodes) => {
 
   if (children.length > 0) {
     return leaves(children);
-  } else {
-    return nodes;
   }
+
+  return nodes;
 };
 
 export const flattenSolutionTree = (solutions) => {
@@ -29,7 +29,7 @@ export const recursiveFilter = (nodes, filterFn) => nodes.map(node => ({
     node.children ?
     recursiveFilter(node.children, filterFn) :
     (node.enablings || node.bmes).filter(filterFn)
-  ),
+  )
 })).filter(node => node.children.length > 0);
 
 export const withSlice = (object) => (dispatch, props) => bindActionCreators(

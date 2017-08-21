@@ -1,10 +1,7 @@
 import uuidv1 from 'uuid/v1';
 
 // utils
-import { getImage as getProjectImage } from 'utils/project';
-
-const getCityImage = (city) => city.photos && city.photos[0] ?
-  `${process.env.API_URL}${city.photos[0].attachment.medium.url}` : null;
+import { getImage } from 'utils/common';
 
 // parses projects in order to populate GridList component
 const listCities = cities => cities.map(city => ({
@@ -13,7 +10,7 @@ const listCities = cities => cities.map(city => ({
   subtitle: `${city.projectCount} ${(city.projectCount > 1) ? 'projects' : 'project'}`,
   link: { route: 'city-detail', params: { id: city.id } },
   layout: 'portrait',
-  image: getCityImage(city)
+  image: getImage(city)
 }));
 
 // parses projects in order to populate GridList component
@@ -25,7 +22,7 @@ const listProjectsByCity = (city = {}) => [({
   children: (city.projects || []).map(project => ({
     id: uuidv1(),
     title: project.name,
-    image: getProjectImage(project),
+    image: getImage(project),
     link: { route: 'solution-detail', params: { id: project.id } },
     layout: 'portrait'
   }))

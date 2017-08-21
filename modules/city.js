@@ -141,7 +141,10 @@ export function getCityBmes(cityId) {
   return (dispatch, getState) => {
     dispatch({ type: SET_LOADING_CITY_BME, payload: true });
 
+    const includeFilters = ['photos'];
+
     const queryParams = queryString.stringify({
+      include: includeFilters.join(','),
       'filter[city_id]': cityId,
       'page[size]': 20
     });

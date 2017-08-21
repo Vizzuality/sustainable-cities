@@ -8,14 +8,21 @@ import { store } from 'store';
 
 // modules
 import {
+  getCities,
   getCityDetail,
   getCityBmes,
   setCityFilters,
   resetCityFilters
 } from 'modules/city';
 
+import {
+  getSolutionCategories,
+  getBmeCategories
+} from 'modules/category';
+
 // selectors
 import { getParsedProjects, getParsedBmes } from 'selectors/city';
+import { bmesAsDownload, citiesAsDownload, solutionsAsDownload } from 'selectors/download';
 
 // components
 import Page from 'pages/Page';
@@ -23,13 +30,27 @@ import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import ItemGallery from 'components/explore/ItemGallery';
-import DownloadData from 'components/common/DownloadData';
+import Modal from 'components/common/Modal';
+import DownloadDataModal from 'components/common/modal/DownloadDataModal';
 
 
 class CityDetailPage extends Page {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modal: {
+        download: false
+      }
+    };
+  }
+
   componentWillMount() {
     const { id, tab } = this.props.queryParams;
     this.props.setCityFilters({ detailId: id, tab });
+    this.props.getCities();
+    this.props.getBmeCategories();
+    this.props.getSolutionCategories();
   }
 
   componentDidUpdate(prevProps) {
@@ -81,8 +102,13 @@ class CityDetailPage extends Page {
     const {
       city,
       parsedProjects,
+      isLoading,
+      loadingBmes,
       parsedBmes,
-      queryParams
+      queryParams,
+      cityDownloadOptions,
+      bmesDownloadOptions,
+      solutionsDownloadOptions
     } = this.props;
 
     const { name, id } = city;
@@ -233,7 +259,18 @@ class CityDetailPage extends Page {
           </div>
         </div>}
 
-        <DownloadData />
+        <Modal
+          open={this.state.modal.download}
+          toggleModal={v => this.setState({ modal: { download: v } })}
+          loading={loadingBmes || isLoading}
+        >
+          <DownloadDataModal
+            bmes={bmesDownloadOptions}
+            cities={cityDownloadOptions}
+            solutions={solutionsDownloadOptions}
+            onClose={() => this.setState({ modal: { download: false } })}
+          />
+        </Modal>
 
       </Layout>
     );
@@ -248,14 +285,24 @@ CityDetailPage.propTypes = {
   resetCityFilters: PropTypes.func,
   parsedProjects: PropTypes.array,
   parsedBmes: PropTypes.object,
-  queryParams: PropTypes.object.isRequired
+  queryParams: PropTypes.object.isRequired,
+  // download
+  cityDownloadOptions: PropTypes.array,
+  solutionsDownloadOptions: PropTypes.array,
+  bmesDownloadOptions: PropTypes.array,
+  // bme
+  loadingBmes: PropTypes.bool
 };
 
 CityDetailPage.defaultProps = {
   city: {},
   cityFilters: {},
   parsedProjects: [],
-  parsedBmes: {}
+  parsedBmes: {},
+  // download
+  cityDownloadOptions: [],
+  solutionsDownloadOptions: [],
+  bmesDownloadOptions: []
 };
 
 export default withRedux(
@@ -267,12 +314,22 @@ export default withRedux(
     cityFilters: state.city.filters,
     // projects
     parsedProjects: getParsedProjects(state),
-    parsedBmes: getParsedBmes(state)
+    parsedBmes: getParsedBmes(state),
+    // download
+    cityDownloadOptions: citiesAsDownload(state),
+    solutionsDownloadOptions: solutionsAsDownload(state),
+    bmesDownloadOptions: bmesAsDownload(state),
+    // bmes
+    loadingBmes: state.bme.loading
   }),
   dispatch => ({
     getCityDetail(id) { dispatch(getCityDetail(id)); },
     setCityFilters(filters) { dispatch(setCityFilters(filters)); },
     resetCityFilters() { dispatch(resetCityFilters()); },
-    getCityBmes(id) { dispatch(getCityBmes(id)); }
+    getCityBmes(id) { dispatch(getCityBmes(id)); },
+    getCities() { dispatch(getCities()); },
+    // categories
+    getSolutionCategories() { dispatch(getSolutionCategories()); },
+    getBmeCategories() { dispatch(getBmeCategories()); }
   })
 )(CityDetailPage);

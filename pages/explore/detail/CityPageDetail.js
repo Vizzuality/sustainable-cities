@@ -97,8 +97,8 @@ class CityDetailPage extends Page {
 
         <Cover
           title={name || ''}
-          size='shorter'
-          position='bottom'
+          size="shorter"
+          position="bottom"
           breadcrumbs={breadcrumbs}
         />
 
@@ -106,14 +106,13 @@ class CityDetailPage extends Page {
           <div className="row">
             <div className="column small-12">
               <ItemGallery
-                showAll={parsedProjects.length > 4 ? true : false}
-                title={parsedProjects.length > 1 ? "Projects in this city" : "Project in this city"}
+                showAll={parsedProjects.length > 4}
+                title={parsedProjects.length > 1 ? 'Projects in this city' : 'Project in this city'}
                 items={parsedProjects}
               />
 
               <ItemGallery
-                showAll={parsedBmes['investment-component'] !== undefined && parsedBmes['investment-component'].length > 4 ?
-                  true : false }
+                showAll={parsedBmes['investment-component'] !== undefined && parsedBmes['investment-component'].length > 4}
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'investment-component' }
@@ -123,8 +122,7 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll={parsedBmes['delivery-mechanism'] !== undefined && parsedBmes['delivery-mechanism'].length > 4 ?
-                  true : false }
+                showAll={parsedBmes['delivery-mechanism'] !== undefined && parsedBmes['delivery-mechanism'].length > 4}
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'delivery-mechanism' }
@@ -134,8 +132,7 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll={parsedBmes['financial-product'] !== undefined && parsedBmes['financial-product'].length > 4 ?
-                  true : false }
+                showAll={parsedBmes['financial-product'] !== undefined && parsedBmes['financial-product'].length > 4}
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'financial-product' }
@@ -145,8 +142,7 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll={parsedBmes['funding-source'] !== undefined && parsedBmes['funding-source'].length > 4 ?
-                  true : false }
+                showAll={parsedBmes['funding-source'] !== undefined && parsedBmes['funding-source'].length > 4}
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'funding-source' }
@@ -156,30 +152,27 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll={parsedBmes['financing'] !== undefined && parsedBmes['financing'].length > 4 ?
-                  true : false }
+                showAll={parsedBmes.financing !== undefined && parsedBmes.financing.length > 4}
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'financing' }
                 }}
-                items={parsedBmes['financing'] !== undefined ?
-                  [parsedBmes['financing']] : []}
+                items={parsedBmes.financing !== undefined ?
+                  [parsedBmes.financing] : []}
               />
 
               <ItemGallery
-                showAll={parsedBmes['funding'] !== undefined && parsedBmes['funding'].length > 4 ?
-                  true : false }
+                showAll={parsedBmes.funding !== undefined && parsedBmes.funding.length > 4}
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'funding' }
                 }}
-                items={parsedBmes['funding'] !== undefined ?
-                  [parsedBmes['funding']] : []}
+                items={parsedBmes.funding !== undefined ?
+                  [parsedBmes.funding] : []}
               />
 
               <ItemGallery
-                showAll={parsedBmes['legal-arrangements'] !== undefined && parsedBmes['legal-arrangements'].length > 4 ?
-                  true : false }
+                showAll={parsedBmes['legal-arrangements'] !== undefined && parsedBmes['legal-arrangements'].length > 4}
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'legal-arrangements' }
@@ -189,8 +182,7 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll={parsedBmes['technical-components'] !== undefined && parsedBmes['technical-components'].length > 4 ?
-                  true : false }
+                showAll={parsedBmes['technical-components'] !== undefined && parsedBmes['technical-components'].length > 4}
                 link={{
                   route: 'city-detail',
                   params: { id, tab: 'technical-components' }

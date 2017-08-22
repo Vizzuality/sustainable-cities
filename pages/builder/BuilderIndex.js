@@ -18,6 +18,7 @@ import ConnectedBmeDetail from 'components/builder-index/ConnectedBmeDetail';
 import HelpModal from 'components/builder-index/HelpModal';
 import Login from 'components/common/Login';
 import SignUp from 'components/common/SignUp';
+import Spinner from 'components/common/Spinner';
 
 import { builderSelector, withModifiers } from 'selectors/builder';
 import { leaves, withSlice } from 'utils/builder';
@@ -126,6 +127,8 @@ class BuilderIndex extends React.Component {
   }
 
   render() {
+    const loading = this.props.bmeTree.length == 0;
+
     return (
       <Layout
         title="Builder"
@@ -170,6 +173,10 @@ class BuilderIndex extends React.Component {
           this.state.sidebar == "enablings" ? "u-w-30" : "u-w-100",
         )}>
 
+          {loading ?
+            <div className="row u-flex-center u-relative u-pb-100">
+              <Spinner className="-transparent" isLoading={true} />
+            </div> :
           <RadialChart
             nodes={this.nodesToShow()}
             selected={this.props.selectedBMEs}
@@ -178,6 +185,7 @@ class BuilderIndex extends React.Component {
             interactive={this.state.sidebar == "default"}
             thumbnail={this.state.sidebar == "enablings"}
           />
+          }
 
           { this.state.hoveredEnabling &&
               <div className="u-ml-1">

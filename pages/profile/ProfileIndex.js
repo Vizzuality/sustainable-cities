@@ -4,34 +4,38 @@ import React from 'react';
 import Page from 'pages/Page';
 
 import Layout from 'components/layout/layout';
-// import ProjectOverview from 'components/builder-index/ProjectOverview';
-// import ProjectDetail from 'components/builder-index/ProjectDetail';
-// import ProjectCategory from 'components/builder-index/ProjectCategory';
 import Cover from 'components/common/Cover';
-// import Button from 'components/common/Button';
-// import Breadcrumbs from 'components/common/Breadcrumbs';
-
-// import { leaves, flattenSolutionTree } from 'utils/builder';
+import Button from 'components/common/Button';
 
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
-// import { Router } from 'routes'
-
-// import { getBmes, getEnablings, getSolutions } from 'modules/builder-api';
-// import { setField, commentBME } from 'modules/builder';
+import { saveProfile } from 'modules/auth';
 
 
 class ProfileIndex extends Page {
-  constructor() {
-    super();
+  state = {
+    errors: [],
+  };
 
-    this.state = {
-      modal: null,
-      activeTab: 'overview'
-    };
-  }
+  onFieldChange = (name, value) => this.setState({ [name]: value });
 
-  onFieldChange = (name, value) => this.props.setField(name, value);
+  saveProfile = () => {
+    this.setState({ errors: [] });
+    this.props.saveProfile(
+      this.props.token,
+      {
+        email: this.state.email,
+        name: this.state.name,
+        nickname: this.state.nickname,
+        password: this.state.password,
+        password_confirmation: this.state.passwordConfirmation,
+      },
+    ).then(data => {
+      if (data.errors) {
+        this.setState({ errors: data.errors });
+      }
+    });
+  };
 
   render() {
     return (
@@ -44,21 +48,54 @@ class ProfileIndex extends Page {
           size="shorter"
           title="My profile"
           image="/static/images/download-data-module.jpg"
-        />
+        >
+          <Button primary inverse onClick={this.saveProfile}>Save changes</Button>
+        </Cover>
 
         <div className="row u-mt-2">
           <div className="column large-4">
             <h2 className="c-title -fw-light -fw-extrabig">Account details</h2>
           </div>
           <div className="column large-8">
+            {this.state.errors.map((error, i) => <p key={i}>{error.title}</p>)}
+
             <h3 className="c-title -fw-light -fw-bigger">Email</h3>
-            <input className="u-block input-text u-mt-1 u-w-100" type="text" value={this.props.profile.email} />
+            <input
+              className="u-block input-text u-mt-1 u-w-100"
+              type="text"
+              onChange={(e) => this.onFieldChange('email', e.target.value)}
+              value={this.state.email === undefined ? this.props.profile.email : this.state.email}
+            />
 
             <h3 className="c-title -fw-light -fw-bigger u-mt-2">Name</h3>
-            <input className="u-block input-text u-mt-1 u-w-100" type="text" value={this.props.profile.name} />
+            <input
+              className="u-block input-text u-mt-1 u-w-100"
+              type="text"
+              onChange={(e) => this.onFieldChange('name', e.target.value)}
+              value={this.state.name === undefined ? this.props.profile.name : this.state.name}
+            />
 
             <h3 className="c-title -fw-light -fw-bigger u-mt-2">Nickname</h3>
-            <input className="u-block input-text u-mt-1 u-w-100" type="text" value={this.props.profile.nickname} />
+            <input
+              className="u-block input-text u-mt-1 u-w-100"
+              type="text"
+              onChange={(e) => this.onFieldChange('nickname', e.target.value)}
+              value={this.state.nickname=== undefined ? this.props.profile.nickname : this.state.nickname}
+            />
+
+            <h3 className="c-title -fw-light -fw-bigger u-mt-2">Change password</h3>
+            <input
+              className="u-block input-text u-mt-1 u-w-100"
+              type="password"
+              onChange={(e) => this.onFieldChange('password', e.target.value)}
+              value={this.state.password}
+            />
+            <input
+              className="u-block input-text u-mt-1 u-w-100"
+              type="password"
+              onChange={(e) => this.onFieldChange('passwordConfirmation', e.target.value)}
+              value={this.state.passwordConfirmation}
+            />
           </div>
         </div>
 
@@ -79,6 +116,8 @@ class ProfileIndex extends Page {
 export default withRedux(
   store,
   state => state.auth,
-  () => ({})
+  {
+    saveProfile,
+  }
 )(ProfileIndex);
 

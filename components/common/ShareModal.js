@@ -9,6 +9,14 @@ class ShareModal extends React.Component {
     publicProject: false,
   }
 
+  state = {
+    showEditableURL: false,
+  };
+
+  onEditableClick = (showEditableURL) => {
+    this.setState({ showEditableURL });
+  }
+
   onCopyClick = () => {
     copy(this.props.url);
   }
@@ -21,30 +29,49 @@ class ShareModal extends React.Component {
             <h1 className="c-title -fw-thin -fs-huge">Share</h1>
 
             <div className="row">
-              <div className="column u-flex-column u-pr-2">
-                <div>
-                  <h2 className="c-title -fw-light -fs-extrabig">
-                    {this.props.publicProject ? "URL to share" : "Private URL to share"}
-                  </h2>
+              {
+                this.props.url ?
+                  <div className="column u-flex-column u-pr-2">
+                    <div>
+                      <h2 className="c-title -fw-light -fs-extrabig">
+                        {this.props.publicProject ? "URL to share" : "Private URL to share"}
+                      </h2>
 
-                  <input
-                    className="u-block u-w-100 input-text u-mb-1"
-                    type="text"
-                    value={this.props.url}
-                  />
+                      <input
+                        className="u-block u-w-100 input-text u-mb-1"
+                        type="text"
+                        value={this.state.showEditableURL ? this.props.urlEditable : this.props.url}
+                        readOnly={true}
+                      />
 
-                  { !this.props.publicProject &&
-                      <label className="u-block u-mb-1">
-                        <input type="checkbox" />
-                        Share editable project (allow changes)
-                      </label>
-                  }
-                </div>
+                      { !this.props.publicProject &&
+                          <label className="u-block u-mb-1">
+                            <input
+                              type="checkbox"
+                              onChange={(e) => this.onEditableClick(e.target.checked)}
+                            />
+                            Share editable project (allow changes)
+                          </label>
+                      }
+                    </div>
 
-                <div>
-                  <Button primary onClick={this.onCopyClick}>Copy link</Button>
-                </div>
-              </div>
+                    <div className="u-mt-1">
+                      <Button primary onClick={this.onCopyClick}>Copy link</Button>
+                    </div>
+                  </div> :
+                  <div className="column u-flex-column u-pr-2">
+                    <div>
+                      <h2 className="c-title -fw-light -fs-extrabig">
+                        Unsaved project
+                      </h2>
+
+                      <p>Please, save your business model before sharing it.</p>
+                    </div>
+                    <div className="u-mt-1">
+                      <Button primary onClick={this.props.onSave}>Save</Button>
+                    </div>
+                  </div>
+              }
 
               <div className="column u-left-separator u-pl-2 u-flex-column">
                 <div>
@@ -57,7 +84,7 @@ class ShareModal extends React.Component {
                   </p>
                 </div>
 
-                <div>
+                <div className="u-mt-1">
                   <Button primary onClick={this.props.onDownload}>Download</Button>
                 </div>
               </div>
@@ -76,4 +103,3 @@ class ShareModal extends React.Component {
 }
 
 export default ShareModal;
-

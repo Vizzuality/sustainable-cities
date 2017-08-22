@@ -150,7 +150,7 @@
     padding: 8px 15px 7px 15px;
     width: auto;
     display: table;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -150%);
 
     p {
       margin: 0px;
@@ -176,24 +176,20 @@
     }
 
     .#{$category} {
-      circle { fill: $color; stroke: $color; }
+      circle { fill: mix($color, $color-white, 20%); stroke: $color; }
+      &.level-3 circle { fill: $color; stroke: $color; }
       line { stroke: $color; }
     }
   }
 
   circle {
     stroke-width: 1.5;
-    fill-opacity: 0.2;
 
     &.selected {
       stroke: black;
-      fill: none;
+      fill: none !important;
       stroke-width: 2;
     }
-  }
-
-  .level-3 circle {
-    fill-opacity: 1;
   }
 
   &:not(.active-undefined) {
@@ -229,10 +225,13 @@
   &.interactive {
     .active-none g.node {
       &.level-3, &.level-0 {
-        circle:hover {
-          cursor: pointer;
-        }
+        circle:hover { cursor: pointer; }
       }
+
+      &.level-0 circle:hover { transform: scale(1.125); }
+      &.level-1 circle:hover { transform: scale(1.25); }
+      &.level-2 circle:hover { transform: scale(1.5); }
+      &.level-3 circle:hover { transform: scale(2); }
     }
     @each $category, $color in $color-categories {
       @if $category != 'none' {

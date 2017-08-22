@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Button from 'components/common/Button';
 
-export default function BmeDetail({ bme }) {
+export default function BmeDetail({ bme, print }) {
   const enablingConditions = {
     successFactors: bme.enablings && bme.enablings.filter(e => e.assessmentValue === 'Success'),
     knownBarriers: bme.enablings && bme.enablings.filter(e => e.assessmentValue === 'Barrier')
@@ -71,9 +71,11 @@ export default function BmeDetail({ bme }) {
               <div className="column large-9 c-title -fs-bigger -fw-light project-name">
                 {project.name}
               </div>
+            { !print &&
               <div className="column large-3 project-link">
                 <Button secondary link={`/solutions/${project.id}`}>See Project</Button>
               </div>
+              }
             </div>
             <div className="row">
               <div className="column large-12 c-title -fs-smaller project-city">
@@ -115,5 +117,6 @@ export default function BmeDetail({ bme }) {
 }
 
 BmeDetail.propTypes = {
-  bme: PropTypes.object.isRequired
+  bme: PropTypes.object.isRequired,
+  print: PropTypes.bool,
 };

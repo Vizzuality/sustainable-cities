@@ -18,7 +18,6 @@ export default function ProjectOverview({ project }) {
           <div className="c-detail-section">
             <div className="content">
               <BmeOverview
-                projectId={project.id}
                 bmeTree={project.bmeTree}
               />
             </div>

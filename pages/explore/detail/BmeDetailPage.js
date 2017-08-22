@@ -6,16 +6,26 @@ import isEmpty from 'lodash/isEmpty';
 // Redux
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
+import { Router } from 'routes';
 
 // modules
 import { getBmeDetail, removeBmeDetail } from 'modules/bme';
+import { getSolutionCategories, getBmeCategories } from 'modules/category';
+import { getCities } from 'modules/city';
+
+// selectors
+import { bmesAsDownload, citiesAsDownload, solutionsAsDownload } from 'selectors/download';
 
 // components
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
+import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import DownloadData from 'components/common/DownloadData';
+import Modal from 'components/common/Modal';
+import DownloadDataModal from 'components/common/modal/DownloadDataModal';
+import ShareModal from 'components/common/ShareModal';
 import RelatedContent from 'components/explore-detail/RelatedContent';
 import BmeDetail from 'components/explore-detail/BmeDetail';
 
@@ -58,11 +68,24 @@ const getBreadcrumbs = (bme) => {
 };
 
 class BmeDetailPage extends Page {
+  constructor(props) {
+    super(props);
+
+
+    this.state = {
+      modal: {
+        download: false
+      }
+    };
+  }
 
   componentWillMount() {
     const { id } = this.props.queryParams;
 
     this.props.getBmeDetail({ detailId: id });
+    this.props.getBmeCategories();
+    this.props.getSolutionCategories();
+    this.props.getCities();
   }
 
   componentDidUpdate(prevProps) {
@@ -79,7 +102,16 @@ class BmeDetailPage extends Page {
   }
 
   render() {
-    const { bme, isLoading } = this.props;
+    const {
+      bme,
+      isLoading,
+      bmesDownloadOptions,
+      cityDownloadOptions,
+      solutionsDownloadOptions,
+      loadingBmes,
+      loadingCities,
+      loadingSolutions
+    } = this.props;
 
     const breadcrumbsItems = !isEqual(bme, {}) ?
       getBreadcrumbs(bme) : [];
@@ -109,7 +141,15 @@ class BmeDetailPage extends Page {
                 CATEGORY_FIRST_LEVEL_COLORS[parentSlug] : ''}
               title={bme.name || ''}
               breadcrumbs={breadcrumbs}
-            />
+            >
+              <Button
+                primary
+                inverse
+                onClick={() => this.setState({ modal: { share: true } })}
+              >
+                Share
+              </Button>
+            </Cover>
 
             <BmeDetail
               bme={bme}
@@ -118,7 +158,31 @@ class BmeDetailPage extends Page {
 
             <RelatedContent />
 
-            <DownloadData />
+            <DownloadData
+              onClickButton={() => this.setState({ modal: { download: true } })}
+            />
+
+            <Modal
+              open={this.state.modal.download}
+              toggleModal={v => this.setState({ modal: { download: v } })}
+              loading={loadingBmes || loadingSolutions || loadingCities}
+            >
+              <DownloadDataModal
+                bmes={bmesDownloadOptions}
+                cities={cityDownloadOptions}
+                solutions={solutionsDownloadOptions}
+                onClose={() => this.setState({ modal: { download: false } })}
+              />
+            </Modal>
+
+            {this.state.modal.share &&
+              <ShareModal
+                publicProject
+                url={window.location}
+                onClose={() => this.setState({ modal: { share: false } })}
+                onDownload={() => Router.pushRoute('bme-detail-print', { id: this.props.queryParams.id })}
+              />
+            }
 
           </div>)}
 
@@ -133,21 +197,48 @@ BmeDetailPage.propTypes = {
   bme: PropTypes.object.isRequired,
   getBmeDetail: PropTypes.func,
   removeBmeDetail: PropTypes.func,
-  queryParams: PropTypes.object.isRequired
+  queryParams: PropTypes.object.isRequired,
+  // cities
+  loadingCities: PropTypes.bool,
+  // bmes
+  loadingBmes: PropTypes.bool,
+  // solutions
+  loadingSolutions: PropTypes.bool,
+  // download
+  cityDownloadOptions: PropTypes.array,
+  solutionsDownloadOptions: PropTypes.array,
+  bmesDownloadOptions: PropTypes.array
 };
 
 BmeDetailPage.defaultProps = {
-  bme: {}
+  bme: {},
+  // download
+  cityDownloadOptions: [],
+  solutionsDownloadOptions: [],
+  bmesDownloadOptions: []
 };
 
 export default withRedux(
   store,
   state => ({
     isLoading: state.bme.loading || isEmpty(state.bme.detail),
-    bme: state.bme.detail
+    bme: state.bme.detail,
+    // download
+    cityDownloadOptions: citiesAsDownload(state),
+    solutionsDownloadOptions: solutionsAsDownload(state),
+    bmesDownloadOptions: bmesAsDownload(state),
+    // loadings
+    loadingBmes: state.category.bme.loading,
+    loadingSolution: state.category.solution.loading,
+    loadingCities: state.city.loading
   }),
   dispatch => ({
     getBmeDetail(filters) { dispatch(getBmeDetail(filters)); },
-    removeBmeDetail() { dispatch(removeBmeDetail()); }
+    removeBmeDetail() { dispatch(removeBmeDetail()); },
+    // categories
+    getBmeCategories() { dispatch(getBmeCategories()); },
+    getSolutionCategories() { dispatch(getSolutionCategories()); },
+    // cities
+    getCities() { dispatch(getCities()); }
   })
 )(BmeDetailPage);

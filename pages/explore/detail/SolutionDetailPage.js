@@ -251,7 +251,7 @@ class SolutionDetailPage extends Page {
               <Button
                 primary
                 inverse
-                onClick={() => this.setState({ modal: 'share' })}
+                onClick={() => this.setState({ modal: { share: true } })}
               >
                 Share
               </Button>
@@ -292,11 +292,11 @@ class SolutionDetailPage extends Page {
           onClose={() => this.setState({ disclaimer: null })}
         />
 
-        {this.state.modal === 'share' && (
+        {this.state.modal.share && (
           <ShareModal
             publicProject
             url={window.location}
-            onClose={() => this.setState({ modal: null })}
+            onClose={() => this.setState({ modal: { share: false } })}
             onDownload={() => Router.pushRoute('solution-detail-print', { id: project.id })}
           />
       )}

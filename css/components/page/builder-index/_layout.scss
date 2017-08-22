@@ -186,7 +186,7 @@
     stroke-width: 1.5;
 
     &.selected {
-      stroke: black;
+      stroke: black !important;
       fill: none !important;
       stroke-width: 2;
     }

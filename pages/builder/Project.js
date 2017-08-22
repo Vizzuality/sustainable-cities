@@ -15,7 +15,7 @@ import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 
-import builderSelector from 'selectors/builder';
+import { builderSelector } from 'selectors/builder';
 
 import { Router } from 'routes'
 

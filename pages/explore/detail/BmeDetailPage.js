@@ -6,6 +6,7 @@ import isEmpty from 'lodash/isEmpty';
 // Redux
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
+import { Router } from 'routes';
 
 // modules
 import { getBmeDetail, removeBmeDetail } from 'modules/bme';
@@ -19,10 +20,12 @@ import { bmesAsDownload, citiesAsDownload, solutionsAsDownload } from 'selectors
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 import Cover from 'components/common/Cover';
+import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import DownloadData from 'components/common/DownloadData';
 import Modal from 'components/common/Modal';
 import DownloadDataModal from 'components/common/modal/DownloadDataModal';
+import ShareModal from 'components/common/ShareModal';
 import RelatedContent from 'components/explore-detail/RelatedContent';
 import BmeDetail from 'components/explore-detail/BmeDetail';
 
@@ -138,7 +141,15 @@ class BmeDetailPage extends Page {
                 CATEGORY_FIRST_LEVEL_COLORS[parentSlug] : ''}
               title={bme.name || ''}
               breadcrumbs={breadcrumbs}
-            />
+            >
+              <Button
+                primary
+                inverse
+                onClick={() => this.setState({ modal: { share: true } })}
+              >
+                Share
+              </Button>
+            </Cover>
 
             <BmeDetail
               bme={bme}
@@ -163,6 +174,15 @@ class BmeDetailPage extends Page {
                 onClose={() => this.setState({ modal: { download: false } })}
               />
             </Modal>
+
+            {this.state.modal.share &&
+              <ShareModal
+                publicProject
+                url={window.location}
+                onClose={() => this.setState({ modal: { share: false } })}
+                onDownload={() => Router.pushRoute('bme-detail-print', { id: this.props.queryParams.id })}
+              />
+            }
 
           </div>)}
 

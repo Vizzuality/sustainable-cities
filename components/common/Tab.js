@@ -155,9 +155,11 @@ export default class Tab extends React.Component {
     return (
       <div className={classNames}>
         <div className="row">
-          <ul className="tab-list">
-            {items.map((item, index) => this.renderTab(item, index))}
-          </ul>
+          <div className="column small-12">
+            <ul className="tab-list">
+              {items.map((item, index) => this.renderTab(item, index))}
+            </ul>
+          </div>
         </div>
       </div>
     );

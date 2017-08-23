@@ -1,10 +1,13 @@
 import uuidv1 from 'uuid/v1';
 
+// utils
+import { getImage } from 'utils/common';
+
 // parses bmes in order to populate GridList component
 const listBmes = bmes => bmes.map(bme => ({
   id: uuidv1(),
   title: bme.name,
-  image: bme.photos && bme.photos[0] ? `${process.env.API_URL}${bme.photos[0].attachment.medium.url}` : null,
+  image: getImage(bme),
   link: { route: 'bme-detail', params: { id: bme.id } }
 }));
 
@@ -25,7 +28,7 @@ const listsBmesByCategory = (categories, filters = {}) =>
         children: category.level === 3 ? category.slug : null
       }
     },
-    image: category.photos && category.photos[0] ? `${process.env.API_URL}${category.photos[0].attachment.medium.url}` : null,
+    image: getImage(category),
     children: listBmes(category['children-bmes'] || [])
   }
 ));

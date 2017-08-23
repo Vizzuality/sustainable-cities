@@ -52,44 +52,46 @@ class MainNav extends React.Component {
     return (
       <div className="c-main-nav">
         <div className="row">
-          <div className="nav-container">
-            <div className="logo">
-              <Link prefetch route="home">
-                <a>Financing <br/> Sustainable <br/> Cities</a>
-              </Link>
+          <div className="column small-12">
+            <div className="nav-container">
+              <div className="logo">
+                <Link prefetch route="home">
+                  <a>Financing <br/> Sustainable <br/> Cities</a>
+                </Link>
+              </div>
+              <nav className="nav">
+                <ul className="nav-list" role="menubar">
+                  <li
+                    className={classnames('nav-item', { '-current': route === 'about' })}
+                    role="menuitem"
+                  >
+                    <Link prefetch route="about"><a className="literal">About</a></Link>
+                  </li>
+                  <li
+                    className={classnames('nav-item', { '-current': SOLUTION_MAP_ROUTES.indexOf(route) !== -1 })}
+                    role="menuitem"
+                  >
+                    <Link prefetch route="explore-index"><a className="literal">Solutions map</a></Link>
+                  </li>
+                  <li
+                    className={classnames('nav-item', { '-current': route === 'builder' })}
+                    role="menuitem"
+                  >
+                    <Link prefetch route="builder"><a className="literal">Design</a></Link>
+                  </li>
+                  <li
+                    className={classnames("nav-item", { '-current': route === 'profile' })}
+                    role="menuitem"
+                  >
+                    {
+                      token ?
+                        <a href="/profile" className="username">{profile.name}</a> :
+                        <a className="username" onClick={() => this.showLogin()}>Log in</a>
+                    }
+                  </li>
+                </ul>
+              </nav>
             </div>
-            <nav className="nav">
-              <ul className="nav-list" role="menubar">
-                <li
-                  className={classnames('nav-item', { '-current': route === 'about' })}
-                  role="menuitem"
-                >
-                  <Link prefetch route="about"><a className="literal">About</a></Link>
-                </li>
-                <li
-                  className={classnames('nav-item', { '-current': SOLUTION_MAP_ROUTES.indexOf(route) !== -1 })}
-                  role="menuitem"
-                >
-                  <Link prefetch route="explore-index"><a className="literal">Solutions map</a></Link>
-                </li>
-                <li
-                  className={classnames('nav-item', { '-current': route === 'builder' })}
-                  role="menuitem"
-                >
-                  <Link prefetch route="builder"><a className="literal">Design</a></Link>
-                </li>
-                <li
-                  className={classnames("nav-item", { '-current': route === 'profile' })}
-                  role="menuitem"
-                >
-                  {
-                    token ?
-                      <a href="/profile" className="username">{profile.name}</a> :
-                      <a className="username" onClick={() => this.showLogin()}>Log in</a>
-                  }
-                </li>
-              </ul>
-            </nav>
           </div>
         </div>
 

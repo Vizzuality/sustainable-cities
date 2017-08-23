@@ -18,8 +18,9 @@ import ConnectedBmeDetail from 'components/builder-index/ConnectedBmeDetail';
 import HelpModal from 'components/builder-index/HelpModal';
 import Login from 'components/common/Login';
 import SignUp from 'components/common/SignUp';
+import Spinner from 'components/common/Spinner';
 
-import builderSelector from 'selectors/builder';
+import { builderSelector, withModifiers } from 'selectors/builder';
 import { leaves, withSlice } from 'utils/builder';
 
 import {
@@ -52,16 +53,19 @@ class BuilderIndex extends React.Component {
     this.props.deselectEnabling(enabling.id);
   }
 
-  selectNext(bme) {
-    const bmes = leaves(this.props.bmeTree);
+  relativeBME(bme, delta) {
+    const bmes = this.props.bmes;
+    const bmeIndex = bmes.findIndex(b => b.id === bme.id);
 
-    this.showBME((bmes.concat(bmes))[bmes.findIndex(b => b.id == bme.id) + 1]);
+    return bmes.concat(bmes)[(bmeIndex + bmes.length + delta) % bmes.length];
+  }
+
+  selectNext(bme) {
+    this.showBME(this.relativeBME(bme, 1));
   }
 
   selectPrevious(bme) {
-    const bmes = leaves(this.props.bmeTree);
-
-    this.showBME((bmes.concat(bmes))[bmes.findIndex(b => b.id == bme.id) + bmes.length - 1]);
+    this.showBME(this.relativeBME(bme, -1));
   }
 
   showBME = (bme) => this.setState({ bme });
@@ -110,7 +114,21 @@ class BuilderIndex extends React.Component {
     }
   }
 
+  nodesToShow() {
+    if (this.props.readonly) {
+      return this.props.filteredBmeTree;
+    } else {
+      if (this.state.sidebar == "enablings") {
+        return withModifiers(this.props.solutionFilteredBmeTree, [this.state.hoveredEnabling]);
+      } else {
+        return this.props.bmeTree;
+      }
+    }
+  }
+
   render() {
+    const loading = this.props.bmeTree.length == 0;
+
     return (
       <Layout
         title="Builder"
@@ -155,14 +173,19 @@ class BuilderIndex extends React.Component {
           this.state.sidebar == "enablings" ? "u-w-30" : "u-w-100",
         )}>
 
+          {loading ?
+            <div className="row u-flex-center u-relative u-pb-100">
+              <Spinner className="-transparent" isLoading={true} />
+            </div> :
           <RadialChart
-            nodes={this.props.project.readonly ? this.props.filteredBmeTree : this.props.bmeTree}
+            nodes={this.nodesToShow()}
             selected={this.props.selectedBMEs}
             onClick={this.showBME}
             keyPrefix={(this.props.selectedSolution || { slug: "none"}).slug}
             interactive={this.state.sidebar == "default"}
             thumbnail={this.state.sidebar == "enablings"}
           />
+          }
 
           { this.state.hoveredEnabling &&
               <div className="u-ml-1">
@@ -170,7 +193,7 @@ class BuilderIndex extends React.Component {
 
                 <ul>
                   {
-                    leaves(this.props.bmeTree).
+                    this.props.bmes.
                       filter(bme => bme.enablings.find(enabling => enabling && enabling.id == this.state.hoveredEnabling)).
                       map(bme => <li className="c-text -fs-smaller -uppercase">{bme.name}</li>)
                   }

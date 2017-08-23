@@ -97,7 +97,7 @@ export function register(name, nickname, email, password, passwordConfirmation) 
 }
 
 export function profile(token) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     apiRequest(
       `users/${jwtDecode(token).user}`,
       { method: 'GET' },
@@ -107,4 +107,25 @@ export function profile(token) {
       });
     });
   };
+}
+
+export function saveProfile(token, params) {
+  return (dispatch) => (
+    apiRequest(
+      `users/${jwtDecode(token).user}`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ user: params }),
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      },
+    ).then(
+      response => response.json()
+    ).then(data => {
+      profile(token)(dispatch);
+
+      return data;
+    })
+  );
 }

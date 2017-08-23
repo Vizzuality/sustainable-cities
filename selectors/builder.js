@@ -10,7 +10,7 @@ import {
 } from 'utils/builder';
 
 
-const withModifiers = (nodes, selectedEnablings) => nodes.map(node => ({
+export const withModifiers = (nodes, selectedEnablings) => nodes.map(node => ({
   ...node,
   children: node.children ? withModifiers(node.children, selectedEnablings) : null,
   modifiers: node.children ?
@@ -18,11 +18,13 @@ const withModifiers = (nodes, selectedEnablings) => nodes.map(node => ({
     node.enablings.filter(enabling => enabling && selectedEnablings.includes(enabling.id)).map(enabling => enabling['assessment-value']),
 }));
 
-const transformBMEtree = (nodes, selectedSolution, selectedEnablings) => {
-  const inSolution = (bme) => !selectedSolution || selectedSolution.bmes.filter(bme => bme).map(bme => bme.id).includes(bme.id);
+const solutionFilteredBMEtree = (bmeTree, selectedSolution) => {
+  const inSolution = (bme) => (
+    !selectedSolution || selectedSolution.bmes.filter(bme => bme).map(bme => bme.id).includes(bme.id)
+  );
 
-  return withModifiers(recursiveFilter(nodes, inSolution), selectedEnablings);
-};
+  return recursiveFilter(bmeTree, inSolution);
+}
 
 const filterEnablings = (enablings, bmeTree) => {
   const availableEnablings = uniq(flatMap(leaves(bmeTree), bme => bme.enablings)).filter(enabling => enabling).map(enabling => enabling.id);
@@ -80,9 +82,14 @@ const selectedBMEs = createSelector(
   ),
 );
 
+const solutionFilteredBmeTree = createSelector(
+  [state => state.builderAPI.bmeCategories, selectedSolution],
+  solutionFilteredBMEtree,
+);
+
 const bmeTree = createSelector(
-  [state => state.builderAPI.bmeCategories, selectedSolution, selectedEnablings],
-  transformBMEtree,
+  [solutionFilteredBmeTree, selectedEnablings],
+  withModifiers,
 );
 
 const filteredBmeTree = createSelector(
@@ -95,9 +102,13 @@ const enablings = createSelector(
   filterEnablings,
 );
 
-export default createStructuredSelector({
+const bmes = (state) => leaves(state.builderAPI.bmeCategories);
+
+export const builderSelector = createStructuredSelector({
   auth: state => state.auth,
+  solutionFilteredBmeTree,
   bmeTree,
+  bmes,
   commentedBMEs,
   enablings,
   filteredBmeTree,

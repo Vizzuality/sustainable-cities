@@ -68,13 +68,20 @@ const sliceReducer = (state = initialSliceState, action) => {
         commentedBMEs: fromPairs(
           action.project['business-model-bmes'].map(bmbme => ([
             bmbme.bme.id,
-            bmbme.comment.body,
+            bmbme.comment ? bmbme.comment.body : null,
           ]))
         ),
         bmeInternalIds: fromPairs(
           action.project['business-model-bmes'].map(bmbme => ([
             bmbme.bme.id,
             bmbme.id,
+          ]))
+        ),
+
+        commentInternalIds: fromPairs(
+          action.project['business-model-bmes'].map(bmbme => ([
+            bmbme.bme.id,
+            bmbme.comment ? bmbme.comment.id : null,
           ]))
         ),
         selectedEnablings: action.project.enablings.map(enabling => enabling.id),
@@ -147,9 +154,11 @@ export function create(project, authToken) {
     enabling_ids: project.selectedEnablings,
     business_model_bmes_attributes: project.selectedBMEs.map(bmeId => ({
       bme_id: bmeId,
-      comment_attributes: {
-        body: project.commentedBMEs[bmeId]
-      }
+      ...(
+        project.commentedBMEs[bmeId] ?
+        { comment_attributes: { body: project.commentedBMEs[bmeId] } } :
+        {}
+      ),
     })),
   };
 
@@ -184,7 +193,9 @@ export function update(_, project, authToken) {
       id: project.bmeInternalIds[bmeId],
       bme_id: bmeId,
       comment_attributes: {
-        body: project.commentedBMEs[bmeId]
+        id: project.commentInternalIds[bmeId],
+        body: project.commentedBMEs[bmeId],
+        _destroy: (project.commentedBMEs[bmeId] || "").length == 0,
       }
     })).concat(
       removedInternalIds.map(id => ({

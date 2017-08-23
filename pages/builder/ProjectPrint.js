@@ -6,7 +6,7 @@ import ProjectOverview from 'components/builder-index/ProjectOverview';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
 import Button from 'components/common/Button';
 
-import builderSelector from 'selectors/builder';
+import { builderSelector } from 'selectors/builder';
 
 
 class ProjectPrint extends React.Component {

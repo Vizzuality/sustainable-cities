@@ -9,12 +9,11 @@ const L = (typeof window !== 'undefined') ? require('leaflet') : null;
 const MAP_CONFIG = {
   zoom: 2,
   minZoom: 2,
-  latLng: {
-    lat: 30,
-    lng: -120
-  },
   zoomControl: true,
-  scrollWheelZoom: false
+  scrollWheelZoom: false,
+  worldCopyJump: true,
+  center: [0, -20],
+  detectRetina: true
 };
 
 class Map extends React.Component {
@@ -29,14 +28,7 @@ class Map extends React.Component {
 
   componentDidMount() {
     this._mounted = true;
-    this.map = L.map(this.mapNode, {
-      minZoom: MAP_CONFIG.minZoom,
-      zoom: MAP_CONFIG.zoom,
-      zoomControl: MAP_CONFIG.zoomControl,
-      center: [0, -20],
-      detectRetina: true,
-      scrollWheelZoom: MAP_CONFIG.scrollWheelZoom
-    });
+    this.map = L.map(this.mapNode, MAP_CONFIG);
 
     // SETTERS
     this.setAttribution();

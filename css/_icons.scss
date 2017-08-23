@@ -1,12 +1,12 @@
 .icon {
   display: inline-block;
-  width: 1em;
-  height: 1em;
+  width: 24px;
+  height: 24px;
   stroke-width: 0;
   stroke: currentColor;
   fill: currentColor;
 
-  //colors
+  // colors
   &.-light {
     fill: $color-white;
   }
@@ -15,20 +15,20 @@
     fill: $color-text-1;
   }
 
-  //layout
+  // layout
   &.-in-line-left {
     margin-right: 10px;
   }
 
-  //size
+  // sizes
   &.-big {
-    width: 2em;
-    height: 2em;
+    width: 32px;
+    height: 32px;
   }
 
-  &.-medium {
-    width: 1.5em;
-    height: 1.5em;
+  &.-huge {
+    width: 64px;
+    height: 64px;
   }
 
   &.-short {
@@ -39,5 +39,10 @@
   &.-username {
     width: 18px;
     height: 18px;
+  }
+
+  &.-info {
+    width: 16px;
+    height: 16px;
   }
 }

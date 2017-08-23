@@ -169,7 +169,7 @@ class SolutionDetailPage extends Page {
                     disclaimer: tab.queryParams.params.subPage
                   })}
                 >
-                  <svg className="icon"><use xlinkHref="#icon-info" /></svg>
+                  <svg className="icon -info"><use xlinkHref="#icon-info" /></svg>
                 </div>}
             </li>
           ))}

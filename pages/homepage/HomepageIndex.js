@@ -83,7 +83,7 @@ class HomePage extends Page {
         </section>
         <section className="l-home-main-links">
           <ul className="row">
-            <li className="columns small-12 medium-4"><Link route="explore-index">
+            <li className="columns small-12 medium-4"><Link route="about">
               <a className="main-link">
                 <svg className="icon"><use xlinkHref="#icon-home-about" /></svg>
                 <p className="c-title -dark -fs-extrabig -fw-light">Learn more about the initiative</p>
@@ -95,7 +95,7 @@ class HomePage extends Page {
                 <p className="c-title -dark -fs-extrabig -fw-light">Explore sustainable projects</p>
               </a>
             </Link></li>
-            <li className="columns small-12 medium-4"><Link route="explore-index">
+            <li className="columns small-12 medium-4"><Link route="builder">
               <a className="main-link">
                 <svg className="icon"><use xlinkHref="#icon-home-build" /></svg>
                 <p className="c-title -dark -fs-extrabig -fw-light">Design a business model</p>

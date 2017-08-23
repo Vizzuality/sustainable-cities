@@ -5,4 +5,35 @@
   .map-leaflet {
     height: 100%;
   }
+
+  .leaflet-control-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    max-width: $layout-max-width;
+    margin: 0 auto;
+
+    > .leaflet-top {
+      position: relative;
+      top: 40px;
+
+      > .leaflet-control-zoom {
+        float: none;
+        margin: 0;
+        border: 0;
+        box-shadow: 0 1px 3px 0 rgba($color-black, .15);
+
+        > .leaflet-control-zoom-in,
+          .leaflet-control-zoom-out {
+            background: $color-white;
+            font-weight: $font-weight-light;
+            line-height: 26px;
+          }
+
+        > .leaflet-control-zoom-out {
+          margin: 1px 0 0;
+        }
+      }
+    }
+  }
 }

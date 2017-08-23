@@ -108,7 +108,7 @@ class HomePage extends Page {
             <div className="columns small-12 medium-6 -flex-vertical-centered">
               <div className="call-to-action -no-border">
                 <h3 className="c-title -dark -fs-extrabig -fw-light">A global movement</h3>
-                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Cities worldwide are experimenting with new ways to invest in smart approaches to urban mobility, land use, and urban energy.</p>
+                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">More and more city leaders see their actions as critical to helping tackle urgent challenges like climate change and living sustainably with our planet.</p>
               </div>
             </div>
             <div className="columns samll-12 medium-6">

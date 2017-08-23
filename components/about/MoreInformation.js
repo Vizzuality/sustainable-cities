@@ -10,7 +10,26 @@ export default function MoreInformation() {
         </div>
         <div className="column small-12 medium-8">
           <div className="content">
-            <p className="c-text -dark -fs-medium -fw-light">Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Etiam porta sem malesuada magna mollis euismod. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id ultricies vehicula ut id elit.</p>
+            <p className="c-text -dark -fs-medium -fw-light">SThe content on this platform was produced by WRI using a comparative multi-case study research method. Real world examples of several different sustainable solutions were identified in three broad areas: 1. mobility (bus rapid transit, bike-sharing, electric and hybrid buses), 2. urban energy (new efficient buildings and municipal retrofits), and 3. land use (transit-oriented development). The content therefore reflects real experiences of investments in these solutions, allowing us to learn from what is happening in cities right now rather than what is theoretically possible.</p>
+
+            <p className="c-text -dark -fs-medium -fw-light">In each case, the following steps were taken:</p>
+
+            <ol>
+              <li>Exploratory mapping of universe of city application of the specific sustainable urban solution.</li>
+              <li>Shortlisting of a subset of city examples based on expert consultation and multi-criteria weighting (geographical representation, trends and innovation in funding, financing, legal arrangements, and technical components).</li>
+              <li>An assessment using a common research framework developed by WRI (“business model framework”) that focuses on four main dimensions, each articulated through a set and sub-set of standardized guiding questions:
+                <ul>
+                  <li>Technical components: what kinds of technology, infrastructure, and other costs arose during implementation?</li>
+                  <li>Non-reimbursable funds: what revenues, incentives, and other budgets were used to cover expenses?</li>
+                  <li>Investment capital: if any, what types of capital, investors, and credit-enhancement options were used for mobilizing investment capital?</li>
+                  <li>Legal arrangements: what policy frameworks, ownership structures and contracts shaped implementation?</li>
+                </ul>
+              </li>
+            </ol>
+
+            <p className="c-text -dark -fs-medium -fw-light">Data collection for most of the projects on this platform consisted of literature reviews and practitioner interviews combined with expert verification of project details.</p>
+
+            <p className="c-text -dark -fs-medium -fw-light">For more information on the research method, please contact Anne Maassen, <a href="mailto:amaassen@wri.org">amaassen@wri.org</a></p>
           </div>
         </div>
       </div>
@@ -22,7 +41,8 @@ export default function MoreInformation() {
         </div>
         <div className="column small-12 medium-8">
           <div className="content">
-            <p className="c-text -dark -fs-medium -fw-light">Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at lobortis. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean lacinia bibendum nulla sed consectetur.</p>
+            <p className="c-text -dark -fs-medium -fw-light">Financing Sustainable Cities Initiative (FSCI) has an open data policy, intended to provide information free of constraints and restrictions on use. All of the data and other material we produce carry the Creative Commons BY 4.0 licensing. This means you are able to download, share, and adapt the data for any use, including commercial and noncommercial uses. You must attribute the data appropriately.</p>
+            <p className="c-text -dark -fs-medium -fw-light">Most of the photographs featured on this site have either been licensed under non-transferable terms, or have been acquired from photo sharing sites that have their own policies for public use. Unless indicated otherwise, the Creative Commons license described above does not apply to photographs and images used on this site.</p>
             <div className="picture -gradient -buildings">
             </div>
           </div>

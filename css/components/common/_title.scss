@@ -121,7 +121,7 @@
       background-color: $color-9;
     }
   }
- 
+
   a {
     color: inherit;
 
@@ -140,4 +140,8 @@
 //Margins
 .c-text + .c-text {
   margin-top: 20px;
+}
+
+.c-title + .c-text {
+  margin-top: 10px;
 }

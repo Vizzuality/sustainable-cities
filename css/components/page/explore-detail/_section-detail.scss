@@ -1,5 +1,6 @@
 $event: 'events-1', 'events-2', 'events-3', 'events-4', 'events-5', 'events-6';
 $post: 'post-1', 'post-2', 'post-3', 'post-4', 'post-5', 'post-6', 'post-7', 'post-8';
+$city-support: 'city-1', 'city-2', 'city-3', 'city-4', 'city-5', 'city-6', 'city-7', 'city-8', 'city-9', 'city-10', 'city-11';
 
 .c-detail-section {
   margin: 50px 0 0;
@@ -77,6 +78,13 @@ $post: 'post-1', 'post-2', 'post-3', 'post-4', 'post-5', 'post-6', 'post-7', 'po
     @for $i from 1 through length($post) {
       &.-post-#{$i} {
         background-image: url("/static/images/#{nth($post, $i)}.jpg");
+      }
+    }
+
+    //City support
+    @for $i from 1 through length($city-support) {
+      &.-#{nth($city-support, $i)} {
+        background-image: url("/static/images/#{nth($city-support, $i)}.jpg");
       }
     }
   }

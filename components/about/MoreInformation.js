@@ -15,14 +15,14 @@ export default function MoreInformation() {
             <p className="c-text -dark -fs-medium -fw-light">In each case, the following steps were taken:</p>
 
             <ol>
-              <li>Exploratory mapping of universe of city application of the specific sustainable urban solution.</li>
-              <li>Shortlisting of a subset of city examples based on expert consultation and multi-criteria weighting (geographical representation, trends and innovation in funding, financing, legal arrangements, and technical components).</li>
-              <li>An assessment using a common research framework developed by WRI (“business model framework”) that focuses on four main dimensions, each articulated through a set and sub-set of standardized guiding questions:
+              <li className="c-text -dark -fs-medium -fw-light">Exploratory mapping of universe of city application of the specific sustainable urban solution.</li>
+              <li className="c-text -dark -fs-medium -fw-light">Shortlisting of a subset of city examples based on expert consultation and multi-criteria weighting (geographical representation, trends and innovation in funding, financing, legal arrangements, and technical components).</li>
+              <li className="c-text -dark -fs-medium -fw-light">An assessment using a common research framework developed by WRI (“business model framework”) that focuses on four main dimensions, each articulated through a set and sub-set of standardized guiding questions:
                 <ul>
-                  <li>Technical components: what kinds of technology, infrastructure, and other costs arose during implementation?</li>
-                  <li>Non-reimbursable funds: what revenues, incentives, and other budgets were used to cover expenses?</li>
-                  <li>Investment capital: if any, what types of capital, investors, and credit-enhancement options were used for mobilizing investment capital?</li>
-                  <li>Legal arrangements: what policy frameworks, ownership structures and contracts shaped implementation?</li>
+                  <li className="c-text -dark -fs-medium -fw-light">Technical components: what kinds of technology, infrastructure, and other costs arose during implementation?</li>
+                  <li className="c-text -dark -fs-medium -fw-light">Non-reimbursable funds: what revenues, incentives, and other budgets were used to cover expenses?</li>
+                  <li className="c-text -dark -fs-medium -fw-light">Investment capital: if any, what types of capital, investors, and credit-enhancement options were used for mobilizing investment capital?</li>
+                  <li className="c-text -dark -fs-medium -fw-light">Legal arrangements: what policy frameworks, ownership structures and contracts shaped implementation?</li>
                 </ul>
               </li>
             </ol>

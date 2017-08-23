@@ -14,3 +14,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+ol ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  padding-top: 20px;
+
+   li {
+    display: list-item;
+    list-style-type: disc;
+   }
+}

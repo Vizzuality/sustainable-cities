@@ -7,7 +7,10 @@ export default function ItemList(props) {
       <ul className="itemlist">
         {props.items.map(item =>
           <li className="itemlist-item" key={item.id}>
-            <a href={item.link} className="item-link" target="_blank" rel="noopener noreferrer">{item.name}</a>
+            {item.link ?
+              <a href={item.link} className="item-link" target="_blank" rel="noopener noreferrer">{item.name}</a> :
+              <span className="c-text">{item.name}</span>
+            }
           </li>
         )}
       </ul>

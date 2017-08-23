@@ -2,13 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Button from 'components/common/Button';
+import ItemList from 'components/explore-detail/ItemList';
 
 export default function BmeDetail({ bme, print }) {
-  const enablingConditions = {
-    successFactors: bme.enablings && bme.enablings.filter(e => e.assessmentValue === 'Success'),
-    knownBarriers: bme.enablings && bme.enablings.filter(e => e.assessmentValue === 'Barrier')
-  };
-
   return (<div className="bme-detail -fw-light">
     <div className="bme-detail-body">
       <div className="row">
@@ -25,37 +21,18 @@ export default function BmeDetail({ bme, print }) {
         </div>
         <div className="column large-8 separator">
           <div className="row">
-            <div className="column large-6">
-              <div className="c-title -fs-bigger -fw-light">
-                Success factors
-              </div>
-              <ul className="details">
-                {enablingConditions.successFactors.length === 0 && (<li>
-                  No success factors
-                </li>)}
-                {enablingConditions.successFactors.map(e => (<li key={e.id}>
-                  {e.name}
-                </li>))}
-              </ul>
-            </div>
-            <div className="column large-6">
-              <div className="c-title -fs-bigger -fw-light">
-                Known barriers
-              </div>
-              <ul className="details">
-                {enablingConditions.knownBarriers.length === 0 && (<li>
-                  No known barriers
-                </li>)}
-                {enablingConditions.knownBarriers.map(e => (<li key={e.id}>
-                  {e.name}
-                </li>))}
-              </ul>
+            <div className="column small-12">
+              {(bme.enablings || []).length > 0 ?
+                <ItemList
+                  items={bme.enablings.map(enabling => ({ id: enabling.id, name: enabling.name }))}
+                /> : <span className="c-text">No enabling conditions found</span>
+              }
             </div>
           </div>
         </div>
       </div>
-      <div className='row'>
-        <div className='column large-4 c-title -fs-extrabig -fw-light'>
+      <div className="row">
+        <div className="column large-4 c-title -fs-extrabig -fw-light">
           Examples of projects that use it
         </div>
         {bme.projects.length === 0 && (<div className="column large-8 c-text -fs-medium separator">
@@ -71,11 +48,10 @@ export default function BmeDetail({ bme, print }) {
               <div className="column large-9 c-title -fs-bigger -fw-light project-name">
                 {project.name}
               </div>
-            { !print &&
-              <div className="column large-3 project-link">
-                <Button secondary link={`/solutions/${project.id}`}>See Project</Button>
-              </div>
-              }
+              {!print &&
+                <div className="column large-3 project-link">
+                  <Button secondary link={`/solutions/${project.id}`}>See Project</Button>
+                </div>}
             </div>
             <div className="row">
               <div className="column large-12 c-title -fs-smaller project-city">
@@ -118,5 +94,5 @@ export default function BmeDetail({ bme, print }) {
 
 BmeDetail.propTypes = {
   bme: PropTypes.object.isRequired,
-  print: PropTypes.bool,
+  print: PropTypes.bool
 };

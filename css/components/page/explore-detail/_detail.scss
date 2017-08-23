@@ -3,7 +3,10 @@
   a.external {
     color: $color-1;
     border-bottom: 1px solid $color-1;
-    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 
   ul {
@@ -27,9 +30,6 @@
         margin-bottom: .5em;
       }
     }
-  }
-
-  .inverted {
   }
 
   .bme-detail-body {
@@ -70,8 +70,6 @@
       }
     }
   }
-
-
 }
 
 .solution-detail {
@@ -96,16 +94,13 @@
     padding-top: 1px;
     background-color: $color-white;
   }
-
 }
 
 .solution-overview {
 
   .solution-overview-summary {
     padding: 46px 0;
-    // border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
-
 }
 
 .solution-category {

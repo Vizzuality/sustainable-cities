@@ -8,7 +8,7 @@ export default function Solutions() {
           <h2 className="c-title -dark -fs-extrabig -fw-light">Intro title</h2>
         </div>
         <div className="column small-12 medium-8">
-          <p className="c-text -dark -fs-medium -fw-light">Intro</p>
+          <p className="c-text -dark -fs-medium -fw-light">The initiative's current focus is on transit oriented-development, bike sharing systems, electric buses, bus rapid transit, energy efficient new buildings and retrofitting existing buildings. Solutions such as these are sustainable solutions that can positively impact the lives of over half of the world's population. </p>
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@ export default function Solutions() {
         <div className="column small-12 medium-4">
           <svg className="icon -dark -in-line-left -big"><use xlinkHref="#icon-gov" /></svg>
           <h2 className="c-title -dark -fs-extrabig -fw-light">Municipal building retrofits</h2>
-          <p>Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Etiam porta sem malesuada magna mollis euismod. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id ultricies vehicula ut id elit.</p>
+          <p>The buildings sector is a major energy consumer in cities. Investments in efficient building retrofits promote energy efficiency and resource conservation, resulting in reduced GHG emissions and energy requirements. In addition to energy and cost savings, investments in efficient buildings have been crucial in transforming the construction industry, with a shift towards green buildings. </p>
         </div>
         <div className="column small-12 medium-4">
           <svg className="icon -dark -in-line-left -big"><use xlinkHref="#icon-metro" /></svg>

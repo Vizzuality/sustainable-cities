@@ -16,11 +16,8 @@ const L = (typeof window !== 'undefined') ? require('leaflet') : null;
 
 const DEFAULT_MARKER_OPTIONS = {
   className: 'c-marker',
-  radius: 5,
-  fillColor: '#000',
-  fillOpacity: 1,
-  weight: 1,
-  color: '#fff'
+  size: 10,
+  zIndex: 2000
 };
 
 export default class MarkerLayer {
@@ -41,6 +38,10 @@ export default class MarkerLayer {
     return type;
   }
 
+  static _getMarkerContent({ fillColor, size }) {
+    return `<div class="c-marker" style="background: ${fillColor}; width: ${size}px; height: ${size}px;">`;
+  }
+
   constructor(data, map, filters, categories) {
     this._data = data;
     this._map = map;
@@ -52,8 +53,8 @@ export default class MarkerLayer {
 
   parseMarkerOptions({ projects }) {
     const { category, subCategory, children } = this._filters;
-    let fillColor = DEFAULT_MARKER_OPTIONS.color;
-    let radius = DEFAULT_MARKER_OPTIONS.radius;
+    let { size, zIndex } = DEFAULT_MARKER_OPTIONS;
+    let fillColor = '';
     let value = 1;
 
     // solution cases
@@ -64,10 +65,14 @@ export default class MarkerLayer {
       const categoryLevel2 = project.categoryLevel2;
       const isMultiSolution = (uniq(compact(projects.map(p => p.categoryLevel2)) || []).length > 1);
 
+      if (isMultiSolution) zIndex = -DEFAULT_MARKER_OPTIONS.zIndex;
+
+
       if (!categoryLevel2) {
         return {
           ...DEFAULT_MARKER_OPTIONS,
-          fillColor
+          fillColor,
+          zIndex
         };
       }
 
@@ -86,13 +91,8 @@ export default class MarkerLayer {
     if (category !== 'solutions' && category !== 'cities') {
       const { cities } = projects[0] || {};
       const city = cities[0] || {};
-      let { bmesQuantity } = city;
+      const { bmesQuantity } = city;
       let currentBme = {};
-
-      // emergency patch. REMOVE ASAP
-      if (!Array.isArray(bmesQuantity)) {
-        bmesQuantity = [];
-      }
 
       if (category) {
         currentBme = (bmesQuantity || []).find(bme => bme.slug === category) || {};
@@ -110,13 +110,14 @@ export default class MarkerLayer {
       fillColor = CATEGORY_FIRST_LEVEL_COLORS[category];
     }
 
-    radius = value !== 0 || value !== 1 ?
-      ((radius * Math.log(value)) + 5) : 5;
+    size = (value !== 0 && value !== 1) ?
+      ((size * Math.log(value)) + 5) : DEFAULT_MARKER_OPTIONS.size;
 
     return {
       ...DEFAULT_MARKER_OPTIONS,
       fillColor,
-      radius
+      size,
+      zIndex
     };
   }
 
@@ -124,8 +125,19 @@ export default class MarkerLayer {
     const projectsByCity = groupProjectsByCity(this._data);
     const geojson = GeoJSON.parse(projectsByCity, { Point: ['lat', 'lng'] });
     return L.geoJson(geojson, {
-      pointToLayer: (feature, latlng) =>
-        new L.CircleMarker(latlng, this.parseMarkerOptions(feature.properties)),
+      pointToLayer: (feature, latlng) => {
+        const markerOptions = this.parseMarkerOptions(feature.properties);
+        const { size, zIndex } = markerOptions;
+        const iconSize = [size, size];
+
+        return new L.Marker(latlng, {
+          icon: L.divIcon({
+            html: MarkerLayer._getMarkerContent(markerOptions),
+            iconSize
+          }),
+          zIndexOffset: zIndex
+        });
+      },
       onEachFeature: (feature, layer) => layer.bindPopup(
         render(
           Infowindow({

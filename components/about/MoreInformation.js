@@ -10,7 +10,7 @@ export default function MoreInformation() {
         </div>
         <div className="column small-12 medium-8">
           <div className="content">
-            <p className="c-text -dark -fs-medium -fw-light">SThe content on this platform was produced by WRI using a comparative multi-case study research method. Real world examples of several different sustainable solutions were identified in three broad areas: 1. mobility (bus rapid transit, bike-sharing, electric and hybrid buses), 2. urban energy (new efficient buildings and municipal retrofits), and 3. land use (transit-oriented development). The content therefore reflects real experiences of investments in these solutions, allowing us to learn from what is happening in cities right now rather than what is theoretically possible.</p>
+            <p className="c-text -dark -fs-medium -fw-light">The content on this platform was produced by WRI using a comparative multi-case study research method. Real world examples of several different sustainable solutions were identified in three broad areas: 1. mobility (bus rapid transit, bike-sharing, electric and hybrid buses), 2. urban energy (new efficient buildings and municipal retrofits), and 3. land use (transit-oriented development). The content therefore reflects real experiences of investments in these solutions, allowing us to learn from what is happening in cities right now rather than what is theoretically possible.</p>
 
             <p className="c-text -dark -fs-medium -fw-light">In each case, the following steps were taken:</p>
 

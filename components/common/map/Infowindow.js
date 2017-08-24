@@ -15,23 +15,26 @@ export default function Infowindow(props) {
 
   const _setBmes = (bmes = []) => {
     const { category, subCategory, children } = props.filters || {};
+    const selectedBmes = (children) ? ((bmes[0] || {}).children || []) : bmes;
 
     return (
       <ul className="info-list">
-        {bmes.map(bme =>
+        {selectedBmes.map(bme =>
           <li className="info-item" key={bme.id}>
-            {!subCategory || !children ?
-              <Link
-                route="explore-index"
-                params={{
-                  category,
-                  subCategory: subCategory !== undefined ? subCategory : bme.slug,
-                  children: subCategory !== undefined ? bme.slug : null
-                }}
-              >
-                <a>{bme.quantity} {bme.name}</a>
-              </Link> :
-              <span>{bme.quantity} {bme.name}</span>}
+            <Link
+              route={children ? 'bme-detail' : 'explore-index'}
+              params={children ? {
+                id: bme.id
+              } : {
+                category,
+                subCategory: subCategory !== undefined ? subCategory : bme.slug,
+                children: subCategory !== undefined ? bme.slug : null
+              }}
+            >
+              {children ?
+                <a>{bme.name}</a> :
+                <a>{bme.quantity} {bme.name}</a> }
+            </Link>
           </li>)}
       </ul>);
   };
@@ -63,7 +66,7 @@ export default function Infowindow(props) {
         break;
       }
       case 'bme': {
-        const { name, projects, filters } = props;
+        const { id, name, projects, filters } = props;
         const { bmesQuantity } = projects[0] ? projects[0].cities[0] : {};
         const { category, subCategory, children } = filters || {};
         let bmes = [];
@@ -91,11 +94,20 @@ export default function Infowindow(props) {
         }
 
         bmes = (bmes || []).filter(bme => bme.quantity);
-        const totalElements = _getTotalBmes(bmes);
+        const totalElements = (children) ? ((bmes[0] || {}).children || []).length : _getTotalBmes(bmes);
 
         content = (
           <div className="infowindow-content">
-            <h3 className="c-title -fs-medium -fw-light -light">{name}</h3>
+            <Link
+              route="city-detail"
+              params={{
+                id
+              }}
+            >
+              <h3 className="c-title -fs-big -fw-light -light">
+                <a>{name}</a>
+              </h3>
+            </Link>
             <span className="resume-items">{totalElements} {totalElements > 1 ? 'elements' : 'element'}:</span>
             {_setBmes(bmes)}
           </div>

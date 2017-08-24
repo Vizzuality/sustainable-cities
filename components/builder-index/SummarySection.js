@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Button from 'components/common/Button';
+
 import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
 
 
@@ -11,12 +13,13 @@ const enablingLabel = (count) => (
 );
 
 export default function SummarySection({
-  category,
-  parent,
-  onCommentChange,
-  readonly,
-  onBMEDisplay,
   bmeDescription,
+  category,
+  onBMEDisplay,
+  onCommentChange,
+  onDeleteCustomElement,
+  parent,
+  readonly,
 }) {
   const titleColor = CATEGORY_FIRST_LEVEL_COLORS[parent.slug] ||
     CATEGORY_FIRST_LEVEL_COLORS.default;
@@ -36,18 +39,27 @@ export default function SummarySection({
             {child.name}
           </div>
           <div className="column large-8">
-            {child.children && child.children.map(grandchild => (
-              <div id={grandchild.slug} className="subsubitem" key={grandchild.id}>
+            {child.children && child.children.map((grandchild, i) => (
+              <div id={grandchild.slug} className="subsubitem" key={grandchild.id || `custom-${i}`}>
                 <div className="row subsubtitle">
-                  <div className="column large-12 c-text -fs-big -fw-light u-flex">
-                    <div>{grandchild.name}</div>
-                    {!readonly &&
-                        <div
-                          className="c-info-icon u-inline-block u-ml-1/2 u-pointer"
-                          onClick={() => onBMEDisplay(grandchild, 'info')}
-                        >
-                          <svg className="icon"><use xlinkHref="#icon-info" /></svg>
-                        </div>
+                  <div className="column large-12 c-text -fs-big -fw-light u-flex u-flex-sb">
+                    <div className="u-flex">
+                      <div>{grandchild.name}</div>
+                      {!readonly && !grandchild.private &&
+                          <div
+                            className="c-info-icon u-inline-block u-ml-1/2 u-pointer"
+                            onClick={() => onBMEDisplay(grandchild, 'info')}
+                          >
+                            <svg className="icon"><use xlinkHref="#icon-info" /></svg>
+                          </div>
+                      }
+                    </div>
+
+                    {!readonly && grandchild.private &&
+                        <Button
+                          secondary
+                          onClick={() => onDeleteCustomElement(grandchild)}
+                        >Delete</Button>
                     }
                   </div>
                 </div>

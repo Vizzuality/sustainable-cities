@@ -33,19 +33,62 @@ const filterEnablings = (enablings, bmeTree) => {
   return recursiveFilter(enablings, isAvailable);
 };
 
-const transform = (nodes, selectedBMEs, commentedBMEs, selectedEnablings) => nodes.map(node => {
-  const bmes = (node.bmes || []).filter(bme => selectedBMEs.includes(bme.id)).map(bme => ({
-    ...bme,
-    comment: commentedBMEs[bme.id],
-    selectedEnablings: bme.enablings.filter(enabling => selectedEnablings.includes(enabling.id)),
-  }));
+const normalizeNesting = (nodes) => nodes.map(node => ({
+  ...node,
+  children: normalizeNesting(node.children || node.bmes.map(bme => ({ ...bme, bme: true, children: [] }))),
+}));
 
-  return {
-    ...node,
-    children: bmes.length > 0 ? bmes : transform(node.children || [], selectedBMEs, commentedBMEs, selectedEnablings),
-  };
-}).filter(node => node.level == "1" || node.children.length > 0);
 
+const withCustomBMEs = (nodes, customBMEs) => nodes.map(node => ({
+  ...node,
+  children: node.level === 3 ? node.children.concat(customBMEs.filter(bme => bme.category === node.id)) : withCustomBMEs(node.children, customBMEs),
+}));
+
+const withBMEcomments = (nodes, commentedBMEs) => nodes.map(node => ({
+  ...node,
+  comment: node.bme && commentedBMEs[node.id],
+  children: withBMEcomments(node.children, commentedBMEs),
+}));
+
+const withSelectedEnablings = (nodes, selectedEnablings) => nodes.map(node => ({
+  ...node,
+  selectedEnablings: node.bme && node.enablings.filter(enabling => selectedEnablings.includes(enabling.id)),
+  children: withSelectedEnablings(node.children, selectedEnablings),
+}));
+
+const filterBMEs = (nodes, selectedBMEs) => nodes.map(node => ({
+  ...node,
+  children: filterBMEs(node.children.filter(child => !child.bme || selectedBMEs.includes(child.id)), selectedBMEs),
+}));
+
+const pruneTree = (nodes, fn) => nodes.map(node => ({
+  ...node,
+  children: pruneTree(node.children, fn),
+})).filter(fn);
+
+const noop = (nodes) => nodes;
+
+const buildCustomBMEs = (customBMEs) => customBMEs.map((bme, i) => ({
+  ...bme,
+  bme: true,
+  private: true,
+  enablings: [],
+  children: [],
+}));
+
+const transform = (nodes, selectedBMEs, commentedBMEs, selectedEnablings, customBMEs) => (
+  pruneTree(
+    withBMEcomments(
+      withSelectedEnablings(
+        withCustomBMEs(
+          filterBMEs(
+            normalizeNesting(nodes),
+            selectedBMEs),
+          buildCustomBMEs(customBMEs)),
+        selectedEnablings),
+      commentedBMEs),
+    node => node.level == "1" || node.bme || node.children.length > 0)
+);
 
 const slice = (state, ownProps) => ownProps.businessModelId ? "existing" : "new";
 
@@ -62,6 +105,7 @@ const projectFieldSelector = (field) => createSelector(selectedProject, selected
 const commentedBMEs = projectFieldSelector('commentedBMEs');
 const selectedEnablings = projectFieldSelector('selectedEnablings');
 const selectedSolutionId = projectFieldSelector('selectedSolution');
+const customBMEs = projectFieldSelector('customBMEs');
 
 const solutions = createSelector(
   [state => state.builderAPI.solutionCategories],
@@ -93,7 +137,7 @@ const bmeTree = createSelector(
 );
 
 const filteredBmeTree = createSelector(
-  [state => state.builderAPI.bmeCategories, selectedBMEs, commentedBMEs, selectedEnablings],
+  [state => state.builderAPI.bmeCategories, selectedBMEs, commentedBMEs, selectedEnablings, customBMEs],
   transform,
 );
 

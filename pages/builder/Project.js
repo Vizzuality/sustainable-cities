@@ -19,14 +19,14 @@ import { builderSelector } from 'selectors/builder';
 
 import { Router } from 'routes'
 
-import { setField, commentBME, create, reset, update } from 'modules/builder';
+import { deleteCustomBME, addCustomBME, setField, commentBME, create, reset, update } from 'modules/builder';
 import { withSlice } from 'utils/builder';
 
 
 class Project extends React.Component {
   state = {
     modal: null,
-    activeTab: 'overview',
+    activeTab: 'financing',
   };
 
   showShareModal = () => this.setState({ modal: 'share' });
@@ -150,11 +150,14 @@ class Project extends React.Component {
             readonly={this.props.project.readonly}
           />}
 
-        {(this.state.activeTab != 'overview' && this.state.activeTab != 'details') &&
+        {(this.props.filteredBmeTree.length > 0 && this.state.activeTab != 'overview' && this.state.activeTab != 'details') &&
           <ProjectCategory
+            bmeTree={this.props.bmeTree}
             category={this.props.filteredBmeTree.find(cat => cat.slug == this.state.activeTab)}
             onCommentChange={this.changeBMEcomment}
             onBMEDisplay={this.showBMEModal}
+            onAddCustomElement={this.props.addCustomBME}
+            onDeleteCustomElement={this.props.deleteCustomBME}
             bmeDescription={bme => bme.comment}
             readonly={this.props.project.readonly}
           />
@@ -208,7 +211,9 @@ export default BuilderPage(
   connect(
     builderSelector,
     withSlice({
+      addCustomBME,
       commentBME,
+      deleteCustomBME,
       setField,
       update,
       reset,

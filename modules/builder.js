@@ -1,4 +1,5 @@
 import { Deserializer } from 'jsonapi-serializer';
+import deserialize from 'utils/jsonapi-deserializer';
 import * as queryString from 'query-string';
 import fromPairs from 'lodash/fromPairs';
 import { combineReducers } from 'redux';
@@ -16,6 +17,9 @@ const DESELECT_ENABLING = 'builder/DESELECT_ENABLING';
 const SET_FIELD = 'builder/SET_FIELD';
 const RESET = 'builder/RESET';
 
+const ADD_CUSTOM_BME = 'builder/ADD_CUSTOM_BME';
+const DELETE_CUSTOM_BME = 'builder/DELETE_CUSTOM_BME';
+
 const BM_CREATING = 'builder/BM_CREATING';
 const BM_CREATED = 'builder/BM_CREATED';
 const BM_GET = 'builder/BM_GET';
@@ -26,6 +30,7 @@ export const SLICE_EXISTING = 'existing';
 const initialSliceState = {
   commentedBMEs: {},
   selectedBMEs: [],
+  customBMEs: [],
   selectedSolution: null,
   selectedEnablings: [],
   title: "Project title",
@@ -46,6 +51,23 @@ const sliceReducer = (state = initialSliceState, action) => {
       return { ...state, selectedBMEs: state.selectedBMEs.filter(bme => bme != action.bmeId) };
     case COMMENT_BME:
       return { ...state, commentedBMEs: { ...state.commentedBMEs, [action.bmeId]: action.comment } }
+    case ADD_CUSTOM_BME:
+      const tempId = (state.maxTempId || -1) + 1;
+      const id = `custom-${tempId}`;
+
+      return {
+        ...state,
+        maxTempId: tempId,
+        customBMEs: state.customBMEs.concat([{ id, tempId, name: action.bme.name, category: action.bme.category }]),
+        commentedBMEs: { ...state.commentedBMEs, [id]: action.bme.comment },
+      };
+    case DELETE_CUSTOM_BME:
+      return {
+        ...state,
+        customBMEs: state.customBMEs.filter(bme => bme.id != action.bme.id),
+        commentedBMEs: { ...state.commentedBMEs, [action.bme.id]: undefined },
+      };
+
     case RESET:
       return { ...initialSliceState };
     case SET_FIELD:
@@ -58,31 +80,66 @@ const sliceReducer = (state = initialSliceState, action) => {
         return state;
       }
 
+      const publicBmBmes = action.project['business-model-bmes'].filter(bmbme => !bmbme.bme.private);
+      const privateBmBmes = action.project['business-model-bmes'].filter(bmbme => bmbme.bme.private);
+
       return {
         ...state,
         title: action.project.title,
         description: action.project.description,
         selectedSolution: action.project['solution-id'],
 
-        selectedBMEs: action.project['business-model-bmes'].map(bmbme => bmbme.bme.id),
+        selectedBMEs: publicBmBmes.map(bmbme => bmbme.bme.id),
         commentedBMEs: fromPairs(
-          action.project['business-model-bmes'].map(bmbme => ([
+          publicBmBmes.map(bmbme => ([
             bmbme.bme.id,
             bmbme.comment ? bmbme.comment.body : null,
-          ]))
+          ])).concat(privateBmBmes.map((bmbme, i) => ([
+            `custom-${i}`,
+            bmbme.comment ? bmbme.comment.body : null,
+          ])))
         ),
+
         bmeInternalIds: fromPairs(
-          action.project['business-model-bmes'].map(bmbme => ([
+          [].concat(
+            publicBmBmes.map(bmbme => ([
+              bmbme.bme.id,
+              bmbme.id,
+            ])),
+            privateBmBmes.map((bmbme, i) => ([
+              `custom-${i}`,
+              bmbme.id,
+            ])),
+          )
+        ),
+
+        privateBmeInternalIds: fromPairs(
+          privateBmBmes.map((bmbme, i) => ([
+            `custom-${i}`,
             bmbme.bme.id,
-            bmbme.id,
           ]))
         ),
 
+        maxTempId: privateBmBmes.length - 1,
+
+        customBMEs: privateBmBmes.map((bmbme, i) => ({
+          id: `custom-${i}`,
+          tempId: i,
+          name: bmbme.bme.name,
+          category: bmbme.bme.categories[0].id,
+        })),
+
         commentInternalIds: fromPairs(
-          action.project['business-model-bmes'].map(bmbme => ([
-            bmbme.bme.id,
-            bmbme.comment ? bmbme.comment.id : null,
-          ]))
+          [].concat(
+            publicBmBmes.map(bmbme => ([
+              bmbme.bme.id,
+              bmbme.comment ? bmbme.comment.id : null,
+            ])),
+            privateBmBmes.map((bmbme, i) => ([
+              `custom-${i}`,
+              bmbme.comment ? bmbme.comment.id : null,
+            ])),
+          )
         ),
         selectedEnablings: action.project.enablings.map(enabling => enabling.id),
 
@@ -127,9 +184,11 @@ export function deselectEnabling(slice, enablingId) {
   return (dispatch) => dispatch({ type: DESELECT_ENABLING, slice, enablingId });
 }
 
-export function commentBME(slice, bmeId, comment) {
-  return (dispatch) => dispatch({ type: COMMENT_BME, slice, bmeId, comment });
-}
+export const commentBME = (slice, bmeId, comment) => ({ type: COMMENT_BME, slice, bmeId, comment });
+
+export const addCustomBME = (slice, bme) => ({ type: ADD_CUSTOM_BME, slice, bme });
+
+export const deleteCustomBME = (slice, bme) => ({ type: DELETE_CUSTOM_BME, slice, bme });
 
 export function reset(slice) {
   return (dispatch, getState) => {
@@ -159,7 +218,17 @@ export function create(project, authToken) {
         { comment_attributes: { body: project.commentedBMEs[bmeId] } } :
         {}
       ),
-    })),
+    })).concat(project.customBMEs.map(bme => ({
+      bme_attributes: {
+        name: bme.name,
+        category_ids: [bme.category],
+      },
+      ...(
+        project.commentedBMEs[bme.id] ?
+        { comment_attributes: { body: project.commentedBMEs[bme.id] } } :
+        {}
+      ),
+    }))),
   };
 
   return apiRequest(`business-models`, {
@@ -180,7 +249,10 @@ export function create(project, authToken) {
 export function update(_, project, authToken) {
   const id = project.writableId;
 
-  const existingInternalIds = project.selectedBMEs.map(bmeId => project.bmeInternalIds[bmeId]);
+  const existingInternalIds = [].concat(
+    project.selectedBMEs,
+    project.customBMEs.map(bme => bme.id),
+  ).map(bmeId => project.bmeInternalIds[bmeId]);
 
   const removedInternalIds = Object.values(project.bmeInternalIds).filter(id => !existingInternalIds.includes(id));
 
@@ -189,15 +261,31 @@ export function update(_, project, authToken) {
     description: project.description,
     solution_id: project.selectedSolution,
     enabling_ids: project.selectedEnablings,
-    business_model_bmes_attributes: project.selectedBMEs.map(bmeId => ({
-      id: project.bmeInternalIds[bmeId],
-      bme_id: bmeId,
-      comment_attributes: {
-        id: project.commentInternalIds[bmeId],
-        body: project.commentedBMEs[bmeId],
-        _destroy: (project.commentedBMEs[bmeId] || "").length == 0,
-      }
-    })).concat(
+    business_model_bmes_attributes: [].concat(
+      project.selectedBMEs.map(bmeId => ({
+        id: project.bmeInternalIds[bmeId],
+        bme_id: bmeId,
+        comment_attributes: {
+          id: project.commentInternalIds[bmeId],
+          body: project.commentedBMEs[bmeId],
+          _destroy: (project.commentedBMEs[bmeId] || "").length == 0,
+        }
+      })),
+      project.customBMEs.map(bme => ({
+        id: project.bmeInternalIds[bme.id],
+
+        bme_attributes: {
+          id: project.privateBmeInternalIds[bme.id],
+          name: bme.name,
+          category_ids: [bme.category],
+        },
+
+        comment_attributes: {
+          id: project.commentInternalIds[bme.id],
+          body: project.commentedBMEs[bme.id],
+          _destroy: (project.commentedBMEs[bme.id] || "").length == 0,
+        }
+      })),
       removedInternalIds.map(id => ({
         id,
         _destroy: 1,
@@ -220,7 +308,6 @@ export function update(_, project, authToken) {
   });
 }
 
-
 export function fetchBM(id) {
   const resource = id[0] == "r" ? "business-models" : "business-model-edits";
   const token = id.slice(1);
@@ -230,6 +317,14 @@ export function fetchBM(id) {
     { method: 'GET' },
   ).then(r => r.json()).then(
     data => new Deserializer().deserialize(data, (err, project) => {
+      const privateBmes = project['private-bmes'].map(bme => deserialize(bme));
+
+      project["business-model-bmes"].forEach(bmbme => {
+        if (!bmbme.bme) {
+          bmbme.bme = privateBmes.find(bme => bme.id == bmbme["bme-id"].toString());
+        }
+      });
+
       dispatch({ type: BM_GET, slice: SLICE_EXISTING, project });
     })
   );

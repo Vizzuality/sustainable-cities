@@ -63,7 +63,7 @@ export default function Infowindow(props) {
         break;
       }
       case 'bme': {
-        const { name, projects, filters } = props;
+        const { id, name, projects, filters } = props;
         const { bmesQuantity } = projects[0] ? projects[0].cities[0] : {};
         const { category, subCategory, children } = filters || {};
         let bmes = [];
@@ -95,7 +95,16 @@ export default function Infowindow(props) {
 
         content = (
           <div className="infowindow-content">
-            <h3 className="c-title -fs-medium -fw-light -light">{name}</h3>
+            <Link
+              route="city-detail"
+              params={{
+                id
+              }}
+            >
+              <h3 className="c-title -fs-big -fw-light -light">
+                <a>{name}</a>
+              </h3>
+            </Link>
             <span className="resume-items">{totalElements} {totalElements > 1 ? 'elements' : 'element'}:</span>
             {_setBmes(bmes)}
           </div>

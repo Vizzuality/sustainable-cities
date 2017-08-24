@@ -1,50 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DropdownTreeSelect from 'react-dropdown-tree-select';
-import isEqual from 'lodash/isEqual';
 
-export default class DownloadFilters extends React.Component {
+import TreeSelect from 'components/common/modal/TreeSelect';
 
-  shouldComponentUpdate(nextProps) {
-    const bmesChanged = !isEqual(this.props.bmes, nextProps.bmes);
-    const citiesChanged = !isEqual(this.props.cities, nextProps.cities);
-    const solutionChanged = !isEqual(this.props.solutions, nextProps.solutions);
+export default function DownloadFilters({ bmes, cities, solutions, onChangeDropwdown, type }) {
+  return (
+    <div className="filters">
+      <span className="c-text -fs-medium -fw-light">Filtered by</span>
 
-    return bmesChanged || citiesChanged || solutionChanged;
-  }
+      <TreeSelect
+        className="c-text -fs-small -dark input-item"
+        placeholder="All cities"
+        data={cities}
+        onChange={(currentNode, selectedNodes) => onChangeDropwdown('cities', selectedNodes)}
+      />
 
-  render() {
-    const { bmes, cities, solutions, onChangeDropwdown } = this.props;
-    return (
-      <div className="filters">
-        <span className="c-text -fs-medium -fw-light">Filtered by</span>
-
-        <DropdownTreeSelect
-          className="c-text -fs-small -dark input-item"
-          placeholderText="All cities"
-          data={cities}
-          onChange={(currentNode, selectedNodes) => onChangeDropwdown('cities', selectedNodes)}
-        />
-
-        <DropdownTreeSelect
+      {type === 'projects' &&
+        <TreeSelect
           showDropdown
-          placeholderText="All business model element categories"
+          placeholder="All business model element categories"
           data={bmes}
           onChange={(currentNode, selectedNodes) => onChangeDropwdown('bmes', selectedNodes)}
-        />
+        />}
 
-        <DropdownTreeSelect
-          className="c-text -fs-small -dark input-item"
-          placeholderText="All solutions"
-          data={solutions}
-          onChange={(currentNode, selectedNodes) => onChangeDropwdown('solutions', selectedNodes)}
-        />
-      </div>
-    );
-  }
+      <TreeSelect
+        className="c-text -fs-small -dark input-item"
+        placeholder="All solutions"
+        data={solutions}
+        onChange={(currentNode, selectedNodes) => onChangeDropwdown('solutions', selectedNodes)}
+      />
+    </div>
+  );
 }
 
 DownloadFilters.propTypes = {
+  type: PropTypes.string,
   cities: PropTypes.array,
   bmes: PropTypes.array,
   onChangeDropwdown: PropTypes.func.isRequired,
@@ -52,6 +42,7 @@ DownloadFilters.propTypes = {
 };
 
 DownloadFilters.defaultProps = {
+  type: 'projects',
   cities: [],
   bmes: [],
   solutions: []

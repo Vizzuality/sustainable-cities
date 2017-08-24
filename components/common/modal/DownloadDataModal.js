@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+// components
 import Button from 'components/common/Button';
 import DownloadFilters from 'components/common/modal/filtersDownload';
 
@@ -10,7 +12,11 @@ export default class DownloadDataModal extends React.Component {
 
     this.state = {
       radio: 'projects',
-      dropdowns: {}
+      dropdowns: {
+        bmes: [],
+        solutions: [],
+        cities: []
+      }
     };
   }
 
@@ -18,6 +24,15 @@ export default class DownloadDataModal extends React.Component {
     this.setState({
       radio: value
     });
+
+    if (value === 'projects') {
+      this.setState({
+        dropdowns: {
+          ...this.state.dropdowns,
+          bmes: []
+        }
+      });
+    }
   }
 
   onChangeDropwdown(name, values) {
@@ -60,11 +75,12 @@ export default class DownloadDataModal extends React.Component {
     const { radio, dropdowns } = this.state;
     const { bmes, cities, solutions } = dropdowns;
     const checkedCities = (cities || []).map(city => city.id);
-    const checkedBmes = (bmes || []).map(bme => bme.id);
+    const checkedBmes = radio === 'projects' ?
+      (bmes || []).map(bme => bme.id) : (bmes[0] || {}).id;
     const checkedSolution = (solutions || []).map(solution => solution.id);
-    const bmesString = checkedBmes.length ? `bme_ids=${checkedBmes.toString()}` : '';
     const citiesString = checkedCities.length ? `city_ids=${checkedCities.toString()}` : '';
     const solutionString = checkedSolution.length ? `solution_ids=${checkedSolution.toString()}` : '';
+    const bmesString = checkedBmes.length ? `bme_ids=${checkedBmes.toString()}` : '';
 
     const params = [bmesString, citiesString, solutionString].filter(s => s.length).join('&');
 
@@ -73,49 +89,71 @@ export default class DownloadDataModal extends React.Component {
 
   render() {
     const { bmes, cities, onClose, solutions } = this.props;
-    const { radio } = this.state;
+    const { radio, dropdowns } = this.state;
+    const { bmes: selectedBmes } = dropdowns;
+
+    const firstLevelSelected = (radio === 'bmes') && selectedBmes ? (selectedBmes[0] || {}).id : undefined;
 
     return (
       <div className="c-download-data-modal">
-        <h2 className="c-title -fw-thin -fs-huge">Download</h2>
-        <p className="c-text -fs-small -fw-light">Select the part of the dataset you are interested in, then click download to get the file</p>
-        <div className="selector">
-          <label htmlFor="projects" className="c-text -fs-small -dark input-item">
-            <input
-              name="projects"
-              id="projects"
-              type="radio"
-              value="projects"
-              checked={radio === 'projects'}
-              onChange={e => this.onSelectRadio(e.target.value)}
+        <div className="row">
+          <div className="column small-12">
+            <h2 className="c-title -fw-thin -fs-huge">Download</h2>
+            <p className="c-text -fs-small -fw-light">Select the part of the dataset you are interested in, then click download to get the file</p>
+            <div className="row">
+              <div className="column small-12">
+                <label htmlFor="projects" className="c-text -fs-small -dark input-item">
+                  <input
+                    name="projects"
+                    id="projects"
+                    type="radio"
+                    value="projects"
+                    checked={radio === 'projects'}
+                    onChange={e => this.onSelectRadio(e.target.value)}
+                  />
+                  Projects
+                </label>
+              </div>
+            </div>
+
+            <div className="bme-categories">
+              <div className="row">
+                {bmes.map(bme =>
+                  <div className="column small-12 medium-6" key={bme.id}>
+                    <label htmlFor={bme.slug} className="c-text -fs-small -dark input-item">
+                      <input
+                        name="bmes"
+                        id={bme.slug}
+                        type="radio"
+                        value={bme.id}
+                        checked={firstLevelSelected === bme.id}
+                        onChange={(e) => {
+                          this.onSelectRadio('bmes');
+                          this.onChangeDropwdown('bmes', [{ id: e.target.value }]);
+                        }}
+                      />
+                      {bme.label}
+                    </label>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <DownloadFilters
+              bmes={bmes}
+              solutions={solutions}
+              cities={cities}
+              type={radio}
+              onChangeDropwdown={(name, values) => this.onChangeDropwdown(name, values)}
             />
-            Projects
-          </label>
-          <label htmlFor="bmes" className="c-text -fs-small -dark input-item">
-            <input
-              name="bmes"
-              id="bmes"
-              type="radio"
-              value="bmes"
-              checked={radio === 'bmes'}
-              onChange={e => this.onSelectRadio(e.target.value)}
-            />
-            Business Model Elements
-          </label>
-        </div>
 
-        <DownloadFilters
-          bmes={bmes}
-          solutions={solutions}
-          cities={cities}
-          onChangeDropwdown={(name, values) => this.onChangeDropwdown(name, values)}
-        />
+            {/* <p className="c-text -fs-small -fw-light">{this._getResume()}</p> */}
 
-        <p className="c-text -fs-small -fw-light">{this._getResume()}</p>
-
-        <div className="buttons">
-          <Button secondary onClick={onClose}>Cancel</Button>
-          <a className="c-button -primary" href={this._getDownloadLink()} download="a">Download</a>
+            <div className="buttons">
+              <Button secondary onClick={onClose}>Cancel</Button>
+              <a className="c-button -primary" href={this._getDownloadLink()} download="a">Download</a>
+            </div>
+          </div>
         </div>
       </div>
     );

@@ -7,6 +7,7 @@ import uuidv1 from 'uuid/v1';
 
 import { store } from 'store';
 
+
 // components
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';

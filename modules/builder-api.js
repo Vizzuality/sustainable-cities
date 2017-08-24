@@ -1,4 +1,4 @@
-import { Deserializer } from 'jsonapi-serializer';
+import deserialize from 'utils/jsonapi-deserializer';
 import fetch from 'isomorphic-fetch';
 import * as queryString from 'query-string';
 
@@ -42,6 +42,8 @@ export function getBmes() {
   const queryParams = queryString.stringify({
     'filter[category-type]': 'Bme',
     'filter[level]': 1,
+    'fields[categories]': 'name,slug,description,category-type,label,level,children,bmes',
+    'fields[enablings]': 'assessment-value,description,is-featured,name',
     'include': includeParams.join(','),
     'page[size]': 1000
   });
@@ -66,10 +68,7 @@ export function getBmes() {
       throw new Error(response.status);
     })
     .then((bmes) => {
-      new Deserializer()
-        .deserialize(bmes, (err, parsedBmes) => {
-          dispatch({ type: GET_BME_TREE, payload: parsedBmes });
-        });
+      dispatch({ type: GET_BME_TREE, payload: deserialize(bmes) });
     });
   };
 }
@@ -104,10 +103,7 @@ export function getSolutions() {
       throw new Error(response.status);
     })
     .then((bmes) => {
-      new Deserializer()
-        .deserialize(bmes, (err, parsedBmes) => {
-          dispatch({ type: GET_SOLUTION_TREE, payload: parsedBmes });
-        });
+      dispatch({ type: GET_SOLUTION_TREE, payload: deserialize(bmes) });
     });
   };
 }
@@ -142,10 +138,7 @@ export function getEnablings() {
       throw new Error(response.status);
     })
     .then((bmes) => {
-      new Deserializer()
-        .deserialize(bmes, (err, parsed) => {
-          dispatch({ type: GET_ENABLING_TREE, payload: parsed });
-        });
+      dispatch({ type: GET_ENABLING_TREE, payload: deserialize(bmes) });
     });
   };
 }

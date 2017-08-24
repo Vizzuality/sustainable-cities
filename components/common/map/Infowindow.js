@@ -15,23 +15,26 @@ export default function Infowindow(props) {
 
   const _setBmes = (bmes = []) => {
     const { category, subCategory, children } = props.filters || {};
+    const selectedBmes = (children) ? ((bmes[0] || {}).children || []) : bmes;
 
     return (
       <ul className="info-list">
-        {bmes.map(bme =>
+        {selectedBmes.map(bme =>
           <li className="info-item" key={bme.id}>
-            {!subCategory || !children ?
-              <Link
-                route="explore-index"
-                params={{
-                  category,
-                  subCategory: subCategory !== undefined ? subCategory : bme.slug,
-                  children: subCategory !== undefined ? bme.slug : null
-                }}
-              >
-                <a>{bme.quantity} {bme.name}</a>
-              </Link> :
-              <span>{bme.quantity} {bme.name}</span>}
+            <Link
+              route={children ? 'bme-detail' : 'explore-index'}
+              params={children ? {
+                id: bme.id
+              } : {
+                category,
+                subCategory: subCategory !== undefined ? subCategory : bme.slug,
+                children: subCategory !== undefined ? bme.slug : null
+              }}
+            >
+              {children ?
+                <a>{bme.name}</a> :
+                <a>{bme.quantity} {bme.name}</a> }
+            </Link>
           </li>)}
       </ul>);
   };
@@ -91,7 +94,7 @@ export default function Infowindow(props) {
         }
 
         bmes = (bmes || []).filter(bme => bme.quantity);
-        const totalElements = _getTotalBmes(bmes);
+        const totalElements = (children) ? ((bmes[0] || {}).children || []).length : _getTotalBmes(bmes);
 
         content = (
           <div className="infowindow-content">

@@ -206,6 +206,8 @@ class ExploreIndex extends Page {
     const isCityView = category === 'cities';
     const isLoading = loadingProjects || loadingBmes || (isCityView ? loadingCities : false);
     const activeLayer = LayerSpec.find(ls => ls.type === getLayerType(queryParams));
+    // temporary client's request. Remove ASAP.
+    const forbiddenBme = category === 'investment-components';
 
     const modifiedCategoryTabs = categoryTabs.map(tab => ({
       ...tab,
@@ -226,7 +228,7 @@ class ExploreIndex extends Page {
           queryParams={queryParams}
         />
         {/* MAP */}
-        <div className="l-map-container">
+        {!forbiddenBme && <div className="l-map-container">
           <Map
             activeLayer={[activeLayer]}
             LayerManager={LayerManager}
@@ -248,7 +250,7 @@ class ExploreIndex extends Page {
                 />
               </div>
             </div>}
-        </div>
+        </div>}
         <div className="row">
           <div className="column small-12">
             {isLoading ?

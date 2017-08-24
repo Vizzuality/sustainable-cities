@@ -26,7 +26,7 @@ export default function LegendItem(props) {
           <div className="legend-item-content">
             <div className="title">
               {icon &&
-              <svg className="`icon -big -dark -in-line-left"><use xlinkHref={`#${icon}`} /></svg>}
+              <svg className="icon -big -dark -in-line-left"><use xlinkHref={`#${icon}`} /></svg>}
               <span className="legend-title">{name}</span>
             </div>
             {label && <span className="legend-label">{label}</span>}

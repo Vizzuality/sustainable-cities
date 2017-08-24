@@ -145,3 +145,45 @@ export function getBmeCategories() {
     });
   };
 }
+
+export function getSolutionPdfs() {
+  return (dispatch, getState) => {
+    dispatch({ type: SET_LOADING_SOLUTION, payload: true });
+
+    const includeFilters = ['document'];
+    const fields = ['name', 'slug', 'description',
+      'document'];
+
+    const queryParams = queryString.stringify({
+      'filter[category-type]': 'Solution',
+      'filter[level]': 2,
+      'fields[categories]': fields.join(','),
+      include: includeFilters.join(','),
+      'page[size]': 999
+    });
+
+    fetch(`${process.env.API_URL}/categories?${queryParams}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'SC-API-KEY': process.env.SC_API_KEY
+      }
+    })
+    .then((response) => {
+      if (response.ok) {
+        if (getState().category.error) dispatch({ type: SET_ERROR_SOLUTION, payload: false });
+        return response.json();
+      }
+
+      dispatch({ type: SET_ERROR_SOLUTION, payload: true });
+      throw new Error(response.status);
+    })
+    .then((solutions) => {
+      new Deserializer()
+        .deserialize(solutions, (err, parsedSolutions) => {
+          dispatch({ type: SET_LOADING_SOLUTION, payload: false });
+          dispatch({ type: GET_SOLUTION_CATEGORIES, payload: parsedSolutions });
+        });
+    });
+  };
+}

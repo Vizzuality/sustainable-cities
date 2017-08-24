@@ -3,6 +3,13 @@
   align-items: center;
 
   .legend-item-content {
+    >.title {
+      display: flex;
+      align-items: center;
+
+      margin: 0 0 5px;
+    }
+
     > .legend-item-circle {
       display: inline-block;
       width: 10px;

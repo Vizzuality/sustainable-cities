@@ -18,6 +18,7 @@ const bmesAsDownload = createSelector(
     return (bmes || []).map(bme => ({
       id: bme.id,
       label: bme.name,
+      slug: bme.slug,
       expanded: true,
       children: recursive(bme)
     }));

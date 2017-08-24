@@ -89,7 +89,11 @@ export default class Legend extends React.Component {
         });
 
         // removes duplicates
-        projectCategories = uniq(projectCategories);
+        projectCategories = uniq(projectCategories).sort((a, b) => {
+          if (a.toLowerCase() > b.toLowerCase()) return 1;
+          if (b.toLowerCase() > a.toLowerCase()) return -1;
+          return 0;
+        });
 
         // build the item array with the necessary values
         items = projectCategories.map((catSlug) => {

@@ -36,4 +36,14 @@
       }
     }
   }
+
+  .leaflet-marker-icon {
+    border-radius: 50%;
+    border: 0;
+
+    > .c-marker {
+      border: 1px solid $color-white;
+      border-radius: 50%;
+    }
+  }
 }

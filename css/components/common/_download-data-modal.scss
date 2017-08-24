@@ -3,18 +3,19 @@
 
   .selector {
     margin-top: 15px;
+  }
 
-    label {
-      display: inline-block;
-      width: 49%;
+  label {
+    display: inline-block;
+    width: 100%;
+    margin: 15px 0 0;
 
-      & + label {
-        margin-left: 2%;
-      }
+    & + label {
+      margin-left: 2%;
+    }
 
-      &:checked {
-        border: 2px solid $color-black;
-      }
+    &:checked {
+      border: 2px solid $color-black;
     }
   }
 

@@ -105,7 +105,7 @@ export default class Tab extends React.Component {
             </a>
             {modal &&
               <div className="c-info-icon" onClick={modal.onClick}>
-                <svg className="icon">
+                <svg className="icon -info">
                   <use xlinkHref="#icon-info" />
                 </svg>
               </div>}

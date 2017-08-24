@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'routes';
 import withRedux from 'next-redux-wrapper';
+import uuidv1 from 'uuid/v1';
 
 import { store } from 'store';
+
 
 // components
 import Page from 'pages/Page';
@@ -21,66 +23,70 @@ import MoreInformation from 'components/about/MoreInformation';
 
 const tabs = [
   {
+    id: uuidv1(),
     label: 'About the Initiative',
     section: null,
     component: Initiative
   },
   {
+    id: uuidv1(),
     label: 'Solutions',
     section: 'solutions',
     component: Solutions
   },
   {
+    id: uuidv1(),
     label: 'Events',
     section: 'events',
     component: Events
   },
   {
+    id: uuidv1(),
     label: 'Blogs',
     section: 'blogs',
     component: Blogs
   },
   {
+    id: uuidv1(),
     label: 'City Support',
     section: 'city-support',
     component: CitySupport
   },
   {
+    id: uuidv1(),
     label: 'More Information',
     section: 'more-information',
     component: MoreInformation
   }
-]
+];
 
 class AboutPage extends Page {
 
   renderTabs() {
     return (<div className="c-tabs -explore">
       <div className="row">
-         <ul className="tab-list">
-           {tabs.map((tab, n) => (
-             <li
-               key={n}
-               className={classnames("tab-item", { "-current": this.props.queryParams.section == tab.section })}
-             >
+        <ul className="tab-list">
+          {tabs.map(tab => (
+            <li
+              key={tab.id}
+              className={classnames('tab-item', { '-current': (this.props.queryParams.section || null) === tab.section })}
+            >
               <Link route="about" params={{ section: tab.section }} >
                 <a className="literal">{tab.label}</a>
               </Link>
             </li>
          ))}
-         </ul>
+        </ul>
       </div>
     </div>);
   }
 
   renderContent() {
-    let currentTab = tabs.find(s => s.section == this.props.queryParams.section);
+    const currentTab = tabs.find(s => s.section === (this.props.queryParams.section || null));
 
-    if (currentTab) {
-      return (<currentTab.component />);
-    } else {
-      return (<p>not found</p>);
-    }
+    if (currentTab) return (<currentTab.component />);
+
+    return (<p>not found</p>);
   }
 
   render() {
@@ -89,7 +95,6 @@ class AboutPage extends Page {
         title="About"
         queryParams={this.props.queryParams}
       >
-
         <div className="about-page">
           <Cover
             title="About"
@@ -98,7 +103,6 @@ class AboutPage extends Page {
           />
 
           {this.renderTabs()}
-
           {this.renderContent()}
         </div>
       </Layout>

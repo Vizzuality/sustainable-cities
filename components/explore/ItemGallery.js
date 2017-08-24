@@ -25,7 +25,7 @@ export default function ItemGallery(props) {
               <div className="gallery-item-header">
                 <div className="gallery-item-title">
                   {item.icon &&
-                  <svg className="icon -dark -in-line-left -big"><use xlinkHref={`#${item.icon}`} /></svg>}
+                  <svg className="icon -big -dark -in-line-left"><use xlinkHref={`#${item.icon}`} /></svg>}
                   {showTitle &&
                     <h3 className="c-title -dark -fs-extrabig -fw-light">{item.title}</h3>}
                 </div>

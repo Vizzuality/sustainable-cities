@@ -6,7 +6,7 @@ export const apiRequest = (url, options) => (
       headers: {
         'Content-Type': 'application/json',
         'SC-API-KEY': process.env.SC_API_KEY,
-        ...(options.headers || {}),
+        ...(options.headers || {})
       }
     }
   )

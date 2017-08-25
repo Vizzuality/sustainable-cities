@@ -1,8 +1,7 @@
 import { Deserializer } from 'jsonapi-serializer';
-import fetch from 'isomorphic-fetch';
-import * as queryString from 'query-string';
 import jwtDecode from 'jwt-decode';
 import { apiRequest } from 'modules/helpers';
+import { Router } from 'routes';
 
 const LOGIN = 'auth/LOGIN';
 const LOGIN_LOADING = 'auth/LOGIN_LOADING';
@@ -18,7 +17,7 @@ const initialState = {
   token: null,
   errors: [],
   loading: false,
-  profile: "",
+  profile: {}
 };
 
 export default function (state = initialState, action) {
@@ -38,29 +37,40 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-};
+}
+
+export function getProfile(token) {
+  return (dispatch) => {
+    apiRequest(
+      `users/${jwtDecode(token).user}`,
+      { method: 'GET' },
+    ).then(response => response.json()).then((data) => {
+      new Deserializer().deserialize(data, (err, parsed) => {
+        dispatch({ type: GET_PROFILE, payload: parsed });
+      });
+    });
+  };
+}
 
 export function login(email, password) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: LOGIN_LOADING });
 
     return apiRequest(
-      "login", {
+      'login', {
         method: 'POST',
-        body: JSON.stringify({ auth: { email, password } }),
+        body: JSON.stringify({ auth: { email, password } })
       },
-    ).then(response => {
+    ).then((response) => {
       if (response.ok) {
-        response.
-          json().
-          then(data => {
-            dispatch(profile(data.token));
+        response.json()
+          .then((data) => {
+            dispatch(getProfile(data.token));
             dispatch({ type: LOGIN, token: data.token });
-          })
+          });
       } else {
-        response.
-          json().
-          then(data => dispatch({ type: LOGIN_ERROR, errors: data.errors }));
+        response.json()
+          .then(data => dispatch({ type: LOGIN_ERROR, errors: data.errors }));
       }
 
       return Promise.resolve(response.ok);
@@ -69,26 +79,25 @@ export function login(email, password) {
 }
 
 export function register(name, nickname, email, password, passwordConfirmation) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: SIGNUP_LOADING });
 
     return apiRequest(
-      "register", {
+      'register', {
         method: 'POST',
-        body: JSON.stringify({ user: { name, nickname, email, password, password_confirmation: passwordConfirmation } }),
+        body: JSON.stringify({
+          user: { name, nickname, email, password, password_confirmation: passwordConfirmation } })
       },
-    ).then(response => {
+    ).then((response) => {
       if (response.ok) {
-        response.
-          json().
-          then(data => {
-            dispatch(profile(data.token));
+        response.json()
+          .then((data) => {
+            dispatch(getProfile(data.token));
             dispatch({ type: SIGNUP, token: data.token });
-          })
+          });
       } else {
-        response.
-          json().
-          then(data => dispatch({ type: SIGNUP_ERROR, errors: data.errors }));
+        response.json()
+          .then(data => dispatch({ type: SIGNUP_ERROR, errors: data.errors }));
       }
 
       return Promise.resolve(response.ok);
@@ -96,36 +105,32 @@ export function register(name, nickname, email, password, passwordConfirmation) 
   };
 }
 
-export function profile(token) {
-  return (dispatch) => {
-    apiRequest(
-      `users/${jwtDecode(token).user}`,
-      { method: 'GET' },
-    ).then(response => response.json()).then(data => {
-      new Deserializer().deserialize(data, (err, parsed) => {
-        dispatch({ type: GET_PROFILE, payload: parsed })
-      });
-    });
-  };
-}
-
 export function saveProfile(token, params) {
-  return (dispatch) => (
+  return dispatch => (
     apiRequest(
       `users/${jwtDecode(token).user}`,
       {
         method: 'PATCH',
         body: JSON.stringify({ user: params }),
         headers: {
-          Authorization: 'Bearer ' + token,
-        },
+          Authorization: `Bearer ${token}`
+        }
       },
     ).then(
       response => response.json()
-    ).then(data => {
-      profile(token)(dispatch);
+    ).then((data) => {
+      getProfile(token)(dispatch);
 
       return data;
     })
   );
+}
+
+export function logout() {
+  return (dispatch) => {
+    dispatch({ type: LOGIN, payload: { token: null } });
+    dispatch({ type: GET_PROFILE, payload: {} });
+    // redirects to homepage once user is logged out
+    Router.pushRoute('/');
+  };
 }

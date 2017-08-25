@@ -15,7 +15,6 @@ const EXPLORE_TABS = [
     info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
     allowAll: true
   },
-  // BME categories come here...
   {
     id: 6,
     label: 'Cities',

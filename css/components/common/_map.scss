@@ -2,6 +2,10 @@
   position: relative;
   height: 100%;
 
+  .leaflet-container {
+    background: #f0f0f0;
+  }
+
   .map-leaflet {
     height: 100%;
   }

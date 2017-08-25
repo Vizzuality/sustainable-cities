@@ -11,8 +11,8 @@ const MAP_CONFIG = {
   minZoom: 2,
   zoomControl: true,
   scrollWheelZoom: false,
-  worldCopyJump: true,
-  center: [0, -20],
+  center: [0, 0],
+  maxBounds: [[-90, -180], [90, 180]],
   detectRetina: true
 };
 
@@ -89,7 +89,10 @@ class Map extends React.Component {
   }
 
   setBasemap() {
-    this.tileLayer = L.tileLayer(process.env.BASEMAP_TILE_URL, {})
+    this.tileLayer = L.tileLayer(process.env.BASEMAP_TILE_URL, {
+      noWrap: true,
+      bounds: [[-90, -180], [90, 180]]
+    })
                       .addTo(this.map)
                       .setZIndex(0);
   }

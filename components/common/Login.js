@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Button from 'components/common/Button';
 
-import { login } from 'modules/auth';
+import { clearErrors, login } from 'modules/auth';
 
 
 class Login extends React.Component {
@@ -31,6 +31,10 @@ class Login extends React.Component {
     this.setState({ [field]: value })
   }
 
+  componentWillMount() {
+    this.props.clearErrors();
+  }
+
   render() {
     return (
       <div className="c-modal">
@@ -38,7 +42,7 @@ class Login extends React.Component {
           <section className="builder-help">
             <h1 className="c-title -fw-thin -fs-huge">Login</h1>
 
-            {this.props.errors.map(error => <p>{error.title}</p>)}
+            {this.props.errors.map((error, i) => <p key={i}>{error.title}</p>)}
 
             <input className="u-block u-w-100 input-text" placeholder="Email" onChange={(e) => this.onChange('email', e.target.value)} />
 
@@ -59,8 +63,9 @@ class Login extends React.Component {
 
 export default connect(
   state => state.auth,
-  dispatch => ({
-    login(email, password) { return dispatch(login(email, password)); },
-  }),
+  {
+    clearErrors,
+    login,
+  },
 )(Login);
 

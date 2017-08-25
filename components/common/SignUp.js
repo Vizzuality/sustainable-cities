@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import Button from 'components/common/Button';
 
-import { register } from 'modules/auth';
+import { register, clearErrors } from 'modules/auth';
 
 
 class SignUp extends React.Component {
@@ -36,6 +36,10 @@ class SignUp extends React.Component {
     );
   }
 
+  componentWillMount() {
+    this.props.clearErrors();
+  }
+
   onChange(field, value) {
     this.setState({ [field]: value })
   }
@@ -46,6 +50,8 @@ class SignUp extends React.Component {
         <div className="content">
           <section className="builder-help">
             <h1 className="c-title -fw-thin -fs-huge">Sign up</h1>
+
+            {this.props.signupErrors.map((error, i) => <p key={i}>{error.title}</p>)}
 
             <input
               className="u-block u-w-100 u-mt-1 input-text"
@@ -94,8 +100,8 @@ class SignUp extends React.Component {
 
 export default connect(
   state => state.auth,
-  dispatch => ({
-    login(email, password) { return dispatch(login(email, password)); },
-    register(name, nickname, email, password, passwordConfirmation) { return dispatch(register(name, nickname, email, password, passwordConfirmation)); },
-  }),
+  {
+    register,
+    clearErrors,
+  },
 )(SignUp);

@@ -31,15 +31,12 @@ const CATEGORY_SOLUTIONS_COLORS = {
 };
 
 const CATEGORY_ICONS = {
-  'bike-sharing-systems': 'icon-bike', // bike-sharing-systems
-  'new-efficient-constructions': 'icon-buildings', // new-efficient-constructions
-
-  'bike-sharing-scheme': 'icon-bike', // bike-sharing-systems
-  'efficient-new-buildings': 'icon-buildings', // new-efficient-constructions
-  'bus-rapid-transit-brt': 'icon-bus', // Transit-oriented developments
-  'low-and-zero-emission-buses': 'icon-bus', // Low emission buses
-  'municipal-building-retrofits': 'icon-gov', // Building efficiency retrofits
-  'transit-oriented-development-tod': 'icon-city' // A new one ^.^
+  'bike-sharing-scheme': 'icon-bike', // Bike-sharing Scheme
+  'efficient-new-buildings': 'icon-buildings', // Efficient New Buildings
+  'bus-rapid-transit-brt': 'icon-rapidbus', // Bus Rapid Transit (BRT)
+  'low-and-zero-emission-buses': 'icon-bus', // Low And Zero Emission Buses
+  'municipal-building-retrofits': 'icon-gov', // Building Efficiency Retrofits
+  'transit-oriented-development-tod': 'icon-city' // Transit-oriented Development (TOD)
 };
 
 export {

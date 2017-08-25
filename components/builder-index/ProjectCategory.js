@@ -134,7 +134,7 @@ class ProjectCategory extends React.Component {
     bmeDescription: PropTypes.func.isRequired,
   };
 
-  state = { modal: { addCustomElement: true } };
+  state = { modal: { addCustomElement: false } };
 
   showAddCustomElement = () => this.setState({ modal: { addCustomElement: true } });
 
@@ -172,16 +172,18 @@ class ProjectCategory extends React.Component {
           >Add custom element</button>
         </div>}
 
-        <Modal
-          open={!this.props.readonly && this.state.modal.addCustomElement}
-          toggleModal={v => this.setState({ modal: { addCustomElement: v } })}
-        >
-          <AddCustomElementModal
-            bmeTree={this.props.bmeTree}
-            onAdd={this.onAdd}
-            onClose={v => this.setState({ modal: { addCustomElement: false } })}
-          />
-        </Modal>
+        { this.state.modal.addCustomElement &&
+          <Modal
+            open={true}
+            toggleModal={v => this.setState({ modal: { addCustomElement: v } })}
+          >
+            <AddCustomElementModal
+              bmeTree={this.props.bmeTree}
+              onAdd={this.onAdd}
+              onClose={v => this.setState({ modal: { addCustomElement: false } })}
+            />
+          </Modal>
+        }
       </div>
     );
   }

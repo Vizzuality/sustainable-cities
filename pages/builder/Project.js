@@ -26,7 +26,7 @@ import { withSlice } from 'utils/builder';
 class Project extends React.Component {
   state = {
     modal: null,
-    activeTab: 'financing',
+    activeTab: 'overview',
   };
 
   showShareModal = () => this.setState({ modal: 'share' });

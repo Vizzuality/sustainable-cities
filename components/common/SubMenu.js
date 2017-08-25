@@ -50,13 +50,15 @@ export default class SubMenu extends React.Component {
         <div className="parent-menu"><span className="literal">{parent}</span></div>
         <ul className="menu-list" role="menubar" aria-label={`Submenu for ${parent} section`}>
           {items.map(item => <li key={item.id} className="menu-item" role="menuitem" tabIndex="-1">
-            <Link
+            {item.onClick ?
+              <span className="literal" onClick={() => item.onClick()}>{item.label}</span>
+            : <Link
               route={route}
               params={item.query}
               prefetch
             >
               <a className="literal">{item.label}</a>
-            </Link>
+            </Link>}
           </li>)}
         </ul>
       </div>

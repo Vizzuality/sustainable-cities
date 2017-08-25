@@ -81,7 +81,7 @@ export default class MarkerLayer {
           CATEGORY_SOLUTIONS_COLORS[categoryLevel2] : CATEGORY_SOLUTIONS_COLORS['multi-solution'];
       } else {
         // cities
-        fillColor = CATEGORY_SOLUTIONS_COLORS['multi-solution'];
+        fillColor = CATEGORY_SOLUTIONS_COLORS.cities;
       }
 
       value = projects.length;

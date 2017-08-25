@@ -28,7 +28,8 @@ const CATEGORY_SOLUTIONS_COLORS = {
   'low-and-zero-emission-buses': '#69e191', // Low And Zero Emission Buses
   'municipal-building-retrofits': '#f7b50c', // Building Efficiency Retrofits
   'transit-oriented-development-tod': '#dd7d5c', // Transit-oriented Development (TOD)
-  'multi-solution': '#f784bd' // multiple solutions
+  'multi-solution': '#f784bd', // multiple solutions
+  cities: '#2c2f33'
 };
 
 const CATEGORY_ICONS = {

@@ -59,6 +59,14 @@ class AddCustomElementModal extends React.Component {
     });
   }
 
+  valid() {
+    return (
+      this.state.category &&
+      this.state.name &&
+      this.state.comment
+    );
+  }
+
   render() {
     return (
       <div className="u-w-100 u-pt-4 u-pl-4 u-pr-4 u-pb-1/2">
@@ -114,7 +122,7 @@ class AddCustomElementModal extends React.Component {
 
         <div className="actions">
           <Button secondary onClick={this.props.onClose}>Close</Button>
-          <Button primary onClick={this.add}>Add element</Button>
+          <Button disabled={!this.valid()} primary onClick={this.add}>Add element</Button>
         </div>
       </div>
     );

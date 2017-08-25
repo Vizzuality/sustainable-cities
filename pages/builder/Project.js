@@ -14,6 +14,8 @@ import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
 import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
+import Login from 'components/common/Login';
+import SignUp from 'components/common/SignUp';
 
 import { builderSelector } from 'selectors/builder';
 
@@ -186,15 +188,15 @@ class Project extends React.Component {
         }
 
         {this.state.modal == 'login' && <Login
-          onClose={this.hideModals}
+          onClose={this.hideModal}
           onSignUp={this.showSignUp}
-          onLogin={this.hideModals}
+          onLogin={this.hideModal}
         />}
 
         {this.state.modal == 'sign-up' && <SignUp
-          onClose={this.hideModals}
+          onClose={this.hideModal}
           onLogin={this.showLogin}
-          onSignUp={this.hideModals}
+          onSignUp={this.hideModal}
         />}
 
         <DisclaimerModal

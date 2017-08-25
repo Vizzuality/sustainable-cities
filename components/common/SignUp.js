@@ -74,7 +74,7 @@ class SignUp extends React.Component {
             <input
               className="u-block u-w-100 u-mt-1 input-text"
               type="password"
-              placeholder="Password"
+              placeholder="Password (minimum 8 characters)"
               onChange={(e) => this.onChange('password', e.target.value)}
             />
 

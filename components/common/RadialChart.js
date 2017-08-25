@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from  'prop-types';
 import classnames from 'classnames';
+import flatMap from 'lodash/flatMap';
 
 const depths = [140, 260, 320, 455];
 const sizes = [80, 15, 5, 6];
@@ -13,6 +14,17 @@ const fitbounds = (angle) => {
   while (angle > Math.PI) angle -= Math.PI*2;
   return angle;
 }
+
+export const leaves = (nodes) => {
+  const children = flatMap(nodes, t => t.children || []);
+
+  if (children.length > 0) {
+    return leaves(children);
+  }
+
+  return nodes;
+};
+
 
 class BME extends React.Component {
   static propTypes = {
@@ -85,89 +97,127 @@ class Line extends React.Component {
   }
 }
 
-function placeLines(p0, p1, d0, d1, r0, r1, keyPrefix) {
-  return p1.map(node => {
-    var parent = p0.find(p => (p.children || p.bmes || []).map(x=>x.id).includes(node.id));
-
-    return {
-      component: Line,
-      props: {
-        parent,
-        node,
-        r0,
-        r1,
-        depth: d0,
-        family: parent.family,
-        modifiers: node.modifiers,
-        id: `line-${keyPrefix}-${parent.slug}-${parent.id}-${node.id}`,
-      },
-    };
-  });
-}
-
-function place(nodes, size, depth, level, keyPrefix) {
-  return nodes.map(node => ({
+function mkBME(node, level, keyPrefix, angle) {
+  return ({
     ...node,
+    id: node.id,
     component: BME,
     props: {
-      size: size,
-      level: level,
+      size: sizes[level],
+      level,
       family: node.family,
-      angle: node.angle,
-      depth: depth,
+      angle,
+      depth: depths[level],
       modifiers: node.modifiers,
       id: `circle-${keyPrefix}-${node.slug}-${node.id}`,
     },
-  }));
+  });
 }
 
-function positions(nodes, depth, offset) {
-  return nodes.map((node, i, self) => {
-    const angle = 2 * Math.PI * (i + offset) / self.length;
+function mkLine(parent, child, level, keyPrefix) {
+  return {
+    component: Line,
+    props: {
+      parent,
+      node: child,
+      r0: sizes[level],
+      r1: sizes[level + 1],
+      depth: depths[level],
+      d1: depths[level + 1],
+      family: parent.family,
+      modifiers: child.modifiers,
+      id: `line-${keyPrefix}-${parent.slug}-${parent.id}-${child.id}`,
+    },
+  };
+}
+
+function buildNodes(tree, highlightedFamily, keyPrefix) {
+  const isPacked = tree.some(node => leaves([node]).length > 50);
+
+  const withFamily = (node, family) => ({
+    ...node,
+    family,
+    children: node.children ? node.children.map(n => withFamily(n, family)) : [],
+  });
+
+  const withPosition = isPacked ? withPackedPosition : withSparsePosition;
+
+  const treeWithFamily = tree.map(n => withFamily(n, n.slug));
+  const treeWithPosition = withPosition(treeWithFamily, highlightedFamily);
+
+  const finalNodes = [];
+  const finalLines = [];
+
+  const process = (nodes, level) => nodes.forEach((node, i) => {
+    finalNodes.push(mkBME(node, level, keyPrefix, node.angle));
+
+    if (node.children) {
+      node.children.forEach(child => {
+        finalLines.push(mkLine(node, child, level, keyPrefix));
+      });
+      process(node.children, level + 1);
+    }
+  });
+
+  process(treeWithPosition, 0);
+
+  return finalLines.concat(finalNodes);
+}
+
+function withSparsePosition(tree, highlightedFamily) {
+  const familyIndex = highlightedFamily ? tree.findIndex(node => node.family === highlightedFamily) : 0;
+
+  const delta = 2 * Math.PI / tree.length * (-familyIndex - 0.5);
+
+  const withPosition = (nodes, minAngle, maxAngle, level) => nodes.map((node, i) => {
+    const sliceSize = (maxAngle - minAngle) / nodes.length;
+    const angle = minAngle + sliceSize * (i + 0.5);
 
     return {
       ...node,
       angle,
-      x: depth * Math.cos(angle),
-      y: depth * Math.sin(angle),
-    }
+      x: depths[level] * Math.cos(angle),
+      y: depths[level] * Math.sin(angle),
+      children: withPosition(node.children, minAngle + sliceSize * i, minAngle + sliceSize * (i + 1), level + 1),
+    };
   });
+
+  return withPosition(tree, delta, delta + 2 * Math.PI, 0);
 }
 
-function buildNodes(tree, family, keyPrefix) {
-  let nodes = [];
-  let lines = [];
-  var previousPositions = null;
-
-  tree = tree.map(node => ({ ...node, family: node.slug }));
+function withPackedPosition(tree, highlightedFamily) {
+  let nodeAngles = {};
 
   if (tree.length == 0) return nodes;
 
-  const rootFamily = family || tree[0].family;
-  for (var i = 0; tree.length > 0; i++) {
-    var offset = (tree.filter(n => n.family == rootFamily).length - 1) / 2;
-    var index = tree.findIndex(n => n.family == rootFamily);
+  const rootFamily = highlightedFamily || tree[0].family;
 
-    let p = positions(tree, depths[i], -offset -index);
-    nodes = nodes.concat(place(p, sizes[i], depths[i], i, keyPrefix));
+  let nodes = tree;
+  for (var i = 0; nodes.length > 0; i++) {
+    var offset = (nodes.filter(n => n.family == rootFamily).length - 1) / 2;
+    var index = nodes.findIndex(n => n.family == rootFamily);
 
-    tree = tree.map(n =>
-      (n.children || n.bmes || []).map(node => ({
-        ...node,
-        family: n.family,
-      }))
-    ).reduce((a,b) => a.concat(b), []);
+    nodes.forEach((node, i) => {
+      nodeAngles[`${node.type}-${node.id}`] = 2 * Math.PI * (i - index - offset) / nodes.length;
+    });
 
-    if (previousPositions) {
-      lines = lines.concat(placeLines(previousPositions, p, depths[i-1], depths[i], sizes[i-1], sizes[i], keyPrefix));
-    }
-
-    previousPositions = p;
+    nodes = flatMap(nodes, n => n.children);
   }
 
-  return lines.concat(nodes);
-}
+  const withPosition = (nodes, level) => nodes.map(node => {
+    const angle = nodeAngles[`${node.type}-${node.id}`];
 
+    return {
+      ...node,
+      angle,
+      x: depths[level] * Math.cos(angle),
+      y: depths[level] * Math.sin(angle),
+      children: withPosition(node.children, level + 1),
+    };
+  });
+
+  return withPosition(tree, 0);
+}
 
 class RadialChart extends React.Component {
   static defaultProps = {

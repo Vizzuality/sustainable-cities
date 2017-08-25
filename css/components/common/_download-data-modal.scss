@@ -22,6 +22,12 @@
   .filters {
     margin-top: 20px;
     margin-bottom: 30px;
+
+    > .filter {
+      &:not(:first-child) {
+        margin: 15px 0 0;
+      }
+    }
   }
 
   .input-item,

@@ -15,20 +15,20 @@ export const withModifiers = (nodes, selectedEnablings) => nodes.map(node => ({
   children: node.children ? withModifiers(node.children, selectedEnablings) : null,
   modifiers: node.children ?
     uniq(flatMap(node.children.map(n => n.modifiers))) :
-    node.enablings.filter(enabling => enabling && selectedEnablings.includes(enabling.id)).map(enabling => enabling['assessment-value']),
+    node.enablings.filter(enabling => selectedEnablings.includes(enabling.id)).map(enabling => enabling['assessment-value']),
 }));
 
 const solutionFilteredBMEtree = (bmeTree, selectedSolution) => {
   const inSolution = (bme) => (
-    !selectedSolution || selectedSolution.bmes.filter(bme => bme).map(bme => bme.id).includes(bme.id)
+    !selectedSolution || selectedSolution.bmes.map(bme => bme.id).includes(bme.id)
   );
 
   return recursiveFilter(bmeTree, inSolution);
 }
 
 const filterEnablings = (enablings, bmeTree) => {
-  const availableEnablings = uniq(flatMap(leaves(bmeTree), bme => bme.enablings)).filter(enabling => enabling).map(enabling => enabling.id);
-  const isAvailable = (enabling) => enabling && availableEnablings.includes(enabling.id);
+  const availableEnablings = uniq(flatMap(leaves(bmeTree), bme => bme.enablings)).map(enabling => enabling.id);
+  const isAvailable = (enabling) => availableEnablings.includes(enabling.id);
 
   return recursiveFilter(enablings, isAvailable);
 };
@@ -37,7 +37,7 @@ const transform = (nodes, selectedBMEs, commentedBMEs, selectedEnablings) => nod
   const bmes = (node.bmes || []).filter(bme => selectedBMEs.includes(bme.id)).map(bme => ({
     ...bme,
     comment: commentedBMEs[bme.id],
-    selectedEnablings: bme.enablings.filter(enabling => enabling && selectedEnablings.includes(enabling.id)),
+    selectedEnablings: bme.enablings.filter(enabling => selectedEnablings.includes(enabling.id)),
   }));
 
   return {
@@ -77,7 +77,7 @@ const selectedBMEs = createSelector(
   [projectFieldSelector('selectedBMEs'), selectedSolution],
   (selectedBMEs, selectedSolution) => (
     selectedSolution ?
-    intersection(selectedBMEs, selectedSolution.bmes.filter(bme => bme).map(bme => bme.id)) :
+    intersection(selectedBMEs, selectedSolution.bmes.map(bme => bme.id)) :
     selectedBMEs
   ),
 );

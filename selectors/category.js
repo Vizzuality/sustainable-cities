@@ -40,7 +40,7 @@ const getCategoryTabs = createSelector(
     }));
 
     // inserts BME categories
-    return [tabs[0], ...bmeCategoryTabs, tabs[1]];
+    return [tabs[0], tabs[1], ...bmeCategoryTabs];
   }
 );
 

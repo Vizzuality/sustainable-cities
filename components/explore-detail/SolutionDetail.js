@@ -80,7 +80,7 @@ export default function SolutionDetail({ project }) {
 
         {impactItems.length > 0 &&
           <DetailSection
-            title="What is the reported impact to date (as of 2016)"
+            title="Reported impacts to date"
           >
             <ReportedImpact
               items={impactItems}

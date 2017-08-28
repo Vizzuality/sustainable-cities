@@ -147,7 +147,9 @@ export default class DownloadDataModal extends React.Component {
               onChangeDropwdown={(name, values) => this.onChangeDropwdown(name, values)}
             />
 
-            {/* <p className="c-text -fs-small -fw-light">{this._getResume()}</p> */}
+            <p className="c-text -fs-small -fw-light">Download CSV file with descriptions of Funding,
+              Financing, Legal Arrangements, and Technical components, including: descriptions,
+              enabling conditions affecting them.</p>
 
             <div className="buttons">
               <Button secondary onClick={onClose}>Cancel</Button>

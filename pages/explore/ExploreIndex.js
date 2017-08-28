@@ -275,7 +275,7 @@ class ExploreIndex extends Page {
         />
 
         <Modal
-          open={true || this.state.modal.download}
+          open={this.state.modal.download}
           toggleModal={v => this.setState({ modal: { download: v } })}
           loading={loadingBmes || loadingCities}
         >

@@ -1,22 +1,13 @@
 .c-download-data-modal {
-  padding: 50px;
+  overflow: auto;
+  max-height: 550px;
 
   .selector {
     margin-top: 15px;
   }
 
-  label {
-    display: inline-block;
-    width: 100%;
-    margin: 15px 0 0;
-
-    & + label {
-      margin-left: 2%;
-    }
-
-    &:checked {
-      border: 2px solid $color-black;
-    }
+  .download-fields-description {
+    margin: 25px 0 0;
   }
 
   .filters {
@@ -48,17 +39,21 @@
     position: relative;
     width: 100%;
 
-    &:after {
-      content: "";
-      position: absolute;
-      top: 12px;
-      right: 20px;
-      width: 10px;
-      height: 10px;
-      border-top: 1px solid $color-black;
-      border-right: 1px solid $color-black;
-      transform: rotate(135deg);
-      pointer-events: none;
+    .tag-list {
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: calc(50% - 2px);
+        right: 0;
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid $color-text-4;
+        border-right: 2px solid $color-text-4;
+        transform: rotate(135deg) translate(0, 50%);
+        pointer-events: none;
+      }
     }
 
     input {
@@ -70,15 +65,94 @@
   }
 
   .tag-item {
-    margin-right: 10px;
+    &:not(:last-child) {
+      margin: 0 10px 0 0;
+    }
+
+    > input {
+      font-size: $font-size-default;
+      color: rgba($color-text-4, .8);
+    }
+
+    > .tag {
+      position: relative;
+      display: flex;
+      padding: 3px 12px;
+      background-color: rgba($color-1, .1);
+      border-radius: 15px;
+
+      color: rgba($color-text-4, .8);
+    }
+
+    > .tag > .tag-remove {
+      appearance: none;
+      border: 0;
+      background: none;
+      outline: 0;
+
+      height: 50%;
+      padding: 0;
+      margin: 0 0 0 5px;
+
+      color: transparent;
+
+      cursor: pointer;
+
+      &:after {
+        content: '×';
+        display: inline-block;
+        position: absolute;
+        top: calc(50% - 2px);
+        right: 7px;
+        transform: translate(0, -50%);
+
+        font-size: $font-size-medium;
+        color: $color-text-1;
+
+        cursor: pointer;
+      }
+    }
+
+    & + .tag-item {
+      > input {
+        display: none;
+      }
+    }
   }
 
   .dropdown {
-    margin-bottom: 10px;
+    position: relative;
+    margin: 0 0 10px;
+
+
+
+    &.dropdown--active {
+
+      &::before {
+        content: '';
+        z-index: $z-index-2;
+        display: inline-block;
+        position: absolute;
+        top: 50px;
+        width: 100%;
+        height: 28px;
+        background: linear-gradient(180deg,  $color-white 0%, rgba($color-black, 0) 100%);
+      }
+
+      &::after {
+        content: '';
+        z-index: $z-index-2;
+        display: inline-block;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 28px;
+        background: linear-gradient(0deg, rgba($color-black,0) 0%, $color-white 100%);
+      }
+    }
   }
 
   .dropdown-content {
-    // display: none;
     position: relative;
     z-index: 1;
     padding: 20px 10px;
@@ -126,6 +200,51 @@
 
       .dropdown-content {
         display: block;
+      }
+
+      .dropdown-content .node {
+        &:not(:first-child) {
+          margin: 10px 0 0;
+        }
+
+        > label {
+
+          input[type='checkbox'] {
+            opacity: 0;
+
+            &:checked {
+
+              & + .node-label {
+                &::after {
+                  content: '✔';
+
+                  font-size: $font-size-default;
+                  line-height: 1.1;
+                  color: $color-text-1;
+                }
+              }
+            }
+          }
+
+          > .node-label {
+            position: relative;
+            margin: 0 0 0 15px;
+            font-size: $font-size-default;
+            color: rgba($color-text-4, .8);
+
+            &::after {
+              content: '';
+              display: inline-block;
+              position: absolute;
+              top: 50%;
+              left: -30px;
+              width: 16px;
+              height: 16px;
+              border: 1px solid $color-text-2;
+              transform: translate(0, -50%);
+            }
+          }
+        }
       }
     }
   }

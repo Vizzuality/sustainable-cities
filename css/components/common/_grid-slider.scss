@@ -4,7 +4,11 @@ $grid-slider-arrow-size: 20px;
   position: relative;
 
   .column {
-    margin: 25px 0;
+    margin: 15px 0;
+
+    @media #{mq-tablet} {
+      margin: 25px 0;
+    }
   }
 
   .c-grid-item {

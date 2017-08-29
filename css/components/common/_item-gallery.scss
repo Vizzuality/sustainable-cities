@@ -10,12 +10,40 @@
 
     > .gallery-item-header {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+
+      @media #{$mq-tablet} {
+        flex-direction: row;
+        justify-content: space-between;
+      }
     }
 
     > .gallery-item-header > .gallery-item-title {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
+
+      @media #{$mq-tablet} {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .icon {
+        margin-right: 10px;
+
+        @media #{$mq-tablet} {
+          margin: 0;
+        }
+      }
+
+      > .c-title {
+        margin: 10px 0 0;
+      }
+
+      & + .c-button {
+        margin: 15px 0 0;
+      }
     }
 
     &:not(:first-child) {

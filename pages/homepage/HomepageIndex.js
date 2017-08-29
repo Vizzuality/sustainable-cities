@@ -140,7 +140,7 @@ class HomePage extends Page {
             </div>
             <div className="columns small-12 medium-4 large-6">
               <div className="picture">
-                <img src="/static/images/home-module-builder.png" alt=""/>
+                <img src="/static/images/home-module-builder.png" alt="" />
               </div>
             </div>
           </div>

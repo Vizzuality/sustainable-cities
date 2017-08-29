@@ -1,0 +1,25 @@
+.c-logo-app {
+  display: flex;
+  height: 65px;
+  padding: 15px 0;
+
+  > a {
+    position: relative;
+    font-size: $font-size-extrasmall;
+    color: $color-primary;
+    line-height: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding-left: 10px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 2px;
+      background-color: $color-primary;
+    }
+  }
+}

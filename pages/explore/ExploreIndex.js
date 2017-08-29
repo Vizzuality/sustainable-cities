@@ -47,6 +47,7 @@ import DownloadData from 'components/common/DownloadData';
 import Modal from 'components/common/Modal';
 import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
 import DownloadDataModal from 'components/common/modal/DownloadDataModal';
+import Spinner from 'components/common/Spinner';
 
 // utils
 import LayerManager from 'utils/map/LayerManager';
@@ -251,16 +252,18 @@ class ExploreIndex extends Page {
               </div>
             </div>}
         </div>}
-        <div className="row">
-          <div className="column small-12">
-            {isLoading ?
-              <div>Loading data...</div> :
-              <ItemGallery
-                items={items}
-                isSolutionView={isSolutionView}
-                slider={conditions}
-                showAll={conditions}
-              />}
+        <div className="l-content">
+          <div className="row">
+            <div className="column small-12">
+              {isLoading ?
+                <Spinner isLoading /> :
+                <ItemGallery
+                  items={items}
+                  isSolutionView={isSolutionView}
+                  slider={conditions}
+                  showAll={conditions}
+                />}
+            </div>
           </div>
         </div>
 

@@ -39,6 +39,10 @@
     position: relative;
     width: 100%;
 
+    &:after {
+      display: none;
+    }
+
     .tag-list {
       position: relative;
 

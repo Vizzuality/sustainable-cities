@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 // components
 import Button from 'components/common/Button';
+import Radio from 'components/common/form/Radio';
 import DownloadFilters from 'components/common/modal/filtersDownload';
 
 export default class DownloadDataModal extends React.Component {
@@ -98,21 +99,17 @@ export default class DownloadDataModal extends React.Component {
       <div className="c-download-data-modal">
         <div className="row">
           <div className="column small-12">
-            <h2 className="c-title -fw-thin -fs-huge">Download</h2>
-            <p className="c-text -fs-small -fw-light">Select the part of the dataset you are interested in, then click download to get the file</p>
+            <h2 className="c-title -fw-thin -fs-huge -dark">Download</h2>
+            <p className="c-text -fs-small -fw-light -dark">Select the part of the dataset you are interested in, then click download to get the file.</p>
             <div className="row">
               <div className="column small-12">
-                <label htmlFor="projects" className="c-text -fs-small -dark input-item">
-                  <input
-                    name="projects"
-                    id="projects"
-                    type="radio"
-                    value="projects"
-                    checked={radio === 'projects'}
-                    onChange={e => this.onSelectRadio(e.target.value)}
-                  />
-                  Projects
-                </label>
+                <Radio
+                  labelString={'Projects'}
+                  value={'projects'}
+                  name={'projects'}
+                  isChecked={radio === 'projects'}
+                  onCheck={e => this.onSelectRadio(e.target.value)}
+                />
               </div>
             </div>
 
@@ -120,24 +117,24 @@ export default class DownloadDataModal extends React.Component {
               <div className="row">
                 {bmes.map(bme =>
                   <div className="column small-12 medium-6" key={bme.id}>
-                    <label htmlFor={bme.slug} className="c-text -fs-small -dark input-item">
-                      <input
-                        name="bmes"
-                        id={bme.slug}
-                        type="radio"
-                        value={bme.id}
-                        checked={firstLevelSelected === bme.id}
-                        onChange={(e) => {
-                          this.onSelectRadio('bmes');
-                          this.onChangeDropwdown('bmes', [{ id: e.target.value }]);
-                        }}
-                      />
-                      {bme.label}
-                    </label>
+                    <Radio
+                      labelString={bme.label}
+                      value={bme.id}
+                      name={'bmes'}
+                      isChecked={firstLevelSelected === bme.id}
+                      onCheck={(e) => {
+                        this.onSelectRadio('bmes');
+                        this.onChangeDropwdown('bmes', [{ id: e.target.value }]);
+                      }}
+                    />
                   </div>
                 )}
               </div>
             </div>
+
+            <p className="c-text -fs-small -fw-light -dark download-fields-description">Download CSV file with descriptions of Funding,
+              Financing, Legal Arrangements, and Technical components, including: descriptions,
+              enabling conditions affecting them.</p>
 
             <DownloadFilters
               bmes={bmes}
@@ -146,8 +143,6 @@ export default class DownloadDataModal extends React.Component {
               type={radio}
               onChangeDropwdown={(name, values) => this.onChangeDropwdown(name, values)}
             />
-
-            {/* <p className="c-text -fs-small -fw-light">{this._getResume()}</p> */}
 
             <div className="buttons">
               <Button secondary onClick={onClose}>Cancel</Button>

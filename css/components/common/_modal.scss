@@ -21,6 +21,7 @@
     background-color: $color-5;
     width: 900px;
     margin: 0 auto;
+    padding: 50px;
 
     header {
       background-color: $color-white;
@@ -45,7 +46,6 @@
 
       section { max-height: 45vh; overflow-y: auto; }
 
-      &.current-info { }
       &.current-enabling-conditions { left: -100%; }
       &.current-comment { left: -200%; }
     }

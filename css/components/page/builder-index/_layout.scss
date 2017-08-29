@@ -404,3 +404,25 @@
     margin-bottom: 3px;
   }
 }
+
+@each $category, $color in $color-categories {
+  .theme-#{$category} {
+    .theme-scoped-bc {
+      border-color: $color;
+    }
+  }
+}
+
+.c-custom-bme-button {
+  width: 100%;
+  line-height: 3em;
+  font-size: $font-size-default;
+  color: $color-text-4;
+  background-color: transparent;
+  border: 1px dashed mix($color-10, $color-3, 20%);
+  border-radius: 5px;
+  text-align: left;
+  padding-left: 20px;
+  cursor: pointer;
+}
+

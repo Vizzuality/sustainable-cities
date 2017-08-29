@@ -26,6 +26,7 @@
 // Components
 // - layout
 @import 'components/layout/l-home';
+@import 'components/layout/l-content';
 @import 'components/layout/l-footer';
 @import 'components/layout/map-container';
 // - page
@@ -75,5 +76,8 @@
 @import 'components/common/logo';
 @import 'components/common/footer-nav';
 @import 'components/common/download-data-modal';
+
+// form
+@import 'components/common/form/radio';
 
 @import 'utils';

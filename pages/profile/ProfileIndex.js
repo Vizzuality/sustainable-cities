@@ -1,6 +1,4 @@
 import React from 'react';
-// import classnames from 'classnames';
-// import { Link } from 'routes';
 import Page from 'pages/Page';
 
 import Layout from 'components/layout/layout';

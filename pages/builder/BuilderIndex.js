@@ -193,9 +193,9 @@ class BuilderIndex extends React.Component {
 
                 <ul>
                   {
-                    this.props.bmes.
-                      filter(bme => bme.enablings.find(enabling => enabling && enabling.id == this.state.hoveredEnabling)).
-                      map(bme => <li className="c-text -fs-smaller -uppercase">{bme.name}</li>)
+                    (this.props.bmes || [])
+                      .filter(bme => bme.enablings.find(enabling => enabling && enabling.id == this.state.hoveredEnabling))
+                      .map(bme => <li className="c-text -fs-smaller -uppercase">{bme.name}</li>)
                   }
               </ul>
             </div>

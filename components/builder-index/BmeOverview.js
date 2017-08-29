@@ -22,7 +22,7 @@ export default function BmeOverview({ bmeTree }) {
                   n/a
                 </span>
               </li>)}
-              {bme.children.map(c => c.children).reduce((a,b) => a.concat(b), []).map(c => c.children).reduce((a,b) => a.concat(b), []).map(child => (<li key={child.id}>
+              {(bme.children || []).map(c => c.children).reduce((a,b) => a.concat(b), []).map(c => c.children).reduce((a,b) => a.concat(b), []).map(child => (<li key={child.id}>
                 {child.name}
               </li>))}
             </ul>

@@ -33,13 +33,13 @@ export default function SummarySection({
           </span>
         </div>
       </div>
-      {category.children.map(child => (
+      {(category.children || []).map(child => (
         <div id={child.slug} key={child.id} className="row subtitle">
           <div className="column large-4 c-text -fs-extrabig -fw-light">
             {child.name}
           </div>
           <div className="column large-8">
-            {child.children && child.children.map((grandchild, i) => (
+            {(child.children || []).map((grandchild, i) => (
               <div id={grandchild.slug} className="subsubitem" key={grandchild.id || `custom-${i}`}>
                 <div className="row subsubtitle">
                   <div className="column large-12 c-text -fs-big -fw-light u-flex u-flex-sb">

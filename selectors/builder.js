@@ -14,17 +14,17 @@ export const withModifiers = (nodes, selectedEnablings) => nodes.map(node => ({
   ...node,
   children: node.children ? withModifiers(node.children, selectedEnablings) : null,
   modifiers: node.children ?
-    uniq(flatMap(node.children.map(n => n.modifiers))) :
+    uniq(flatMap((node.children || []).map(n => n.modifiers))) :
     node.enablings.filter(enabling => selectedEnablings.includes(enabling.id)).map(enabling => enabling['assessment-value']),
 }));
 
 const solutionFilteredBMEtree = (bmeTree, selectedSolution) => {
   const inSolution = (bme) => (
-    !selectedSolution || selectedSolution.bmes.map(bme => bme.id).includes(bme.id)
+    !selectedSolution || (selectedSolution.bmes || []).map(bme => bme.id).includes(bme.id)
   );
 
   return recursiveFilter(bmeTree, inSolution);
-}
+};
 
 const filterEnablings = (enablings, bmeTree) => {
   const availableEnablings = uniq(flatMap(leaves(bmeTree), bme => bme.enablings)).map(enabling => enabling.id);
@@ -68,12 +68,12 @@ const pruneTree = (nodes, fn) => nodes.map(node => ({
 
 const noop = (nodes) => nodes;
 
-const buildCustomBMEs = (customBMEs) => customBMEs.map((bme, i) => ({
+const buildCustomBMEs = (customBMEs) => (customBMEs || []).map(bme => ({
   ...bme,
   bme: true,
   private: true,
   enablings: [],
-  children: [],
+  children: []
 }));
 
 const transform = (nodes, selectedBMEs, commentedBMEs, selectedEnablings, customBMEs) => (

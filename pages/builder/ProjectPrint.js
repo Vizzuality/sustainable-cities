@@ -47,7 +47,7 @@ class ProjectPrint extends React.Component {
           project={{ bmeTree: this.props.filteredBmeTree }}
         />
 
-        {this.props.filteredBmeTree.filter(category => category.children.length > 0).map(category => (
+        {(this.props.filteredBmeTree || []).filter(category => category.children.length > 0).map(category => (
           <ProjectCategory
             key={category.id}
             category={category}

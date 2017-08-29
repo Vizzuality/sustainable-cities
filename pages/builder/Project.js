@@ -91,7 +91,7 @@ class Project extends React.Component {
 
     const tabItems = [
       defaultTabItems[0],
-      ...this.props.filteredBmeTree.map((category) => ({
+      ...(this.props.filteredBmeTree || []).map((category) => ({
         slug: category.slug,
         label: category.name,
         className: 'info',
@@ -123,7 +123,7 @@ class Project extends React.Component {
         <div className="c-tabs -explore">
           <div className="row">
             <ul className="tab-list">
-              {tabItems.map((tab, n) => (
+              {(tabItems || []).map((tab, n) => (
                 <li
                   key={n}
                   className={classnames("tab-item", { "-current": this.state.activeTab == tab.slug })}

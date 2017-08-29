@@ -33,7 +33,7 @@ class EnablingConditionsSelector extends React.Component {
           <div className="c-tabs">
             <div className="row">
                 <ul className="tab-list">
-                  {this.props.nodes.map((node, i) => (
+                  {(this.props.nodes || []).map((node, i) => (
                     <li
                       key={node.slug}
                       className={classnames("tab-item", { "-current": isActive(i)})}
@@ -51,16 +51,16 @@ class EnablingConditionsSelector extends React.Component {
           <h2 className="c-title -fw-light -fs-bigger">No enabling conditions available</h2>
         </section>}
 
-        {this.props.nodes.filter((node, i) => isActive(i)).map(node => (
+        {(this.props.nodes || []).filter((node, i) => isActive(i)).map(node => (
           <section key={node.id}>
-            {node.children.map(subnode => (
+            {(node.children || []).map(subnode => (
               <div key={subnode.id}>
                 <h2 className="c-title -fw-light -fs-bigger">
                   {subnode.name}
                 </h2>
 
                 <ul>
-                  {subnode.children.map(enabling => (
+                  {(subnode.children || []).map(enabling => (
                     <li
                       key={enabling.id}
                       onMouseEnter={() => this.props.onEnablingHover(enabling)}

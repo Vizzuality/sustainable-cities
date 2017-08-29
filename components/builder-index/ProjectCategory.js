@@ -153,7 +153,7 @@ class ProjectCategory extends React.Component {
         }
 
         {<div className="solution-category-list">
-          {this.props.category.children.map(child => <SummarySection
+          {(this.props.category.children || []).map(child => <SummarySection
             key={child.id}
             parent={this.props.category}
             category={child}

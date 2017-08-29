@@ -14,12 +14,14 @@ import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
 import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
+import Login from 'components/common/Login';
+import SignUp from 'components/common/SignUp';
 
 import { builderSelector } from 'selectors/builder';
 
 import { Router } from 'routes'
 
-import { setField, commentBME, create, reset, update } from 'modules/builder';
+import { deleteCustomBME, addCustomBME, setField, commentBME, create, reset, update } from 'modules/builder';
 import { withSlice } from 'utils/builder';
 
 
@@ -150,11 +152,14 @@ class Project extends React.Component {
             readonly={this.props.project.readonly}
           />}
 
-        {(this.state.activeTab != 'overview' && this.state.activeTab != 'details') &&
+        {(this.props.filteredBmeTree.length > 0 && this.state.activeTab != 'overview' && this.state.activeTab != 'details') &&
           <ProjectCategory
+            bmeTree={this.props.bmeTree}
             category={this.props.filteredBmeTree.find(cat => cat.slug == this.state.activeTab)}
             onCommentChange={this.changeBMEcomment}
             onBMEDisplay={this.showBMEModal}
+            onAddCustomElement={this.props.addCustomBME}
+            onDeleteCustomElement={this.props.deleteCustomBME}
             bmeDescription={bme => bme.comment}
             readonly={this.props.project.readonly}
           />
@@ -183,15 +188,15 @@ class Project extends React.Component {
         }
 
         {this.state.modal == 'login' && <Login
-          onClose={this.hideModals}
+          onClose={this.hideModal}
           onSignUp={this.showSignUp}
-          onLogin={this.hideModals}
+          onLogin={this.hideModal}
         />}
 
         {this.state.modal == 'sign-up' && <SignUp
-          onClose={this.hideModals}
+          onClose={this.hideModal}
           onLogin={this.showLogin}
-          onSignUp={this.hideModals}
+          onSignUp={this.hideModal}
         />}
 
         <DisclaimerModal
@@ -208,7 +213,9 @@ export default BuilderPage(
   connect(
     builderSelector,
     withSlice({
+      addCustomBME,
       commentBME,
+      deleteCustomBME,
       setField,
       update,
       reset,

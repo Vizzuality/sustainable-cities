@@ -11,11 +11,14 @@ const SIGNUP = 'auth/SIGNUP';
 const SIGNUP_LOADING = 'auth/SIGNUP_LOADING';
 const SIGNUP_ERROR = 'auth/SIGNUP_ERROR';
 
+const CLEAR_ERRORS = 'auth/CLEAR_ERRORS';
+
 const GET_PROFILE = 'auth/GET_PROFILE';
 
 const initialState = {
   token: null,
   errors: [],
+  signupErrors: [],
   loading: false,
   profile: {}
 };
@@ -28,8 +31,14 @@ export default function (state = initialState, action) {
     case LOGIN_ERROR:
       return { ...state, loading: false, errors: action.errors };
 
+    case SIGNUP_ERROR:
+      return { ...state, loading: false, signupErrors: action.errors };
+
     case LOGIN:
       return { ...state, loading: false, token: action.token };
+
+    case CLEAR_ERRORS:
+      return { ...state, errors: [], signupErrors: [] };
 
     case GET_PROFILE:
       return { ...state, profile: action.payload };
@@ -134,3 +143,5 @@ export function logout() {
     Router.pushRoute('/');
   };
 }
+
+export const clearErrors = () => ({ type: CLEAR_ERRORS });

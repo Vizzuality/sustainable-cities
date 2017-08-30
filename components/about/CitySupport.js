@@ -5,7 +5,7 @@ export default function CitySupport() {
     <div className="c-detail-section -content-padding -content-separator">
       <div className="row">
         <div className="column small-12">
-          <h2 className="c-title -dark -fs-huge -fw-thin">City support</h2>
+          <h2 className="c-title -dark -fs-huge -fw-thin">City Support</h2>
         </div>
 
         <div className="column small-12 medium-4">

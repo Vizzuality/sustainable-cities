@@ -38,7 +38,7 @@ class HomePage extends Page {
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
               <Link route="explore-index" params={{ category: 'solutions', subCategory: 'bus-rapid-transit-brt' }}>
                 <a>
-                  <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-buildings" /></svg>
+                  <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-rapidbus" /></svg>
                   <span className="c-text -fs-bigger -light -fw-light">Bus rapid transit systems</span>
                 </a>
               </Link>
@@ -54,7 +54,7 @@ class HomePage extends Page {
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
               <Link route="explore-index" params={{ category: 'solutions', subCategory: 'efficient-new-buildings' }}>
                 <a>
-                  <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-city" /></svg>
+                  <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-buildings" /></svg>
                   <span className="c-text -fs-bigger -light -fw-light">Efficient new buildings</span>
                 </a>
               </Link>
@@ -70,7 +70,7 @@ class HomePage extends Page {
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
               <Link route="explore-index" params={{ category: 'solutions', subCategory: 'transit-oriented-development-tod' }}>
                 <a>
-                  <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-metro" /></svg>
+                  <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-city" /></svg>
                   <span className="c-text -fs-bigger -light -fw-light">Transit-oriented development</span>
                 </a>
               </Link>

@@ -18,7 +18,7 @@ export default function Events() {
         <div className="column small-12 medium-6">
           <a target="_blank" href="http://www.c40.org/events/c40-financing-sustainable-cities-forum-2016" className="event">
               <div className="picture -event-2"></div>
-              <p className="c-text -dark -fs-medium -fw-light -lh-small">Financing Sustainable Cities Forum & Workshop</p>
+              <p className="c-text -dark -fs-medium -fw-light -lh-small">2016 Financing Sustainable Cities Forum & Workshop</p>
               <span className="c-text -dark -fs-smaller -fw-light -uppercase">April, 2016</span>
             </a>
         </div>

@@ -11,15 +11,15 @@ class HelpModal extends React.Component {
             <h1 className="c-title -fw-thin -fs-huge">Design your business model</h1>
 
             <p className="c-text">
-              Start selecting a <strong>solution</strong> and, optionally,
-              some <strong>enabling conditions</strong>. It would change how the
-              business model elements are shown on the interactive chart.
+              Start by selecting a <strong>solution</strong> and then, optionally, some
+              <strong> enabling conditions</strong>, which provide context to the situation.
+              This will change how the elements are shown on the interactive chart.
             </p>
 
             <p className="c-text">
-              Placing the cursor over the dots, they will show their names. Then,
-              clicking on them a modal window will show the details of
-              the <strong>business model element</strong> and save and comment options.
+              Placing the cursor over the dots will make their names appear. By clicking on them,
+              a modal window will show the details of the element and options to add comments or
+              save the element to your chart.
             </p>
 
             <div className="actions">

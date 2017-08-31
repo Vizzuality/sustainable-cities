@@ -163,14 +163,14 @@ class SolutionDetailPage extends Page {
               </Link>
 
               {tab.modal &&
-                <div
+                <button
                   className="c-info-icon"
                   onClick={() => this.setState({
                     disclaimer: tab.queryParams.params.subPage
                   })}
                 >
                   <svg className="icon -info"><use xlinkHref="#icon-info" /></svg>
-                </div>}
+                </button>}
             </li>
           ))}
         </ul>

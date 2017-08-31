@@ -19,6 +19,9 @@ import {
 // selectors
 import { builderSelector } from 'selectors/builder';
 
+// modules
+import { deleteCustomBME, addCustomBME, setField, commentBME, create, reset, rememberProject, update } from 'modules/builder';
+
 // components
 import BuilderPage from 'pages/builder/BuilderPage';
 import Layout from 'components/layout/layout';
@@ -100,7 +103,7 @@ class Project extends React.Component {
           this.props.auth.token
         ).then((writableId) => {
           this.props.reset();
-          Router.pushRoute(`${document.location.origin}/builder/w${writableId}/project`);
+          this.props.rememberProject(writableId);
         });
       }
     } else {
@@ -343,7 +346,8 @@ export default BuilderPage(
       deleteCustomBME,
       setField,
       update,
-      reset
+      reset,
+      rememberProject
     }),
   )(Project)
 );

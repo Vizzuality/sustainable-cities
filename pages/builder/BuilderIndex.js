@@ -27,7 +27,8 @@ import {
   selectSolution,
   reset,
   create,
-  update
+  update,
+  rememberProject
 } from 'modules/builder';
 
 
@@ -132,12 +133,17 @@ class BuilderIndex extends React.Component {
           this.props.auth.token,
         ).then(writableId => {
           this.props.reset();
-          Router.pushRoute(document.location.origin + "/builder/w" + writableId);
+          this.props.rememberProject(writableId);
         });
       }
     } else {
       this.showLogin();
     }
+  }
+
+  reset = () => {
+    this.props.reset();
+    Router.pushRoute('builder');
   }
 
   nodesToShow() {
@@ -168,7 +174,7 @@ class BuilderIndex extends React.Component {
           onEnablingsClick={this.showEnablingsSelector}
           onShowResultsClick={this.showResults}
           onSaveClick={this.save}
-          onResetClick={this.props.reset}
+          onResetClick={this.reset}
           selectedSolution={this.props.selectedSolution}
           selectedEnablings={this.props.selectedEnablings}
         />
@@ -295,6 +301,7 @@ export default BuilderPage(
       deselectEnabling,
       selectEnabling,
       selectSolution,
+      rememberProject,
       reset,
       update
     }),

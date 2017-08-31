@@ -37,6 +37,7 @@ import SolutionDetail from 'components/explore-detail/SolutionDetail';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import SolutionCategory from 'components/explore-detail/SolutionCategory';
 import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
+import Spinner from 'components/common/Spinner';
 
 // constants
 import { CATEGORY_ICONS } from 'constants/category';
@@ -163,14 +164,14 @@ class SolutionDetailPage extends Page {
               </Link>
 
               {tab.modal &&
-                <div
+                <button
                   className="c-info-icon"
                   onClick={() => this.setState({
                     disclaimer: tab.queryParams.params.subPage
                   })}
                 >
                   <svg className="icon -info"><use xlinkHref="#icon-info" /></svg>
-                </div>}
+                </button>}
             </li>
           ))}
         </ul>
@@ -231,14 +232,10 @@ class SolutionDetailPage extends Page {
         queryParams={this.props.queryParams}
       >
 
-        <div className="solution-detail-page">
-
-          {isLoading && (<div>
-            Loading project...
-          </div>)}
-
-          {!isLoading && (<div>
-
+        <div className="l-content">
+          {isLoading ?
+          (<Spinner className="-transparent" isLoading />) :
+          (<div>
             <Cover
               title={project.name || ''}
               titleIcon={categoryIcon}
@@ -281,9 +278,7 @@ class SolutionDetailPage extends Page {
                 onClose={() => this.setState({ modal: { download: false } })}
               />
             </Modal>
-
           </div>)}
-
         </div>
 
         <DisclaimerModal

@@ -13,14 +13,12 @@ import {
   commentBME,
   create,
   reset,
+  rememberProject,
   update
 } from 'modules/builder';
 
 // selectors
 import { builderSelector } from 'selectors/builder';
-
-// modules
-import { deleteCustomBME, addCustomBME, setField, commentBME, create, reset, rememberProject, update } from 'modules/builder';
 
 // components
 import BuilderPage from 'pages/builder/BuilderPage';

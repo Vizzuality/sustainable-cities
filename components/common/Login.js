@@ -28,7 +28,7 @@ class Login extends React.Component {
   }
 
   onChange(field, value) {
-    this.setState({ [field]: value })
+    this.setState({ [field]: value });
   }
 
   componentWillMount() {
@@ -37,26 +37,21 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="c-modal">
-        <div className="content">
-          <section className="builder-help">
-            <h1 className="c-title -fw-thin -fs-huge">Login</h1>
 
-            {this.props.errors.map((error, i) => <p key={i}>{error.title}</p>)}
+      <section className="builder-help">
+        <h1 className="c-title -fw-thin -fs-huge">Login</h1>
 
-            <input className="u-block u-w-100 input-text" placeholder="Email" onChange={(e) => this.onChange('email', e.target.value)} />
+        {this.props.errors.map((error, i) => <p key={i}>{error.title}</p>)}
 
-            <input className="u-block u-w-100 u-mt-1 input-text" type="password" placeholder="Password" onChange={(e) => this.onChange('password', e.target.value)} />
+        <input className="u-block u-w-100 input-text" placeholder="Email" onChange={(e) => this.onChange('email', e.target.value)} />
 
-            <div className="actions">
-              <Button secondary onClick={this.props.onSignUp}>Sign up</Button>
-              <Button primary onClick={() => this.onLoginClick()}>Login</Button>
-            </div>
+        <input className="u-block u-w-100 u-mt-1 input-text" type="password" placeholder="Password" onChange={(e) => this.onChange('password', e.target.value)} />
 
-            <div className="dismiss" onClick={this.props.onClose}>&times;</div>
-          </section>
+        <div className="actions">
+          <Button secondary onClick={this.props.onSignUp}>Sign up</Button>
+          <Button primary onClick={() => this.onLoginClick()}>Login</Button>
         </div>
-      </div>
+      </section>
     );
   }
 }

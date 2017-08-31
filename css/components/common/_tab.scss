@@ -13,6 +13,7 @@
 
   .tab-list > .tab-item {
     display: flex;
+    align-items: center;
     height: 100%;
 
     > .literal {
@@ -61,10 +62,15 @@
 
   // (i) info icon
   .c-info-icon {
-    display: flex;
-    align-items: center;
+    width: 16px;
+    height: 16px;
     margin-left: 10px;
+    padding: 0;
     cursor: pointer;
+
+    appearance: none;
+    background: none;
+    border: 0;
   }
 }
 

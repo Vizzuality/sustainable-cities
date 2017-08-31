@@ -1,4 +1,3 @@
-import { connect } from 'react-redux';
 import React from 'react';
 import withRedux from 'next-redux-wrapper';
 
@@ -35,19 +34,19 @@ export default (Component) => {
         />
       );
     }
-  }
+  };
 
   return withRedux(
     store,
     (state, ownProps) => ({
       businessModelId: ownProps.url.query.id,
-      bmRouteParams: ownProps.url.query,
+      bmRouteParams: ownProps.url.query
     }),
     {
       getBmes,
       getSolutions,
       getEnablings,
-      fetchBM,
+      fetchBM
     },
   )(BuilderPageComponent);
 };

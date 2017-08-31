@@ -10,8 +10,10 @@ export default class Modal extends React.Component {
       document.removeEventListener('keydown', escKeyPressListener);
       return evt.keyCode === 27 && this.props.toggleModal(false);
     }
+
     // if opened property has changed
     if (this.props.open !== open) {
+      document.getElementsByTagName('body')[0].classList.toggle('no-overflow', open);
       document[open ? 'addEventListener' : 'removeEventListener']('keydown', escKeyPressListener.bind(this));
     }
   }
@@ -20,14 +22,13 @@ export default class Modal extends React.Component {
     const { open, children, loading, toggleModal } = this.props;
     return (
       <section ref={(node) => { this.el = node; }} className={`c-modal ${open ? '' : '-hidden'}`}>
+        <area className="modal-backdrop" onClick={() => toggleModal(false)} />
         <div className="modal-container">
-          <div className="dismiss" onClick={() => toggleModal(false)}>×</div>
+          <button className="dismiss" onClick={() => toggleModal(false)}>×</button>
           <div className="content">
-            <Spinner isLoading={loading} />
-            {children}
+            {loading ? <Spinner isLoading /> : children}
           </div>
         </div>
-        <area className="modal-backdrop" onClick={() => toggleModal(false)} />
       </section>
     );
   }
@@ -38,4 +39,8 @@ Modal.propTypes = {
   children: PropTypes.node.isRequired,
   loading: PropTypes.bool,
   toggleModal: PropTypes.func.isRequired
+};
+
+Modal.defaultProps = {
+  loading: false
 };

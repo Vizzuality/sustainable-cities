@@ -15,7 +15,7 @@ import {
 
 class ConnectedBmeDetail extends React.Component {
   static propTypes = {
-    bmeId: PropTypes.string.isRequired,
+    bmeId: PropTypes.string,
     onClose: PropTypes.func.isRequired,
     onNext: PropTypes.func,
     onPrev: PropTypes.func,

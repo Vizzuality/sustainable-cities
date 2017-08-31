@@ -1,8 +1,25 @@
+import React from 'react';
+import Proptypes from 'prop-types';
 import classnames from 'classnames';
-import { Link } from 'routes';
 import { connect } from 'react-redux';
-import withRedux from 'next-redux-wrapper';
+import { Router } from 'routes';
+import uuidv1 from 'uuid/v1';
 
+// modules
+import {
+  deleteCustomBME,
+  addCustomBME,
+  setField,
+  commentBME,
+  create,
+  reset,
+  update
+} from 'modules/builder';
+
+// selectors
+import { builderSelector } from 'selectors/builder';
+
+// components
 import BuilderPage from 'pages/builder/BuilderPage';
 import Layout from 'components/layout/layout';
 import ProjectOverview from 'components/builder-index/ProjectOverview';
@@ -10,42 +27,68 @@ import ProjectDetail from 'components/builder-index/ProjectDetail';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
 import ShareModal from 'components/common/ShareModal';
 import ConnectedBmeDetail from 'components/builder-index/ConnectedBmeDetail';
-import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
+import Modal from 'components/common/Modal';
+import DisclaimerModal from 'components/common/disclaimer/DisclaimerModal';
 import Cover from 'components/common/Cover';
 import Button from 'components/common/Button';
 import Breadcrumbs from 'components/common/Breadcrumbs';
 import Login from 'components/common/Login';
 import SignUp from 'components/common/SignUp';
 
-import { builderSelector } from 'selectors/builder';
-
-import { Router } from 'routes'
-
-import { deleteCustomBME, addCustomBME, setField, commentBME, create, reset, update } from 'modules/builder';
+// utils
 import { withSlice } from 'utils/builder';
 
 
 class Project extends React.Component {
   state = {
-    modal: null,
-    activeTab: 'overview',
+    modal: {
+      disclaimer: {
+        open: false,
+        category: null
+      },
+      login: {
+        open: false
+      },
+      signup: {
+        open: false
+      },
+      share: {
+        open: false
+      },
+      bme: {
+        open: false,
+        modalArgs: {
+          bme: {},
+          tab: null
+        }
+      }
+    },
+    activeTab: 'overview'
   };
-
-  showShareModal = () => this.setState({ modal: 'share' });
-
-  hideModal = () => this.setState({ modal: null });
-
-  showLogin = () => this.setState({ modal: 'login' });
-
-  showSignUp = () => this.setState({ modal: 'sign-up' });
-
-  download = () => Router.pushRoute('builder-project-print', this.props.bmRouteParams);
 
   onFieldChange = (name, value) => this.props.setField(name, value);
 
-  changeBMEcomment = (bme, text) => this.props.commentBME(bme.id, text);
+  download = () => Router.pushRoute('builder-project-print', this.props.bmRouteParams);
 
-  showBMEModal = (bme, tab) => this.setState({ modal: 'bme', modalArgs: { bme, tab } });
+  showShareModal = () => this.setState({ modal: { ...this.state.modal, share: { open: true } } });
+
+  showLogin = () => this.setState({ modal: { ...this.state.modal, login: { open: true } } });
+
+  showSignUp = () => this.setState({ modal: { ...this.state.modal, signup: { open: true } } });
+
+  showBMEModal = (bme, tab) => this.setState({
+    modal: {
+      ...this.state.modal,
+      bme: {
+        open: true,
+        modalArgs: { bme, tab }
+      }
+    }
+  });
+
+  hideModal = modal => this.setState({ modal: { ...this.state.modal, [modal]: { open: false } } });
+
+  changeBMEcomment = (bme, text) => this.props.commentBME(bme.id, text);
 
   saveProject = () => {
     if (this.props.auth.token) {
@@ -54,10 +97,10 @@ class Project extends React.Component {
       } else {
         create(
           this.props.project,
-          this.props.auth.token,
-        ).then(writableId => {
+          this.props.auth.token
+        ).then((writableId) => {
           this.props.reset();
-          Router.pushRoute(document.location.origin + `/builder/w${writableId}/project`);
+          Router.pushRoute(`${document.location.origin}/builder/w${writableId}/project`);
         });
       }
     } else {
@@ -67,11 +110,11 @@ class Project extends React.Component {
 
   projectUrl(readonly) {
     if (readonly && this.props.project.readableId) {
-      return document.location.origin + "/builder/r" + this.props.project.readableId;
+      return `${document.location.origin}/builder/r${this.props.project.readableId}`;
     }
 
     if (!readonly && this.props.project.writableId) {
-      return document.location.origin + "/builder/w" + this.props.project.writableId;
+      return `${document.location.origin}/builder/w${this.props.project.writableId}`;
     }
 
     return null;
@@ -81,22 +124,22 @@ class Project extends React.Component {
     const defaultTabItems = [
       {
         slug: 'overview',
-        label: 'Overview',
+        label: 'Overview'
       },
       {
         slug: 'details',
-        label: 'Project Details',
-      },
+        label: 'Project Details'
+      }
     ];
 
     const tabItems = [
       defaultTabItems[0],
-      ...(this.props.filteredBmeTree || []).map((category) => ({
+      ...(this.props.filteredBmeTree || []).map(category => ({
         slug: category.slug,
         label: category.name,
-        className: 'info',
+        className: 'info'
       })),
-      defaultTabItems[1],
+      defaultTabItems[1]
     ];
 
     return (
@@ -107,55 +150,73 @@ class Project extends React.Component {
       >
         <Cover
           position="bottom"
-          size='shorter'
-          title={this.props.project.title || "Project title"}
-          image='/static/images/download-data-module.jpg'
-          breadcrumbs={<Breadcrumbs items={[{
-            name: '< Back to builder',
-            route: 'builder',
-            params: this.props.bmRouteParams,
-          }]} />}
+          size="shorter"
+          title={this.props.project.title || 'Project title'}
+          image="/static/images/download-data-module.jpg"
+          breadcrumbs={<Breadcrumbs
+            items={[{
+              name: '< Back to builder',
+              route: 'builder',
+              params: this.props.bmRouteParams
+            }]}
+          />}
         >
           <Button secondary inverse onClick={this.showShareModal}>Share/Export</Button>
-          {!this.props.project.readonly && <Button inverse onClick={this.saveProject}>Save project</Button>}
+          {!this.props.project.readonly &&
+            <Button inverse onClick={this.saveProject}>Save project</Button>}
         </Cover>
 
         <div className="c-tabs -explore">
           <div className="row">
             <ul className="tab-list">
-              {(tabItems || []).map((tab, n) => (
+              {(tabItems || []).map(tab => (
                 <li
-                  key={n}
-                  className={classnames("tab-item", { "-current": this.state.activeTab == tab.slug })}
+                  key={uuidv1()}
+                  className={classnames('tab-item', { '-current': this.state.activeTab === tab.slug })}
                 >
-                  <a className="literal" onClick={() => this.setState({activeTab: tab.slug })}>{tab.label}</a>
-                  {tab.className === "info" && (<div className="c-info-icon" onClick={() => this.setState({ disclaimer: tab.slug })}>
-                    <svg className="icon"><use xlinkHref="#icon-info" /></svg>
-                  </div>)}
+                  <a className="literal" onClick={() => this.setState({ activeTab: tab.slug })}>{tab.label}</a>
+                  {tab.className === 'info' &&
+                    (<button
+                      className="c-info-icon"
+                      onClick={() => this.setState({ modal: {
+                        ...this.state.modal,
+                        disclaimer: {
+                          open: true,
+                          category: tab.slug
+                        }
+                      } })}
+                    >
+                      <svg className="icon -info"><use xlinkHref="#icon-info" /></svg>
+                    </button>)}
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        {this.state.activeTab == 'overview' &&
+        {this.state.activeTab === 'overview' &&
           <ProjectOverview
             project={{ id: 2, bmeTree: this.props.filteredBmeTree }}
           />}
 
-        {this.state.activeTab == 'details' &&
+        {this.state.activeTab === 'details' &&
           <ProjectDetail
-            project={{ id: 2, bmeTree: this.props.filteredBmeTree, impacts: [], externalSources: [], projectBmes: [] }}
+            project={{
+              id: 2,
+              bmeTree: this.props.filteredBmeTree,
+              impacts: [],
+              externalSources: [],
+              projectBmes: [] }}
             categories={[]}
             fields={this.props.project}
             onFieldChange={this.onFieldChange}
             readonly={this.props.project.readonly}
           />}
 
-        {(this.props.filteredBmeTree.length > 0 && this.state.activeTab != 'overview' && this.state.activeTab != 'details') &&
+        {(this.props.filteredBmeTree.length > 0 && this.state.activeTab !== 'overview' && this.state.activeTab !== 'details') &&
           <ProjectCategory
             bmeTree={this.props.bmeTree}
-            category={this.props.filteredBmeTree.find(cat => cat.slug == this.state.activeTab)}
+            category={this.props.filteredBmeTree.find(cat => cat.slug === this.state.activeTab)}
             onCommentChange={this.changeBMEcomment}
             onBMEDisplay={this.showBMEModal}
             onAddCustomElement={this.props.addCustomBME}
@@ -165,49 +226,113 @@ class Project extends React.Component {
           />
         }
 
-        {
-          this.state.modal == 'share' &&
-            <ShareModal
-              onClose={this.hideModal}
-              onDownload={this.download}
-              onSave={this.saveProject}
-              url={this.projectUrl(true)}
-              urlEditable={this.projectUrl(false)}
-            />
-        }
-
-        {
-          this.state.modal == 'bme' &&
-            <ConnectedBmeDetail
-              businessModelId={this.props.businessModelId}
-              slice={this.props.slice}
-              bmeId={this.state.modalArgs.bme.id}
-              initialTab={this.state.modalArgs.tab}
-              onClose={this.hideModal}
+        <Modal
+          open={this.state.modal.share.open}
+          toggleModal={v => this.setState({
+            modal: {
+              ...this.state.modal,
+              share: { open: v }
+            }
+          })}
+        >
+          <ShareModal
+            onClose={() => this.hideModal('share')}
+            onDownload={this.download}
+            onSave={this.saveProject}
+            url={this.projectUrl(true)}
+            urlEditable={this.projectUrl(false)}
           />
-        }
+        </Modal>
 
-        {this.state.modal == 'login' && <Login
-          onClose={this.hideModal}
-          onSignUp={this.showSignUp}
-          onLogin={this.hideModal}
-        />}
+        <Modal
+          open={this.state.modal.bme.open}
+          toggleModal={v => this.setState({
+            modal: {
+              ...this.state.modal,
+              bme: { open: v }
+            }
+          })}
+        >
+          <ConnectedBmeDetail
+            businessModelId={this.props.businessModelId}
+            slice={this.props.slice}
+            bmeId={this.state.modal.bme.modalArgs.bme.id}
+            initialTab={this.state.modal.bme.modalArgs.tab}
+            onClose={() => this.hideModal('bme')}
+          />
+        </Modal>
 
-        {this.state.modal == 'sign-up' && <SignUp
-          onClose={this.hideModal}
-          onLogin={this.showLogin}
-          onSignUp={this.hideModal}
-        />}
+        <Modal
+          open={this.state.modal.login.open}
+          toggleModal={v => this.setState({
+            modal: {
+              ...this.state.modal,
+              login: { open: v }
+            }
+          })}
+        >
+          <Login
+            onClose={() => this.hideModal('login')}
+            onSignUp={this.showSignUp}
+            onLogin={this.hideModal}
+          />
+        </Modal>
 
-        <DisclaimerModal
-          categories={this.props.filteredBmeTree}
-          disclaimer={this.state.disclaimer}
-          onClose={() => this.setState({ disclaimer: null })}
-        />
-    </Layout>
+        <Modal
+          open={this.state.modal.signup.open}
+          toggleModal={v => this.setState({
+            modal: {
+              ...this.state.modal,
+              signup: { open: v }
+            }
+          })}
+        >
+          <SignUp
+            onClose={() => this.hideModal('signup')}
+            onLogin={this.showLogin}
+            onSignUp={this.hideModal}
+          />
+        </Modal>
+
+        <Modal
+          open={this.state.modal.disclaimer.open}
+          toggleModal={v => this.setState({
+            modal: {
+              ...this.state.modal,
+              disclaimer: { open: v }
+            }
+          })}
+          loading={this.props.filteredBmeTree.length === 0}
+        >
+          <DisclaimerModal
+            categories={this.props.filteredBmeTree}
+            disclaimer={this.state.modal.disclaimer.category}
+            onClose={() => this.hideModal('disclaimer')}
+          />
+        </Modal>
+      </Layout>
     );
   }
 }
+
+Project.propTypes = {
+  auth: Proptypes.object,
+  addCustomBME: Proptypes.func,
+  bmeTree: Proptypes.array,
+  deleteCustomBME: Proptypes.func,
+  filteredBmeTree: Proptypes.array,
+  project: Proptypes.object,
+  setField: Proptypes.func,
+  bmRouteParams: Proptypes.object,
+  commentBME: Proptypes.func,
+  queryParams: Proptypes.object,
+  update: Proptypes.func,
+  reset: Proptypes.func
+};
+
+Project.defaultProps = {
+  filteredBmeTree: []
+};
 
 export default BuilderPage(
   connect(
@@ -218,7 +343,7 @@ export default BuilderPage(
       deleteCustomBME,
       setField,
       update,
-      reset,
+      reset
     }),
   )(Project)
 );

@@ -45,7 +45,7 @@ import Legend from 'components/common/map/Legend';
 import ItemGallery from 'components/explore/ItemGallery';
 import DownloadData from 'components/common/DownloadData';
 import Modal from 'components/common/Modal';
-import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
+import DisclaimerModal from 'components/common/disclaimer/DisclaimerModal';
 import DownloadDataModal from 'components/common/modal/DownloadDataModal';
 import Spinner from 'components/common/Spinner';
 
@@ -57,8 +57,11 @@ import getLayerType from 'utils/map/layer';
 class ExploreIndex extends Page {
 
   state = {
-    disclaimer: null,
     modal: {
+      disclaimer: {
+        open: false,
+        category: null
+      },
       download: false
     }
   };
@@ -136,6 +139,7 @@ class ExploreIndex extends Page {
   _openDownloadData() {
     this.setState({
       modal: {
+        ...this.state.modal,
         download: true
       }
     });
@@ -213,7 +217,15 @@ class ExploreIndex extends Page {
     const modifiedCategoryTabs = categoryTabs.map(tab => ({
       ...tab,
       modal: tab.hasModal ? {
-        onClick: () => this.setState({ disclaimer: tab.slug })
+        onClick: () => this.setState({
+          modal: {
+            ...this.state.modal,
+            disclaimer: {
+              open: true,
+              category: tab.slug
+            }
+          }
+        })
       } : null
     }));
 
@@ -271,22 +283,36 @@ class ExploreIndex extends Page {
           onClickButton={() => this._openDownloadData()}
         />
 
-        <DisclaimerModal
-          categories={categories}
-          disclaimer={this.state.disclaimer}
-          onClose={() => this.setState({ disclaimer: null })}
-        />
+        <Modal
+          open={this.state.modal.disclaimer.open}
+          toggleModal={v => this.setState({
+            modal: { ...this.state.modal, disclaimer: { open: v } }
+          })}
+          loading={categories.length === 0}
+        >
+          <DisclaimerModal
+            categories={categories}
+            disclaimer={this.state.modal.disclaimer.category}
+            onClose={() => this.setState({
+              modal: { ...this.state.modal, disclaimer: { open: false } }
+            })}
+          />
+        </Modal>
 
         <Modal
           open={this.state.modal.download}
-          toggleModal={v => this.setState({ modal: { download: v } })}
+          toggleModal={v => this.setState({
+            modal: { ...this.state.modal, download: v }
+          })}
           loading={loadingBmes || loadingCities}
         >
           <DownloadDataModal
             bmes={bmesDownloadOptions}
             cities={cityDownloadOptions}
             solutions={solutionsDownloadOptions}
-            onClose={() => this.setState({ modal: { download: false } })}
+            onClose={() => this.setState({
+              modal: { ...this.state.modal, download: false }
+            })}
           />
         </Modal>
 

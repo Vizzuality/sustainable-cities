@@ -31,14 +31,14 @@
 
       .icon {
         margin-right: 10px;
-
-        @media #{$mq-tablet} {
-          margin: 0;
-        }
       }
 
       > .c-title {
         margin: 10px 0 0;
+
+        @media #{$mq-tablet} {
+          margin: 0;
+        }
       }
 
       & + .c-button {

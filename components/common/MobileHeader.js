@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Link } from 'routes';
 import { connect } from 'react-redux';
-import uuidv1 from 'uuid/v1';
 
 // modules
 import { logout } from 'modules/auth';
@@ -18,7 +17,6 @@ const SOLUTION_MAP_ROUTES = ['explore-index', 'solution-detail', 'bme-detail', '
 
 class MobileHeader extends React.Component {
   state = {
-    section: '',
     modal: {
       login: {
         open: false
@@ -28,16 +26,6 @@ class MobileHeader extends React.Component {
       }
     }
   };
-
-  onSelectSection(e, section) {
-    if (e) e.preventDefault();
-    const currentSection = this.state.section;
-    if (currentSection === section) return;
-
-    this.setState({
-      section
-    });
-  }
 
   onSignUp() {
     this.setState({
@@ -49,14 +37,42 @@ class MobileHeader extends React.Component {
     });
   }
 
+  onLogin() {
+    this.hideModals('login');
+    this.toggleMenu();
+  }
+
+  onLogout(e) {
+    if (e) e.preventDefault();
+    this.props.logout();
+    this.toggleMenu();
+  }
+
+  toggleMenu() {
+    this.setState({
+      open: !this.state.open
+    });
+  }
+
+  showSignUp() {
+    this.setState({
+      modal: {
+        ...this.state.modal,
+        signup: { open: true }
+      }
+    });
+  }
+
   showLogin(e) {
-    e.stopPropagation();
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
     this.setState({
       modal: {
         ...this.state.modal,
         login: { open: true }
-      },
-      section: ''
+      }
     });
   }
 
@@ -69,31 +85,10 @@ class MobileHeader extends React.Component {
     });
   }
 
-  showSignUp() {
-    this.setState({
-      modal: {
-        ...this.state.modal,
-        signup: { open: true }
-      },
-      section: ''
-    });
-  }
-
-  toggleMenu() {
-    this.setState({
-      open: !this.state.open
-    });
-  }
-
   render() {
     const { route, token, profile } = this.props;
-    const { modal, section, open } = this.state;
+    const { modal, open } = this.state;
     const { name } = profile || {};
-
-    const profileSubmenu = [
-      { id: uuidv1(), label: 'See profile' },
-      { id: uuidv1(), label: 'Log out', onClick: () => { this.props.logout(); } }
-    ];
 
     const mobileHeaderClass = classnames('c-mobile-header', {
       '-open': open
@@ -137,21 +132,31 @@ class MobileHeader extends React.Component {
                     >
                       <Link prefetch route="builder"><a className="literal">Design</a></Link>
                     </li>
-                    <li
-                      className={classnames('nav-item', { '-current': route === 'profile' })}
-                      role="menuitem"
-                      onClick={e => this.onSelectSection(e, 'profile')}
-                    >
-                      {
-                        token ?
-                          <a href="/profile" className="username">{name}</a> :
-                          <a
-                            href="#"
-                            className="username"
-                            onClick={(e) => { this.showLogin(e); }}
-                          >Log in</a>
-                      }
-                    </li>
+                    {!token &&
+                      <li
+                        className="nav-item"
+                        role="menuitem"
+                      >
+                        <a
+                          href="login"
+                          className="username"
+                          onClick={(e) => { this.showLogin(e); }}
+                        >Log in</a>
+                      </li>}
+                    {token &&
+                      <li
+                        className={classnames('nav-item', { '-current': route === 'profile' })}
+                        role="menuitem"
+                      >
+                        <Link prefetch route="profile"><a className="literal">{name}</a></Link>
+                      </li>}
+                    {token &&
+                      <li
+                        className="nav-item"
+                        role="menuitem"
+                      >
+                        <a className="literal" href="logout" onClick={e => this.onLogout(e)}>Logout</a>
+                      </li>}
                   </ul>
                 </nav>
               </div>
@@ -160,23 +165,23 @@ class MobileHeader extends React.Component {
         </div>
 
         <Modal
-          open={this.state.modal.login.open}
+          open={modal.login.open}
           toggleModal={v => this.setState({ modal: {
-            ...this.state.modal,
+            ...modal,
             login: { open: v }
           } })}
         >
           <Login
             onClose={() => this.hideModals('login')}
             onSignUp={() => this.onSignUp()}
-            onLogin={() => this.hideModals('login')}
+            onLogin={() => this.onLogin()}
           />
         </Modal>
 
         <Modal
-          open={this.state.modal.signup.open}
+          open={modal.signup.open}
           toggleModal={v => this.setState({ modal: {
-            ...this.state.modal,
+            ...modal,
             signup: { open: v }
           } })}
         >

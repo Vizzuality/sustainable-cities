@@ -48,24 +48,13 @@ class MainNav extends React.Component {
     });
   }
 
-  showLogin(e) {
-    e.stopPropagation();
+  onSignUp() {
     this.setState({
       modal: {
         ...this.state.modal,
-        login: { open: true }
-      },
-      section: ''
-    });
-  }
-
-  showSignUp() {
-    this.setState({
-      modal: {
-        ...this.state.modal,
+        login: { open: false },
         signup: { open: true }
-      },
-      section: ''
+      }
     });
   }
 
@@ -78,13 +67,25 @@ class MainNav extends React.Component {
     });
   }
 
-  onSignUp() {
+  showLogin(e) {
+    e.stopPropagation();
     this.setState({
       modal: {
         ...this.state.modal,
-        login: { open: false },
+        login: { open: true },
+        signup: { open: false }
+      },
+      section: ''
+    });
+  }
+
+  showSignUp() {
+    this.setState({
+      modal: {
+        ...this.state.modal,
         signup: { open: true }
-      }
+      },
+      section: ''
     });
   }
 
@@ -189,7 +190,7 @@ class MainNav extends React.Component {
         >
           <SignUp
             onClose={() => this.hideModals('signup')}
-            onLogin={() => this.showLogin()}
+            onLogin={(e) => { this.showLogin(e); }}
             onSignUp={() => this.hideModals('signup')}
           />
         </Modal>

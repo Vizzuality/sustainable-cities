@@ -10,6 +10,7 @@ import uuidv1 from 'uuid/v1';
 import { logout } from 'modules/auth';
 
 // components
+import LogoApp from 'components/common/LogoApp';
 import SubMenu from 'components/common/SubMenu';
 import Modal from 'components/common/Modal';
 import Login from 'components/common/Login';
@@ -47,24 +48,13 @@ class MainNav extends React.Component {
     });
   }
 
-  showLogin(e) {
-    e.stopPropagation();
+  onSignUp() {
     this.setState({
       modal: {
         ...this.state.modal,
-        login: { open: true }
-      },
-      section: ''
-    });
-  }
-
-  showSignUp() {
-    this.setState({
-      modal: {
-        ...this.state.modal,
+        login: { open: false },
         signup: { open: true }
-      },
-      section: ''
+      }
     });
   }
 
@@ -77,13 +67,25 @@ class MainNav extends React.Component {
     });
   }
 
-  onSignUp() {
+  showLogin(e) {
+    e.stopPropagation();
     this.setState({
       modal: {
         ...this.state.modal,
-        login: { open: false },
+        login: { open: true },
+        signup: { open: false }
+      },
+      section: ''
+    });
+  }
+
+  showSignUp() {
+    this.setState({
+      modal: {
+        ...this.state.modal,
         signup: { open: true }
-      }
+      },
+      section: ''
     });
   }
 
@@ -102,11 +104,7 @@ class MainNav extends React.Component {
         <div className="row">
           <div className="column small-12">
             <div className="nav-container">
-              <div className="logo">
-                <Link prefetch route="home">
-                  <a>Financing <br /> Sustainable <br /> Cities</a>
-                </Link>
-              </div>
+              <LogoApp />
               <nav className="nav">
                 <ul className="nav-list" role="menubar">
                   <li
@@ -192,7 +190,7 @@ class MainNav extends React.Component {
         >
           <SignUp
             onClose={() => this.hideModals('signup')}
-            onLogin={() => this.showLogin()}
+            onLogin={(e) => { this.showLogin(e); }}
             onSignUp={() => this.hideModals('signup')}
           />
         </Modal>

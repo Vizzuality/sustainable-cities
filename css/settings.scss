@@ -99,10 +99,17 @@ $font-weight-bold:    700;
 // Max widths
 $layout-max-width: 1080px;
 
-// Responsive breakpoints
-// $br-mobile: 640px;
-// $br-tablet: 1024px;
-// $br-desktop: 1200px;
+// Breakpoints
+$breakpoint-mobile:  320px;
+$breakpoint-tablet:  768px;
+$breakpoint-laptop: 1024px;
+$breakpoint-desktop: 1200px;
+
+// Media queries
+$mq-mobile: 'screen and (min-width: #{$breakpoint-mobile})';
+$mq-tablet: 'screen and (min-width: #{$breakpoint-tablet})';
+$mq-laptop: 'screen and (min-width: #{$breakpoint-laptop})';
+$mq-desktop: 'screen and (min-width: #{$breakpoint-desktop})';
 
 /**
  * SPACES && SIZES
@@ -119,7 +126,7 @@ $base-line-height: 1.62;
  * - Eases
 */
 // Times
-// $animation-time: .16s;
+$animation-time: .16s;
 // $animation-time-2: .24s;
 // $animation-time-3: .5s;
 $animation-time-4: .75s;

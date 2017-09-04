@@ -22,7 +22,7 @@ export default class GridSlider extends React.Component {
     return this.props.items
       .slice(this.state.page * ITEMS_PER_PAGE, (this.state.page + 1) * ITEMS_PER_PAGE)
       .map(item => (
-        <div className="column small-12 medium-4 large-3" key={item.id}>
+        <div className="column small-6 medium-3" key={item.id}>
           <GridItem
             image={item.image}
             imageLayout={this.props.layout || item.layout}

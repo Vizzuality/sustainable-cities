@@ -6,15 +6,18 @@ $grid-item-portrait-height:  310px;
   position: relative;
   text-decoration: none;
 
-  &:hover {
-    z-index: 1;
+  @media #{$mq-tablet} {
+    &:hover {
+      z-index: 1;
 
-    .background {
-      transform: scale(1.16);
-      background-color: $color-white;
-      box-shadow: 0 7px 15px 0 rgba($color-black, .15);
+      .background {
+        transform: scale(1.16);
+        background-color: $color-white;
+        box-shadow: 0 7px 15px 0 rgba($color-black, .15);
+      }
     }
   }
+
 
   .background {
     display: block;
@@ -41,5 +44,17 @@ $grid-item-portrait-height:  310px;
     &.-portrait {
       height: 310px;
     }
+  }
+
+  .title {
+    font-size: $font-size-default;
+
+    @media #{$mq-tablet} {
+      font-size: $font-size-bigger;
+    }
+  }
+
+  .subittle {
+    font-size: $font-size-default;
   }
 }

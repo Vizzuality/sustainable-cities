@@ -28,7 +28,7 @@ export default function ItemGallery(props) {
                     {item.icon &&
                     <svg className="icon -big -dark -in-line-left"><use xlinkHref={`#${item.icon}`} /></svg>}
                     {showTitle &&
-                      <h3 className="c-title -dark -fs-extrabig -fw-light">{item.title}</h3>}
+                      <h3 className="c-title -dark -fw-light">{item.title}</h3>}
                   </div>
                   {(showAll &&
                     (item.children || []).length > MAX_ITEMS_PER_ROW) &&

@@ -1,5 +1,6 @@
 import { Deserializer } from 'jsonapi-serializer';
 import jwtDecode from 'jwt-decode';
+import * as queryString from 'query-string';
 import { apiRequest } from 'modules/helpers';
 import { Router } from 'routes';
 
@@ -14,6 +15,7 @@ const SIGNUP_ERROR = 'auth/SIGNUP_ERROR';
 const CLEAR_ERRORS = 'auth/CLEAR_ERRORS';
 
 const GET_PROFILE = 'auth/GET_PROFILE';
+const GET_SAVED_PROJECTS = 'auth/GET_SAVED_PROJECTS';
 
 const initialState = {
   token: null,
@@ -43,6 +45,13 @@ export default function (state = initialState, action) {
     case GET_PROFILE:
       return { ...state, profile: action.payload };
 
+    case GET_SAVED_PROJECTS:
+      return Object.assign({},
+        state,
+        { profile: {
+          ...state.profile, savedProjects: action.payload
+        } }
+      );
     default:
       return state;
   }
@@ -57,6 +66,45 @@ export function getProfile(token) {
       new Deserializer().deserialize(data, (err, parsed) => {
         dispatch({ type: GET_PROFILE, payload: parsed });
       });
+    });
+  };
+}
+
+export function getSavedProjects(token) {
+  return (dispatch) => {
+    const includeFields = ['solution', 'business-model-bmes', 'bmes',
+      'business-model-bmes.comment', 'business-model-enablings',
+      'business-model-enablings.enabling', 'owner', 'business-model-users',
+      'business-model-users.user'];
+
+
+    const queryParams = queryString.stringify({
+      include: includeFields.join(',')
+    });
+    apiRequest(`/business-models?${queryParams}`,
+      { mehtod: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    ).then(response => response.json()).then((data) => {
+      new Deserializer().deserialize(data, (err, parsed) => {
+        dispatch({ type: GET_SAVED_PROJECTS, payload: parsed });
+      });
+    });
+  };
+}
+
+export function deleteSavedProject(token, projectId) {
+  return (dispatch) => {
+    apiRequest(`business-models/${projectId}`,
+      { method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    ).then(() => {
+      dispatch(getSavedProjects(token));
     });
   };
 }

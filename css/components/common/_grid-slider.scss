@@ -10,20 +10,22 @@ $grid-slider-arrow-size: 20px;
     overflow-x: initial;
   }
 
+  .c-grid-item {
+    height: 100%;
+    margin: 0 0 0 10px;
+  }
+
   .column {
     margin: 15px 0;
 
     @media #{$mq-tablet} {
       margin: 25px 0;
     }
-  }
 
-  .c-grid-item {
-    height: 100%;
-    margin: 0 0 0 10px;
-
-    @media #{$mq-tablet} {
-      min-width: auto;
+    &:first-of-type {
+      .c-grid-item {
+        margin: 0;
+      }
     }
   }
 

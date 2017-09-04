@@ -2,16 +2,35 @@ $grid-slider-arrow-size: 20px;
 
 .c-grid-slider {
   position: relative;
+  overflow-x: auto;
+  display: flex;
+  flex-wrap: nowrap;
 
-  .column {
-    margin: 25px 0;
+  @media #{$mq-tablet} {
+    overflow-x: initial;
   }
 
   .c-grid-item {
     height: 100%;
+    margin: 0 0 0 10px;
   }
 
-  > .button {
+  .column {
+    margin: 15px 0;
+
+    @media #{$mq-tablet} {
+      margin: 25px 0;
+    }
+
+    &:first-of-type {
+      .c-grid-item {
+        margin: 0;
+      }
+    }
+  }
+
+  .button {
+    display: none;
     position: absolute;
     top: 25px;
     width: 90px;
@@ -68,6 +87,9 @@ $grid-slider-arrow-size: 20px;
         background-position: left center;
       }
     }
-  }
 
+    @media #{$mq-desktop} {
+      display: inline-block;
+    }
+  }
 }

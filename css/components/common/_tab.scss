@@ -1,19 +1,64 @@
 .c-tabs {
+  position: relative;
   display: flex;
   justify-content: center;
 
   border-bottom: 1px solid rgba($color-black, .1);
   background: $color-white;
 
+  &::before {
+    z-index: $z-index-2;
+    content: '';
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(270deg, rgba($color-white,0) 0%, $color-white 100%);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    width: 43px;
+    height: 100%;
+    background: linear-gradient(90deg, rgba($color-white,0) 0%, $color-white 100%);
+    pointer-events: none;
+  }
+
+  @media #{$mq-tablet} {
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
   .tab-list {
     display: flex;
+    overflow: auto;
     align-items: center;
     height: $tab-height;
   }
 
   .tab-list > .tab-item {
     display: flex;
+    align-items: center;
     height: 100%;
+
+    &:not(:first-child) {
+      margin: 0 0 0 30px;
+    }
+
+    &:first-child {
+      padding: 0 0 0 15px;
+    }
+
+    &:last-child {
+      padding: 0 15px 0 0;
+    }
 
     > .literal {
       cursor: pointer;
@@ -23,6 +68,8 @@
 
       font-size: $font-size-smaller;
       color: $color-text-3;
+      line-height: 1;
+      text-align: center;
       text-transform: uppercase;
     }
 
@@ -46,6 +93,16 @@
         cursor: default;
       }
     }
+
+    @media #{$mq-tablet} {
+      &:first-child {
+        padding: 0;
+      }
+
+      &:last-child {
+        padding: 0;
+      }
+    }
   }
 
   &.-explore {
@@ -61,10 +118,15 @@
 
   // (i) info icon
   .c-info-icon {
-    display: flex;
-    align-items: center;
+    width: 16px;
+    height: 16px;
     margin-left: 10px;
+    padding: 0;
     cursor: pointer;
+
+    appearance: none;
+    background: none;
+    border: 0;
   }
 }
 

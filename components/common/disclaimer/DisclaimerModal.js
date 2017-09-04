@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'routes';
 
+// components
 import Button from 'components/common/Button';
 
-export class DisclaimerModal extends React.Component {
+export default class DisclaimerModal extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { disclaimer } = nextProps;
@@ -27,21 +29,27 @@ export class DisclaimerModal extends React.Component {
       return null;
     }
 
-    return (<div className="c-modal">
-      <div className="content">
+    return (
+      <section className="disclaimer">
+        <h1 className="c-title -fw-thin -fs-huge">{label}</h1>
+        <p className="c-text -fs-medium -fw-light">{description}</p>
 
-        <section className="disclaimer">
-          <h1 className="c-title -fw-thin -fs-huge">{label}</h1>
-          <p className="c-text -fs-medium -fw-light">{description}</p>
-        </section>
+        <p className="c-text -dark -fs-medium -fw-light">
+          Visit this <Link
+            route="about"
+            params={{
+              section: 'more-information'
+            }}
+          >
+            <a>link</a>
+          </Link> for further information.
+        </p>
 
         <div className="actions">
           <Button onClick={onClose}>OK</Button>
         </div>
-
-        <div className="dismiss" onClick={() => this.handleClose()}>&times;</div>
-      </div>
-    </div>);
+      </section>
+    );
   }
 }
 

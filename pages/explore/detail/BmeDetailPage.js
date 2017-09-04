@@ -28,6 +28,7 @@ import DownloadDataModal from 'components/common/modal/DownloadDataModal';
 import ShareModal from 'components/common/ShareModal';
 import RelatedContent from 'components/explore-detail/RelatedContent';
 import BmeDetail from 'components/explore-detail/BmeDetail';
+import Spinner from 'components/common/Spinner';
 
 // constants
 import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
@@ -127,13 +128,10 @@ class BmeDetailPage extends Page {
         title="Business model element detail"
         queryParams={this.props.queryParams}
       >
-        <div className="bme-detail-page">
-
-          {isLoading && (<div>
-            Loading bme...
-          </div>)}
-
-          {!isLoading && (<div>
+        <div className="l-content">
+          {isLoading ?
+          (<Spinner className="-transparent" isLoading />) :
+          (<div>
             <Cover
               size="shorter"
               className={'-no-veil -bme'}
@@ -183,9 +181,7 @@ class BmeDetailPage extends Page {
                 onDownload={() => Router.pushRoute('bme-detail-print', { id: this.props.queryParams.id })}
               />
             }
-
           </div>)}
-
         </div>
 
       </Layout>

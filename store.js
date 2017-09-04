@@ -17,7 +17,7 @@ const devToolsExtension = (
 );
 
 const builderTransform = createTransform(
-  (state, key) => ({ "new": state.new }),
+  (state, key) => ({ "new": state.new, props: state.props }),
   (state, key) => state,
   { whitelist: ['builder'] },
 );

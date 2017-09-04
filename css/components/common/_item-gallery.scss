@@ -10,12 +10,45 @@
 
     > .gallery-item-header {
       display: flex;
+      align-items: flex-end;
       justify-content: space-between;
     }
 
     > .gallery-item-header > .gallery-item-title {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
+      flex-grow: 1;
+      flex-basis: 0;
+
+      @media #{$mq-tablet} {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .icon {
+        margin-right: 10px;
+      }
+
+      > .c-title {
+        margin: 10px 0 0;
+
+        font-size: $font-size-big;
+
+        @media #{$mq-tablet} {
+          margin: 0;
+          font-size: $font-size-extrabig;
+        }
+      }
+
+      & + .c-button {
+        margin: 15px 0 0;
+
+        @media #{$mq-tablet} {
+          margin: 0;
+        }
+      }
     }
 
     &:not(:first-child) {

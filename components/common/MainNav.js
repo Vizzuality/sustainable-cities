@@ -10,7 +10,9 @@ import uuidv1 from 'uuid/v1';
 import { logout } from 'modules/auth';
 
 // components
+import LogoApp from 'components/common/LogoApp';
 import SubMenu from 'components/common/SubMenu';
+import Modal from 'components/common/Modal';
 import Login from 'components/common/Login';
 import SignUp from 'components/common/SignUp';
 
@@ -20,7 +22,14 @@ const SOLUTION_MAP_ROUTES = ['explore-index', 'solution-detail', 'bme-detail', '
 class MainNav extends React.Component {
   state = {
     section: '',
-    modal: null
+    modal: {
+      login: {
+        open: false
+      },
+      signup: {
+        open: false
+      }
+    }
   };
 
   onSelectSection(e, section) {
@@ -39,22 +48,50 @@ class MainNav extends React.Component {
     });
   }
 
+  onSignUp() {
+    this.setState({
+      modal: {
+        ...this.state.modal,
+        login: { open: false },
+        signup: { open: true }
+      }
+    });
+  }
+
+  hideModals(name) {
+    this.setState({
+      modal: {
+        ...this.state.modal,
+        [name]: { open: false }
+      }
+    });
+  }
+
   showLogin(e) {
     e.stopPropagation();
-    this.setState({ modal: 'login', section: '' });
+    this.setState({
+      modal: {
+        ...this.state.modal,
+        login: { open: true },
+        signup: { open: false }
+      },
+      section: ''
+    });
   }
 
   showSignUp() {
-    this.setState({ modal: 'sign-up', section: '' });
-  }
-
-  hideModals() {
-    this.setState({ modal: null });
+    this.setState({
+      modal: {
+        ...this.state.modal,
+        signup: { open: true }
+      },
+      section: ''
+    });
   }
 
   render() {
     const { route, token, profile } = this.props;
-    const { modal, section } = this.state;
+    const { section } = this.state;
     const { name } = profile || {};
 
     const profileSubmenu = [
@@ -67,11 +104,7 @@ class MainNav extends React.Component {
         <div className="row">
           <div className="column small-12">
             <div className="nav-container">
-              <div className="logo">
-                <Link prefetch route="home">
-                  <a>Financing <br /> Sustainable <br /> Cities</a>
-                </Link>
-              </div>
+              <LogoApp />
               <nav className="nav">
                 <ul className="nav-list" role="menubar">
                   <li
@@ -134,17 +167,33 @@ class MainNav extends React.Component {
           </div>
         </div>
 
-        {modal === 'login' && <Login
-          onClose={() => this.hideModals()}
-          onSignUp={() => this.showSignUp()}
-          onLogin={() => this.hideModals()}
-        />}
+        <Modal
+          open={this.state.modal.login.open}
+          toggleModal={v => this.setState({ modal: {
+            ...this.state.modal,
+            login: { open: v }
+          } })}
+        >
+          <Login
+            onClose={() => this.hideModals('login')}
+            onSignUp={() => this.onSignUp()}
+            onLogin={() => this.hideModals('login')}
+          />
+        </Modal>
 
-        {modal === 'sign-up' && <SignUp
-          onClose={() => this.hideModals()}
-          onLogin={() => this.showLogin()}
-          onSignUp={() => this.hideModals()}
-        />}
+        <Modal
+          open={this.state.modal.signup.open}
+          toggleModal={v => this.setState({ modal: {
+            ...this.state.modal,
+            signup: { open: v }
+          } })}
+        >
+          <SignUp
+            onClose={() => this.hideModals('signup')}
+            onLogin={(e) => { this.showLogin(e); }}
+            onSignUp={() => this.hideModals('signup')}
+          />
+        </Modal>
       </div>
     );
   }

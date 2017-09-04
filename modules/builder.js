@@ -73,8 +73,6 @@ const sliceReducer = (state = initialSliceState, action) => {
     case SET_FIELD:
       return { ...state, [action.field]: action.value };
 
-    case BM_CREATED:
-      return { ...state, writableId: action.writableId, readableId: action.readableId };
     case BM_GET:
       if (state.readableId === action.project['link-share']) {
         return state;
@@ -87,7 +85,7 @@ const sliceReducer = (state = initialSliceState, action) => {
         ...state,
         title: action.project.title,
         description: action.project.description,
-        selectedSolution: action.project['solution-id'],
+        selectedSolution: action.project['solution-id'].toString(),
 
         selectedBMEs: publicBmBmes.map(bmbme => bmbme.bme.id),
         commentedBMEs: fromPairs(
@@ -162,6 +160,16 @@ const makeSliceReducer = (slice) => (state, action) => {
 export default combineReducers({
   [SLICE_EXISTING]: makeSliceReducer(SLICE_EXISTING),
   [SLICE_NEW]: makeSliceReducer(SLICE_NEW),
+  props: (state = {}, action) => {
+    switch (action.type) {
+      case BM_CREATED:
+        return { ...state, writableId: action.writableId };
+      case RESET:
+        return {};
+      default:
+        return state;
+    }
+  }
 });
 
 export function selectSolution(slice, solutionId) {
@@ -189,6 +197,10 @@ export const commentBME = (slice, bmeId, comment) => ({ type: COMMENT_BME, slice
 export const addCustomBME = (slice, bme) => ({ type: ADD_CUSTOM_BME, slice, bme });
 
 export const deleteCustomBME = (slice, bme) => ({ type: DELETE_CUSTOM_BME, slice, bme });
+
+export function rememberProject(slice, writableId) {
+  return { type: BM_CREATED, writableId };
+}
 
 export function reset(slice) {
   return (dispatch, getState) => {

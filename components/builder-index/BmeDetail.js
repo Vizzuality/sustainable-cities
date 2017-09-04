@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import Tab from 'components/common/Tab';
@@ -40,8 +41,7 @@ class BmeDetail extends React.Component {
 
   render() {
     return (
-      <div className="c-modal c-builder-bme-detail" onClick={this.onOverlayClick.bind(this)}>
-        <div className="content">
+        <div>
           <header>
             <h1 className="c-title -fw-thin -fs-huge">{this.props.bme.name}</h1>
 
@@ -72,11 +72,11 @@ class BmeDetail extends React.Component {
               </section>
 
               <section>
-                {this.props.bme.enablings.filter(e => e).length == 0 &&
+                {(this.props.bme.enablings || []).filter(e => e).length == 0 &&
                   <h2 className="c-title -fw-light -fs-extrabig">No enabling conditions for this element</h2>
                 }
 
-                {Object.entries(groupBy(this.props.bme.enablings.filter(e => e), enabling => enabling["assessment-value"])).map(([value, enablings]) =>
+                {Object.entries(groupBy((this.props.bme.enablings || []).filter(e => e), enabling => enabling["assessment-value"])).map(([value, enablings]) =>
                   <div key={value}>
                     <h2 className="c-title -fw-light -fs-extrabig">{value}</h2>
                     <ul>
@@ -120,13 +120,19 @@ class BmeDetail extends React.Component {
             }
           </div>
 
-          <div className="dismiss" onClick={this.props.onClose}>&times;</div>
           {this.props.onPrev && <div className="prev" onClick={this.props.onPrev}></div>}
           {this.props.onNext && <div className="next" onClick={this.props.onNext}></div>}
         </div>
-      </div>
     );
   }
 }
+
+BmeDetail.propTypes = {
+  bme: PropTypes.object
+};
+
+BmeDetail.defaultProps = {
+  bme: {}
+};
 
 export default BmeDetail;

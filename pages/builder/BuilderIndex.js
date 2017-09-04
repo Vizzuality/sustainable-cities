@@ -2,26 +2,24 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import React from 'react';
 import storage from 'local-storage-fallback';
-import withRedux from 'next-redux-wrapper';
 
 import BuilderPage from 'pages/builder/BuilderPage';
 import { Router } from 'routes';
-import { store } from 'store';
 
 import Layout from 'components/layout/layout';
 import Sidebar from 'components/builder-index/Sidebar';
 import SolutionPicker from 'components/builder-index/SolutionPicker';
 import EnablingConditionsSelector from 'components/builder-index/EnablingConditionsSelector';
 import RadialChart from 'components/common/RadialChart';
-import BmeDetail from 'components/builder-index/BmeDetail';
 import ConnectedBmeDetail from 'components/builder-index/ConnectedBmeDetail';
-import HelpModal from 'components/builder-index/HelpModal';
 import Login from 'components/common/Login';
 import SignUp from 'components/common/SignUp';
 import Spinner from 'components/common/Spinner';
+import Modal from 'components/common/Modal';
+import HelpModal from 'components/builder-index/HelpModal';
 
 import { builderSelector, withModifiers } from 'selectors/builder';
-import { leaves, withSlice } from 'utils/builder';
+import { withSlice, leaves } from 'utils/builder';
 
 import {
   deselectEnabling,
@@ -30,15 +28,29 @@ import {
   reset,
   create,
   update,
+  rememberProject
 } from 'modules/builder';
 
 
 class BuilderIndex extends React.Component {
   state = {
     sidebar: "default",
-    showHelp: process.browser && !storage.getItem('builder.help-dismissed'),
     hoveredEnabling: null,
-    modal: null,
+    bme: {},
+    modal: {
+      login: {
+        open: false
+      },
+      signup: {
+        open: false
+      },
+      bmeDetail: {
+        open: false
+      },
+      help: {
+        open: process.browser && !storage.getItem('builder.help-dismissed')
+      }
+    }
   };
 
   selectSolution(solution) {
@@ -54,7 +66,7 @@ class BuilderIndex extends React.Component {
   }
 
   relativeBME(bme, delta) {
-    const bmes = this.props.bmes;
+    const bmes = leaves(this.props.solutionFilteredBmeTree);
     const bmeIndex = bmes.findIndex(b => b.id === bme.id);
 
     return bmes.concat(bmes)[(bmeIndex + bmes.length + delta) % bmes.length];
@@ -68,14 +80,27 @@ class BuilderIndex extends React.Component {
     this.showBME(this.relativeBME(bme, -1));
   }
 
-  showBME = (bme) => this.setState({ bme });
+  showBME = bme => this.setState({
+    bme,
+    modal: {
+      ...this.state.modal,
+      bmeDetail: { open: true }
+    }
+  });
 
-  hideBME = () => this.setState({ bme: undefined });
-
-  showHelp = () => this.setState({ showHelp: true });
+  hideBME = () => this.setState({
+    bme: {},
+    modal: {
+      ...this.state.modal,
+      bmeDetail: { open: false }
+    }
+  });
 
   hideHelp = () => {
-    this.setState({ showHelp: false });
+    this.setState({ modal: {
+      ...this.state.modal,
+      help: { open: false } }
+    });
 
     storage.setItem('builder.help-dismissed', true);
   }
@@ -92,9 +117,11 @@ class BuilderIndex extends React.Component {
 
   hideModals = () => this.setState({ modal: null });
 
-  showLogin = () => this.setState({ modal: 'login' });
+  showLogin = () => this.setState({ modal: { ...this.state.modal, login: { open: true } } });
 
-  showSignUp = () => this.setState({ modal: 'sign-up' });
+  showSignUp = () => this.setState({ modal: { ...this.state.modal, signup: { open: true } } });
+
+  showHelp = () => this.setState({ modal: { ...this.state.modal, help: { open: true } } });
 
   save = () => {
     if (this.props.auth.token) {
@@ -106,12 +133,17 @@ class BuilderIndex extends React.Component {
           this.props.auth.token,
         ).then(writableId => {
           this.props.reset();
-          Router.pushRoute(document.location.origin + "/builder/w" + writableId);
+          this.props.rememberProject(writableId);
         });
       }
     } else {
       this.showLogin();
     }
+  }
+
+  reset = () => {
+    this.props.reset();
+    Router.pushRoute('builder');
   }
 
   nodesToShow() {
@@ -142,29 +174,29 @@ class BuilderIndex extends React.Component {
           onEnablingsClick={this.showEnablingsSelector}
           onShowResultsClick={this.showResults}
           onSaveClick={this.save}
-          onResetClick={this.props.reset}
+          onResetClick={this.reset}
           selectedSolution={this.props.selectedSolution}
           selectedEnablings={this.props.selectedEnablings}
         />
 
-        { this.state.sidebar == "solutions" &&
-            <SolutionPicker
-              onSolutionSelected={(s) => this.selectSolution(s)}
-              onClose={this.showSidebar}
-              solutions={this.props.solutions}
-              selectedSolution={this.props.selectedSolution}
-            />
+        { this.state.sidebar === 'solutions' &&
+          <SolutionPicker
+            onSolutionSelected={(s) => this.selectSolution(s)}
+            onClose={this.showSidebar}
+            solutions={this.props.solutions}
+            selectedSolution={this.props.selectedSolution}
+          />
         }
 
-        { this.state.sidebar == "enablings" &&
-            <EnablingConditionsSelector
-              nodes={this.props.enablings}
-              selectedEnablings={this.props.selectedEnablings}
-              onClose={this.showSidebar}
-              onEnablingSelect={(enabling) => this.selectEnabling(enabling)}
-              onEnablingDeselect={(enabling) => this.deselectEnabling(enabling)}
-              onEnablingHover={(enabling) => this.showEnablingBMEs(enabling)}
-            />
+        { this.state.sidebar === 'enablings' &&
+          <EnablingConditionsSelector
+            nodes={this.props.enablings}
+            selectedEnablings={this.props.selectedEnablings}
+            onClose={this.showSidebar}
+            onEnablingSelect={(enabling) => this.selectEnabling(enabling)}
+            onEnablingDeselect={(enabling) => this.deselectEnabling(enabling)}
+            onEnablingHover={(enabling) => this.showEnablingBMEs(enabling)}
+          />
         }
 
         <div className={classnames(
@@ -202,28 +234,60 @@ class BuilderIndex extends React.Component {
           }
         </div>
 
-        {this.state.bme && <ConnectedBmeDetail
-          businessModelId={this.props.businessModelId}
-          slice={this.props.slice}
-          bmeId={this.state.bme.id}
-          onClose={this.hideBME}
-          onNext={() => this.selectNext(this.state.bme)}
-          onPrev={() => this.selectPrevious(this.state.bme)}
-        />}
+        <Modal
+          open={this.state.modal.bmeDetail.open}
+          toggleModal={v => this.setState({ modal: {
+            ...this.state.modal,
+            bmeDetail: { open: v }
+          } })}
+        >
+          <ConnectedBmeDetail
+            businessModelId={this.props.businessModelId}
+            slice={this.props.slice}
+            bmeId={this.state.bme.id}
+            onClose={() => this.hideBME()}
+            onNext={() => this.selectNext(this.state.bme)}
+            onPrev={() => this.selectPrevious(this.state.bme)}
+          />
+        </Modal>
 
-        {this.state.showHelp && <HelpModal onClose={this.hideHelp} />}
+        <Modal
+          open={this.state.modal.help.open}
+          toggleModal={v => this.setState({ modal: {
+            ...this.state.modal,
+            help: { open: v }
+          } })}
+        >
+          <HelpModal onClose={this.hideHelp} />
+        </Modal>
 
-        {this.state.modal == 'login' && <Login
-          onClose={this.hideModals}
-          onSignUp={this.showSignUp}
-          onLogin={this.hideModals}
-        />}
+        <Modal
+          open={this.state.modal.login.open}
+          toggleModal={v => this.setState({ modal: {
+            ...this.state.modal,
+            login: { open: v }
+          } })}
+        >
+          <Login
+            onClose={this.hideModals}
+            onSignUp={this.showSignUp}
+            onLogin={this.hideModals}
+          />
+        </Modal>
 
-        {this.state.modal == 'sign-up' && <SignUp
-          onClose={this.hideModals}
-          onLogin={this.showLogin}
-          onSignUp={this.hideModals}
-        />}
+        <Modal
+          open={this.state.modal.signup.open}
+          toggleModal={v => this.setState({ modal: {
+            ...this.state.modal,
+            signup: { open: v }
+          } })}
+        >
+          <SignUp
+            onClose={this.hideModals}
+            onLogin={this.showLogin}
+            onSignUp={this.hideModals}
+          />
+        </Modal>
 
       </Layout>
     );
@@ -237,8 +301,9 @@ export default BuilderPage(
       deselectEnabling,
       selectEnabling,
       selectSolution,
+      rememberProject,
       reset,
-      update,
+      update
     }),
   )(BuilderIndex)
 );

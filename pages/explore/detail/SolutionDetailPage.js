@@ -36,7 +36,8 @@ import ContactForm from 'components/explore-detail/ContactForm';
 import SolutionDetail from 'components/explore-detail/SolutionDetail';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import SolutionCategory from 'components/explore-detail/SolutionCategory';
-import { DisclaimerModal } from 'components/common/disclaimer/DisclaimerModal';
+import DisclaimerModal from 'components/common/disclaimer/DisclaimerModal';
+import Spinner from 'components/common/Spinner';
 
 // constants
 import { CATEGORY_ICONS } from 'constants/category';
@@ -78,8 +79,11 @@ class SolutionDetailPage extends Page {
   }
 
   state = {
-    disclaimer: null,
     modal: {
+      disclaimer: {
+        open: false,
+        category: null
+      },
       download: false
     }
   };
@@ -138,7 +142,15 @@ class SolutionDetailPage extends Page {
         }
       },
       modal: bme.label ? {
-        onClick: () => this.setState({ disclaimer: bme.slug })
+        onClick: () => this.setState({
+          modal: {
+            ...this.state.modal,
+            disclaimer: {
+              open: true,
+              category: bme.slug
+            }
+          }
+        })
       } : null
     }))];
 
@@ -163,14 +175,12 @@ class SolutionDetailPage extends Page {
               </Link>
 
               {tab.modal &&
-                <div
+                <button
                   className="c-info-icon"
-                  onClick={() => this.setState({
-                    disclaimer: tab.queryParams.params.subPage
-                  })}
+                  onClick={() => tab.modal.onClick()}
                 >
                   <svg className="icon -info"><use xlinkHref="#icon-info" /></svg>
-                </div>}
+                </button>}
             </li>
           ))}
         </ul>
@@ -224,6 +234,8 @@ class SolutionDetailPage extends Page {
       <Breadcrumbs items={breadcrumbsItems} /> : null;
     const categoryIcon = CATEGORY_ICONS[project.categoryLevel2];
 
+    console.log(this.state.modal)
+
 
     return (
       <Layout
@@ -231,14 +243,10 @@ class SolutionDetailPage extends Page {
         queryParams={this.props.queryParams}
       >
 
-        <div className="solution-detail-page">
-
-          {isLoading && (<div>
-            Loading project...
-          </div>)}
-
-          {!isLoading && (<div>
-
+        <div className="l-content">
+          {isLoading ?
+          (<Spinner className="-transparent" isLoading />) :
+          (<div>
             <Cover
               title={project.name || ''}
               titleIcon={categoryIcon}
@@ -266,31 +274,41 @@ class SolutionDetailPage extends Page {
             <RelatedContent />
 
             <DownloadData
-              onClickButton={() => this.setState({ modal: { download: true } })}
+              onClickButton={() => this.setState({ modal: { ...this.state.modal, download: true } })}
             />
 
             <Modal
               open={this.state.modal.download}
-              toggleModal={v => this.setState({ modal: { download: v } })}
+              toggleModal={v => this.setState({
+                modal: { ...this.state.modal, download: v }
+              })}
               loading={loadingBmes || loadingSolutions || loadingCities}
             >
               <DownloadDataModal
                 bmes={bmesDownloadOptions}
                 cities={cityDownloadOptions}
                 solutions={solutionsDownloadOptions}
-                onClose={() => this.setState({ modal: { download: false } })}
+                onClose={() => this.setState({ modal: { ...this.state.modal, download: false } })}
               />
             </Modal>
-
           </div>)}
-
         </div>
 
-        <DisclaimerModal
-          categories={bmeCategories}
-          disclaimer={this.state.disclaimer}
-          onClose={() => this.setState({ disclaimer: null })}
-        />
+        <Modal
+          open={this.state.modal.disclaimer.open}
+          toggleModal={v => this.setState({
+            modal: { ...this.state.modal, disclaimer: { open: v } }
+          })}
+          loading={loadingBmes || loadingSolutions || loadingCities}
+        >
+          <DisclaimerModal
+            categories={bmeCategories}
+            disclaimer={this.state.modal.disclaimer.category}
+            onClose={() => this.setState({
+              modal: { ...this.state.modal, disclaimer: { open: false } }
+            })}
+          />
+        </Modal>
 
         {this.state.modal.share && (
           <ShareModal

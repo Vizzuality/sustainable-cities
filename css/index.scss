@@ -54,9 +54,11 @@
 @import 'components/page/about/partnership';
 
 // - common
+@import 'components/common/logo-app';
 @import 'components/common/modal';
 @import 'components/common/title';
 @import 'components/common/main-nav';
+@import 'components/common/mobile-header';
 @import 'components/common/sub-menu';
 @import 'components/common/tab';
 @import 'components/common/grid-item'; // Must be before the other grid components

@@ -1,7 +1,7 @@
-import { connect } from 'react-redux';
 import React from 'react';
 import withRedux from 'next-redux-wrapper';
 
+import { Router } from 'routes';
 import { store } from 'store';
 import { getBmes, getEnablings, getSolutions } from 'modules/builder-api';
 import { fetchBM } from 'modules/builder';
@@ -15,14 +15,27 @@ export default (Component) => {
         this.props.fetchBM(this.props.businessModelId);
       }
 
+      if (!this.props.businessModelId && this.props.rememberedBusinessModelId) {
+        Router.pushRoute(document.location.origin + "/builder/w" + this.props.rememberedBusinessModelId);
+        return;
+      }
+
       this.props.getBmes();
       this.props.getSolutions();
       this.props.getEnablings();
     }
 
     componentWillReceiveProps(nextProps) {
-      if (this.props.businessModelId !== nextProps.businessModelId) {
+      if (this.props.businessModelId !== nextProps.businessModelId && nextProps.businessModelId) {
         this.props.fetchBM(nextProps.businessModelId);
+      }
+
+      if (this.props.rememberedBusinessModelId !== nextProps.rememberedBusinessModelId && nextProps.rememberedBusinessModelId) {
+        if (nextProps.queryParams.route === 'builder-project') {
+          Router.pushRoute(document.location.origin + "/builder/w" + nextProps.rememberedBusinessModelId + "/project");
+        } else {
+          Router.pushRoute(document.location.origin + "/builder/w" + nextProps.rememberedBusinessModelId);
+        }
       }
     }
 
@@ -35,19 +48,20 @@ export default (Component) => {
         />
       );
     }
-  }
+  };
 
   return withRedux(
     store,
     (state, ownProps) => ({
       businessModelId: ownProps.url.query.id,
       bmRouteParams: ownProps.url.query,
+      rememberedBusinessModelId: state.builder.props.writableId
     }),
     {
       getBmes,
       getSolutions,
       getEnablings,
-      fetchBM,
+      fetchBM
     },
   )(BuilderPageComponent);
 };

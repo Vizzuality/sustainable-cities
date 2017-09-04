@@ -46,54 +46,48 @@ class SignUp extends React.Component {
 
   render() {
     return (
-      <div className="c-modal">
-        <div className="content">
-          <section className="builder-help">
-            <h1 className="c-title -fw-thin -fs-huge">Sign up</h1>
+      <section className="builder-help">
+        <h1 className="c-title -fw-thin -fs-huge">Sign up</h1>
 
-            {this.props.signupErrors.map((error, i) => <p key={i}>{error.title}</p>)}
+        {this.props.signupErrors.map((error, i) => <p key={i}>{error.title}</p>)}
 
-            <input
-              className="u-block u-w-100 u-mt-1 input-text"
-              placeholder="Name"
-              onChange={(e) => this.onChange('name', e.target.value)}
-            />
+        <input
+          className="u-block u-w-100 u-mt-1 input-text"
+          placeholder="Name"
+          onChange={(e) => this.onChange('name', e.target.value)}
+        />
 
-            <input
-              className="u-block u-w-100 u-mt-1 input-text"
-              placeholder="Nickname"
-              onChange={(e) => this.onChange('nickname', e.target.value)}
-            />
+        <input
+          className="u-block u-w-100 u-mt-1 input-text"
+          placeholder="Nickname"
+          onChange={(e) => this.onChange('nickname', e.target.value)}
+        />
 
-            <input
-              className="u-block u-w-100 u-mt-1 input-text"
-              placeholder="Email"
-              onChange={(e) => this.onChange('email', e.target.value)}
-            />
+        <input
+          className="u-block u-w-100 u-mt-1 input-text"
+          placeholder="Email"
+          onChange={(e) => this.onChange('email', e.target.value)}
+        />
 
-            <input
-              className="u-block u-w-100 u-mt-1 input-text"
-              type="password"
-              placeholder="Password (minimum 8 characters)"
-              onChange={(e) => this.onChange('password', e.target.value)}
-            />
+        <input
+          className="u-block u-w-100 u-mt-1 input-text"
+          type="password"
+          placeholder="Password (minimum 8 characters)"
+          onChange={(e) => this.onChange('password', e.target.value)}
+        />
 
-            <input
-              className="u-block u-w-100 u-mt-1 input-text"
-              type="password"
-              placeholder="Repeat password"
-              onChange={(e) => this.onChange('passwordConfirmation', e.target.value)}
-            />
+        <input
+          className="u-block u-w-100 u-mt-1 input-text"
+          type="password"
+          placeholder="Repeat password"
+          onChange={(e) => this.onChange('passwordConfirmation', e.target.value)}
+        />
 
-            <div className="actions">
-              <Button secondary onClick={this.props.onLogin}>Login</Button>
-              <Button primary onClick={() => this.onSignUpClick()}>Sign up</Button>
-            </div>
-
-            <div className="dismiss" onClick={this.props.onClose}>&times;</div>
-          </section>
+        <div className="actions">
+          <Button secondary onClick={this.props.onLogin}>Login</Button>
+          <Button primary onClick={() => this.onSignUpClick()}>Sign up</Button>
         </div>
-      </div>
+      </section>
     );
   }
 }

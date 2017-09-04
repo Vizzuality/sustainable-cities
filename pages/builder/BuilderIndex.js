@@ -19,7 +19,7 @@ import Modal from 'components/common/Modal';
 import HelpModal from 'components/builder-index/HelpModal';
 
 import { builderSelector, withModifiers } from 'selectors/builder';
-import { withSlice } from 'utils/builder';
+import { withSlice, leaves } from 'utils/builder';
 
 import {
   deselectEnabling,
@@ -66,7 +66,7 @@ class BuilderIndex extends React.Component {
   }
 
   relativeBME(bme, delta) {
-    const bmes = this.props.bmes;
+    const bmes = leaves(this.props.solutionFilteredBmeTree);
     const bmeIndex = bmes.findIndex(b => b.id === bme.id);
 
     return bmes.concat(bmes)[(bmeIndex + bmes.length + delta) % bmes.length];

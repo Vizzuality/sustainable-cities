@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'routes';
 
+// components
 import Button from 'components/common/Button';
 
 export default class DisclaimerModal extends React.Component {
@@ -31,6 +33,17 @@ export default class DisclaimerModal extends React.Component {
       <section className="disclaimer">
         <h1 className="c-title -fw-thin -fs-huge">{label}</h1>
         <p className="c-text -fs-medium -fw-light">{description}</p>
+
+        <p className="c-text -dark -fs-medium -fw-light">
+          Visit this <Link
+            route="about"
+            params={{
+              section: 'more-information'
+            }}
+          >
+            <a>link</a>
+          </Link> for further information.
+        </p>
 
         <div className="actions">
           <Button onClick={onClose}>OK</Button>

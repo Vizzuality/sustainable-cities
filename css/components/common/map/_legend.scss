@@ -1,9 +1,16 @@
 .c-legend {
   position: absolute;
+  right: 0.625rem;
   bottom: 50px;
+  left: 0.625rem;
   display: inline-block;
-  max-width: 430px;
   z-index: $z-index-4;
+
+  @media #{$mq-tablet} {
+    right: auto;
+    left: auto;
+    max-width: 430px;
+  }
 
   > .toggle-container {
       background: transparent;

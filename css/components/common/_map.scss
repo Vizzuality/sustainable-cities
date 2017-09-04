@@ -11,11 +11,15 @@
   }
 
   .leaflet-control-container {
-    display: flex;
+    display: none;
     flex-flow: row wrap;
     justify-content: flex-end;
     max-width: $layout-max-width;
     margin: 0 auto;
+
+    @media #{$mq-desktop} {
+      display: flex;
+    }
 
     > .leaflet-top {
       position: relative;

@@ -85,7 +85,7 @@ const sliceReducer = (state = initialSliceState, action) => {
         ...state,
         title: action.project.title,
         description: action.project.description,
-        selectedSolution: action.project['solution-id'],
+        selectedSolution: action.project['solution-id'].toString(),
 
         selectedBMEs: publicBmBmes.map(bmbme => bmbme.bme.id),
         commentedBMEs: fromPairs(

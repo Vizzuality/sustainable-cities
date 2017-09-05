@@ -271,7 +271,7 @@ export function update(_, project, authToken) {
   const params = {
     title: project.title,
     description: project.description,
-    solution_id: project.selectedSolution,
+    solution_id: project.selectedSolution || null,
     enabling_ids: project.selectedEnablings,
     business_model_bmes_attributes: [].concat(
       project.selectedBMEs.map(bmeId => ({

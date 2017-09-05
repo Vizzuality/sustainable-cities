@@ -86,7 +86,7 @@ export function getBmes(filters = {}) {
       throw new Error(response.status);
     })
     .then((bmes) => {
-      new Deserializer()
+      new Deserializer({ keyForAttribute: 'camelCase' })
         .deserialize(bmes, (err, parsedBmes) => {
           dispatch({ type: SET_LOADING_BMES, payload: false });
           dispatch({ type: GET_BMES, payload: parsedBmes });

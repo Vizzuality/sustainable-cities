@@ -18,6 +18,7 @@ export default function GridList(props) {
             title={item.title}
             subtitle={item.subtitle}
             link={item.link}
+            placeholder={item.placeholder}
             onClick={onClick || item.onClick}
           />
         </div>

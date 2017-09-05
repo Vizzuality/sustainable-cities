@@ -407,6 +407,355 @@ export default function Icons() {
           <path strokeWidth="1" strokeMiterlimit="10" strokeLinecap="square" strokeLinejoin="miter" d="M26.994 16.98c0.341 0.809-0.64 2.878-1.449 3.281-1.071 0.535-1.802 1.206-2.099 1.674s-0.691 2.403-1.671 2.787c-0.98 0.384-3.303 2.57-4.539 2.229s-1.236-3.281-0.384-4.602c0.509-0.788-0.085-2.514-0.128-3.111s-1.832-1.704-1.832-2.301c0-0.938 2.046-3.409 2.046-3.409s1.676-0.554 2.188-0.426 1.477 0.725 1.477 0.725 1.918 0.171 2.642 0.554l0.98 0.895c0-0.001 2.429 0.894 2.77 1.704z" />
           <path strokeWidth="1" strokeMiterlimit="10" strokeLinecap="square" strokeLinejoin="miter" d="M31 16c0 8.284-6.716 15-15 15s-15-6.716-15-15c0-8.284 6.716-15 15-15s15 6.716 15 15z" />
         </symbol>
+        {/* BME icons */}
+        <symbol id="icon-accessibility-and-social-inclusion" viewBox="0 0 32 32">
+          <title>accessibility-and-social-inclusion</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M19.097 27.355h-6.194l-0.516-7.226-2.581-1.032v-6.71c0-1.71 1.386-3.097 3.097-3.097h6.194c1.71 0 3.097 1.386 3.097 3.097v6.71l-2.581 1.032-0.516 7.226z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M19.097 3.613c0 1.71-1.386 3.097-3.097 3.097s-3.097-1.386-3.097-3.097c0-1.71 1.386-3.097 3.097-3.097s3.097 1.386 3.097 3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M23.226 24.675c4.911 0.606 8.258 1.81 8.258 3.196 0 1.995-6.932 3.613-15.484 3.613s-15.484-1.618-15.484-3.613c0-1.386 3.347-2.59 8.258-3.196" />
+        </symbol>
+        <symbol id="icon-additional-collatera" viewBox="0 0 28 32">
+          <title>additional-collatera</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M25.29 31.484h-22.71c-1.14 0-2.065-0.924-2.065-2.065v-26.839c0-1.14 0.924-2.065 2.065-2.065h22.71c1.14 0 2.065 0.924 2.065 2.065v26.839c0 1.14-0.924 2.065-2.065 2.065z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M4.645 4.645h18.581v4.129h-18.581v-4.129z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M4.645 11.871h4.129v3.097h-4.129v-3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M11.871 11.871h4.129v3.097h-4.129v-3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M19.097 11.871h4.129v3.097h-4.129v-3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M4.645 18.065h4.129v3.097h-4.129v-3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M11.871 18.065h4.129v3.097h-4.129v-3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M4.645 24.258h4.129v3.097h-4.129v-3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M11.871 24.258h4.129v3.097h-4.129v-3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M19.097 18.065h4.129v9.29h-4.129v-9.29z" />
+        </symbol>
+        <symbol id="icon-air-and-space-right-capture" viewBox="0 0 32 32">
+          <title>air-and-space-right-capture</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M13.935 4.645c-7.411 0-13.419 6.008-13.419 13.419s6.008 13.419 13.419 13.419c7.411 0 13.419-6.008 13.419-13.419h-13.419v-13.419z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M18.065 0.516v13.419h13.419c0-7.411-6.008-13.419-13.419-13.419z" />
+        </symbol>
+        <symbol id="icon-bonds" viewBox="0 0 32 32">
+          <title>bonds</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M0.516 4.645v4.129c0 1.71 2.773 3.097 6.194 3.097s6.194-1.386 6.194-3.097v-4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M0.516 8.774v4.129c0 1.71 2.773 3.097 6.194 3.097s6.194-1.386 6.194-3.097v-4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M0.516 12.903v4.129c0 1.71 2.773 3.097 6.194 3.097" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M0.516 17.032v4.129c0 1.71 2.773 3.097 6.194 3.097" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M12.903 4.645c0 1.71-2.773 3.097-6.194 3.097s-6.194-1.386-6.194-3.097c0-1.71 2.773-3.097 6.194-3.097s6.194 1.386 6.194 3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M19.097 8.774v4.129c0 1.71 2.773 3.097 6.194 3.097s6.194-1.386 6.194-3.097v-4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M25.29 20.129c3.42 0 6.194-1.386 6.194-3.097v-4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M25.29 24.258c3.42 0 6.194-1.386 6.194-3.097v-4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M31.484 8.774c0 1.71-2.773 3.097-6.194 3.097s-6.194-1.386-6.194-3.097c0-1.71 2.773-3.097 6.194-3.097s6.194 1.386 6.194 3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M9.806 19.097v4.129c0 1.71 2.773 3.097 6.194 3.097s6.194-1.386 6.194-3.097v-4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M9.806 23.226v4.129c0 1.71 2.773 3.097 6.194 3.097s6.194-1.386 6.194-3.097v-4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M22.194 19.097c0 1.71-2.773 3.097-6.194 3.097s-6.194-1.386-6.194-3.097c0-1.71 2.773-3.097 6.194-3.097s6.194 1.386 6.194 3.097z" />
+        </symbol>
+        <symbol id="icon-concessions-and-inte" viewBox="0 0 32 32">
+          <title>concessions-and-inte</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M0.516 9.29h11.907" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M0.516 13.419h19.020" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M4.645 17.032h5.161" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M21.161 15.739v4.906h-20.645v-16.516h20.645v3.097" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M25.29 17.548c-3.097 0-6.194-3.097-6.194-6.194h-3.097c-2.28 0-4.129-1.849-4.129-4.129v0h9.29c5.701 0 10.323 4.621 10.323 10.323v0c0 5.701-4.621 10.323-10.323 10.323h-11.355c-1.71 0-3.097-1.386-3.097-3.097v-1.032h9.29" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M6.71 23.742v0c-1.71 0-3.097-1.386-3.097-3.097v0" />
+        </symbol>
+        <symbol id="icon-procurement-and-construction" viewBox="0 0 32 32">
+          <title>procurement-and-construction</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M19.768 14.348l8.619 8.619c1.703 1.703 1.703 4.49 0 6.194v0c-1.703 1.703-4.49 1.703-6.194 0l-8.206-8.206" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M14.142 12.852l-4.335-4.335v-2.323l-4.387-4.387-4.387 4.387 4.387 4.387h2.323l4.232 4.232" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M20.129 20.903l4.129 4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M22.142 11.716l-15.432 17.445-5.161-5.161 17.445-15.432" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M29.11 10.374l-1.084 1.084-2.065-2.065 1.084-1.084-5.316-5.316c-2.323-2.271-6.039-2.271-8.31 0l9.445 9.445 1.239-1.239 2.065 2.065-1.239 1.239 1.806 1.806 4.129-4.129-1.755-1.806z" />
+        </symbol>
+        <symbol id="icon-direct-taxation-and-fees" viewBox="0 0 32 32">
+          <title>direct-taxation-and-fees</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16 23.226h-15.484v-22.71h30.968v14.452" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M19.097 11.871c0 1.71-1.386 3.097-3.097 3.097s-3.097-1.386-3.097-3.097c0-1.71 1.386-3.097 3.097-3.097s3.097 1.386 3.097 3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M27.355 13.935v-5.161c-2.332 0-4.129-1.797-4.129-4.129h-14.452c0 2.332-1.797 4.129-4.129 4.129v6.194c2.332 0 4.129 1.797 4.129 4.129h7.226" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M19.097 20.129v4.129c0 1.71 2.773 3.097 6.194 3.097s6.194-1.386 6.194-3.097v-4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M19.097 24.258v4.129c0 1.71 2.773 3.097 6.194 3.097s6.194-1.386 6.194-3.097v-4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M31.484 20.129c0 1.71-2.773 3.097-6.194 3.097s-6.194-1.386-6.194-3.097c0-1.71 2.773-3.097 6.194-3.097s6.194 1.386 6.194 3.097z" />
+        </symbol>
+        <symbol id="icon-equity-and-hybrid" viewBox="0 0 32 32">
+          <title>equity-and-hybrid</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16 2.065v25.29" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M8.774 29.935h14.452" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M0.516 14.452h12.387" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M19.097 14.452h12.387" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M25.29 5.161l-6.194 9.29c0 2.177 2.065 5.161 6.194 5.161s6.194-2.985 6.194-5.161l-6.194-9.29h-18.581l-6.194 9.29c0 2.177 2.065 5.161 6.194 5.161s6.194-2.985 6.194-5.161l-6.194-9.29" />
+        </symbol>
+        <symbol id="icon-enabling-acts-legislation" viewBox="0 0 32 32">
+          <title>enabling-acts-legislation</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M9.806 14.452l12.387-12.387" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M27.355 7.226l-12.387 12.387" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M22.71 11.871l8.258 8.258-3.097 3.097-8.258-8.258" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16 20.645l-7.226-7.226" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M21.161 1.032l7.226 7.226" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M20.129 31.484h-19.613" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M3.097 28.903v-2.581h14.452v2.581" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M0.516 22.194h3.613" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M3.54 14.894l2.555 2.555" />
+        </symbol>
+        <symbol id="icon-human-capital-and-culture" viewBox="0 0 32 32">
+          <title>human-capital-and-culture</title>
+          <path strokeWidth="1.0159" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M7.266 3.766c0.961 0.711 1.699 2.517 1.699 2.517s0.83 0.577 1.090 1.313c0.26 0.736 0.014 1.736 0.014 1.736s0.736 2.16 0.39 2.767c-0.346 0.606-1.818 0.996-1.818 0.996s-0.606 1.126-1.862 1.342c-0.822 0.086-1.645 0.649-1.645 1.818s1.169 3.074 1.169 3.074c0 0 1.212 0.593 1.385 1.026s0.232 1.442 0.232 1.442c0 0 1.153 2.035 0.504 3.204-0.207 0.373-1.169 0.649-1.169 0.649l-1.348 2.023" />
+          <path strokeWidth="1.0159" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M28.026 6.895c-1.47 0.705-4.043 1.293-4.043 1.293s-1.879 2.092-3.113 1.919c-1.234-0.173-2.489-1.558-2.489-1.558s0.086-2.554-0.303-2.684c-0.39-0.13-1.428 0.563-2.078 0.043s-0.275-1.984-0.275-1.984-1.414-0.44-1.587-0.917c-0.173-0.476 0.515-1.536 0.646-1.943" />
+          <path strokeWidth="1.0159" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M27.169 17.25c0.346 0.822-0.65 2.923-1.472 3.333-1.088 0.543-1.83 1.225-2.133 1.701s-0.701 2.441-1.698 2.831c-0.996 0.39-3.356 2.611-4.611 2.265s-1.256-3.333-0.39-4.675c0.517-0.801-0.086-2.554-0.13-3.16s-1.862-1.732-1.862-2.338c0-0.952 2.078-3.463 2.078-3.463s1.703-0.563 2.222-0.433c0.52 0.13 1.501 0.736 1.501 0.736s1.948 0.173 2.684 0.563l0.996 0.909c0-0.001 2.468 0.909 2.814 1.731z" />
+          <path strokeWidth="1.0159" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M31.238 16.254c0 8.416-6.822 15.238-15.238 15.238s-15.238-6.822-15.238-15.238c0-8.416 6.822-15.238 15.238-15.238s15.238 6.822 15.238 15.238z" />
+        </symbol>
+        <symbol id="icon-in-kind-incentives" viewBox="0 0 32 32">
+          <title>in-kind-incentives</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M14.452 8.258h3.097v10.323h-3.097v-10.323z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M7.742 14.452h3.097v4.129h-3.097v-4.129z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M21.161 11.871h3.097v6.71h-3.097v-6.71z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16 24.258v6.194" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M12.903 24.258l-6.194 7.226" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M19.097 24.258l6.194 7.226" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M28.387 21.161v-18.065h-24.774v18.065" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M31.484 24.258h-30.968" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16 3.097v-2.581" />
+        </symbol>
+        <symbol id="icon-infrastructure" viewBox="0 0 32 32">
+          <title>infrastructure</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M27.355 12.903v-8.258h-8.774c0-2.28-1.849-4.129-4.129-4.129s-4.129 1.849-4.129 4.129h-9.806v7.226c2.851 0 5.161 2.311 5.161 5.161s-2.311 5.161-5.161 5.161v9.29h8.774c0-2.851 2.311-5.161 5.161-5.161s5.161 2.311 5.161 5.161h7.742v-10.323c2.28 0 4.129-1.849 4.129-4.129s-1.849-4.129-4.129-4.129z" />
+        </symbol>
+        <symbol id="icon-insurance" viewBox="0 0 32 32">
+          <title>insurance</title>
+          <path strokeWidth="1.0667" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M16 30.933v-29.867" />
+          <path strokeWidth="1.0667" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M2.655 16h26.69" />
+          <path strokeWidth="1.0667" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16 1.067c-4.267 3.2-10.667 5.333-14.933 5.333 0 9.955 4.978 20.267 14.933 24.533 9.955-4.267 14.933-14.578 14.933-24.533-4.267 0-10.667-2.133-14.933-5.333z" />
+        </symbol>
+        <symbol id="icon-land-assembly" viewBox="0 0 32 32">
+          <title>land-assembly</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M29.419 29.935h-26.839c-1.14 0-2.065-0.924-2.065-2.065v-25.806h11.355l3.097 4.129h16.516v21.677c0 1.14-0.924 2.065-2.065 2.065z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M6.71 24.258l3.613-5.677 3.613 2.581 5.161-6.194 6.194 9.29z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M14.968 12.903c0 1.14-0.924 2.065-2.065 2.065s-2.065-0.924-2.065-2.065c0-1.14 0.924-2.065 2.065-2.065s2.065 0.924 2.065 2.065z" />
+        </symbol>
+        <symbol id="icon-land-value-capture" viewBox="0 0 32 32">
+          <title>land-value-capture</title>
+          <path strokeWidth="1.0667" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M1.067 14.4h3.2" />
+          <path strokeWidth="1.0667" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M1.067 10.133h2.133" />
+          <path strokeWidth="1.0667" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M1.067 18.667h2.133" />
+          <path strokeWidth="1.0667" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M1.067 22.933h3.2" />
+          <path strokeWidth="1.0667" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M1.067 27.2h2.133" />
+          <path strokeWidth="1.0667" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M8.533 17.6v7.467h7.467z" />
+          <path strokeWidth="1.0667" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M1.067 1.6v29.867h28.8z" />
+        </symbol>
+        <symbol id="icon-land" viewBox="0 0 32 32">
+          <title>land</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M25.29 7.794l6.194-1.858v20.645l-10.323 4.129-10.323-4.129-10.323 4.129v-20.645l6.194-2.477" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M10.839 15.742v10.839" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M21.161 15.742v14.968" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M22.194 6.968c0 3.421-2.773 6.194-6.194 6.194s-6.194-2.773-6.194-6.194c0-3.421 2.773-6.194 6.194-6.194s6.194 2.773 6.194 6.194z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16 13.161v5.677" />
+        </symbol>
+        <symbol id="icon-loans" viewBox="0 0 32 32">
+          <title>loans</title>
+          <path strokeWidth="1.0492" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M4.721 16.262h1.049c2.379 0 5.064 1.309 6.295 3.148h4.197c2.106 0 4.197 2.091 4.197 4.197h-9.443" />
+          <path strokeWidth="1.0492" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M19.789 21.508h6.965c3.803 0 4.197 2.098 4.197 2.098l-15.024 6.102c-1.196 0.478-2.539 0.422-3.69-0.154l-7.515-3.817" />
+          <path strokeWidth="1.0492" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M28.852 12.066c0 2.318-1.879 4.197-4.197 4.197s-4.197-1.879-4.197-4.197c0-2.318 1.879-4.197 4.197-4.197s4.197 1.879 4.197 4.197z" />
+          <path strokeWidth="1.0492" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M0.525 14.164h4.197v13.639h-4.197v-13.639z" />
+          <path strokeWidth="1.0492" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16.262 5.771c0 2.318-1.879 4.197-4.197 4.197s-4.197-1.879-4.197-4.197c0-2.318 1.879-4.197 4.197-4.197s4.197 1.879 4.197 4.197z" />
+          <path strokeWidth="1.0492" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M11.016 5.771h2.098" />
+          <path strokeWidth="1.0492" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M23.607 12.066h2.098" />
+        </symbol>
+        <symbol id="icon-monetary-grants" viewBox="0 0 32 32">
+          <title>monetary-grants</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16 31.484v-11.355" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M0.516 0.516h30.968v16.516h-30.968v-16.516z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M19.097 8.774c0 1.71-1.386 3.097-3.097 3.097s-3.097-1.386-3.097-3.097c0-1.71 1.386-3.097 3.097-3.097s3.097 1.386 3.097 3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M25.29 23.226h-2.065c-3.991 0-7.226 3.235-7.226 7.226v1.032h2.065c3.991 0 7.226-3.235 7.226-7.226v-1.032z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M4.129 4.129h4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M23.742 13.419h4.129" />
+        </symbol>
+        <symbol id="icon-operating-maintaining-and-upgrading" viewBox="0 0 32 32">
+          <title>operating-maintaining-and-upgrading</title>
+          <path strokeWidth="1.0492" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M21.309 15.538l7.676 7.676c1.738 1.738 1.738 4.557 0 6.295v0c-1.738 1.738-4.557 1.738-6.295 0l-7.346-7.346" />
+          <path strokeWidth="1.0492" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M14.254 12.68l-4.154-4.154-0.011-2.364-4.451-4.451-4.451 4.451 4.451 4.451 2.364 0.011 4.061 4.061" />
+          <path strokeWidth="1.0492" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M20.984 21.508l4.197 4.197" />
+          <path strokeWidth="1.0492" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M27.279 7.869l-3.148-3.148 3.636-3.636c-0.79-0.357-1.664-0.56-2.587-0.56-3.476 0-6.295 2.819-6.295 6.295 0 0.515 0.069 1.012 0.185 1.491l-18.021 16.345 6.295 6.295 16.345-18.021c0.479 0.116 0.976 0.185 1.491 0.185 3.476 0 6.295-2.819 6.295-6.295 0-0.923-0.204-1.797-0.56-2.587l-3.636 3.636z" />
+        </symbol>
+        <symbol id="icon-other-contracts" viewBox="0 0 32 32">
+          <title>other-contracts</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M17.334 3.399l-10.625 4.859-3.613 18.581 19.097-3.097 4.62-10.863" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M3.097 26.839l10.046-9.53" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M29.419 15.484l-14.452-14.452" />
+          <path strokeWidth="1.0322" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16.792 13.659c1.008 1.008 1.008 2.642 0 3.65s-2.642 1.008-3.65 0c-1.008-1.008-1.008-2.642 0-3.65s2.642-1.008 3.65 0z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M0.516 31.484h30.968" />
+        </symbol>
+        <symbol id="icon-planning-and-preparation" viewBox="0 0 32 32">
+          <title>planning-and-preparation</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M3.613 20.645v-14.452c0-1.14 0.924-2.065 2.065-2.065h20.645c1.14 0 2.065 0.924 2.065 2.065v14.452" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M20.129 23.742v1.548h-8.258v-1.548h-11.355c0 2.28 1.849 4.129 4.129 4.129h22.71c2.28 0 4.129-1.849 4.129-4.129h-11.355z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M21.161 13.935h-5.161v-5.161" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M21.161 13.935c0 2.85-2.311 5.161-5.161 5.161s-5.161-2.311-5.161-5.161c0-2.851 2.311-5.161 5.161-5.161s5.161 2.311 5.161 5.161z" />
+        </symbol>
+        <symbol id="icon-preferential-pricing" viewBox="0 0 32 32">
+          <title>preferential-pricing</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M2.332 17.271c-2.794-4.043-2.371-9.62 1.256-13.247 3.21-3.21 8.145-3.796 12.010-1.954 0 0 0.303 0.16 0.506 0.275" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M20.898 11.547l8.098 8.514c0.712 0.766 0.799 2.055-0.119 2.973-0.833 0.833-2.14 0.833-2.973 0l-0.516-0.516" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M14.8 29.587l0.756 0.756c0.833 0.833 2.14 0.833 2.973 0v0c0.833-0.833 0.833-2.14 0-2.973l-1.93-1.93" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M22.018 24.914c0.833 0.833 0.833 2.14 0 2.973v0c-0.833 0.833-2.14 0.833-2.973 0l-0.516-0.516" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M20.121 23.018l2.349 2.349c0.833 0.833 2.144 0.895 2.977 0.063v0c0.833-0.833 0.773-2.081-0.059-2.913l-2.382-2.382" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M23.999 10.032c-3.627 3.627-10.226-0.059-10.226-0.059-3.805 3.805-7.372 1.486-7.372 1.486l7.372-7.372c4.102-4.043 10.701-4.102 14.744 0s3.91 10.836-0.133 14.878l-0.224 0.218" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M1.158 21.552v0c-0.855-0.855-0.855-2.242 0-3.097l1.951-1.951c0.855-0.855 2.242-0.855 3.097 0v0c0.855 0.855 0.855 2.242 0 3.097l-1.951 1.951c-0.855 0.855-2.242 0.855-3.097 0z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M4.513 24.391v0c-0.855-0.855-0.855-2.242 0-3.097l1.951-1.951c0.855-0.855 2.242-0.855 3.097 0v0c0.855 0.855 0.855 2.242 0 3.097l-1.951 1.951c-0.855 0.855-2.242 0.855-3.097 0z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M7.867 27.229v0c-0.855-0.855-0.855-2.242 0-3.097l1.951-1.951c0.855-0.855 2.242-0.855 3.097 0v0c0.855 0.855 0.855 2.242 0 3.097l-1.951 1.951c-0.855 0.855-2.242 0.855-3.097 0z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M11.222 30.068v0c-0.855-0.855-0.855-2.242 0-3.097l1.951-1.951c0.855-0.855 2.242-0.855 3.097 0v0c0.855 0.855 0.855 2.242 0 3.097l-1.951 1.951c-0.855 0.855-2.242 0.855-3.097 0z" />
+        </symbol>
+        <symbol id="icon-private-entities" viewBox="0 0 32 32">
+          <title>private-entities</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M4.439 5.677c2.839 3.768 6.452 5.161 11.561 5.161 5.058 0 8.723-1.394 11.561-5.161" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M4.439 26.323c2.839-3.768 6.452-5.161 11.561-5.161 5.058 0 8.723 1.394 11.561 5.161" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M16 31.484c5.471-2.632 8.258-8.568 8.258-15.484s-2.787-12.852-8.258-15.484" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M16 31.484c-5.471-2.632-8.258-8.568-8.258-15.484s2.787-12.852 8.258-15.484" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M16 31.484v-30.968" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M0.516 16h30.968" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M31.484 16c0 8.552-6.932 15.484-15.484 15.484s-15.484-6.932-15.484-15.484c0-8.552 6.932-15.484 15.484-15.484s15.484 6.932 15.484 15.484z" />
+        </symbol>
+        <symbol id="icon-private" viewBox="0 0 30 32">
+          <title>private</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M6.71 20.645v-20.129h16.516v20.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M26.323 24.774h-22.71v-1.032c0-1.71 1.386-3.097 3.097-3.097h16.516c1.71 0 3.097 1.386 3.097 3.097v1.032z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M14.968 27.871v3.613" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M7.742 31.484h14.452" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M3.613 24.774h-3.097v-9.29h2.065" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M26.323 24.774h3.097v-9.29h-2.065" />
+        </symbol>
+        <symbol id="icon-promotional-schemes-and-plans" viewBox="0 0 32 32">
+          <title>promotional-schemes-and-plans</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M23.226 9.806l-6.71 6.71-4.129-4.129-4.129 4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M18.581 9.806h4.645v4.645" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16 24.258v6.194" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M12.903 24.258l-6.194 7.226" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M19.097 24.258l6.194 7.226" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M28.387 21.161v-18.065h-24.774v18.065" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M31.484 24.258h-30.968" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16 3.097v-2.581" />
+        </symbol>
+        <symbol id="icon-public-budgets" viewBox="0 0 30 32">
+          <title>public-budgets</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M2.581 20.129v11.355" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M27.355 20.129v11.355" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M21.161 20.129v11.355" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M14.968 20.129v11.355" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M8.774 20.129v11.355" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M0.516 31.484h28.903" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M14.968 0.516v4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M26.323 16c0-6.297-5.058-11.355-11.355-11.355s-11.355 5.058-11.355 11.355" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M0.516 16h28.903v4.129h-28.903v-4.129z" />
+        </symbol>
+        <symbol id="icon-public-entities" viewBox="0 0 32 32">
+          <title>public-entities</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16 1.032l-15.484 8.258v3.613h30.968v-3.613z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M3.613 27.355v-11.355" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M20.129 27.355v-11.355" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M11.871 27.355v-11.355" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M28.387 16v11.355" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M18.065 7.742c0 1.14-0.924 2.065-2.065 2.065s-2.065-0.924-2.065-2.065c0-1.14 0.924-2.065 2.065-2.065s2.065 0.924 2.065 2.065z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M0.516 27.355h30.968v4.129h-30.968v-4.129z" />
+        </symbol>
+        <symbol id="icon-public-private" viewBox="0 0 19 32">
+          <title>public-private</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M11.355 6.71l6.71 9.806-3.436 3.699" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M11.355 6.71l3.097-6.194h-12.387l3.097 6.194-4.129 17.032 7.226 7.226 7.226-7.226z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M5.161 6.71h6.194" />
+        </symbol>
+        <symbol id="icon-public-private-partnerships-ppps-hybrid" viewBox="0 0 32 32">
+          <title>public-private-partnerships-ppps-hybrid</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M22.194 31.484l-4.129-16.516 3.015-4.051" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M10.921 10.917l3.015 4.051-4.129 16.516" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M13.935 14.968h4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M24.258 4.645h5.161c1.14 0 2.065 0.924 2.065 2.065v22.71c0 1.14-0.924 2.065-2.065 2.065h-26.839c-1.14 0-2.065-0.924-2.065-2.065v-22.71c0-1.14 0.924-2.065 2.065-2.065h5.161" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M24.258 0.516l-8.258 7.226 8.258 5.161v-12.387h-16.516v12.387l8.258-5.161-8.258-7.226" />
+        </symbol>
+        <symbol id="icon-public" viewBox="0 0 28 32">
+          <title>public</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M21.677 13.935v-10.323h-15.484v13.419" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M11.871 31.484h4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M13.935 0.516v3.097" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M0.516 20.129h11.355v11.355h-11.355v-11.355z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16 17.032h11.355v14.452h-11.355v-14.452z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M10.323 7.226h7.226" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M10.323 10.323h7.226" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M10.323 13.419h7.226" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M4.645 24.258h3.097" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M20.129 21.161h3.097" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M20.129 24.258h3.097" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M20.129 27.355h3.097" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M4.645 27.355h3.097" />
+        </symbol>
+        <symbol id="icon-regulations-and-requirements" viewBox="0 0 27 32">
+          <title>regulations-and-requirements</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M8.258 13.935h10.323" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M8.258 18.581h10.323" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M8.258 23.226h4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M22.194 5.161h4.129v26.323h-25.806v-26.323h4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M17.032 4.129c0-1.995-1.618-3.613-3.613-3.613s-3.613 1.618-3.613 3.613h-2.581v4.129h12.387v-4.129h-2.581z" />
+          <path d="M14.452 4.129c0 0.57-0.462 1.032-1.032 1.032s-1.032-0.462-1.032-1.032c0-0.57 0.462-1.032 1.032-1.032s1.032 0.462 1.032 1.032z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M23.226 8.258v20.129h-19.613v-20.129" />
+        </symbol>
+        <symbol id="icon-rentals-and-leases" viewBox="0 0 32 32">
+          <title>rentals-and-leases</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M19.097 20.129v4.129c0 1.71 2.773 3.097 6.194 3.097s6.194-1.386 6.194-3.097v-4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M19.097 24.258v4.129c0 1.71 2.773 3.097 6.194 3.097s6.194-1.386 6.194-3.097v-4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M31.484 20.129c0 1.71-2.773 3.097-6.194 3.097s-6.194-1.386-6.194-3.097c0-1.71 2.773-3.097 6.194-3.097s6.194 1.386 6.194 3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M13.935 6.71v7.226h-7.742" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M16.001 27.197c-0.674 0.104-1.363 0.158-2.065 0.158-7.411 0-13.419-6.008-13.419-13.419s6.008-13.419 13.419-13.419c7.411 0 13.419 6.008 13.419 13.419" />
+        </symbol>
+        <symbol id="icon-reputation-and-brand" viewBox="0 0 24 32">
+          <title>reputation-and-brand</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M1.548 8.774h20.645" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M7.742 13.419h8.258" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M19.097 27.355l-3.097-13.935 6.194-4.645v-8.258h-4.129v3.097h-4.129v-3.097h-4.129v3.097h-4.129v-3.097h-4.129v8.258l6.194 4.645-3.097 13.935" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M0.516 27.355h22.71v4.129h-22.71v-4.129z" />
+        </symbol>
+        <symbol id="icon-safety-and-health" viewBox="0 0 32 32">
+          <title>safety-and-health</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M2.323 15.226h8.516l2.065-4.129 5.161 8.258 2.065-4.129h9.548" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M23.019 0.774c-2.942 0-5.523 1.497-7.019 3.819-1.497-2.323-4.077-3.819-7.019-3.819-4.697 0-8.465 3.819-8.465 8.568 0 8.516 15.484 21.368 15.484 21.368s15.484-12.852 15.484-21.368c0-4.748-3.768-8.568-8.465-8.568z" />
+        </symbol>
+        <symbol id="icon-sale-of-goods-and-services-contracts" viewBox="0 0 32 32">
+          <title>sale-of-goods-and-services-contracts</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M0.516 7.226h30.968v22.71h-30.968v-22.71z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M19.097 18.581c0 1.71-1.386 3.097-3.097 3.097s-3.097-1.386-3.097-3.097c0-1.71 1.386-3.097 3.097-3.097s3.097 1.386 3.097 3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M23.226 11.355h-14.452c0 2.332-1.797 4.129-4.129 4.129v6.194c2.332 0 4.129 1.797 4.129 4.129h14.452c0-2.332 1.797-4.129 4.129-4.129v-6.194c-2.332 0-4.129-1.797-4.129-4.129z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M4.129 4.129v-2.065h23.742v2.065" />
+        </symbol>
+        <symbol id="icon-special-equipment" viewBox="0 0 32 32">
+          <title>special-equipment</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M21.677 21.161v0.774c0 1.853 1.502 3.355 3.355 3.355v0c1.853 0 3.355-1.502 3.355-3.355v-8" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M30.452 8.774v-3.097" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M6.194 6.194h11.871v8.774h-11.871v-8.774z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M26.323 8.774v-3.097" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M6.194 18.065h4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M28.387 13.935v0c-1.71 0-3.097-1.386-3.097-3.097v-2.065h6.194v2.065c0 1.71-1.386 3.097-3.097 3.097z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M2.581 29.419v-24.774c0-1.14 0.924-2.065 2.065-2.065h14.968c1.14 0 2.065 0.924 2.065 2.065v24.774" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M0.516 29.419h23.226" />
+        </symbol>
+        <symbol id="icon-sponsorship-agreemen" viewBox="0 0 32 32">
+          <title>sponsorship-agreemen</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M20.129 29.935l-11.355-8.774h-8.258v-10.323h8.258l11.355-8.774z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M27.355 16h4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M25.557 9.29l3.576-2.065" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M25.557 22.71l3.576 2.065" />
+        </symbol>
+        <symbol id="icon-third-party-guarantee" viewBox="0 0 32 32">
+          <title>third-party-guarantee</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M19.613 16h11.871v15.484h-30.968v-15.484h4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M12.387 18.065l-5.161 1.548 1.548-5.161 13.419-13.419 3.613 3.613z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M6.71 23.226h18.581" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M6.71 27.355h8.258" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M21.161 27.355h4.129" />
+        </symbol>
+        <symbol id="icon-users-and-beneficiaries" viewBox="0 0 30 32">
+          <title>users-and-beneficiaries</title>
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="butt" strokeLinejoin="miter" d="M17.279 21.161h-16.763v-13.419h28.903v13.419h-3.097" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M6.71 7.742v-3.097c0-1.14 0.924-2.065 2.065-2.065v0c1.14 0 2.065 0.924 2.065 2.065v3.097" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M10.839 7.742v-4.129c0-1.14 0.924-2.065 2.065-2.065v0c1.14 0 2.065 0.924 2.065 2.065v4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M14.968 7.742v-5.161c0-1.14 0.924-2.065 2.065-2.065v0c1.14 0 2.065 0.924 2.065 2.065v5.161" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M19.097 7.742v-4.129c0-1.14 0.924-2.065 2.065-2.065v0c1.14 0 2.065 0.924 2.065 2.065v4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M17.548 14.452c0 1.425-1.155 2.581-2.581 2.581s-2.581-1.155-2.581-2.581c0-1.425 1.155-2.581 2.581-2.581s2.581 1.155 2.581 2.581z" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M8.774 11.871h-4.129" />
+          <path strokeWidth="1.0323" strokeMiterlimit="4" strokeLinecap="square" strokeLinejoin="miter" d="M6.71 21.161v0.516c0 5.416 4.391 9.806 9.806 9.806v0c5.416 0 9.806-4.391 9.806-9.806v-9.806c-2.332 0-4.129 1.797-4.129 4.129v3.097c-3.183 0-6.194 2.236-6.194 5.161" />
+        </symbol>
       </defs>
     </svg>
   );

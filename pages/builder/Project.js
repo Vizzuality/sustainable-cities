@@ -250,7 +250,7 @@ class Project extends React.Component {
           toggleModal={v => this.setState({
             modal: {
               ...this.state.modal,
-              bme: { open: v }
+              bme: { open: v, modalArgs: { bme: {} } }
             }
           })}
         >

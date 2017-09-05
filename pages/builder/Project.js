@@ -27,6 +27,7 @@ import ProjectOverview from 'components/builder-index/ProjectOverview';
 import ProjectDetail from 'components/builder-index/ProjectDetail';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
 import ShareModal from 'components/common/ShareModal';
+import SaveModal from 'components/builder-index/SaveModal';
 import ConnectedBmeDetail from 'components/builder-index/ConnectedBmeDetail';
 import Modal from 'components/common/Modal';
 import DisclaimerModal from 'components/common/disclaimer/DisclaimerModal';
@@ -54,6 +55,9 @@ class Project extends React.Component {
         open: false
       },
       share: {
+        open: false
+      },
+      save: {
         open: false
       },
       bme: {
@@ -91,22 +95,25 @@ class Project extends React.Component {
 
   changeBMEcomment = (bme, text) => this.props.commentBME(bme.id, text);
 
-  saveProject = () => {
+  onSaveClick = () => {
     if (this.props.auth.token) {
-      if (this.props.project.writableId) {
-        this.props.update(this.props.project, this.props.auth.token);
-      } else {
-        create(
-          this.props.project,
-          this.props.auth.token
-        ).then((writableId) => {
-          this.props.reset();
-          this.props.rememberProject(writableId);
-        });
-      }
+      this.showSave();
     } else {
       this.showLogin();
     }
+  }
+
+  createNewProject = (title) => {
+    this.hideModal('save');
+    create({ ...this.props.project, title }, this.props.auth.token).then(writableId => {
+      this.props.reset();
+      this.props.rememberProject(writableId);
+    });
+  }
+
+  updateProject = (title) => {
+    this.hideModal('save');
+    this.props.update({ ...this.props.project, title }, this.props.auth.token);
   }
 
   projectUrl(readonly) {
@@ -164,7 +171,7 @@ class Project extends React.Component {
         >
           <Button secondary inverse onClick={this.showShareModal}>Share/Export</Button>
           {!this.props.project.readonly &&
-            <Button inverse onClick={this.saveProject}>Save project</Button>}
+            <Button inverse onClick={this.onSaveClick}>Save project</Button>}
         </Cover>
 
         <div className="c-tabs -explore">
@@ -309,6 +316,23 @@ class Project extends React.Component {
             categories={this.props.filteredBmeTree}
             disclaimer={this.state.modal.disclaimer.category}
             onClose={() => this.hideModal('disclaimer')}
+          />
+        </Modal>
+
+        <Modal
+          open={this.state.modal.save.open}
+          toggleModal={v => this.setState({ modal: {
+            ...this.state.modal,
+            save: { open: v }
+          } })}
+        >
+          <SaveModal
+            readonly={this.props.readonly}
+            existing={this.props.businessModelId}
+            currentProjectName={this.props.project.title}
+            onClose={() => this.hideModal('save')}
+            onUpdate={this.updateProject}
+            onCreate={this.createNewProject}
           />
         </Modal>
       </Layout>

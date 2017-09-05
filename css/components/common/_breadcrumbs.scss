@@ -1,5 +1,5 @@
 .c-breadcrumbs {
-  li {
+  .breadcrumbs-item {
     font-size: $font-size-extrasmall;
     font-weight: $font-weight-bold;
     line-height: 1.25;
@@ -19,6 +19,10 @@
       line-height: 1.25;
       letter-spacing: 1px;
       color: $color-primary;
+    }
+
+    &.-title {
+      display: block;
     }
   }
 

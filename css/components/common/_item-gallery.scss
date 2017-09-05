@@ -1,6 +1,10 @@
 .c-item-gallery {
   margin: 55px 0 100px;
 
+  > .c-breadcrumbs {
+    margin: 0 0 25px;
+  }
+
   > .gallery-list {
     width: 100%;
   }

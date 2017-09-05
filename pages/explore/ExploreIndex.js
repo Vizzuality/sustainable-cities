@@ -48,11 +48,13 @@ import Modal from 'components/common/Modal';
 import DisclaimerModal from 'components/common/disclaimer/DisclaimerModal';
 import DownloadDataModal from 'components/common/modal/DownloadDataModal';
 import Spinner from 'components/common/Spinner';
+import Breadcrumbs from 'components/common/Breadcrumbs';
 
 // utils
 import LayerManager from 'utils/map/LayerManager';
 import LayerSpec from 'utils/map/layerSpec.json';
 import getLayerType from 'utils/map/layer';
+import getBreadcrumbs from 'utils/breadcrumbs';
 
 class ExploreIndex extends Page {
 
@@ -229,6 +231,9 @@ class ExploreIndex extends Page {
       } : null
     }));
 
+    const breadcrumbsContent = categories.length > 0 ? getBreadcrumbs(categories, queryParams, true) : [];
+    const breadcrumbs = <Breadcrumbs items={breadcrumbsContent} />;
+
     return (
       <Layout
         title="Explore"
@@ -274,6 +279,7 @@ class ExploreIndex extends Page {
                   isSolutionView={isSolutionView}
                   slider={conditions}
                   showAll={conditions}
+                  breadcrumbs={breadcrumbs}
                 />}
             </div>
           </div>

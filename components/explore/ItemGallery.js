@@ -9,7 +9,7 @@ import GridList from 'components/common/GridList';
 const MAX_ITEMS_PER_ROW = 4;
 
 export default function ItemGallery(props) {
-  const { items, isSolutionView, slider, showAll, showTitle } = props;
+  const { items, isSolutionView, slider, showAll, showTitle, breadcrumbs } = props;
 
   let resultItems = items;
   if (isSolutionView && !slider) {
@@ -18,6 +18,7 @@ export default function ItemGallery(props) {
 
   return (
     <div className="c-item-gallery">
+      {breadcrumbs && breadcrumbs}
       <ul className="gallery-list">
         {slider ?
           (items || []).map(item => (
@@ -57,7 +58,8 @@ ItemGallery.propTypes = {
   isSolutionView: PropTypes.bool,
   slider: PropTypes.bool,
   showAll: PropTypes.bool,
-  showTitle: PropTypes.bool
+  showTitle: PropTypes.bool,
+  breadcrumbs: PropTypes.element
 };
 
 ItemGallery.defaultProps = {

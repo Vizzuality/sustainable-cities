@@ -29,8 +29,6 @@ const getParsedBmes = createSelector(
 
     (bmeList || []).sort(sortByName);
 
-    console.log(bmeList)
-
     return !filters.children ?
       listsBmesByCategory(bmeList, filters) :
       listBmes(bmeList, bmeCategory, filters);

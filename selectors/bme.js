@@ -12,25 +12,28 @@ const getParsedBmes = createSelector(
   (bmes, filters) => {
     if (!bmes.length) return [];
     const bmeList = [];
+    let bmeCategory = {};
 
     if (!filters.children) {
       bmes.forEach(p =>
-        bmeList.push([...p.children])
-    );
-    }
-
-
-    if (filters.children) {
-      (bmes || []).forEach(p =>
-        bmeList.push([...p['children-bmes']])
+        bmeList.push(...p.children)
       );
     }
 
-    (bmeList[0] || []).sort(sortByName);
+    if (filters.children) {
+      bmeCategory = ((bmes[0] || {}).children || []).find(b => b.slug === filters.children);
+      if (bmeCategory) {
+        bmeList.push(...bmeCategory.childrenBmes);
+      }
+    }
+
+    (bmeList || []).sort(sortByName);
+
+    console.log(bmeList)
 
     return !filters.children ?
-      listsBmesByCategory(bmeList[0] || [], filters) :
-      listBmes(bmeList[0] || []);
+      listsBmesByCategory(bmeList, filters) :
+      listBmes(bmeList, bmeCategory, filters);
   }
 );
 

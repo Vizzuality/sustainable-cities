@@ -29,6 +29,7 @@ export default class GridSlider extends React.Component {
             title={item.title}
             subtitle={item.subtitle}
             link={item.link}
+            placeholder={item.placeholder}
             onClick={this.props.onClick || item.onClick}
           />
         </div>

@@ -40,7 +40,7 @@ export default function getBreadcrumbs(categories = [], filters = {}, hasTitle =
 
     // BME of first level
     case (category !== 'solutions' && !children && !subCategory && hasTitle): {
-      const categoryObject = categories.find(cat => cat.slug === category);
+      const categoryObject = categories.find(cat => cat.slug === category) || {};
 
       breadcrumbs.push({
         name: categoryObject.name,
@@ -54,33 +54,35 @@ export default function getBreadcrumbs(categories = [], filters = {}, hasTitle =
 
     // BME of second level
     case (subCategory && !children && category !== 'solutions'): {
-      const categoryObject = categories.filter(ca => ca['category-type'] === 'Bme' && ca.children.find(c => c.slug === subCategory));
+      const categoryObject = categories.filter(ca => ca['category-type'] === 'Bme' && ca.children.find(c => c.slug === subCategory)) || [];
 
       breadcrumbs = [
         {
-          name: categoryObject[0].name,
+          name: (categoryObject[0] || {}).name,
           route: 'explore-index',
-          params: { category: categoryObject[0].slug }
+          params: { category: (categoryObject[0] || {}).slug }
         }
       ];
 
       if (hasTitle) {
-        const subCategoryObject = ((categoryObject[0] || {}).children).find(child => child.slug === subCategory);
+        const subCategoryObject = ((categoryObject[0] || {}).children).find(child => child.slug === subCategory) || {};
 
         breadcrumbs.push({
           name: subCategoryObject.name,
           route: 'explore-index',
-          params: { category: categoryObject[0].slug, subCategory: subCategoryObject.slug },
+          params: { category: (categoryObject[0] || {}).slug, subCategory: subCategoryObject.slug },
           title: true
         });
       }
 
       break;
     }
+
     // BME of third level
     case (children && category !== 'solutions'): {
-      const categoryObject = categories.find(cat => cat.slug === category);
-      const subCategoryObject = ((categoryObject || {}).children || []).find(cat => cat.slug === subCategory);
+      const categoryObject = categories.find(cat => cat.slug === category) || {};
+      const subCategoryObject = (categoryObject.children || [])
+        .find(cat => cat.slug === subCategory) || {};
 
       breadcrumbs = [
         {

@@ -75,7 +75,10 @@ class BmeDetailPage extends Page {
 
     this.state = {
       modal: {
-        download: false
+        download: false,
+        share: {
+          open: false
+        }
       }
     };
   }
@@ -143,7 +146,9 @@ class BmeDetailPage extends Page {
               <Button
                 primary
                 inverse
-                onClick={() => this.setState({ modal: { share: true } })}
+                onClick={() => this.setState({
+                  modal: { ...this.state.modal, share: { open: true } }
+                })}
               >
                 Share
               </Button>
@@ -173,14 +178,21 @@ class BmeDetailPage extends Page {
               />
             </Modal>
 
-            {this.state.modal.share &&
+            <Modal
+              open={this.state.modal.share.open}
+              toggleModal={v => this.setState({
+                modal: { ...this.state.modal, share: { open: v } }
+              })}
+            >
               <ShareModal
                 publicProject
-                url={window.location}
-                onClose={() => this.setState({ modal: { share: false } })}
+                url={!this.props.isServer ? window.location.href : ''}
+                onClose={() => this.setState({
+                  modal: { ...this.state.modal, share: { open: false } }
+                })}
                 onDownload={() => Router.pushRoute('bme-detail-print', { id: this.props.queryParams.id })}
               />
-            }
+            </Modal>
           </div>)}
         </div>
 

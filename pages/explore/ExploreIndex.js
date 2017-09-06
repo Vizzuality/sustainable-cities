@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import { Router } from 'routes';
+import Tether from 'react-tether';
 
 // Redux
 import withRedux from 'next-redux-wrapper';
@@ -231,7 +232,8 @@ class ExploreIndex extends Page {
       } : null
     }));
 
-    const breadcrumbsContent = categories.length > 0 ? getBreadcrumbs(categories, queryParams, true) : [];
+    const breadcrumbsContent = categories.length > 0 ?
+      getBreadcrumbs(categories, queryParams, true) : [];
     const breadcrumbs = <Breadcrumbs items={breadcrumbsContent} />;
 
     return (
@@ -239,12 +241,30 @@ class ExploreIndex extends Page {
         title="Explore"
         queryParams={queryParams}
       >
-        <Tab
-          allowAll
-          className="-explore"
-          items={modifiedCategoryTabs}
-          queryParams={queryParams}
-        />
+        <Tether
+          attachment="middle center"
+          targetAttachment="middle center"
+          classPrefix="fixed-navigation"
+          constraints={[{
+            to: 'window',
+            pin: true
+          }]}
+        >
+          <Tab
+            allowAll
+            className="-explore"
+            items={modifiedCategoryTabs}
+            queryParams={queryParams}
+          />
+
+          <Tab
+            allowAll
+            className="-explore"
+            items={modifiedCategoryTabs}
+            queryParams={queryParams}
+          />
+
+        </Tether>
         {/* MAP */}
         {!forbiddenBme && <div className="l-map-container">
           <Map

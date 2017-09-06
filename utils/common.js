@@ -30,7 +30,7 @@ const getYearFromDateString = (dateString) => {
   return date ? date.getFullYear() : '-';
 };
 
-const sortByName = (a, b) => {
+const sortByName = (a = {}, b = {}) => {
   if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
   if (b.name.toLowerCase() > a.name.toLowerCase()) return -1;
   return 0;

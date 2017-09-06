@@ -232,9 +232,9 @@ class ExploreIndex extends Page {
       } : null
     }));
 
-    const breadcrumbsContent = categories.length > 0 ?
-      getBreadcrumbs(categories, queryParams, true) : [];
-    const breadcrumbs = <Breadcrumbs items={breadcrumbsContent} />;
+
+    const breadcrumbsContent = (categories || []).length > 0 ? getBreadcrumbs(categories, queryParams, true) : [];
+    const breadcrumbs = breadcrumbsContent.length > 0 ? <Breadcrumbs items={breadcrumbsContent} /> : null;
 
     return (
       <Layout

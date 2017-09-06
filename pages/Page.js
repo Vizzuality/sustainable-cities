@@ -2,7 +2,7 @@ import React from 'react';
 import routes from 'routes';
 
 export default class Page extends React.Component {
-  static async getInitialProps({ pathname, query }) {
+  static async getInitialProps({ pathname, query, isServer }) {
     const route = routes.routes.find(r => r.page === pathname);
 
     const parseParams = {};
@@ -16,7 +16,8 @@ export default class Page extends React.Component {
       queryParams: {
         route: route ? route.name : '',
         ...parseParams
-      }
+      },
+      isServer
     };
   }
 }

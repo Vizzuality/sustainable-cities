@@ -117,7 +117,9 @@ class MainNav extends React.Component {
                     className={classnames('nav-item', { '-current': SOLUTION_MAP_ROUTES.indexOf(route) !== -1 })}
                     role="menuitem"
                   >
-                    <Link prefetch route="explore-index"><a className="literal">Solutions map</a></Link>
+                    <Link prefetch route="explore-index" params={{ category: 'solutions' }}>
+                      <a className="literal">Solutions map</a>
+                    </Link>
                   </li>
                   <li
                     className={classnames('nav-item', { '-current': route === 'builder' })}

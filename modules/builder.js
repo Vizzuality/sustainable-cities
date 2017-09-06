@@ -85,7 +85,7 @@ const sliceReducer = (state = initialSliceState, action) => {
         ...state,
         title: action.project.title,
         description: action.project.description,
-        selectedSolution: action.project['solution-id'].toString(),
+        selectedSolution: action.project['solution-id'] && action.project['solution-id'].toString(),
 
         selectedBMEs: publicBmBmes.map(bmbme => bmbme.bme.id),
         commentedBMEs: fromPairs(
@@ -271,7 +271,7 @@ export function update(_, project, authToken) {
   const params = {
     title: project.title,
     description: project.description,
-    solution_id: project.selectedSolution,
+    solution_id: project.selectedSolution || null,
     enabling_ids: project.selectedEnablings,
     business_model_bmes_attributes: [].concat(
       project.selectedBMEs.map(bmeId => ({

@@ -18,6 +18,7 @@ import Spinner from 'components/common/Spinner';
 import Modal from 'components/common/Modal';
 import HelpModal from 'components/builder-index/HelpModal';
 import SaveModal from 'components/builder-index/SaveModal';
+import SavedModal from 'components/builder-index/SavedModal';
 
 import { builderSelector, withModifiers } from 'selectors/builder';
 import { withSlice, leaves } from 'utils/builder';
@@ -37,6 +38,7 @@ const modals = {
   signup: { open: false },
   bmeDetail: { open: false },
   save: { open: false },
+  saved: { open: false },
   help: { open: false },
 };
 
@@ -117,13 +119,24 @@ class BuilderIndex extends React.Component {
 
   hideModals = () => this.setState({ modal: modals });
 
-  showLogin = () => this.setState({ modal: { ...this.state.modal, login: { open: true } } });
+  hideModal = (modal) => this.setState({
+    modal: {
+      ...this.state.modal,
+      [modal]: { ...this.state.modal[modal], open: false },
+    }
+  });
 
-  showSignUp = () => this.setState({ modal: { ...this.state.modal, signup: { open: true } } });
+  showModal = (modal) => this.setState({
+    modal: {
+      ...this.state.modal,
+      [modal]: { ...this.state.modal[modal], open: true },
+    }
+  })
 
-  showSave = () => this.setState({ modal: { ...this.state.modal, save: { open: true } } });
-
-  showHelp = () => this.setState({ modal: { ...this.state.modal, help: { open: true } } });
+  showLogin = () => this.showModal('login');
+  showSignUp = () => this.showModal('signup');
+  showSave = () => this.showModal('save');
+  showHelp = () => this.showModal('help');
 
   onSaveClick = () => {
     if (this.props.auth.token) {
@@ -139,16 +152,22 @@ class BuilderIndex extends React.Component {
   }
 
   createNewProject = (title) => {
-    this.hideModals();
+    this.hideModal('save');
     create({ ...this.props.project, title }, this.props.auth.token).then(writableId => {
       this.props.reset();
       this.props.rememberProject(writableId);
+
+      this.showModal('saved');
+      setTimeout(() => this.hideModal('saved'), 2000);
     });
   }
 
   updateProject = (title) => {
-    this.hideModals();
-    this.props.update({ ...this.props.project, title }, this.props.auth.token);
+    this.hideModal('save');
+    this.props.update({ ...this.props.project, title }, this.props.auth.token).then(() => {
+      this.showModal('saved');
+      setTimeout(() => this.hideModal('saved'), 2000);
+    });
   }
 
   nodesToShow() {
@@ -309,6 +328,16 @@ class BuilderIndex extends React.Component {
             onUpdate={this.updateProject}
             onCreate={this.createNewProject}
           />
+        </Modal>
+
+        <Modal
+          open={this.state.modal.saved.open}
+          toggleModal={v => this.setState({ modal: {
+            ...this.state.modal,
+            saved: { open: v }
+          } })}
+        >
+          <SavedModal onClose={() => this.hideModal('saved')} />
         </Modal>
       </Layout>
     );

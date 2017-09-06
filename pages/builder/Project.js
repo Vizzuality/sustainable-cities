@@ -28,6 +28,7 @@ import ProjectDetail from 'components/builder-index/ProjectDetail';
 import ProjectCategory from 'components/builder-index/ProjectCategory';
 import ShareModal from 'components/common/ShareModal';
 import SaveModal from 'components/builder-index/SaveModal';
+import SavedModal from 'components/builder-index/SavedModal';
 import ConnectedBmeDetail from 'components/builder-index/ConnectedBmeDetail';
 import Modal from 'components/common/Modal';
 import DisclaimerModal from 'components/common/disclaimer/DisclaimerModal';
@@ -60,6 +61,9 @@ class Project extends React.Component {
       save: {
         open: false
       },
+      saved: {
+        open: false
+      },
       bme: {
         open: false,
         modalArgs: {
@@ -75,11 +79,25 @@ class Project extends React.Component {
 
   download = () => Router.pushRoute('builder-project-print', this.props.bmRouteParams);
 
-  showShareModal = () => this.setState({ modal: { ...this.state.modal, share: { open: true } } });
+  hideModal = (modal) => this.setState({
+    modal: {
+      ...this.state.modal,
+      [modal]: { ...this.state.modal[modal], open: false },
+    }
+  });
 
-  showLogin = () => this.setState({ modal: { ...this.state.modal, login: { open: true } } });
+  showModal = (modal) => this.setState({
+    modal: {
+      ...this.state.modal,
+      [modal]: { ...this.state.modal[modal], open: true },
+    }
+  })
 
-  showSignUp = () => this.setState({ modal: { ...this.state.modal, signup: { open: true } } });
+  showLogin = () => this.showModal('login');
+  showSignUp = () => this.showModal('signup');
+  showSave = () => this.showModal('save');
+  showSaved = () => this.showModal('saved');
+  showShare = () => this.showModal('share');
 
   showBMEModal = (bme, tab) => this.setState({
     modal: {
@@ -90,8 +108,6 @@ class Project extends React.Component {
       }
     }
   });
-
-  hideModal = modal => this.setState({ modal: { ...this.state.modal, [modal]: { open: false } } });
 
   changeBMEcomment = (bme, text) => this.props.commentBME(bme.id, text);
 
@@ -108,12 +124,18 @@ class Project extends React.Component {
     create({ ...this.props.project, title }, this.props.auth.token).then(writableId => {
       this.props.reset();
       this.props.rememberProject(writableId);
+
+      this.showModal('saved');
+      setTimeout(() => this.hideModal('saved'), 2000);
     });
   }
 
   updateProject = (title) => {
     this.hideModal('save');
-    this.props.update({ ...this.props.project, title }, this.props.auth.token);
+    this.props.update({ ...this.props.project, title }, this.props.auth.token).then(() => {
+      this.showModal('saved');
+      setTimeout(() => this.hideModal('saved'), 2000);
+    });
   }
 
   projectUrl(readonly) {
@@ -169,7 +191,7 @@ class Project extends React.Component {
             }]}
           />}
         >
-          <Button secondary inverse onClick={this.showShareModal}>Share/Export</Button>
+          <Button secondary inverse onClick={this.showShare}>Share/Export</Button>
           {!this.props.project.readonly &&
             <Button inverse onClick={this.onSaveClick}>Save project</Button>}
         </Cover>
@@ -334,6 +356,16 @@ class Project extends React.Component {
             onUpdate={this.updateProject}
             onCreate={this.createNewProject}
           />
+        </Modal>
+
+        <Modal
+          open={this.state.modal.saved.open}
+          toggleModal={v => this.setState({ modal: {
+            ...this.state.modal,
+            saved: { open: v }
+          } })}
+        >
+          <SavedModal onClose={() => this.hideModal('saved')} />
         </Modal>
       </Layout>
     );

@@ -17,6 +17,7 @@ import SignUp from 'components/common/SignUp';
 import Spinner from 'components/common/Spinner';
 import Modal from 'components/common/Modal';
 import HelpModal from 'components/builder-index/HelpModal';
+import SaveModal from 'components/builder-index/SaveModal';
 
 import { builderSelector, withModifiers } from 'selectors/builder';
 import { withSlice, leaves } from 'utils/builder';
@@ -31,6 +32,13 @@ import {
   rememberProject
 } from 'modules/builder';
 
+const modals = {
+  login: { open: false },
+  signup: { open: false },
+  bmeDetail: { open: false },
+  save: { open: false },
+  help: { open: false },
+};
 
 class BuilderIndex extends React.Component {
   state = {
@@ -38,15 +46,7 @@ class BuilderIndex extends React.Component {
     hoveredEnabling: null,
     bme: {},
     modal: {
-      login: {
-        open: false
-      },
-      signup: {
-        open: false
-      },
-      bmeDetail: {
-        open: false
-      },
+      ...modals,
       help: {
         open: process.browser && !storage.getItem('builder.help-dismissed')
       }
@@ -115,27 +115,19 @@ class BuilderIndex extends React.Component {
 
   showEnablingBMEs = (enabling) => this.setState({ hoveredEnabling: enabling.id });
 
-  hideModals = () => this.setState({ modal: null });
+  hideModals = () => this.setState({ modal: modals });
 
   showLogin = () => this.setState({ modal: { ...this.state.modal, login: { open: true } } });
 
   showSignUp = () => this.setState({ modal: { ...this.state.modal, signup: { open: true } } });
 
+  showSave = () => this.setState({ modal: { ...this.state.modal, save: { open: true } } });
+
   showHelp = () => this.setState({ modal: { ...this.state.modal, help: { open: true } } });
 
-  save = () => {
+  onSaveClick = () => {
     if (this.props.auth.token) {
-      if (this.props.project.writableId) {
-        this.props.update(this.props.project, this.props.auth.token);
-      } else {
-        create(
-          this.props.project,
-          this.props.auth.token,
-        ).then(writableId => {
-          this.props.reset();
-          this.props.rememberProject(writableId);
-        });
-      }
+      this.showSave();
     } else {
       this.showLogin();
     }
@@ -144,6 +136,19 @@ class BuilderIndex extends React.Component {
   reset = () => {
     this.props.reset();
     Router.pushRoute('builder');
+  }
+
+  createNewProject = (title) => {
+    this.hideModals();
+    create({ ...this.props.project, title }, this.props.auth.token).then(writableId => {
+      this.props.reset();
+      this.props.rememberProject(writableId);
+    });
+  }
+
+  updateProject = (title) => {
+    this.hideModals();
+    this.props.update({ ...this.props.project, title }, this.props.auth.token);
   }
 
   nodesToShow() {
@@ -173,7 +178,7 @@ class BuilderIndex extends React.Component {
           onSolutionsClick={this.showSolutionPicker}
           onEnablingsClick={this.showEnablingsSelector}
           onShowResultsClick={this.showResults}
-          onSaveClick={this.save}
+          onSaveClick={this.onSaveClick}
           onResetClick={this.reset}
           selectedSolution={this.props.selectedSolution}
           selectedEnablings={this.props.selectedEnablings}
@@ -289,6 +294,22 @@ class BuilderIndex extends React.Component {
           />
         </Modal>
 
+        <Modal
+          open={this.state.modal.save.open}
+          toggleModal={v => this.setState({ modal: {
+            ...this.state.modal,
+            save: { open: v }
+          } })}
+        >
+          <SaveModal
+            readonly={this.props.readonly}
+            existing={this.props.businessModelId}
+            currentProjectName={this.props.project.title}
+            onClose={this.hideModals}
+            onUpdate={this.updateProject}
+            onCreate={this.createNewProject}
+          />
+        </Modal>
       </Layout>
     );
   }

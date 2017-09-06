@@ -162,19 +162,25 @@ class BmeDetailPage extends Page {
             <RelatedContent />
 
             <DownloadData
-              onClickButton={() => this.setState({ modal: { download: true } })}
+              onClickButton={() => this.setState({
+                modal: { ...this.state.modal, download: true }
+              })}
             />
 
             <Modal
               open={this.state.modal.download}
-              toggleModal={v => this.setState({ modal: { download: v } })}
+              toggleModal={v => this.setState({
+                modal: { ...this.state.modal, download: v }
+              })}
               loading={loadingBmes || loadingSolutions || loadingCities}
             >
               <DownloadDataModal
                 bmes={bmesDownloadOptions}
                 cities={cityDownloadOptions}
                 solutions={solutionsDownloadOptions}
-                onClose={() => this.setState({ modal: { download: false } })}
+                onClose={() => this.setState({
+                  modal: { ...this.state.modal, download: false }
+                })}
               />
             </Modal>
 

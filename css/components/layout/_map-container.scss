@@ -3,4 +3,5 @@ $map-container-height: 580px;
 .l-map-container {
   position: relative;
   height: $map-container-height;
+  z-index: $z-index-1;
 }

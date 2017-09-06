@@ -6,6 +6,7 @@ import { Link } from 'routes';
 export default function GridItem(props) {
   // If the link is a string, this means that it is external
   const isExternalLink = typeof props.link === 'string';
+  const { background, icon } = props.placeholder || {};
 
   const linkAttributes = isExternalLink
     ? { href: props.link, rel: 'noreferrer', target: '_blank' }
@@ -21,8 +22,15 @@ export default function GridItem(props) {
       <div className="background" />
       <div
         className={classnames('image', `-${props.imageLayout}`)}
-        style={props.image && { backgroundImage: `url(${props.image})` }}
-      />
+        style={{
+          backgroundImage: props.image ? `url(${props.image})` : null,
+          backgroundColor: !props.image && background ? background : null
+        }}
+      >
+        {(!props.image && icon)
+          && <svg className={`icon ${icon}`}>
+            <use xlinkHref={`#${icon}`} /></svg>}
+      </div>
       <h4 className="c-title -dark -fw-light title">{props.title}</h4>
       { props.subtitle && <h5 className="c-title -gray-light -uppercase subtitle">{props.subtitle}</h5> }
     </a>
@@ -43,6 +51,10 @@ GridItem.propTypes = {
   image: PropTypes.string,
   imageLayout: PropTypes.oneOf(['landscape', 'portrait']),
   title: PropTypes.string.isRequired,
+  placeholder: PropTypes.shape({
+    background: PropTypes.string,
+    icon: PropTypes.string
+  }),
   subtitle: PropTypes.string,
   onClick: PropTypes.func,
   link: PropTypes.oneOfType([
@@ -55,5 +67,9 @@ GridItem.propTypes = {
 };
 
 GridItem.defaultProps = {
-  imageLayout: 'landscape'
+  imageLayout: 'landscape',
+  placeholder: {
+    background: '',
+    icon: ''
+  }
 };

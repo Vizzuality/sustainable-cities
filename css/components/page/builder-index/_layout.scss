@@ -330,6 +330,24 @@
   .c-bme-overview-item {
     width: 50%;
   }
+
+  .saved-project-list > .saved-project-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:not(:first-child) {
+      margin: 15px 0 0;
+    }
+
+    > .delete-button {
+      font-family: $font-family-1;
+      font-size: $font-size-default;
+      color: $color-text-4;
+
+      cursor: pointer;
+    }
+  }
 }
 
 .c-checkbox {

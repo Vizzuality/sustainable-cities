@@ -84,6 +84,9 @@ class SolutionDetailPage extends Page {
         open: false,
         category: null
       },
+      share: {
+        open: false
+      },
       download: false
     }
   };
@@ -234,9 +237,6 @@ class SolutionDetailPage extends Page {
       <Breadcrumbs items={breadcrumbsItems} /> : null;
     const categoryIcon = CATEGORY_ICONS[project.categoryLevel2];
 
-    console.log(this.state.modal)
-
-
     return (
       <Layout
         title="Solution detail"
@@ -259,7 +259,9 @@ class SolutionDetailPage extends Page {
               <Button
                 primary
                 inverse
-                onClick={() => this.setState({ modal: { share: true } })}
+                onClick={() => this.setState({
+                  modal: { ...this.state.modal, share: { open: true } }
+                })}
               >
                 Share
               </Button>
@@ -310,14 +312,22 @@ class SolutionDetailPage extends Page {
           />
         </Modal>
 
-        {this.state.modal.share && (
+        <Modal
+          open={this.state.modal.share.open}
+          toggleModal={v => this.setState({
+            modal: { ...this.state.modal, share: { open: v } }
+          })}
+        >
           <ShareModal
             publicProject
-            url={window.location}
-            onClose={() => this.setState({ modal: { share: false } })}
+            url={!this.props.isServer ? window.location.href : ''}
+            onClose={() => this.setState({
+              modal: { ...this.state.modal, share: { open: false } }
+            })}
             onDownload={() => Router.pushRoute('solution-detail-print', { id: project.id })}
           />
-      )}
+
+        </Modal>
       </Layout>
     );
   }

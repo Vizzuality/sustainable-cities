@@ -1,17 +1,20 @@
 .footer-nav {
-  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 
-  @media (min-width: 640px) {
+  @media (min-width: $screen-m) {
     margin-top: 0;
+    display: block;
   }
 
   li {
     text-align: right;
     margin-right: 20px;
 
-    @media (min-width: 640px) {
+    @media (min-width: $screen-m) {
       display: block;
       margin-right: 0;
-    } 
+    }
   }
 }

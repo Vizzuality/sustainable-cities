@@ -242,9 +242,19 @@ class RadialChart extends React.Component {
 
     if (this.props.interactive && node.level == 1) {
       if (this.state.family == null) {
+        const nextNodesY = buildNodes(
+          this.props.nodes || [],
+          node.family,
+          this.props.keyPrefix
+        ).filter(n => n.component === BME && n.family === node.family).map(node => node.y);
+
+        const maxY = Math.max(...nextNodesY);
+        const minY = Math.min(...nextNodesY);
+        const radius = Math.max(maxY, -minY);
+
         this.setState({
           x:-400,
-          scale: 1.5,
+          scale: Math.min(depths[depths.length - 1] / radius, 1.8),
           family: node.family,
           zooming: true,
         });

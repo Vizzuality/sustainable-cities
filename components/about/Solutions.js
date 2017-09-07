@@ -77,7 +77,9 @@ class Solutions extends React.Component {
             <svg className="icon -dark -in-line-left -big -short"><use xlinkHref="#icon-home-about" /></svg>
             <h2 className="c-title -dark -fs-extrabig -fw-light">More coming soon</h2>
           </div>
-          <div className="column small-12 medium-8">
+        </div>
+        <div className="row">
+          <div className="column small-12">
             <div className="content" />
           </div>
         </div>
@@ -85,7 +87,7 @@ class Solutions extends React.Component {
       <div className="c-detail-section -content-padding">
         <div className="row">
           <div className="column small-12 medium-4">
-            <h2 className="c-title -dark -fs-extrabig -fw-light">Continue reading</h2>
+            <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">Continue reading</h2>
           </div>
           <div className="column small-12 medium-4">
             <a className="main-link -border -about" href="/about/events">

@@ -1,4 +1,9 @@
 .about-page {
+  margin-bottom: 25px;
+
+  @media screen and (min-width: $screen-m) {
+    margin-bottom: 50px;
+  }
 
   .solutions-grid {
     display: flex;
@@ -11,3 +16,4 @@
     }
   }
 }
+

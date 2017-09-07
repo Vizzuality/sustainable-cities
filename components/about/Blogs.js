@@ -2,10 +2,10 @@ import React from 'react';
 
 export default function Blogs() {
   return (<div className="c-about-content">
-    <div className="c-detail-section -content-padding -content-separator">
+    <div className="c-detail-section -content-separator">
       <div className="row">
         <div className="column small-12">
-          <h2 className="c-title -dark -fs-huge -fw-thin">FSCI Posts</h2>
+          <h2 className="c-title -dark -fs-huge -fw-thin -title-margin">FSCI Posts</h2>
         </div>
 
 
@@ -74,16 +74,17 @@ export default function Blogs() {
         </div>
       </div>
 
-
-      <div className="column small-12 medium-8 medium-offset-4">
-        <div className="content"></div>
+      <div className="row">
+        <div className="column small-12">
+          <div className="content"></div>
+        </div>
       </div>
     </div>
 
     <div className="c-detail-section -content-padding">
       <div className="row">
         <div className="column small-12 medium-4">
-          <h2 className="c-title -dark -fs-extrabig -fw-light">Continue reading</h2>
+          <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">Continue reading</h2>
         </div>
         <div className="column small-12 medium-4">
           <a className="main-link -border -about" href="/about/events">

@@ -51,29 +51,21 @@ class EnablingConditionsSelector extends React.Component {
 
         {(this.props.nodes || []).filter((node, i) => isActive(i)).map(node => (
           <section key={node.id}>
-            {(node.children || []).map(subnode => (
-              <div key={subnode.id}>
-                <h2 className="c-title -fw-light -fs-bigger">
-                  {subnode.name}
-                </h2>
-
-                <ul>
-                  {(subnode.children || []).map(enabling => (
-                    <li
-                      key={enabling.id}
-                      onMouseEnter={() => this.props.onEnablingHover(enabling)}
-                      onMouseLeave={() => this.props.onEnablingHover({})}
-                    >
-                      <EnablingCheckbox
-                        checked={this.props.selectedEnablings.includes(enabling.id)}
-                        enabling={enabling}
-                        onChange={(_, checked) => checked ? this.props.onEnablingDeselect(enabling) : this.props.onEnablingSelect(enabling)}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <ul className="u-mt-1">
+              {(node.children || []).map(enabling => (
+                <li
+                  key={enabling.id}
+                  onMouseEnter={() => this.props.onEnablingHover(enabling)}
+                  onMouseLeave={() => this.props.onEnablingHover({})}
+                >
+                  <EnablingCheckbox
+                    checked={this.props.selectedEnablings.includes(enabling.id)}
+                    enabling={enabling}
+                    onChange={(_, checked) => checked ? this.props.onEnablingDeselect(enabling) : this.props.onEnablingSelect(enabling)}
+                  />
+                </li>
+              ))}
+            </ul>
           </section>
         ))}
 

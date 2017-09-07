@@ -81,7 +81,7 @@ export default class DownloadDataModal extends React.Component {
     const checkedSolution = (solutions || []).map(solution => solution.id);
     const citiesString = checkedCities.length ? `city_ids=${checkedCities.toString()}` : '';
     const solutionString = checkedSolution.length ? `solution_ids=${checkedSolution.toString()}` : '';
-    const bmesString = checkedBmes.length ? `bme_ids=${checkedBmes.toString()}` : '';
+    const bmesString = checkedBmes.length ? `bmes_ids=${checkedBmes.toString()}` : '';
 
     const params = [bmesString, citiesString, solutionString].filter(s => s.length).join('&');
 

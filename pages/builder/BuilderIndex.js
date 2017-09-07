@@ -107,13 +107,16 @@ class BuilderIndex extends React.Component {
     storage.setItem('builder.help-dismissed', true);
   }
 
-  showSolutionPicker = () => this.setState({ sidebar: "solutions" });
+  showSolutionPicker = () => this.setSidebar("solutions");
+  showEnablingsSelector = () => this.setSidebar("enablings");
+  showSidebar = () => this.setSidebar("default");
 
-  showEnablingsSelector = () => this.setState({ sidebar: "enablings" });
+  setSidebar = (sidebar) => {
+    this.setState({ sidebar, family: null });
+  }
 
   showResults = () => Router.pushRoute('builder-project', this.props.bmRouteParams);
 
-  showSidebar = () => this.setState({ sidebar: "default" });
 
   showEnablingBMEs = (enabling) => this.setState({ hoveredEnabling: enabling.id });
 
@@ -234,12 +237,14 @@ class BuilderIndex extends React.Component {
               <Spinner className="-transparent" isLoading={true} />
             </div> :
           <RadialChart
+            family={this.state.sidebar === "default" ? this.state.family : null}
             nodes={this.nodesToShow()}
             selected={this.props.selectedBMEs}
             onClick={this.showBME}
             keyPrefix={(this.props.selectedSolution || { slug: "none"}).slug}
             interactive={this.state.sidebar == "default"}
             thumbnail={this.state.sidebar == "enablings"}
+            onFamilyChange={(family) => this.setState({ family })}
           />
           }
 

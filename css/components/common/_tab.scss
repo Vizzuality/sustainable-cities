@@ -74,23 +74,22 @@
     }
 
     &.-current {
-      position: relative;
-
-      &::after {
-        content: '';
-        display: inline-block;
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translate(-50%, 0);
-        width: 50%;
-        height: 5px;
-        background: $color-6;
-      }
-
       > .literal {
+        position: relative;
         color: $color-text-2;
         cursor: default;
+
+        &::after {
+          content: '';
+          display: inline-block;
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translate(-50%, 0);
+          width: 50%;
+          height: 5px;
+          background: $color-6;
+        }
       }
     }
 

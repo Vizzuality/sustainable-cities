@@ -47,8 +47,12 @@ class BME extends React.Component {
   render() {
     return (
       <g
+        className="radial-chart-animated-group"
         id={this.props.id}
-        transform={`rotate(${rad2deg(this.props.angle)} 0 0) translate(${this.props.depth} 0)`}
+        transform={[
+          `rotate(${rad2deg(this.props.angle)} 0 0)`,
+          `translate(${this.props.depth} 0)`,
+        ].join(" ")}
       >
         <g className={classnames("node", `level-${this.props.level}`, this.props.family, ...this.props.modifiers)}>
           <circle
@@ -89,7 +93,7 @@ class Line extends React.Component {
           `translate(${this.props.r0} 0)`,
           `scale(${distanceBetween(this.props.parent, this.props.node) - this.props.r1 - this.props.r0} 1)`,
         ].join(" ")}
-        className={classnames(this.props.family, ...this.props.modifiers)}
+        className={classnames("radial-chart-animated-group", this.props.family, ...this.props.modifiers)}
       >
         <line x1="0" y1="0" x2="1" y2="0" />
       </g>
@@ -229,8 +233,6 @@ class RadialChart extends React.Component {
     super();
 
     this.state = {
-      scale: 1,
-      x: 0,
       zooming: false,
     }
   }
@@ -241,21 +243,17 @@ class RadialChart extends React.Component {
     }
 
     if (this.props.interactive && node.level == 1) {
-      if (this.state.family == null) {
-        this.setState({
-          x:-400,
-          scale: 1.5,
-          family: node.family,
-          zooming: true,
-        });
-      } else if (node.family == this.state.family) {
-        this.setState({
-          x: 0,
-          scale: 1,
-          family: null,
-          zooming: true,
-        });
+      if (this.props.family == null) {
+        this.props.onFamilyChange(node.family);
+      } else if (node.family == this.props.family) {
+        this.props.onFamilyChange(null);
       }
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.family !== this.props.family) {
+      this.setState({ zooming: true });
     }
   }
 
@@ -276,7 +274,16 @@ class RadialChart extends React.Component {
   }
 
   render() {
-    let nodes = buildNodes(this.props.nodes || [], this.state.family, this.props.keyPrefix);
+    const nodes = buildNodes(this.props.nodes || [], this.props.family, this.props.keyPrefix);
+
+    const nodesY = nodes.filter(n => n.component === BME && n.family === this.props.family).map(node => node.y);
+
+    const maxY = Math.max(0, ...nodesY);
+    const minY = Math.min(0, ...nodesY);
+    const radius = Math.max(maxY, -minY);
+
+    const scale = this.props.family ? Math.min(depths[depths.length - 1] / radius, 1.8) : 1.0;
+    const xOffset = this.props.family ? -400 : 0;
 
     return (
       <div className={classnames(
@@ -317,10 +324,22 @@ class RadialChart extends React.Component {
           </div>
         }
 
-        <div className={classnames("u-relative", `active-${this.state.family || "none"}`)}>
+        <div className={classnames("u-relative", `active-${this.props.family || "none"}`)}>
           <svg id="chart" className="u-block" viewBox="0 0 1000 1000">
-            <g transform={`scale(${this.state.scale})`} onTransitionEnd={() => this.transitionEnd()} />
-            <g transform={`translate(${this.state.x + 500} 500) scale(${this.state.scale})`}>
+            <g
+              className="radial-chart-zoom-animation-canary"
+              transform={`scale(${scale})`}
+              onTransitionEnd={() => this.transitionEnd()}
+            />
+            <g
+              className="radial-chart-thumbnail-animation-canary"
+              transform={`scale(${this.props.thumbnail ? 1 : 2})`}
+              onTransitionEnd={() => this.transitionEnd()}
+            />
+            <g
+              className="radial-chart-animated-group"
+              transform={`translate(${xOffset + 500} 500) scale(${scale})`}
+            >
               {nodes.map(node => (
                 <node.component
                   {...node.props}
@@ -334,12 +353,12 @@ class RadialChart extends React.Component {
             </g>
           </svg>
 
-          {nodes.filter(node => node.level == 1 && (!this.state.family || node.family == this.state.family)).map(node =>
+          {nodes.filter(node => node.level == 1 && (!this.props.family || node.family == this.props.family)).map(node =>
             <div className={`root-label ${node.family}`} key={`label-${node.id}`} style={{
               opacity: this.state.zooming ? 0 : "",
               position: "absolute",
-              top: `${(node.y * this.state.scale + 500)/1000.0*100}%`,
-              left: `${(node.x * this.state.scale + this.state.x + 500)/1000.0*100}%`,
+              top: `${(node.y * scale + 500)/1000.0*100}%`,
+              left: `${(node.x * scale + xOffset + 500)/1000.0*100}%`,
             }}>
               <p>{node.name}</p>
             </div>
@@ -348,8 +367,8 @@ class RadialChart extends React.Component {
           {this.state.popup &&
           <div className={`tooltip ${this.state.popup.family} level-${this.state.popup.level || 4}`} style={{
             position: 'absolute',
-            top: `${(this.state.popup.y * this.state.scale + 500)/1000.0*100}%`,
-            left: `${(this.state.popup.x * this.state.scale + 500 + this.state.x)/1000.0*100}%`,
+            top: `${(this.state.popup.y * scale + 500)/1000.0*100}%`,
+            left: `${(this.state.popup.x * scale + 500 + xOffset)/1000.0*100}%`,
           }}>
             <p>{this.state.popup.name}</p>
           </div>

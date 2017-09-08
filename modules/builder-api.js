@@ -109,7 +109,7 @@ export function getSolutions() {
 }
 
 export function getEnablings() {
-  const includeParams = ['children.enablings'];
+  const includeParams = ['enablings'];
 
   const queryParams = queryString.stringify({
     'filter[category-type]': 'Enabling',

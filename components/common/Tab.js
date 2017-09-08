@@ -9,6 +9,9 @@ import uuidv1 from 'uuid/v1';
 // components
 import SubMenu from 'components/common/SubMenu';
 
+// constants
+import { Mobile, Tablet } from 'constants/responsive';
+
 export default class Tab extends React.Component {
   constructor(props) {
     super(props);
@@ -77,6 +80,7 @@ export default class Tab extends React.Component {
         );
       }
 
+
       return (
         <TetherComponent
           attachment="top center"
@@ -96,13 +100,27 @@ export default class Tab extends React.Component {
             aria-haspopup="true"
             tabIndex="-1"
           >
-            <a
-              href="explore"
-              onClick={e => this.onClickTab(e, query.category)}
-              className="literal"
-            >
-              {label}
-            </a>
+            <Mobile>
+              <Link
+                route="explore-index"
+                params={{ category: query.category }}
+              >
+                <a
+                  className="literal"
+                >
+                  {label}
+                </a>
+              </Link>
+            </Mobile>
+            <Tablet>
+              <a
+                href="/"
+                onClick={e => this.onClickTab(e, query.category)}
+                className="literal"
+              >
+                {label}
+              </a>
+            </Tablet>
             {modal &&
               <button className="c-info-icon" onClick={modal.onClick}>
                 <svg className="icon -info">
@@ -110,15 +128,17 @@ export default class Tab extends React.Component {
                 </svg>
               </button>}
           </li>
-          {this.state.category === query.category &&
-            <SubMenu
-              className="-tab"
-              parent={label}
-              route={route}
-              parentNode={this.tabNodes[index]}
-              items={subMenuOptions}
-              onCloseSubMenu={() => this.onCloseSubMenu()}
-            />}
+          <Tablet>
+            {this.state.category === query.category &&
+              <SubMenu
+                className="-tab"
+                parent={label}
+                route={route}
+                parentNode={this.tabNodes[index]}
+                items={subMenuOptions}
+                onCloseSubMenu={() => this.onCloseSubMenu()}
+              />}
+          </Tablet>
         </TetherComponent>
       );
     }

@@ -1,5 +1,6 @@
 .l-main.builder-index {
   display: flex;
+  min-height: 80vh;
 }
 
 
@@ -79,6 +80,8 @@
 }
 
 .c-enabling-conditions-selector {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -87,7 +90,7 @@
   background-color: $color-5;
 
   border-right: 1px solid rgba(44,47,51,0.1);
-  padding-bottom: 50px;
+  //padding-bottom: 50px;
   margin-right: 24px;
   width: 70%;
 
@@ -113,6 +116,7 @@
   section {
     padding-left: 50px;
     padding-right: 50px;
+    overflow-y: auto;
 
     h2 {
       margin: 32px 0px 16px 0px;

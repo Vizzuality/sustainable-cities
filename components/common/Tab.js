@@ -91,6 +91,10 @@ export default class Tab extends React.Component {
           constraints={[{
             to: 'target',
             attachment: 'together'
+          }, {
+            to: 'window',
+            attachment: 'together',
+            pin: true
           }]}
         >
           <li

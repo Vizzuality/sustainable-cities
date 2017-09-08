@@ -36,20 +36,17 @@ export default class SaveModal extends React.Component {
 
         {!readonly && existing &&
           <div className="actions">
-            <Button secondary onClick={() => onClose(this.state.title)}>Cancel</Button>
             <Button secondary onClick={() => onUpdate(this.state.title)}>Save</Button>
             <Button primary onClick={() => onCreate(this.state.title)}>Save as new</Button>
           </div>
         }
         {readonly &&
           <div className="actions">
-            <Button secondary onClick={() => onClose(this.state.title)}>Cancel</Button>
             <Button primary onClick={() => onCreate(this.state.title)}>Save as new</Button>
           </div>
         }
         {!existing &&
           <div className="actions">
-            <Button secondary onClick={() => onClose(this.state.title)}>Cancel</Button>
             <Button primary onClick={() => onCreate(this.state.title)}>Save</Button>
           </div>
         }

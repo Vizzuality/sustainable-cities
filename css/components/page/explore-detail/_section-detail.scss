@@ -1,6 +1,6 @@
 $event: 'events-1', 'events-2', 'events-3', 'events-4', 'events-5', 'events-6';
 $post: 'post-1', 'post-2', 'post-3', 'post-4', 'post-5', 'post-6', 'post-7', 'post-8';
-$city-support: 'city-1', 'city-2', 'city-3', 'city-4', 'city-5', 'city-6', 'city-7', 'city-8', 'city-9', 'city-10', 'city-11';
+$city-support: 'city-1', 'city-2', 'city-3', 'city-4', 'city-5', 'city-6', 'city-7', 'city-8', 'city-9', 'city-10', 'city-11', 'city-12', 'city-13', 'city-14', 'city-15', 'city-16', 'city-17';
 
 .c-detail-section {
   margin: 50px 0 0;
@@ -43,11 +43,15 @@ $city-support: 'city-1', 'city-2', 'city-3', 'city-4', 'city-5', 'city-6', 'city
     }
   }
 
+  .post {
+    margin-bottom: 50px;
+  }
+
   .picture {
     position: relative;
     width: 100%;
     padding: 235px 70px 35px;
-    margin: 50px 0 10px;
+    margin-bottom: 10px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

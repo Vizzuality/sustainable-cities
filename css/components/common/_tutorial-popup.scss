@@ -1,0 +1,75 @@
+.tutorial-popup {
+  display: none;
+  position: absolute;
+
+  border: none;
+  box-shadow: 0 7px 15px 0 rgba($color-black, .15), 0 1px 3px 0 rgba($color-black, 0.15);
+  background-color: $color-white;
+  padding: 2em 2em 1em 2em;
+  z-index: 3;
+  left: calc(50% - 6em);
+}
+
+.tutorial-popup::after {
+  content: "";
+  width: 2em;
+  height: 2em;
+  position: absolute;
+  background-color: $color-white;
+  border-top: 1px solid mix($color-black, $color-white, 10%);
+  border-left: 1px solid mix($color-black, $color-white, 10%);
+}
+
+.tutorial-popup.tutorial-popup--solution::after,
+.tutorial-popup.tutorial-popup--enabling-condition::after {
+  transform: rotate(45deg);
+  top: -1em;
+  left: 4em;
+}
+
+.tutorial-popup.tutorial-popup--bme::after {
+  transform: translate(0, -50%) rotate(135deg);
+  top: 50%;
+  right: -1em;
+}
+
+.tutorial-popup--solution {
+  width: 350px;
+  top: 3em;
+}
+
+.tutorial-popup--enabling-condition {
+  width: 350px;
+  top: 3em;
+}
+
+.tutorial-popup--bme {
+  width: 350px;
+  top: 0;
+  transform: translate(0, -50%);
+}
+
+.tutorial-popup-cover {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 1;
+  display: none;
+}
+
+.tutorial-popup-button {
+  position: relative;
+  z-index: 2;
+}
+
+.tutorial-step--solution .tutorial-popup--solution,
+.tutorial-step--solution .tutorial-cover--solution,
+.tutorial-step--bme .tutorial-cover--bme,
+.tutorial-step--bme .tutorial-popup--bme,
+.tutorial-step--enabling-condition .tutorial-popup--enabling-condition,
+.tutorial-step--enabling-condition .tutorial-cover--enabling-condition {
+  display: block;
+}

@@ -160,8 +160,14 @@
     }
   }
 
-  &:not(.thumbnail) g {
+  &:not(.thumbnail) g.radial-chart-animated-group,
+  g.radial-chart-zoom-animation-canary {
     transition: all 1s ease-in-out;
+    transition-property: transform, opacity;
+  }
+
+  g.radial-chart-thumbnail-animation-canary {
+    transition: all 0.1s ease-in-out;
     transition-property: transform, opacity;
   }
 

@@ -89,7 +89,7 @@ export default function SolutionDetail({ project }) {
 
         {sourcesList.length > 0 &&
           <DetailSection
-            title="Where I can learn more?"
+            title="Where can I learn more?"
           >
             <ItemList
               items={sourcesList}

@@ -42,15 +42,24 @@ const modals = {
   help: { open: false },
 };
 
+const tutorialSteps = [
+  "start",
+  "solution",
+  "enabling-condition",
+  "bme",
+  "finish",
+];
+
 class BuilderIndex extends React.Component {
   state = {
+    tutorialStep: storage.getItem('builder.tutorial-finished') ? "finish" : "start",
     sidebar: "default",
     hoveredEnabling: null,
     bme: {},
     modal: {
       ...modals,
       help: {
-        open: process.browser && !storage.getItem('builder.help-dismissed')
+        open: process.browser && !storage.getItem('builder.tutorial-finished')
       }
     }
   };
@@ -99,21 +108,36 @@ class BuilderIndex extends React.Component {
   });
 
   hideHelp = () => {
-    this.setState({ modal: {
-      ...this.state.modal,
-      help: { open: false } }
-    });
-
-    storage.setItem('builder.help-dismissed', true);
+    this.hideModal('help');
+    this.advanceTutorial();
   }
 
-  showSolutionPicker = () => this.setState({ sidebar: "solutions" });
+  showSolutionPicker = () => this.setSidebar("solutions");
+  showEnablingsSelector = () => this.setSidebar("enablings");
+  showSidebar = () => this.setSidebar("default");
 
-  showEnablingsSelector = () => this.setState({ sidebar: "enablings" });
+  setSidebar = (sidebar) => {
+    this.setState({ sidebar, family: null });
+  }
 
   showResults = () => Router.pushRoute('builder-project', this.props.bmRouteParams);
 
-  showSidebar = () => this.setState({ sidebar: "default" });
+
+  closeSolutionPicker = () => {
+    this.showSidebar();
+
+    if (this.state.tutorialStep == "solution") {
+      this.advanceTutorial();
+    }
+  }
+
+  closeEnablingConditionsSelector = () => {
+    this.showSidebar();
+
+    if (this.state.tutorialStep == "enabling-condition") {
+      this.advanceTutorial();
+    }
+  }
 
   showEnablingBMEs = (enabling) => this.setState({ hoveredEnabling: enabling.id });
 
@@ -170,6 +194,15 @@ class BuilderIndex extends React.Component {
     });
   }
 
+  advanceTutorial = () => {
+    const nextStep = tutorialSteps[tutorialSteps.indexOf(this.state.tutorialStep) + 1];
+    this.setState({ tutorialStep: nextStep });
+
+    if (nextStep === "finish") {
+      storage.setItem('builder.tutorial-finished', true);
+    }
+  }
+
   nodesToShow() {
     if (this.props.readonly) {
       return this.props.filteredBmeTree;
@@ -182,6 +215,18 @@ class BuilderIndex extends React.Component {
     }
   }
 
+  currentTutorialStep() {
+    if (this.state.sidebar !== "default") {
+      return "hidden";
+    }
+
+    if (this.props.readonly || this.props.businessModelId) {
+      return "hidden";
+    }
+
+    return this.state.tutorialStep;
+  }
+
   render() {
     const loading = this.props.bmeTree.length == 0;
 
@@ -189,9 +234,10 @@ class BuilderIndex extends React.Component {
       <Layout
         title="Builder"
         queryParams={this.props.queryParams}
-        className="builder-index"
+        className={`builder-index tutorial-step--${this.currentTutorialStep()}`}
       >
         <Sidebar
+          tutorialStep={this.state.tutorialStep}
           readonly={this.props.project.readonly}
           onHelpClick={this.showHelp}
           onSolutionsClick={this.showSolutionPicker}
@@ -201,12 +247,13 @@ class BuilderIndex extends React.Component {
           onResetClick={this.reset}
           selectedSolution={this.props.selectedSolution}
           selectedEnablings={this.props.selectedEnablings}
+          onTutorialSkip={this.advanceTutorial}
         />
 
         { this.state.sidebar === 'solutions' &&
           <SolutionPicker
             onSolutionSelected={(s) => this.selectSolution(s)}
-            onClose={this.showSidebar}
+            onClose={this.closeSolutionPicker}
             solutions={this.props.solutions}
             selectedSolution={this.props.selectedSolution}
           />
@@ -216,7 +263,7 @@ class BuilderIndex extends React.Component {
           <EnablingConditionsSelector
             nodes={this.props.enablings}
             selectedEnablings={this.props.selectedEnablings}
-            onClose={this.showSidebar}
+            onClose={this.closeEnablingConditionsSelector}
             onEnablingSelect={(enabling) => this.selectEnabling(enabling)}
             onEnablingDeselect={(enabling) => this.deselectEnabling(enabling)}
             onEnablingHover={(enabling) => this.showEnablingBMEs(enabling)}
@@ -234,12 +281,14 @@ class BuilderIndex extends React.Component {
               <Spinner className="-transparent" isLoading={true} />
             </div> :
           <RadialChart
+            family={this.state.sidebar === "default" ? this.state.family : null}
             nodes={this.nodesToShow()}
             selected={this.props.selectedBMEs}
             onClick={this.showBME}
             keyPrefix={(this.props.selectedSolution || { slug: "none"}).slug}
             interactive={this.state.sidebar == "default"}
             thumbnail={this.state.sidebar == "enablings"}
+            onFamilyChange={(family) => this.setState({ family })}
           />
           }
 

@@ -14,8 +14,7 @@ class SolutionPicker extends React.Component {
           <h1 className="c-title -fs-huge -fw-thin">Solution</h1>
 
           <p>
-            Select conditions to lorem ipsum casius tesebe leo risus, pora ac
-            consectetur ac, vestibulum at eros:
+            Select one or all sustainable solutions that you wish to create a project of:
           </p>
         </header>
 

@@ -18,7 +18,7 @@ export default function Cover(props) {
     >
       <div className="c-cover-veil">
         <div className="row align-bottom">
-          <div className="column large-8">
+          <div className="column small-12 large-8">
             { props.breadcrumbs && <div className="breadcrumbs">{props.breadcrumbs}</div> }
             <h1 className="c-title -light -fs-huge -fw-thin">
               { props.titleIcon && <svg viewBox="0 0 32 32">
@@ -28,7 +28,7 @@ export default function Cover(props) {
             </h1>
             { props.description && <p className="c-text -fs-medium -fw-light description">{props.description}</p> }
           </div>
-          <div className="column large-4">
+          <div className="column small-12 large-4">
             <div className={classnames('actions', { '-margin': !props.description })}>
               {props.children}
             </div>

@@ -5,7 +5,7 @@
   font-family: $font-family-1;
   font-size: $font-size-default;
   font-weight: $font-weight-default;
-  line-height: 1;
+  line-height: 1.2em;
 
   // colors
   &.-dark {
@@ -43,7 +43,7 @@
   }
 
   &.-fs-huge {
-    font-size: 50px;
+    font-size: 40px;
 
     @media screen and (min-width: $screen-m) {
       font-size: $font-size-huge;
@@ -52,6 +52,7 @@
 
   &.-fs-extrabig {
     font-size: $font-size-big;
+    line-height: 1.5em;
 
     @media screen and (min-width: $screen-m) {
       font-size: $font-size-extrabig;
@@ -60,6 +61,7 @@
 
   &.-fs-bigger {
     font-size: $font-size-medium;
+    line-height: 1.5em;
 
     @media screen and (min-width: $screen-m) {
       font-size: $font-size-bigger;
@@ -68,15 +70,15 @@
 
   &.-fs-big {
     font-size: $font-size-big;
+    line-height: 1.5em;
   }
 
   &.-fs-medium {
     font-size: $font-size-default;
-    line-height: 1.2em;
+    line-height: 1.5em;
 
     @media screen and (min-width: $screen-m) {
       font-size: $font-size-medium;
-      line-height: 35px;
     }
   }
 

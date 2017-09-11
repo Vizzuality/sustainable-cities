@@ -66,11 +66,15 @@
       align-items: center;
       height: 100%;
 
-      font-size: $font-size-smaller;
+      font-size: $font-size-extrasmall;
       color: $color-text-3;
       line-height: 1;
       text-align: center;
       text-transform: uppercase;
+
+      @media screen and (min-width: $screen-m) {
+        font-size: $font-size-smaller;
+      }
     }
 
     &.-current {

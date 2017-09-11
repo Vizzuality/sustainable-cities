@@ -35,19 +35,35 @@
 
   // sizes
   &.-fs-super-huge {
-    font-size: $font-size-super-huge;
+    font-size: 50px;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: $font-size-super-huge;
+    }
   }
 
   &.-fs-huge {
-    font-size: $font-size-huge;
+    font-size: 50px;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: $font-size-huge;
+    }
   }
 
   &.-fs-extrabig {
-    font-size: $font-size-extrabig;
+    font-size: $font-size-big;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: $font-size-extrabig;
+    }
   }
 
   &.-fs-bigger {
-    font-size: $font-size-bigger;
+    font-size: $font-size-medium;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: $font-size-bigger;
+    }
   }
 
   &.-fs-big {
@@ -55,8 +71,13 @@
   }
 
   &.-fs-medium {
-    font-size: $font-size-medium;
-    line-height: 35px;
+    font-size: $font-size-default;
+    line-height: 1.2em;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: $font-size-medium;
+      line-height: 35px;
+    }
   }
 
   &.-fs-smaller {

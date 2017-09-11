@@ -1,7 +1,12 @@
-$map-container-height: 580px;
+$map-container-height-mobil: 500px;
+$map-container-height-desktop: 580px;
 
 .l-map-container {
   position: relative;
-  height: $map-container-height;
+  height: $map-container-height-mobil;
   z-index: $z-index-1;
+
+  @media screen and (min-width: $screen-m) {
+    height: $map-container-height-desktop;
+  }
 }

@@ -1,5 +1,4 @@
 .u-left-separator {
-
   @media screen and (min-width: $screen-m) {
     border-left: 1px solid $color-4;
   }
@@ -94,4 +93,10 @@
 
 @media print {
   .u-hide-print { display: none; }
+}
+
+.u-small-pl-0 {
+  @media screen and (max-width: $screen-m) {
+    padding-left: 0.625rem; //It is the padding of the column
+  }
 }

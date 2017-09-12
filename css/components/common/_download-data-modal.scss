@@ -1,6 +1,11 @@
 .c-download-data-modal {
-  overflow: auto;
-  max-height: 550px;
+  // overflow: auto;
+  padding-top: 50px;
+
+  @media screen and (min-width: $screen-m) {
+    padding-top: 0;
+    max-height: 550px;
+  }
 
   .selector {
     margin-top: 15px;
@@ -181,6 +186,7 @@
     width: 100%;
     margin-top: 30px;
     text-align: center;
+    padding-bottom: 30px;
 
     a {
       margin-left: 20px;

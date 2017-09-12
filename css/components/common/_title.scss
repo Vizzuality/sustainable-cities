@@ -156,8 +156,13 @@
 
   &.-tagline {
     font-style: italic;
-    margin-top: 40px;
     line-height: 1.2em;
+    margin-top: 20px;
+    font-size: 20px;
+
+    @media screen and (min-width: $screen-m) {
+      margin-top: 40px;
+    }
   }
 }
 

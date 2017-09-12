@@ -15,7 +15,7 @@ export default function DownloadData(props) {
         </div>
         <div className="row">
           <div className="column large-12 c-text -fs-medium">
-            <p>Select the part of the dataset you are interested in and download it to your computer</p>
+            <p className="c-text -light -fw-light -fs-medium">Select the part of the dataset you are interested in and download it to your computer</p>
           </div>
         </div>
         <div className="row">

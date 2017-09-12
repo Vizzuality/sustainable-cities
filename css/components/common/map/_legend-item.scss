@@ -4,6 +4,10 @@
   line-height: 1em;
 
   .legend-item-content {
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 5px;
+    }
+
     >.title {
       display: flex;
       align-items: center;

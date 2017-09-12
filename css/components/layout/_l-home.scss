@@ -1,8 +1,30 @@
 .l-home-header {
-  padding: 50px 0;
+  padding: 30px 0;
   background-image: url('/static/images/home-header.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+
+  @media (min-width: $screen-m) {
+    padding: 50px 0;
+  }
+
+
+  @media (max-width: $screen-m) {
+    .c-title.-fs-super-huge {
+      font-size: 35px;
+      font-weight: 300;
+    }
+
+    .c-title.-fs-bigger {
+      margin-top: 20px;
+      font-size: 20px;
+      line-height: 1.2em;
+    }
+
+    .c-text.-fs-bigger {
+      font-size: 16px;
+    }
+  }
 
   .c-title.-subtitle {
     margin-bottom: 30px;
@@ -18,7 +40,11 @@
   }
 
   li {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+
+    @media (min-width: $screen-m) {
+      margin-bottom: 20px;
+    }
   }
 }
 
@@ -41,6 +67,10 @@
 
   &.-explore {
     background-image: url('/static/images/home-module-explore.png');
+  }
+
+  &.-builder {
+    padding-bottom: 50px;
   }
 
   .picture {

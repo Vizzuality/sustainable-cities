@@ -63,7 +63,7 @@ class ShareModal extends React.Component {
                     Unsaved project
                   </h2>
 
-                  <p>Please, save your business model before sharing it.</p>
+                  <p className="c-text">Please, save your business model before sharing it.</p>
                 </div>
                 <div className="u-mt-1">
                   <Button primary onClick={this.props.onSave}>Save</Button>
@@ -71,7 +71,7 @@ class ShareModal extends React.Component {
               </div>
           }
 
-          <div className="column u-left-separator u-pl-2 u-flex-column">
+          <div className="column u-left-separator u-pl-2 u-flex-column u-small-pl-0">
             <div>
               <h2 className="c-title -fw-light -fs-extrabig">Share a document</h2>
 

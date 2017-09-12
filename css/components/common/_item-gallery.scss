@@ -1,5 +1,9 @@
 .c-item-gallery {
-  margin: 55px 0 100px;
+  margin: 50px 0;
+
+  @media screen and (min-width: $screen-m) {
+    margin: 55px 0 100px;
+  }
 
   > .c-breadcrumbs {
     margin: 0 0 25px;
@@ -56,7 +60,10 @@
     }
 
     &:not(:first-child) {
-      margin: 55px 0 0;
+
+      @media screen and (min-width: $screen-m) {
+        margin: 55px 0 0;
+      }
     }
   }
 }

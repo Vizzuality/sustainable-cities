@@ -45,11 +45,11 @@ export default function BmeDetail({ bme, print }) {
         {bme.projects.length > 0 && (<div className="column small-12 large-8 separator">
           {bme.projects.map(project => (<div className="project-content" key={project.id}>
             <div className="row">
-              <div className="column small-12 large-9 c-title -fs-bigger -fw-light project-name">
+              <div className="column small-8 large-9 c-title -fs-bigger -fw-light project-name">
                 {project.name}
               </div>
               {!print &&
-                <div className="column small-12 large-3 project-link">
+                <div className="column small-4 large-3 project-link">
                   <Button secondary link={`/solutions/${project.id}`}>See Project</Button>
                 </div>}
             </div>

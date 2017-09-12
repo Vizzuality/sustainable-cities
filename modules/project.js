@@ -60,7 +60,7 @@ export function getProjectsByCategory(filters = {}) {
     dispatch({ type: SET_LOADING_PROJECTS, payload: true });
     const { category } = filters;
 
-    const includeFields = ['projects', 'children', 'children.projects', 'children.projects.photos'];
+    const includeFields = ['projects', 'projects.photos', 'children', 'children.projects', 'children.projects.photos'];
     const categoryFields = ['name', 'slug', 'level', 'category-type', 'projects', 'children'];
     const projectFields = ['name', 'slug', 'photos'];
     const levelFilter = !category ? [2] : undefined;

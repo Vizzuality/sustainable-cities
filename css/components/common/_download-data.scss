@@ -20,8 +20,12 @@
   }
 
   .download-data-content {
-    padding: 85px 0;
+    padding: 35px 0;
     background: rgba(0, 0, 0, 0.7);
+
+    @media screen and (min-width: $screen-m) {
+      padding: 85px 0;
+    }
   }
 
 }

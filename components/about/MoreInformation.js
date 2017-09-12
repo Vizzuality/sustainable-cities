@@ -60,13 +60,13 @@ export default function MoreInformation() {
         </div>
         <div className="partnership">
           <div className="row">
-            <div className="columns small-12 medium-3 medium-offset-4">
+            <div className="columns small-5 medium-3 medium-offset-4">
               <a href="http://www.wrirosscities.org/" target="_blank" className="logo wri"></a>
             </div>
-            <div className="columns small-12 medium-2">
+            <div className="columns small-3 medium-2">
               <a href="http://www.c40.org/" target="_blank" className="logo c40"></a>
             </div>
-            <div className="columns small-12 medium-3">
+            <div className="columns small-4 medium-3">
               <a href="http://www.citigroup.com/citi/foundation/" target="_blank" className="logo citi-foundation"></a>
             </div>
             <div className="columns small-12 medium-8 medium-offset-4">

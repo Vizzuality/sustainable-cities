@@ -3,7 +3,11 @@ $post: 'post-1', 'post-2', 'post-3', 'post-4', 'post-5', 'post-6', 'post-7', 'po
 $city-support: 'city-1', 'city-2', 'city-3', 'city-4', 'city-5', 'city-6', 'city-7', 'city-8', 'city-9', 'city-10', 'city-11', 'city-12', 'city-13', 'city-14', 'city-15', 'city-16', 'city-17';
 
 .c-detail-section {
-  margin: 50px 0 0;
+  margin: 20px 0 0;
+
+  @media screen and (min-width: $screen-m) {
+    margin: 50px 0 0;
+  }
 
   &.-content-separator {
     .content {
@@ -46,18 +50,26 @@ $city-support: 'city-1', 'city-2', 'city-3', 'city-4', 'city-5', 'city-6', 'city
   .post {
     display: inline-block;
     width: 100%;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+
+    @media screen and (min-width: $screen-m) {
+      margin-bottom: 50px;
+    }
   }
 
   .picture {
     position: relative;
     width: 100%;
-    padding: 235px 70px 35px;
-    margin-bottom: 10px;
+    padding: 100px 20px 20px;
+    margin: 10px 0;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     background-color: #ddd;
+
+    @media screen and (min-width: $screen-m) {
+      padding: 235px 70px 35px;
+    }
 
     &.-gradient:before {
       content: "";

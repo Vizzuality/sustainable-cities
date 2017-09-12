@@ -30,8 +30,11 @@
   }
 
   &.-about {
-    height: 157px;
     margin-bottom: 20px;
+
+    @media (min-width: $screen-m) {
+      height: 157px;
+    }
   }
 
   &.-no-height {

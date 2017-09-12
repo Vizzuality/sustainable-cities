@@ -5,7 +5,7 @@ export default function Initiative() {
     <div className="c-detail-section -content-padding">
       <div className="row">
         <div className="column small-12 medium-4">
-          <h2 className="c-title -dark -fs-extrabig -fw-light">Background</h2>
+          <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">Background</h2>
         </div>
         <div className="column small-12 medium-8">
           <p className="c-text -dark -fs-medium -fw-light">
@@ -28,7 +28,7 @@ export default function Initiative() {
     <div className="c-detail-section -content-padding">
       <div className="row">
         <div className="column small-12 medium-4">
-          <h2 className="c-title -dark -fs-extrabig -fw-light">The initiative</h2>
+          <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">The initiative</h2>
         </div>
         <div className="column small-12 medium-8">
           <p className="c-text -dark -fs-medium -fw-light">Financing Sustainable Cities is an initiative focused on <strong>helping cities develop business models</strong> that can accelerate the implementation of sustainable urban solutions.</p>
@@ -43,7 +43,7 @@ export default function Initiative() {
     <div className="c-detail-section -content-padding -content-separator">
       <div className="row">
         <div className="column small-12 medium-4">
-          <h2 className="c-title -dark -fs-extrabig -fw-light">Continue reading</h2>
+          <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small -title-margin-small">Continue reading</h2>
         </div>
         <div className="column small-12 medium-4">
           <a className="main-link -border -about" href="/about/events">

@@ -29,7 +29,7 @@ class ShareModal extends React.Component {
         <div className="row">
           {
             this.props.url ?
-              <div className="column u-flex-column u-pr-2">
+              <div className="column small-12 medium-6 -flex-column u-pr-2">
                 <div>
                   <h2 className="c-title -fw-light -fs-extrabig">
                     {this.props.publicProject ? "URL to share" : "Private URL to share"}
@@ -57,7 +57,7 @@ class ShareModal extends React.Component {
                   <Button primary onClick={this.onCopyClick}>Copy link</Button>
                 </div>
               </div> :
-              <div className="column u-flex-column u-pr-2">
+              <div className="column small-12 medium-6 u-flex-column u-pr-2">
                 <div>
                   <h2 className="c-title -fw-light -fs-extrabig">
                     Unsaved project

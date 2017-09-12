@@ -1,6 +1,7 @@
 .c-legend-item {
   display: flex;
   align-items: center;
+  line-height: 1em;
 
   .legend-item-content {
     >.title {
@@ -38,9 +39,13 @@
     }
 
     > .legend-item-name {
-      font-size: $font-size-smaller;
+      font-size: $font-size-extrasmall;
       color: $color-text-2;
       text-transform: uppercase;
+
+      @media screen and (min-width: $screen-m) {
+        font-size: $font-size-smaller;
+      }
     }
 
     > .legend-range {

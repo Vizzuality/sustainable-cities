@@ -1,5 +1,8 @@
 .u-left-separator {
-  border-left: 1px solid $color-4;
+
+  @media screen and (min-width: $screen-m) {
+    border-left: 1px solid $color-4;
+  }
 }
 
 .u-bottom-separator {

@@ -16,10 +16,10 @@ export default function SummarySection({ category, parent, projectBmes }) {
       </div>
     </div>
     {category.children.map(child => (<div id={child.slug} key={child.id} className="row subtitle">
-      <div className="column large-4 c-text -fs-extrabig -fw-light">
+      <div className="column small-12 medium-4 c-text -fs-extrabig -fw-light">
         {child.name}
       </div>
-      <div className="column large-8">
+      <div className="column small-12 medium-8">
         {child.children && child.children.map(grandchild => (<div id={grandchild.slug} className="subsubitem" key={grandchild.id}>
           <div className="row subsubtitle">
             <div className="column large-12 c-text -fs-big -fw-light">

@@ -5,7 +5,7 @@
   font-family: $font-family-1;
   font-size: $font-size-default;
   font-weight: $font-weight-default;
-  line-height: 1;
+  line-height: 1.2em;
 
   // colors
   &.-dark {
@@ -35,28 +35,51 @@
 
   // sizes
   &.-fs-super-huge {
-    font-size: $font-size-super-huge;
+    font-size: 50px;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: $font-size-super-huge;
+    }
   }
 
   &.-fs-huge {
-    font-size: $font-size-huge;
+    font-size: 40px;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: $font-size-huge;
+    }
   }
 
   &.-fs-extrabig {
-    font-size: $font-size-extrabig;
+    font-size: $font-size-big;
+    line-height: 1.5em;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: $font-size-extrabig;
+    }
   }
 
   &.-fs-bigger {
-    font-size: $font-size-bigger;
+    font-size: $font-size-medium;
+    line-height: 1.5em;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: $font-size-bigger;
+    }
   }
 
   &.-fs-big {
     font-size: $font-size-big;
+    line-height: 1.5em;
   }
 
   &.-fs-medium {
-    font-size: $font-size-medium;
-    line-height: 35px;
+    font-size: $font-size-default;
+    line-height: 1.5em;
+
+    @media screen and (min-width: $screen-m) {
+      font-size: $font-size-medium;
+    }
   }
 
   &.-fs-smaller {
@@ -145,4 +168,12 @@
 
 .c-title + .c-text {
   margin-top: 10px;
+}
+
+.-title-margin {
+  margin-bottom: 50px;
+}
+
+.-title-margin-small {
+  margin-bottom: 25px;
 }

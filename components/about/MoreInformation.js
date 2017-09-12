@@ -6,7 +6,7 @@ export default function MoreInformation() {
     <div className="c-detail-section -content-padding -content-separator">
       <div className="row">
         <div className="column small-12 medium-4">
-          <h2 className="c-title -dark -fs-extrabig -fw-light">Methodology</h2>
+          <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">Methodology</h2>
         </div>
         <div className="column small-12 medium-8">
           <div className="content">
@@ -37,7 +37,7 @@ export default function MoreInformation() {
     <div className="c-detail-section -content-padding -content-separator">
       <div className="row">
         <div className="column small-12 medium-4">
-          <h2 className="c-title -dark -fs-extrabig -fw-light">Data policy</h2>
+          <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">Data policy</h2>
         </div>
         <div className="column small-12 medium-8">
           <div className="content">
@@ -52,7 +52,7 @@ export default function MoreInformation() {
     <div className="c-detail-section -content-padding -content-separator">
       <div className="row">
         <div className="column small-12 medium-4">
-            <h2 className="c-title -dark -fs-extrabig -fw-light">The partnership</h2>
+            <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">The partnership</h2>
           </div>
           <div className="column small-12 medium-8">
             <p className="c-text -dark -fs-medium -fw-light">Financing Sustainable Cities is an initiative of the WRI Ross Center for Sustainable Cities and C40 Cities, funded by the Citi Foundation, helping cities develop business models that can accelerate the implementation of sustainable urban solutions.</p>
@@ -78,7 +78,7 @@ export default function MoreInformation() {
       <div className="c-detail-section -content-padding">
         <div className="row">
           <div className="column small-12 medium-4">
-            <h2 className="c-title -dark -fs-extrabig -fw-light">Continue reading</h2>
+            <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">Continue reading</h2>
           </div>
           <div className="column small-12 medium-4">
             <a className="main-link -border -about" href="/about/events">

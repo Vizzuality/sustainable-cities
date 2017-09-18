@@ -1,6 +1,11 @@
 .l-main.builder-index {
   display: flex;
   min-height: 80vh;
+  padding-bottom: 25px;
+
+  @media screen and (min-width: $screen-m)  {
+    padding-bottom: 50px;
+  }
 }
 
 

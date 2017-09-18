@@ -45,9 +45,13 @@
     }
 
     header {
-      background-color: $color-white;
+
       h1 {
         padding: 50px 50px 30px 50px;
+      }
+
+      .c-tabs {
+        background-color: transparent;
       }
 
       .c-tabs .row {

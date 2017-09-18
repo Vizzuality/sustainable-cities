@@ -6,9 +6,7 @@ import { getImage } from 'utils/common';
 // constants
 import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
 
-const getIcon = ({ parentSlug }, { slug }) => {
-  return `icon-${(parentSlug || slug)}`;
-};
+const getIcon = ({ parentSlug }, { slug }) => `icon-${(parentSlug || slug)}`;
 
 // parses bmes in order to populate GridList component
 const listBmes = (bmes = [], bmeParent = {}, filters = {}) => bmes.map(bme => ({

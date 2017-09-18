@@ -50,7 +50,11 @@ const getParsedBmes = createSelector(
             tab: categorySlug
           }
         },
-        children: listBmes(groupBmesByCategoryParent[categoryParent] || [])
+        children: listBmes(
+          groupBmesByCategoryParent[categoryParent] || [],
+          { slug: categorySlug },
+          { category: categorySlug }
+        )
       };
     });
 

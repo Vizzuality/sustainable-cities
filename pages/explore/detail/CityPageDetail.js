@@ -168,13 +168,13 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll={parsedBmes['funding-source'] !== undefined && parsedBmes['funding-source'].length > 4}
+                showAll={parsedBmes.bme !== undefined && parsedBmes.bme.length > 4}
                 link={{
                   route: 'city-detail',
-                  params: { id, tab: 'funding-source' }
+                  params: { id, tab: 'bme' }
                 }}
-                items={parsedBmes['funding-source'] !== undefined ?
-                  [parsedBmes['funding-source']] : []}
+                items={parsedBmes.bme !== undefined ?
+                  [parsedBmes.bme] : []}
               />
 
               <ItemGallery
@@ -198,13 +198,13 @@ class CityDetailPage extends Page {
               />
 
               <ItemGallery
-                showAll={parsedBmes['legal-arrangements'] !== undefined && parsedBmes['legal-arrangements'].length > 4}
+                showAll={parsedBmes['legal-arragements'] !== undefined && parsedBmes['legal-arragements'].length > 4}
                 link={{
                   route: 'city-detail',
-                  params: { id, tab: 'legal-arrangements' }
+                  params: { id, tab: 'legal-arragements' }
                 }}
-                items={parsedBmes['legal-arrangements'] !== undefined ?
-                  [parsedBmes['legal-arrangements']] : []}
+                items={parsedBmes['legal-arragements'] !== undefined ?
+                  [parsedBmes['legal-arragements']] : []}
               />
 
               <ItemGallery
@@ -229,31 +229,31 @@ class CityDetailPage extends Page {
               />
             }
 
-            {tab === 'investment-component' &&
+            {tab === 'bme' &&
               <ItemGallery
-                items={parsedBmes['investment-component'] !== undefined ?
-                  [parsedBmes['investment-component']] : []}
+                items={parsedBmes.bme !== undefined ?
+                  [parsedBmes.bme] : []}
               />
             }
 
-            {tab === 'delivery-mechanism' &&
+            {tab === 'financing' &&
               <ItemGallery
-                items={parsedBmes['delivery-mechanism'] !== undefined ?
-                  [parsedBmes['delivery-mechanism']] : []}
+                items={parsedBmes.financing !== undefined ?
+                  [parsedBmes.financing] : []}
               />
             }
 
-            {tab === 'financial-product' &&
+            {tab === 'legal-arragements' &&
               <ItemGallery
-                items={parsedBmes['financial-product'] !== undefined ?
-                  [parsedBmes['financial-product']] : []}
+                items={parsedBmes['legal-arragements'] !== undefined ?
+                  [parsedBmes['legal-arragements']] : []}
               />
             }
 
-            {tab === 'funding-source' &&
+            {tab === 'investment-components' &&
               <ItemGallery
-                items={parsedBmes['funding-source'] !== undefined ?
-                  [parsedBmes['funding-source']] : []}
+                items={parsedBmes['investment-components'] !== undefined ?
+                  [parsedBmes['investment-components']] : []}
               />
             }
           </div>

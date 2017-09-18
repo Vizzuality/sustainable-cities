@@ -34,26 +34,27 @@ const getParsedBmes = createSelector(
   (bmes, city) => {
     if (!Object.keys(bmes).length || !Object.keys(city).length) return {};
 
-    const groupBmesByCategoryParent = groupBy(bmes.filter(bme => bme.categoryLevel1), 'categoryLevel1');
+    const groupBmesByCategoryParent = groupBy(bmes.filter(bme => bme.categoryLevel1Slug), 'categoryLevel1Slug');
 
     const categoryParentObject = {};
 
-    Object.keys(groupBmesByCategoryParent).forEach((categoryParent) => {
-      const categorySlug = categoryParent.toLowerCase().replace(/\s/g, '-');
-      categoryParentObject[categorySlug] = {
+    Object.keys(groupBmesByCategoryParent).forEach((categoryParentSlug) => {
+      const categoryParentName =
+        ((groupBmesByCategoryParent[categoryParentSlug][0] || {})).categoryLevel1;
+      categoryParentObject[categoryParentSlug] = {
         id: uuidv1(),
-        title: `${categoryParent} in this city`,
+        title: `${categoryParentName} in this city`,
         link: {
           route: 'city-detail',
           params: {
             id: city.id,
-            tab: categorySlug
+            tab: categoryParentSlug
           }
         },
         children: listBmes(
-          groupBmesByCategoryParent[categoryParent] || [],
-          { slug: categorySlug },
-          { category: categorySlug }
+          groupBmesByCategoryParent[categoryParentSlug] || [],
+          { slug: categoryParentSlug },
+          { category: categoryParentSlug }
         )
       };
     });

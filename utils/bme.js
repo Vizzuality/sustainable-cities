@@ -11,7 +11,7 @@ const getIcon = ({ parentSlug }, { slug }) => {
 };
 
 // parses bmes in order to populate GridList component
-const listBmes = (bmes = [], bmeParent, filters) => bmes.map(bme => ({
+const listBmes = (bmes = [], bmeParent = {}, filters = {}) => bmes.map(bme => ({
   id: uuidv1(),
   title: bme.name,
   image: getImage(bme),

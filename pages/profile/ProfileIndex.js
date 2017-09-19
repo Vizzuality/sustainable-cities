@@ -165,7 +165,7 @@ class ProfileIndex extends Page {
           </div>
         </div>
 
-        <Modal
+        {this.state.modal.delete.open && <Modal
           open={this.state.modal.delete.open}
           toggleModal={v => this.setState({
             modal: { ...this.state.modal, delete: { open: v } }
@@ -179,7 +179,7 @@ class ProfileIndex extends Page {
               modal: { ...this.state.modal, delete: { open: false } }
             })}
           />
-        </Modal>
+        </Modal>}
       </Layout>
     );
   }

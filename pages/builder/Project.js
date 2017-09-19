@@ -77,19 +77,32 @@ class Project extends React.Component {
 
   onFieldChange = (name, value) => this.props.setField(name, value);
 
-  download = () => Router.pushRoute('builder-project-print', this.props.bmRouteParams);
+  onDownload() {
+    const { bmRouteParams } = this.props;
 
-  hideModal = (modal) => this.setState({
+    this.hideModal('share');
+    Router.pushRoute('builder-project-print', bmRouteParams);
+  }
+
+  onSaveClick = () => {
+    if (this.props.auth.token) {
+      this.showSave();
+    } else {
+      this.showLogin();
+    }
+  }
+
+  hideModal = modal => this.setState({
     modal: {
       ...this.state.modal,
-      [modal]: { ...this.state.modal[modal], open: false },
+      [modal]: { ...this.state.modal[modal], open: false }
     }
   });
 
-  showModal = (modal) => this.setState({
+  showModal = modal => this.setState({
     modal: {
       ...this.state.modal,
-      [modal]: { ...this.state.modal[modal], open: true },
+      [modal]: { ...this.state.modal[modal], open: true }
     }
   })
 
@@ -111,17 +124,9 @@ class Project extends React.Component {
 
   changeBMEcomment = (bme, text) => this.props.commentBME(bme.id, text);
 
-  onSaveClick = () => {
-    if (this.props.auth.token) {
-      this.showSave();
-    } else {
-      this.showLogin();
-    }
-  }
-
   createNewProject = (title) => {
     this.hideModal('save');
-    create({ ...this.props.project, title }, this.props.auth.token).then(writableId => {
+    create({ ...this.props.project, title }, this.props.auth.token).then((writableId) => {
       this.props.reset();
       this.props.rememberProject(writableId);
 
@@ -256,25 +261,7 @@ class Project extends React.Component {
           />
         }
 
-        <Modal
-          open={this.state.modal.share.open}
-          toggleModal={v => this.setState({
-            modal: {
-              ...this.state.modal,
-              share: { open: v }
-            }
-          })}
-        >
-          <ShareModal
-            onClose={() => this.hideModal('share')}
-            onDownload={this.download}
-            onSave={this.saveProject}
-            url={this.projectUrl(true)}
-            urlEditable={this.projectUrl(false)}
-          />
-        </Modal>
-
-        <Modal
+        {this.state.modal.bme.open && <Modal
           open={this.state.modal.bme.open}
           toggleModal={v => this.setState({
             modal: {
@@ -290,9 +277,9 @@ class Project extends React.Component {
             initialTab={this.state.modal.bme.modalArgs.tab}
             onClose={() => this.hideModal('bme')}
           />
-        </Modal>
+        </Modal>}
 
-        <Modal
+        {this.state.modal.login.open && <Modal
           open={this.state.modal.login.open}
           toggleModal={v => this.setState({
             modal: {
@@ -306,9 +293,9 @@ class Project extends React.Component {
             onSignUp={this.showSignUp}
             onLogin={this.hideModal}
           />
-        </Modal>
+        </Modal>}
 
-        <Modal
+        {this.state.modal.signup.open && <Modal
           open={this.state.modal.signup.open}
           toggleModal={v => this.setState({
             modal: {
@@ -322,9 +309,9 @@ class Project extends React.Component {
             onLogin={this.showLogin}
             onSignUp={this.hideModal}
           />
-        </Modal>
+        </Modal>}
 
-        <Modal
+        {this.state.modal.disclaimer.open && <Modal
           open={this.state.modal.disclaimer.open}
           toggleModal={v => this.setState({
             modal: {
@@ -339,9 +326,9 @@ class Project extends React.Component {
             disclaimer={this.state.modal.disclaimer.category}
             onClose={() => this.hideModal('disclaimer')}
           />
-        </Modal>
+        </Modal>}
 
-        <Modal
+        {this.state.modal.save.open && <Modal
           open={this.state.modal.save.open}
           toggleModal={v => this.setState({ modal: {
             ...this.state.modal,
@@ -356,9 +343,9 @@ class Project extends React.Component {
             onUpdate={this.updateProject}
             onCreate={this.createNewProject}
           />
-        </Modal>
+        </Modal>}
 
-        <Modal
+        {this.state.modal.saved.open && <Modal
           open={this.state.modal.saved.open}
           toggleModal={v => this.setState({ modal: {
             ...this.state.modal,
@@ -366,7 +353,25 @@ class Project extends React.Component {
           } })}
         >
           <SavedModal onClose={() => this.hideModal('saved')} />
-        </Modal>
+        </Modal>}
+
+        {this.state.modal.share.open && <Modal
+          open={this.state.modal.share.open}
+          toggleModal={v => this.setState({
+            modal: {
+              ...this.state.modal,
+              share: { open: v }
+            }
+          })}
+        >
+          <ShareModal
+            onClose={() => this.hideModal('share')}
+            onDownload={() => this.onDownload()}
+            onSave={this.saveProject}
+            url={this.projectUrl(true)}
+            urlEditable={this.projectUrl(false)}
+          />
+        </Modal>}
       </Layout>
     );
   }
@@ -384,7 +389,8 @@ Project.propTypes = {
   commentBME: Proptypes.func,
   queryParams: Proptypes.object,
   update: Proptypes.func,
-  reset: Proptypes.func
+  reset: Proptypes.func,
+  rememberProject: Proptypes.func
 };
 
 Project.defaultProps = {

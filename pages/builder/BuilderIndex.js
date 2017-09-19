@@ -39,7 +39,7 @@ const modals = {
   bmeDetail: { open: false },
   save: { open: false },
   saved: { open: false },
-  help: { open: false },
+  help: { open: false }
 };
 
 const tutorialSteps = [
@@ -307,7 +307,7 @@ class BuilderIndex extends React.Component {
           }
         </div>
 
-        <Modal
+        {this.state.modal.bmeDetail.open && <Modal
           open={this.state.modal.bmeDetail.open}
           toggleModal={v => this.setState({ modal: {
             ...this.state.modal,
@@ -322,19 +322,9 @@ class BuilderIndex extends React.Component {
             onNext={() => this.selectNext(this.state.bme)}
             onPrev={() => this.selectPrevious(this.state.bme)}
           />
-        </Modal>
+        </Modal>}
 
-        <Modal
-          open={this.state.modal.help.open}
-          toggleModal={v => this.setState({ modal: {
-            ...this.state.modal,
-            help: { open: v }
-          } })}
-        >
-          <HelpModal onClose={this.hideHelp} />
-        </Modal>
-
-        <Modal
+        {this.state.modal.login.open && <Modal
           open={this.state.modal.login.open}
           toggleModal={v => this.setState({ modal: {
             ...this.state.modal,
@@ -346,9 +336,9 @@ class BuilderIndex extends React.Component {
             onSignUp={this.showSignUp}
             onLogin={this.hideModals}
           />
-        </Modal>
+        </Modal>}
 
-        <Modal
+        {this.state.modal.signup.open && <Modal
           open={this.state.modal.signup.open}
           toggleModal={v => this.setState({ modal: {
             ...this.state.modal,
@@ -360,9 +350,9 @@ class BuilderIndex extends React.Component {
             onLogin={this.showLogin}
             onSignUp={this.hideModals}
           />
-        </Modal>
+        </Modal>}
 
-        <Modal
+        {this.state.modal.save.open && <Modal
           open={this.state.modal.save.open}
           toggleModal={v => this.setState({ modal: {
             ...this.state.modal,
@@ -377,9 +367,9 @@ class BuilderIndex extends React.Component {
             onUpdate={this.updateProject}
             onCreate={this.createNewProject}
           />
-        </Modal>
+        </Modal>}
 
-        <Modal
+        {this.state.modal.saved.open && <Modal
           open={this.state.modal.saved.open}
           toggleModal={v => this.setState({ modal: {
             ...this.state.modal,
@@ -387,7 +377,17 @@ class BuilderIndex extends React.Component {
           } })}
         >
           <SavedModal onClose={() => this.hideModal('saved')} />
-        </Modal>
+        </Modal>}
+
+        {this.state.modal.help.open && <Modal
+          open={this.state.modal.help.open}
+          toggleModal={v => this.setState({ modal: {
+            ...this.state.modal,
+            help: { open: v }
+          } })}
+        >
+          <HelpModal onClose={this.hideHelp} />
+        </Modal>}
       </Layout>
     );
   }

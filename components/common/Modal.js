@@ -4,6 +4,10 @@ import Spinner from 'components/common/Spinner';
 
 export default class Modal extends React.Component {
 
+  componentDidMount() {
+    document.getElementsByTagName('body')[0].classList.add('no-overflow');
+  }
+
   // Close modal when esc key is pressed
   componentWillReceiveProps({ open }) {
     function escKeyPressListener(evt) {
@@ -13,9 +17,12 @@ export default class Modal extends React.Component {
 
     // if opened property has changed
     if (this.props.open !== open) {
-      document.getElementsByTagName('body')[0].classList.toggle('no-overflow', open);
       document[open ? 'addEventListener' : 'removeEventListener']('keydown', escKeyPressListener.bind(this));
     }
+  }
+
+  componentWillUnmount() {
+    document.getElementsByTagName('body')[0].classList.remove('no-overflow');
   }
 
   render() {

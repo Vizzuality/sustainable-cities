@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function SnapshotSection({ project }) {
   const { country, cities, category, operationalYear } = project;
@@ -6,15 +7,13 @@ export default function SnapshotSection({ project }) {
     {
       label: 'Location',
       values: [
-       [cities && cities[0] && cities[0].name, country && country.regionName].filter(s => s).join(', '),
-       country && country.iso
+        [cities && cities[0] && cities[0].name, country && country.regionName].filter(s => s).join(', '),
+        country && country.iso
       ].filter(s => s)
     },
     {
       label: 'Date',
-      values: [
-        operationalYear
-      ].filter(s => s)
+      values: [operationalYear]
     },
     {
       label: 'Solution type',
@@ -40,3 +39,11 @@ export default function SnapshotSection({ project }) {
     </div>))}
   </div>);
 }
+
+SnapshotSection.propTypes = {
+  project: PropTypes.object
+};
+
+SnapshotSection.defaultProps = {
+  project: {}
+};

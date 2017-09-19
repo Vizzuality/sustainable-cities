@@ -40,7 +40,6 @@
     overflow-y: auto;
 
     @media screen and (min-width: $screen-s) {
-      overflow-y: inherit;
       height: auto;
       padding: 50px;
     }

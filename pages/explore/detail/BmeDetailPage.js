@@ -105,6 +105,17 @@ class BmeDetailPage extends Page {
     this.props.removeBmeDetail();
   }
 
+  onDownload() {
+    const { queryParams } = this.props;
+
+    this.setState({
+      modal: {
+        ...this.state.modal,
+        share: { open: false }
+      }
+    }, () => Router.pushRoute('bme-detail-print', { id: queryParams.id }));
+  }
+
   render() {
     const {
       bme,
@@ -167,7 +178,7 @@ class BmeDetailPage extends Page {
               })}
             />
 
-            <Modal
+            {this.state.modal.download && <Modal
               open={this.state.modal.download}
               toggleModal={v => this.setState({
                 modal: { ...this.state.modal, download: v }
@@ -182,9 +193,9 @@ class BmeDetailPage extends Page {
                   modal: { ...this.state.modal, download: false }
                 })}
               />
-            </Modal>
+            </Modal>}
 
-            <Modal
+            {this.state.modal.share.open && <Modal
               open={this.state.modal.share.open}
               toggleModal={v => this.setState({
                 modal: { ...this.state.modal, share: { open: v } }
@@ -196,9 +207,9 @@ class BmeDetailPage extends Page {
                 onClose={() => this.setState({
                   modal: { ...this.state.modal, share: { open: false } }
                 })}
-                onDownload={() => Router.pushRoute('bme-detail-print', { id: this.props.queryParams.id })}
+                onDownload={() => this.onDownload()}
               />
-            </Modal>
+            </Modal>}
           </div>)}
         </div>
 

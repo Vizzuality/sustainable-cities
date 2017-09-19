@@ -1,10 +1,21 @@
 .l-main.builder-index {
   display: flex;
+  flex-direction: column;
   min-height: 80vh;
   padding-bottom: 25px;
+  align-items: center;
+  flex-flow: column-reverse;
 
   @media screen and (min-width: $screen-m)  {
     padding-bottom: 50px;
+    flex-direction: row;
+    align-items: inherit;
+    flex-flow: inherit;
+  }
+
+  //HAck to have margin in the button without adding classes
+  .c-button.-secondary.u-w-100 {
+    margin-bottom: 0.5em;
   }
 }
 

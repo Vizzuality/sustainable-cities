@@ -1,8 +1,6 @@
 import React from 'react';
 
 import DetailSection from 'components/explore-detail/DetailSection';
-import { getYearFromDateString } from 'utils/common';
-
 
 class ProjectDetail extends React.Component {
   render() {

@@ -1,8 +1,5 @@
 import React from 'react';
 
-// utils
-import { getYearFromDateString } from 'utils/common';
-
 export default function SnapshotSection({ project }) {
   const { country, cities, category, operationalYear } = project;
   const items = [
@@ -16,7 +13,7 @@ export default function SnapshotSection({ project }) {
     {
       label: 'Date',
       values: [
-        getYearFromDateString(operationalYear)
+        operationalYear
       ].filter(s => s)
     },
     {

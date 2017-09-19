@@ -24,12 +24,6 @@ const isArrayEqual = (originalArray, comparedArray) => {
   return isArrEqual;
 };
 
-const getYearFromDateString = (dateString) => {
-  if (!dateString) return null;
-  const date = new Date(dateString);
-  return date ? date.getFullYear() : '-';
-};
-
 const sortByName = (a = {}, b = {}) => {
   if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
   if (b.name.toLowerCase() > a.name.toLowerCase()) return -1;
@@ -41,4 +35,4 @@ const getImage = entity => (entity.photos || []).length ?
   `${process.env.API_URL}${entity.photos[0].attachment.medium.url}` : null;
 
 
-export { isArrayEqual, getYearFromDateString, sortByName, getImage };
+export { isArrayEqual, sortByName, getImage };

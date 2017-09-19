@@ -259,7 +259,7 @@ class CityDetailPage extends Page {
           </div>
         </div>}
 
-        <Modal
+        {this.state.modal.download && <Modal
           open={this.state.modal.download}
           toggleModal={v => this.setState({ modal: { download: v } })}
           loading={loadingBmes || isLoading}
@@ -270,7 +270,7 @@ class CityDetailPage extends Page {
             solutions={solutionsDownloadOptions}
             onClose={() => this.setState({ modal: { download: false } })}
           />
-        </Modal>
+        </Modal>}
 
       </Layout>
     );

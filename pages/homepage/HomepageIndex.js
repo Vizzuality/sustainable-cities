@@ -135,7 +135,7 @@ class HomePage extends Page {
               <div className="call-to-action -no-border">
                 <h3 className="c-title -dark -fs-extrabig -fw-light">Business model design</h3>
                 <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Get started with designing a sustainable urban project using experiences gained by cities worldwide.</p>
-                <Link route="explore-index"><a className="c-button -primary">design a project</a></Link>
+                <Link route="builder"><a className="c-button -primary">design a project</a></Link>
               </div>
             </div>
             <div className="columns small-12 medium-4 large-6">

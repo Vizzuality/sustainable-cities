@@ -309,23 +309,7 @@ class ExploreIndex extends Page {
           onClickButton={() => this._openDownloadData()}
         />
 
-        <Modal
-          open={this.state.modal.disclaimer.open}
-          toggleModal={v => this.setState({
-            modal: { ...this.state.modal, disclaimer: { open: v } }
-          })}
-          loading={categories.length === 0}
-        >
-          <DisclaimerModal
-            categories={categories}
-            disclaimer={this.state.modal.disclaimer.category}
-            onClose={() => this.setState({
-              modal: { ...this.state.modal, disclaimer: { open: false } }
-            })}
-          />
-        </Modal>
-
-        <Modal
+        {this.state.modal.download && <Modal
           open={this.state.modal.download}
           toggleModal={v => this.setState({
             modal: { ...this.state.modal, download: v }
@@ -340,7 +324,23 @@ class ExploreIndex extends Page {
               modal: { ...this.state.modal, download: false }
             })}
           />
-        </Modal>
+        </Modal>}
+
+        {this.state.modal.disclaimer.open && <Modal
+          open={this.state.modal.disclaimer.open}
+          toggleModal={v => this.setState({
+            modal: { ...this.state.modal, disclaimer: { open: v } }
+          })}
+          loading={categories.length === 0}
+        >
+          <DisclaimerModal
+            categories={categories}
+            disclaimer={this.state.modal.disclaimer.category}
+            onClose={() => this.setState({
+              modal: { ...this.state.modal, disclaimer: { open: false } }
+            })}
+          />
+        </Modal>}
 
       </Layout>
     );

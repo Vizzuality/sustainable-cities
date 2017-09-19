@@ -220,6 +220,17 @@ class SolutionDetailPage extends Page {
     );
   }
 
+  onDownload() {
+    const { project } = this.props;
+
+    this.setState({
+      modal: {
+        ...this.state.modal,
+        share: { open: false }
+      }
+    }, () => Router.pushRoute('solution-detail-print', { id: project.id }));
+  }
+
   render() {
     const {
       bmeCategories,
@@ -276,10 +287,16 @@ class SolutionDetailPage extends Page {
             <RelatedContent />
 
             <DownloadData
-              onClickButton={() => this.setState({ modal: { ...this.state.modal, download: true } })}
+              onClickButton={() =>
+                this.setState({
+                  modal: {
+                    ...this.state.modal,
+                    download: true
+                  }
+                })}
             />
 
-            <Modal
+            {this.state.modal.download && <Modal
               open={this.state.modal.download}
               toggleModal={v => this.setState({
                 modal: { ...this.state.modal, download: v }
@@ -292,11 +309,11 @@ class SolutionDetailPage extends Page {
                 solutions={solutionsDownloadOptions}
                 onClose={() => this.setState({ modal: { ...this.state.modal, download: false } })}
               />
-            </Modal>
+            </Modal>}
           </div>)}
         </div>
 
-        <Modal
+        {this.state.modal.disclaimer.open && <Modal
           open={this.state.modal.disclaimer.open}
           toggleModal={v => this.setState({
             modal: { ...this.state.modal, disclaimer: { open: v } }
@@ -310,9 +327,9 @@ class SolutionDetailPage extends Page {
               modal: { ...this.state.modal, disclaimer: { open: false } }
             })}
           />
-        </Modal>
+        </Modal>}
 
-        <Modal
+        {this.state.modal.share.open && <Modal
           open={this.state.modal.share.open}
           toggleModal={v => this.setState({
             modal: { ...this.state.modal, share: { open: v } }
@@ -324,10 +341,10 @@ class SolutionDetailPage extends Page {
             onClose={() => this.setState({
               modal: { ...this.state.modal, share: { open: false } }
             })}
-            onDownload={() => Router.pushRoute('solution-detail-print', { id: project.id })}
+            onDownload={() => this.onDownload()}
           />
 
-        </Modal>
+        </Modal>}
       </Layout>
     );
   }

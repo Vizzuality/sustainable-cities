@@ -169,7 +169,7 @@ class MainNav extends React.Component {
           </div>
         </div>
 
-        <Modal
+        {this.state.modal.login.open && <Modal
           open={this.state.modal.login.open}
           toggleModal={v => this.setState({ modal: {
             ...this.state.modal,
@@ -181,9 +181,9 @@ class MainNav extends React.Component {
             onSignUp={() => this.onSignUp()}
             onLogin={() => this.hideModals('login')}
           />
-        </Modal>
+        </Modal>}
 
-        <Modal
+        {this.state.modal.signup.open && <Modal
           open={this.state.modal.signup.open}
           toggleModal={v => this.setState({ modal: {
             ...this.state.modal,
@@ -195,7 +195,7 @@ class MainNav extends React.Component {
             onLogin={(e) => { this.showLogin(e); }}
             onSignUp={() => this.hideModals('signup')}
           />
-        </Modal>
+        </Modal>}
       </div>
     );
   }

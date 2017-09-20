@@ -108,7 +108,7 @@ class MobileHeader extends React.Component {
                   <span className="ingredient" />
                 </button> :
                 <button className="cross" onClick={() => this.toggleMenu()}>
-                  <svg className="icon icon-cross"><use xlinkHref="#icon-cross" /></svg>
+                  <svg className="icon icon-close"><use xlinkHref="#icon-close" /></svg>
                 </button>}
 
               <div className="slider">

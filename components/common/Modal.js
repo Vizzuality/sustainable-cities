@@ -37,7 +37,9 @@ export default class Modal extends React.Component {
       <section ref={(node) => { this.el = node; }} className={modalClass}>
         <area className="modal-backdrop" onClick={() => toggleModal(false)} />
         <div className="modal-container">
-          <button className="dismiss" onClick={() => toggleModal(false)}>×</button>
+          <button className="dismiss" onClick={() => toggleModal(false)}>
+            <svg className="icon -close"><use xlinkHref="#icon-close" /></svg>
+          </button>
           <div className="content">
             {loading ? <Spinner isLoading /> : children}
           </div>

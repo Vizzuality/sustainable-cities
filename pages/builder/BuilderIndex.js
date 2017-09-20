@@ -171,7 +171,15 @@ class BuilderIndex extends React.Component {
   showLogin = () => this.showModal('login');
   showSignUp = () => this.showModal('signup');
   showSave = () => this.showModal('save');
-  showHelp = () => this.showModal('help');
+  showHelp = () => {
+    this.setState({
+      tutorialStep: 'start',
+      modal: {
+        ...this.state.modal,
+        help: { ...this.state.modal.help, open: true }
+      }
+    });
+  };
 
   reset = () => {
     this.props.reset();

@@ -76,8 +76,8 @@ class ShareModal extends React.Component {
               <h2 className="c-title -fw-light -fs-extrabig">Share a document</h2>
 
               <p className="c-text">
-                Export a printable document to share by any other way. Please {}
-                <span className="c-text -underline">consider the environment before printing</span> {}
+                Export a printable document, which you can share in a number of ways.
+                Please <span className="c-text -underline">consider the environment before printing</span> {}
                 this document.
               </p>
             </div>

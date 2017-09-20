@@ -1,0 +1,15 @@
+.c-not-supported {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 65px);
+
+  background: $color-1;
+
+  > .no-supported-text {
+    font-size: $font-size-big;
+    color: $color-primary;
+    line-height: 1.2;
+    text-align: center;
+  }
+}

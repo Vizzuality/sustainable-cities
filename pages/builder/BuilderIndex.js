@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
+import { Router } from 'routes';
 import storage from 'local-storage-fallback';
 
+// components
 import BuilderPage from 'pages/builder/BuilderPage';
-import { Router } from 'routes';
-
 import Layout from 'components/layout/layout';
 import Sidebar from 'components/builder-index/Sidebar';
 import SolutionPicker from 'components/builder-index/SolutionPicker';
@@ -24,6 +24,7 @@ import SavedModal from 'components/builder-index/SavedModal';
 import { builderSelector, withModifiers } from 'selectors/builder';
 import { withSlice, leaves } from 'utils/builder';
 
+// modules
 import {
   deselectEnabling,
   selectEnabling,
@@ -33,6 +34,7 @@ import {
   update,
   rememberProject
 } from 'modules/builder';
+
 
 const modals = {
   login: { open: false },

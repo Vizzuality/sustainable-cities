@@ -164,7 +164,7 @@ class MobileHeader extends React.Component {
           </div>
         </div>
 
-        <Modal
+        {modal.login.open && <Modal
           open={modal.login.open}
           toggleModal={v => this.setState({ modal: {
             ...modal,
@@ -176,9 +176,9 @@ class MobileHeader extends React.Component {
             onSignUp={() => this.onSignUp()}
             onLogin={() => this.onLogin()}
           />
-        </Modal>
+        </Modal>}
 
-        <Modal
+        {modal.signup.open && <Modal
           open={modal.signup.open}
           toggleModal={v => this.setState({ modal: {
             ...modal,
@@ -190,7 +190,7 @@ class MobileHeader extends React.Component {
             onLogin={() => this.showLogin()}
             onSignUp={() => this.hideModals('signup')}
           />
-        </Modal>
+        </Modal>}
 
       </div>
     );

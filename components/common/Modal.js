@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import Spinner from 'components/common/Spinner';
 
@@ -26,12 +27,19 @@ export default class Modal extends React.Component {
   }
 
   render() {
-    const { open, children, loading, toggleModal } = this.props;
+    const { open, children, loading, toggleModal, className } = this.props;
+    const modalClass = classnames('c-modal', {
+      [className]: !!className,
+      '-hidden': !open
+    });
+
     return (
-      <section ref={(node) => { this.el = node; }} className={`c-modal ${open ? '' : '-hidden'}`}>
+      <section ref={(node) => { this.el = node; }} className={modalClass}>
         <area className="modal-backdrop" onClick={() => toggleModal(false)} />
         <div className="modal-container">
-          <button className="dismiss" onClick={() => toggleModal(false)}>×</button>
+          <button className="dismiss" onClick={() => toggleModal(false)}>
+            <svg className="icon -close"><use xlinkHref="#icon-close" /></svg>
+          </button>
           <div className="content">
             {loading ? <Spinner isLoading /> : children}
           </div>
@@ -45,7 +53,8 @@ Modal.propTypes = {
   open: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   loading: PropTypes.bool,
-  toggleModal: PropTypes.func.isRequired
+  toggleModal: PropTypes.func.isRequired,
+  className: PropTypes.string
 };
 
 Modal.defaultProps = {

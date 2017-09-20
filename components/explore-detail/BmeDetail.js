@@ -9,7 +9,7 @@ export default function BmeDetail({ bme, print }) {
     <div className="bme-detail-body">
       <div className="row">
         <div className="column small-12 large-4 c-title -fs-extrabig -fw-light">
-          What it is & how does it work?
+          What is it & how does it work?
         </div>
         <div className="column small-12 large-8 c-text -fs-medium separator c-text -fw-light bme-description">
           {bme.description}

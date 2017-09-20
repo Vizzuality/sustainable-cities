@@ -1,7 +1,8 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import BmeDetail from 'components/builder-index/BmeDetail'
+import BmeDetail from 'components/builder-index/BmeDetail';
 
 import { leaves, withSlice } from 'utils/builder';
 import {
@@ -9,56 +10,74 @@ import {
   deselectBME,
   deselectEnabling,
   selectBME,
-  selectEnabling,
+  selectEnabling
 } from 'modules/builder';
 
 
-class ConnectedBmeDetail extends React.Component {
-  static propTypes = {
-    bmeId: PropTypes.string,
-    onClose: PropTypes.func.isRequired,
-    onNext: PropTypes.func,
-    onPrev: PropTypes.func,
-  };
+function ConnectedBmeDetail(props) {
+  const {
+    bmeId,
+    initialTab,
+    onClose,
+    onNext,
+    onPrev,
+    bme,
+    comment,
+    selected,
+    selectedEnablings
+  } = props;
 
-  render() {
-    const { bmeId, initialTab } = this.props;
+  return (
+    <BmeDetail
+      initialTab={initialTab}
 
-    return (
-      <BmeDetail
-        initialTab={initialTab}
+      onClose={onClose}
+      onNext={onNext}
+      onPrev={onPrev}
 
-        onClose={this.props.onClose}
-        onNext={this.props.onNext}
-        onPrev={this.props.onPrev}
+      onSave={() => props.selectBME(bmeId)}
+      onCommentChange={text => props.commentBME(bmeId, text)}
+      onDelete={() => props.deselectBME(bmeId)}
+      onEnablingSelect={enabling => props.selectEnabling(enabling.id)}
+      onEnablingDeselect={enabling => props.deselectEnabling(enabling.id)}
 
-        onSave={() => this.props.selectBME(bmeId)}
-        onCommentChange={(text) => this.props.commentBME(bmeId, text)}
-        onDelete={() => this.props.deselectBME(bmeId)}
-        onEnablingSelect={(enabling) => this.props.selectEnabling(enabling.id)}
-        onEnablingDeselect={(enabling) => this.props.deselectEnabling(enabling.id)}
-
-        bme={this.props.bme}
-        comment={this.props.comment}
-        selected={this.props.selected}
-        selectedEnablings={this.props.selectedEnablings}
-      />
-    );
-  }
+      bme={bme}
+      comment={comment}
+      selected={selected}
+      selectedEnablings={selectedEnablings}
+    />
+  );
 }
+
+ConnectedBmeDetail.propTypes = {
+  bmeId: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
+  onNext: PropTypes.func,
+  onPrev: PropTypes.func,
+  bme: PropTypes.object,
+  initialTab: PropTypes.string,
+  selectBME: PropTypes.func,
+  commentBME: PropTypes.func,
+  deselectBME: PropTypes.func,
+  selectEnabling: PropTypes.func,
+  deselectEnabling: PropTypes.func,
+  comment: PropTypes.string,
+  selected: PropTypes.bool,
+  selectedEnablings: PropTypes.array
+};
 
 export default connect(
   (state, ownProps) => ({
     bme: leaves(state.builderAPI.bmeCategories).find(bme => bme.id === ownProps.bmeId),
     comment: state.builder[ownProps.slice].commentedBMEs[ownProps.bmeId],
     selected: state.builder[ownProps.slice].selectedBMEs.includes(ownProps.bmeId),
-    selectedEnablings: state.builder[ownProps.slice].selectedEnablings,
+    selectedEnablings: state.builder[ownProps.slice].selectedEnablings
   }),
   withSlice({
     commentBME,
     deselectBME,
     deselectEnabling,
     selectBME,
-    selectEnabling,
+    selectEnabling
   }),
 )(ConnectedBmeDetail);

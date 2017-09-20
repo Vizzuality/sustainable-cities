@@ -1,16 +1,11 @@
-.l-main.builder-index {
-  display: flex;
-  flex-direction: column;
-  min-height: 80vh;
-  padding-bottom: 25px;
-  align-items: center;
-  flex-flow: column-reverse;
+.l-main {
 
-  @media screen and (min-width: $screen-m)  {
-    padding-bottom: 50px;
-    flex-direction: row;
-    align-items: inherit;
-    flex-flow: inherit;
+  &.builder-index {
+    @media #{$mq-tablet} {
+      display: flex;
+      min-height: 80vh;
+      padding-bottom: 50px;
+    }
   }
 
   //HAck to have margin in the button without adding classes

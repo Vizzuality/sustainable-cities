@@ -1,11 +1,12 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import React from 'react';
+import { Router } from 'routes';
 import storage from 'local-storage-fallback';
 
+// components
 import BuilderPage from 'pages/builder/BuilderPage';
-import { Router } from 'routes';
-
 import Layout from 'components/layout/layout';
 import Sidebar from 'components/builder-index/Sidebar';
 import SolutionPicker from 'components/builder-index/SolutionPicker';
@@ -23,6 +24,7 @@ import SavedModal from 'components/builder-index/SavedModal';
 import { builderSelector, withModifiers } from 'selectors/builder';
 import { withSlice, leaves } from 'utils/builder';
 
+// modules
 import {
   deselectEnabling,
   selectEnabling,
@@ -32,6 +34,7 @@ import {
   update,
   rememberProject
 } from 'modules/builder';
+
 
 const modals = {
   login: { open: false },
@@ -43,17 +46,17 @@ const modals = {
 };
 
 const tutorialSteps = [
-  "start",
-  "solution",
-  "enabling-condition",
-  "bme",
-  "finish",
+  'start',
+  'solution',
+  'enabling-condition',
+  'bme',
+  'finish'
 ];
 
 class BuilderIndex extends React.Component {
   state = {
-    tutorialStep: storage.getItem('builder.tutorial-finished') ? "finish" : "start",
-    sidebar: "default",
+    tutorialStep: storage.getItem('builder.tutorial-finished') ? 'finish' : 'start',
+    sidebar: 'default',
     hoveredEnabling: null,
     bme: {},
     modal: {
@@ -63,6 +66,18 @@ class BuilderIndex extends React.Component {
       }
     }
   };
+
+  onSaveClick = () => {
+    if (this.props.auth.token) {
+      this.showSave();
+    } else {
+      this.showLogin();
+    }
+  }
+
+  setSidebar = (sidebar) => {
+    this.setState({ sidebar, family: null });
+  }
 
   selectSolution(solution) {
     this.props.selectSolution(solution.id);
@@ -74,13 +89,6 @@ class BuilderIndex extends React.Component {
 
   deselectEnabling(enabling) {
     this.props.deselectEnabling(enabling.id);
-  }
-
-  relativeBME(bme, delta) {
-    const bmes = leaves(this.props.solutionFilteredBmeTree);
-    const bmeIndex = bmes.findIndex(b => b.id === bme.id);
-
-    return bmes.concat(bmes)[(bmeIndex + bmes.length + delta) % bmes.length];
   }
 
   selectNext(bme) {
@@ -112,12 +120,15 @@ class BuilderIndex extends React.Component {
     this.advanceTutorial();
   }
 
-  showSolutionPicker = () => this.setSidebar("solutions");
-  showEnablingsSelector = () => this.setSidebar("enablings");
-  showSidebar = () => this.setSidebar("default");
+  showSolutionPicker = () => this.setSidebar('solutions');
+  showEnablingsSelector = () => this.setSidebar('enablings');
+  showSidebar = () => this.setSidebar('default');
 
-  setSidebar = (sidebar) => {
-    this.setState({ sidebar, family: null });
+  relativeBME(bme, delta) {
+    const bmes = leaves(this.props.solutionFilteredBmeTree);
+    const bmeIndex = bmes.findIndex(b => b.id === bme.id);
+
+    return bmes.concat(bmes)[(bmeIndex + bmes.length + delta) % bmes.length];
   }
 
   showResults = () => Router.pushRoute('builder-project', this.props.bmRouteParams);
@@ -126,7 +137,7 @@ class BuilderIndex extends React.Component {
   closeSolutionPicker = () => {
     this.showSidebar();
 
-    if (this.state.tutorialStep == "solution") {
+    if (this.state.tutorialStep === 'solution') {
       this.advanceTutorial();
     }
   }
@@ -134,41 +145,41 @@ class BuilderIndex extends React.Component {
   closeEnablingConditionsSelector = () => {
     this.showSidebar();
 
-    if (this.state.tutorialStep == "enabling-condition") {
+    if (this.state.tutorialStep === 'enabling-condition') {
       this.advanceTutorial();
     }
   }
 
-  showEnablingBMEs = (enabling) => this.setState({ hoveredEnabling: enabling.id });
+  showEnablingBMEs = enabling => this.setState({ hoveredEnabling: enabling.id });
 
   hideModals = () => this.setState({ modal: modals });
 
-  hideModal = (modal) => this.setState({
+  hideModal = modal => this.setState({
     modal: {
       ...this.state.modal,
-      [modal]: { ...this.state.modal[modal], open: false },
+      [modal]: { ...this.state.modal[modal], open: false }
     }
   });
 
-  showModal = (modal) => this.setState({
+  showModal = modal => this.setState({
     modal: {
       ...this.state.modal,
-      [modal]: { ...this.state.modal[modal], open: true },
+      [modal]: { ...this.state.modal[modal], open: true }
     }
   })
 
   showLogin = () => this.showModal('login');
   showSignUp = () => this.showModal('signup');
   showSave = () => this.showModal('save');
-  showHelp = () => this.showModal('help');
-
-  onSaveClick = () => {
-    if (this.props.auth.token) {
-      this.showSave();
-    } else {
-      this.showLogin();
-    }
-  }
+  showHelp = () => {
+    this.setState({
+      tutorialStep: 'start',
+      modal: {
+        ...this.state.modal,
+        help: { ...this.state.modal.help, open: true }
+      }
+    });
+  };
 
   reset = () => {
     this.props.reset();
@@ -177,7 +188,7 @@ class BuilderIndex extends React.Component {
 
   createNewProject = (title) => {
     this.hideModal('save');
-    create({ ...this.props.project, title }, this.props.auth.token).then(writableId => {
+    create({ ...this.props.project, title }, this.props.auth.token).then((writableId) => {
       this.props.reset();
       this.props.rememberProject(writableId);
 
@@ -198,7 +209,7 @@ class BuilderIndex extends React.Component {
     const nextStep = tutorialSteps[tutorialSteps.indexOf(this.state.tutorialStep) + 1];
     this.setState({ tutorialStep: nextStep });
 
-    if (nextStep === "finish") {
+    if (nextStep === 'finish') {
       storage.setItem('builder.tutorial-finished', true);
     }
   }
@@ -206,29 +217,29 @@ class BuilderIndex extends React.Component {
   nodesToShow() {
     if (this.props.readonly) {
       return this.props.filteredBmeTree;
-    } else {
-      if (this.state.sidebar == "enablings") {
-        return withModifiers(this.props.solutionFilteredBmeTree, [this.state.hoveredEnabling]);
-      } else {
-        return this.props.bmeTree;
-      }
     }
+
+    if (this.state.sidebar === 'enablings') {
+      return withModifiers(this.props.solutionFilteredBmeTree, [this.state.hoveredEnabling]);
+    }
+
+    return this.props.bmeTree;
   }
 
   currentTutorialStep() {
-    if (this.state.sidebar !== "default") {
-      return "hidden";
+    if (this.state.sidebar !== 'default') {
+      return 'hidden';
     }
 
     if (this.props.readonly || this.props.businessModelId) {
-      return "hidden";
+      return 'hidden';
     }
 
     return this.state.tutorialStep;
   }
 
   render() {
-    const loading = this.props.bmeTree.length == 0;
+    const loading = !this.props.bmeTree.length;
 
     return (
       <Layout
@@ -252,7 +263,7 @@ class BuilderIndex extends React.Component {
 
         { this.state.sidebar === 'solutions' &&
           <SolutionPicker
-            onSolutionSelected={(s) => this.selectSolution(s)}
+            onSolutionSelected={s => this.selectSolution(s)}
             onClose={this.closeSolutionPicker}
             solutions={this.props.solutions}
             selectedSolution={this.props.selectedSolution}
@@ -264,51 +275,53 @@ class BuilderIndex extends React.Component {
             nodes={this.props.enablings}
             selectedEnablings={this.props.selectedEnablings}
             onClose={this.closeEnablingConditionsSelector}
-            onEnablingSelect={(enabling) => this.selectEnabling(enabling)}
-            onEnablingDeselect={(enabling) => this.deselectEnabling(enabling)}
-            onEnablingHover={(enabling) => this.showEnablingBMEs(enabling)}
+            onEnablingSelect={enabling => this.selectEnabling(enabling)}
+            onEnablingDeselect={enabling => this.deselectEnabling(enabling)}
+            onEnablingHover={enabling => this.showEnablingBMEs(enabling)}
           />
         }
 
-        <div className={classnames(
-          "u-mt-2",
-          "u-ml-a",
-          this.state.sidebar == "enablings" ? "u-w-30" : "u-w-100",
-        )}>
+        <div
+          className={classnames(
+          'u-mt-2',
+          'u-ml-a',
+          this.state.sidebar === 'enablings' ? 'u-w-30' : 'u-w-100',
+        )}
+        >
 
           {loading ?
             <div className="row u-flex-center u-relative u-pb-100">
-              <Spinner className="-transparent" isLoading={true} />
+              <Spinner className="-transparent" isLoading />
             </div> :
-          <RadialChart
-            family={this.state.sidebar === "default" ? this.state.family : null}
-            nodes={this.nodesToShow()}
-            selected={this.props.selectedBMEs}
-            onClick={this.showBME}
-            keyPrefix={(this.props.selectedSolution || { slug: "none"}).slug}
-            interactive={this.state.sidebar == "default"}
-            thumbnail={this.state.sidebar == "enablings"}
-            onFamilyChange={(family) => this.setState({ family })}
-          />
-          }
+            <RadialChart
+              family={this.state.sidebar === 'default' ? this.state.family : null}
+              nodes={this.nodesToShow()}
+              selected={this.props.selectedBMEs}
+              onClick={this.showBME}
+              keyPrefix={(this.props.selectedSolution || { slug: 'none' }).slug}
+              interactive={this.state.sidebar === 'default'}
+              thumbnail={this.state.sidebar === 'enablings'}
+              onFamilyChange={family => this.setState({ family })}
+            />}
 
           { this.state.hoveredEnabling &&
-              <div className="u-ml-1">
-                <h1 className="c-title -fw-light -fs-bigger">Success factor for</h1>
-
-                <ul>
-                  {
-                    (this.props.bmes || [])
-                      .filter(bme => bme.enablings.find(enabling => enabling && enabling.id == this.state.hoveredEnabling))
-                      .map(bme => <li className="c-text -fs-smaller -uppercase">{bme.name}</li>)
-                  }
-              </ul>
-            </div>
+          <div className="u-ml-1">
+            <h1 className="c-title -fw-light -fs-bigger">Success factor for</h1>
+            <ul>
+              {
+                (this.props.bmes || [])
+                  .filter(bme => bme.enablings.find(enabling =>
+                    enabling && enabling.id === this.state.hoveredEnabling))
+                  .map(bme => <li className="c-text -fs-smaller -uppercase">{bme.name}</li>)
+              }
+            </ul>
+          </div>
           }
         </div>
 
         {this.state.modal.bmeDetail.open && <Modal
           open={this.state.modal.bmeDetail.open}
+          className="-no-overflow"
           toggleModal={v => this.setState({ modal: {
             ...this.state.modal,
             bmeDetail: { open: v }
@@ -392,6 +405,37 @@ class BuilderIndex extends React.Component {
     );
   }
 }
+
+BuilderIndex.propTypes = {
+  auth: PropTypes.object,
+  selectSolution: PropTypes.func,
+  selectEnabling: PropTypes.func,
+  rememberProject: PropTypes.func,
+  deselectEnabling: PropTypes.func,
+  reset: PropTypes.func,
+  update: PropTypes.func,
+  selectedSolution: PropTypes.object,
+  bmeTree: PropTypes.array,
+  solutionFilteredBmeTree: PropTypes.array,
+  bmes: PropTypes.array,
+  project: PropTypes.object,
+  queryParams: PropTypes.object,
+  readonly: PropTypes.bool,
+  businessModelId: PropTypes.string,
+  slice: PropTypes.string,
+  bmRouteParams: PropTypes.object,
+  selectedBMEs: PropTypes.array,
+  selectedEnablings: PropTypes.array,
+  solutions: PropTypes.array,
+  enablings: PropTypes.array,
+  filteredBmeTree: PropTypes.array
+};
+
+BuilderIndex.defaultProps = {
+  auth: {},
+  bmes: [],
+  project: {}
+};
 
 export default BuilderPage(
   connect(

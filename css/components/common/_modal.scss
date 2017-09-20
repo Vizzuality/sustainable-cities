@@ -176,6 +176,9 @@
     position: absolute;
     top: 0;
     right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 40px;
     width: 40px;
     padding: 0;
@@ -183,20 +186,13 @@
 
     border-radius: 50%;
 
-    font-size: $font-size-bigger;
-    font-weight: $font-weight-light;
-    line-height: 1;
-    text-align: center;
-
     cursor: pointer;
-    appearance: none;
-    border: 0;
 
     @media screen and (min-width: $screen-l) {
       top: 34px;
       right: -20px;
       background-color: $color-white;
-      box-shadow: 0 1px 3px 0 rgba(0,0,0,0.15);
+      box-shadow: 0 1px 3px 0 rgba($color-black, .15);
     }
   }
 
@@ -216,8 +212,16 @@
   &.-hidden {
     display: none;
   }
+
+  &.-no-overflow {
+    > .modal-container > .content {
+      overflow-x: visible;
+      overflow-y: visible;
+    }
+  }
 }
 
+// used in the body to prevent scrolling while modal is open
 .no-overflow {
- overflow: hidden;
+  overflow: hidden;
 }

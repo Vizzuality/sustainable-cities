@@ -16,7 +16,7 @@ export default (Component) => {
       }
 
       if (!this.props.businessModelId && this.props.rememberedBusinessModelId) {
-        Router.pushRoute(document.location.origin + "/builder/w" + this.props.rememberedBusinessModelId);
+        Router.pushRoute(`${document.location.origin}/builder/w${this.props.rememberedBusinessModelId}`);
         return;
       }
 
@@ -30,11 +30,12 @@ export default (Component) => {
         this.props.fetchBM(nextProps.businessModelId);
       }
 
-      if (this.props.rememberedBusinessModelId !== nextProps.rememberedBusinessModelId && nextProps.rememberedBusinessModelId) {
+      if (this.props.rememberedBusinessModelId !== nextProps.rememberedBusinessModelId
+        && nextProps.rememberedBusinessModelId) {
         if (nextProps.queryParams.route === 'builder-project') {
-          Router.pushRoute(document.location.origin + "/builder/w" + nextProps.rememberedBusinessModelId + "/project");
+          Router.pushRoute(`${document.location.origin}/builder/w${nextProps.rememberedBusinessModelId}/project`);
         } else {
-          Router.pushRoute(document.location.origin + "/builder/w" + nextProps.rememberedBusinessModelId);
+          Router.pushRoute(`${document.location.origin}/builder/w${nextProps.rememberedBusinessModelId}`);
         }
       }
     }

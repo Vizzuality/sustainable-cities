@@ -216,8 +216,16 @@
   &.-hidden {
     display: none;
   }
+
+  &.-no-overflow {
+    > .modal-container > .content {
+      overflow-x: visible;
+      overflow-y: visible;
+    }
+  }
 }
 
+// used in the body to prevent scrolling while modal is open
 .no-overflow {
- overflow: hidden;
+  overflow: hidden;
 }

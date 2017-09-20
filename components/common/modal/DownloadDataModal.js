@@ -132,9 +132,9 @@ export default class DownloadDataModal extends React.Component {
               </div>
             </div>
 
-            <p className="c-text -fs-small -fw-light -dark download-fields-description">Download CSV file with descriptions of Funding,
-              Financing, Legal Arrangements, and Technical components, including: descriptions,
-              enabling conditions affecting them.</p>
+            {
+              // <p className="c-text -fs-small -fw-light -dark download-fields-description">Download CSV file with descriptions of Funding, Financing, Legal Arrangements, and Technical components, including: descriptions, enabling conditions affecting them.</p>
+            }
 
             <DownloadFilters
               bmes={bmes}

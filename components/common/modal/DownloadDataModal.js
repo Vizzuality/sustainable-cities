@@ -47,24 +47,20 @@ export default class DownloadDataModal extends React.Component {
 
   _getResume() {
     const { radio, dropdowns } = this.state;
-    const { bmes, cities, solutions } = dropdowns;
+    const { bmes } = dropdowns;
     let resume = '';
-    const checkedCities = (cities || []).map(city => city.label);
-    const checkedBmes = (bmes || []).map(bme => bme.label);
-    const checkedSolution = (solutions || []).map(solution => solution.label);
-    const citiesString = checkedCities.length ? `in ${checkedCities.toString()}` : '';
-    const bmesString = checkedBmes.length ? `, containing the next business model elements: ${checkedBmes.toString()}` : '';
-    const solutionString = checkedSolution.length ? ` and the next solutions: ${checkedSolution.toString()}` : '';
 
     switch (radio) {
       case 'projects':
-        resume = `Downloading CSV file with project details, such as situation,
-          what was done, key actors, impacts, etc., of all projects ${citiesString}${bmesString}${solutionString}`;
+        resume = 'Downloading title, situation, description, elements and more details of projects.';
         break;
-      case 'bmes':
-        resume = `Downloading CSV file with element details such as their descriptions, success factors,
-        barriers know, etc. of all business model elements ${citiesString}${bmesString}${solutionString}`;
+      case 'bmes': {
+        const selectedBme = this.props.bmes.find(bme => bme.id === (bmes[0] || {}).id);
+        const { label } = selectedBme || {};
+        const modifiedName = (label || '').endsWith('s') ? `${label.trim()}'` : `${label.trim()}'s`;
+        resume = `Downloading title, description, enabling conditions and more details of ${modifiedName} elements.`;
         break;
+      }
       default:
         resume = '';
     }
@@ -94,6 +90,7 @@ export default class DownloadDataModal extends React.Component {
     const { bmes: selectedBmes } = dropdowns;
 
     const firstLevelSelected = (radio === 'bmes') && selectedBmes ? (selectedBmes[0] || {}).id : undefined;
+    const resume = this._getResume();
 
     return (
       <div className="c-download-data-modal">
@@ -132,9 +129,7 @@ export default class DownloadDataModal extends React.Component {
               </div>
             </div>
 
-            {
-              // <p className="c-text -fs-small -fw-light -dark download-fields-description">Download CSV file with descriptions of Funding, Financing, Legal Arrangements, and Technical components, including: descriptions, enabling conditions affecting them.</p>
-            }
+            <p>{resume}</p>
 
             <DownloadFilters
               bmes={bmes}

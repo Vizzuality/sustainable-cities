@@ -25,6 +25,7 @@ export default (Component) => {
 
       const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
       const ua = useragent.parse(userAgent);
+      const { isMobile, isTablet } = ua || {};
 
       return {
         queryParams: {
@@ -32,7 +33,7 @@ export default (Component) => {
           ...parseParams
         },
         isServer,
-        isMobile: ua.isMobile
+        isMobile: isMobile && !isTablet
       };
     }
 

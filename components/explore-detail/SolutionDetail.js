@@ -60,7 +60,7 @@ export default function SolutionDetail({ project }) {
         </DetailSection>}
 
         {solution && <DetailSection
-          title="What was done"
+          title="What was done?"
         >
           <p>{solution}</p>
         </DetailSection>}

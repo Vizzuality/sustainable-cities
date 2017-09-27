@@ -8,7 +8,6 @@ import Button from 'components/common/Button';
 
 import { builderSelector } from 'selectors/builder';
 
-
 class ProjectPrint extends React.Component {
   render() {
     return (

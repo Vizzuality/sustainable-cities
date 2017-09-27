@@ -10,6 +10,8 @@ import uuidv1 from 'uuid/v1';
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
+import withTracker from 'hoc/withTracker';
+
 // modules
 import { getProjectDetail, setProjectFilters, removeProjectDetail } from 'modules/project';
 import { getSolutionCategories, getBmeCategories } from 'modules/category';
@@ -41,6 +43,7 @@ import Spinner from 'components/common/Spinner';
 
 // constants
 import { CATEGORY_ICONS } from 'constants/category';
+import { GA_DETAIL_SOLUTION } from 'constants/analytics';
 
 class SolutionDetailPage extends Page {
   static setBreadcrumbs(project) {
@@ -433,4 +436,4 @@ export default withRedux(
     // cities
     getCities() { dispatch(getCities()); }
   })
-)(SolutionDetailPage);
+)(withTracker(SolutionDetailPage, GA_DETAIL_SOLUTION));

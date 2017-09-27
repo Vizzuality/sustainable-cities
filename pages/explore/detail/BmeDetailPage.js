@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
+import withTracker from 'hoc/withTracker';
 
 // Redux
 import withRedux from 'next-redux-wrapper';
@@ -32,6 +33,7 @@ import Spinner from 'components/common/Spinner';
 
 // constants
 import { CATEGORY_FIRST_LEVEL_COLORS } from 'constants/category';
+import { GA_DETAIL_BME } from 'constants/analytics';
 
 const flatten = (category, accumulator = []) => {
   if (category) {
@@ -266,4 +268,4 @@ export default withRedux(
     // cities
     getCities() { dispatch(getCities()); }
   })
-)(BmeDetailPage);
+)(withTracker(BmeDetailPage, GA_DETAIL_BME));

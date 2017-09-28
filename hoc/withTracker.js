@@ -12,7 +12,6 @@ if (typeof window !== 'undefined') {
   GA.initialize(gaTrackingId);
 }
 
-
 const withTracker = (Page, options = {}) => {
   const trackPage = (page) => {
     GA.event({
@@ -23,6 +22,7 @@ const withTracker = (Page, options = {}) => {
       ...options
     });
 
+    GA.set({ page });
     GA.pageview(page);
   };
 

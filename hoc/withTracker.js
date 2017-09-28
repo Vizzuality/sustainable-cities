@@ -22,7 +22,14 @@ const withTracker = (Page, options = {}) => {
       ...options
     });
 
-    GA.set({ page });
+    GA.set({
+      page,
+      category: page,
+      action: 'Navigation',
+      label: page,
+      ...options
+    });
+
     GA.pageview(page);
   };
 

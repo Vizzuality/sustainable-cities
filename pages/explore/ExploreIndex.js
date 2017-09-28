@@ -6,6 +6,7 @@ import Tether from 'react-tether';
 
 // Redux
 import withRedux from 'next-redux-wrapper';
+import withTracker from 'hoc/withTracker';
 import { store } from 'store';
 
 // modules
@@ -56,6 +57,9 @@ import LayerManager from 'utils/map/LayerManager';
 import LayerSpec from 'utils/map/layerSpec.json';
 import getLayerType from 'utils/map/layer';
 import getBreadcrumbs from 'utils/breadcrumbs';
+
+// constants
+import { GA_EXPLORE } from 'constants/analytics';
 
 class ExploreIndex extends Page {
 
@@ -438,4 +442,4 @@ export default withRedux(
     // cities
     getCities() { dispatch(getCities()); }
   })
-)(ExploreIndex);
+)(withTracker(ExploreIndex, GA_EXPLORE));

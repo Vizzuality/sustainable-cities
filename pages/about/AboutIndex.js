@@ -6,7 +6,7 @@ import withRedux from 'next-redux-wrapper';
 import uuidv1 from 'uuid/v1';
 
 import { store } from 'store';
-
+import withTracker from 'hoc/withTracker';
 
 // components
 import Page from 'pages/Page';
@@ -20,6 +20,9 @@ import Events from 'components/about/Events';
 import CitySupport from 'components/about/CitySupport';
 import Blogs from 'components/about/Blogs';
 import MoreInformation from 'components/about/MoreInformation';
+
+// constants
+import { GA_ABOUT } from 'constants/analytics';
 
 const tabs = [
   {
@@ -59,6 +62,7 @@ const tabs = [
     component: MoreInformation
   }
 ];
+
 
 class AboutPage extends Page {
 
@@ -114,4 +118,4 @@ AboutPage.propTypes = {
   queryParams: PropTypes.object.isRequired
 };
 
-export default withRedux(store)(AboutPage);
+export default withRedux(store)(withTracker(AboutPage, GA_ABOUT));

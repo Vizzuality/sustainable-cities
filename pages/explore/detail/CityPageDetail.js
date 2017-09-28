@@ -6,6 +6,8 @@ import isEqual from 'lodash/isEqual';
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
+import withTracker from 'hoc/withTracker';
+
 // modules
 import {
   getCities,
@@ -33,6 +35,8 @@ import ItemGallery from 'components/explore/ItemGallery';
 import Modal from 'components/common/Modal';
 import DownloadDataModal from 'components/common/modal/DownloadDataModal';
 
+// constants
+import { GA_DETAIL_CITY } from 'constants/analytics';
 
 class CityDetailPage extends Page {
   constructor(props) {
@@ -332,4 +336,4 @@ export default withRedux(
     getSolutionCategories() { dispatch(getSolutionCategories()); },
     getBmeCategories() { dispatch(getBmeCategories()); }
   })
-)(CityDetailPage);
+)(withTracker(CityDetailPage, GA_DETAIL_CITY));

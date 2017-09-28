@@ -38,7 +38,8 @@ module.exports = {
       new webpack.DefinePlugin({
         'process.env.API_URL': JSON.stringify(process.env.API_URL),
         'process.env.SC_API_KEY': JSON.stringify(process.env.SC_API_KEY),
-        'process.env.BASEMAP_TILE_URL': JSON.stringify(process.env.BASEMAP_TILE_URL)
+        'process.env.BASEMAP_TILE_URL': JSON.stringify(process.env.BASEMAP_TILE_URL),
+        'process.env.GA_TRACKING_ID': JSON.stringify(process.env.GA_TRACKING_ID)
       })
     );
 

@@ -11,8 +11,13 @@ import ProjectCategory from 'components/builder-index/ProjectCategory';
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
+import withTracker from 'hoc/withTracker';
+
 import { getProjectDetail, setProjectFilters } from 'modules/project';
 import { getBmeCategories } from 'modules/category';
+
+// constants
+import { GA_DETAIL_SOLUTION_PRINT } from 'constants/analytics';
 
 
 class SolutionDetailPrintPage extends Page {
@@ -131,4 +136,4 @@ export default withRedux(
     getBmeCategories() { dispatch(getBmeCategories()); },
     setProjectFilters(filters) { dispatch(setProjectFilters(filters)); },
   })
-)(SolutionDetailPrintPage);
+)(withTracker(SolutionDetailPrintPage, GA_DETAIL_SOLUTION_PRINT));

@@ -3,6 +3,9 @@ import withRedux from 'next-redux-wrapper';
 import { Router, routes } from 'routes';
 import { store } from 'store';
 import useragent from 'express-useragent';
+
+import withTracker from 'hoc/withTracker';
+
 // modules
 import { getBmes, getEnablings, getSolutions } from 'modules/builder-api';
 import { fetchBM } from 'modules/builder';
@@ -11,6 +14,9 @@ import { fetchBM } from 'modules/builder';
 import Page from 'pages/Page';
 import Layout from 'components/layout/layout';
 import NotSupported from 'pages/builder/NotSupported';
+
+// constants
+import { GA_BUILDER_INDEX } from 'constants/analytics';
 
 export default (Component) => {
   const BuilderPageComponent = class extends Page {
@@ -103,6 +109,6 @@ export default (Component) => {
       getEnablings,
       fetchBM
     },
-  )(BuilderPageComponent);
+  )(withTracker(BuilderPageComponent, GA_BUILDER_INDEX));
 };
 

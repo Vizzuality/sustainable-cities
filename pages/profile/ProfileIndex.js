@@ -10,6 +10,8 @@ import DeleteModelModal from 'components/profile/DeleteModelModal';
 
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
+import withTracker from 'hoc/withTracker';
+
 import { saveProfile, getSavedProjects, deleteSavedProject } from 'modules/auth';
 
 
@@ -193,5 +195,5 @@ export default withRedux(
     getSavedProjects,
     deleteSavedProject
   }
-)(ProfileIndex);
+)(withTracker(ProfileIndex));
 

@@ -36,6 +36,7 @@ import {
 } from 'modules/builder';
 
 
+// constants
 const modals = {
   login: { open: false },
   signup: { open: false },

@@ -7,6 +7,9 @@ import isEmpty from 'lodash/isEmpty';
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
 
+import withTracker from 'hoc/withTracker';
+
+
 // modules
 import { getBmeDetail, removeBmeDetail } from 'modules/bme';
 import { getSolutionCategories, getBmeCategories } from 'modules/category';
@@ -20,6 +23,9 @@ import Head from 'components/layout/head';
 import Button from 'components/common/Button';
 import Page from 'pages/Page';
 import BmeDetail from 'components/explore-detail/BmeDetail';
+
+// constants
+import { GA_DETAIL_BME_PRINT } from 'constants/analytics';
 
 
 class BmeDetailPrintPage extends Page {
@@ -153,4 +159,4 @@ export default withRedux(
     // cities
     getCities() { dispatch(getCities()); }
   })
-)(BmeDetailPrintPage);
+)(withTracker(BmeDetailPrintPage, GA_DETAIL_BME_PRINT));

@@ -8,6 +8,10 @@ import Layout from 'components/layout/layout';
 
 import withRedux from 'next-redux-wrapper';
 import { store } from 'store';
+import withTracker from 'hoc/withTracker';
+
+// constants
+import { GA_HOMEPAGE } from 'constants/analytics';
 
 
 class HomePage extends Page {
@@ -154,4 +158,4 @@ HomePage.propTypes = {
   queryParams: PropTypes.object.isRequired
 };
 
-export default withRedux(store)(HomePage);
+export default withRedux(store)(withTracker(HomePage, GA_HOMEPAGE));

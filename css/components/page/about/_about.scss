@@ -19,6 +19,7 @@
   .about-content {
     position: relative;
     display: flex;
+    flex-wrap: wrap;
     min-height: 350px;
   }
 }

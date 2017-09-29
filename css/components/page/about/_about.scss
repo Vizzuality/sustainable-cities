@@ -16,11 +16,15 @@
     }
   }
 
-  .about-content {
+  .c-about-content {
     position: relative;
-    display: flex;
-    flex-wrap: wrap;
     min-height: 350px;
+
+    .about-content {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+    }
   }
 }
 

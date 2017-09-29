@@ -14,15 +14,29 @@ const SET_ERROR_ABOUT = 'bme/SET_ERROR_ABOUT';
 /* Initial state */
 const initialState = {
   list: [],
+  categories: [], // for city-support
   loading: false,
   error: false
 };
 
+const getCategories = (included) => {
+  const categories = included.filter(inc => inc.type === 'city-support-categories') || [];
+  return (categories || []).map(cat => ({
+    id: cat.id,
+    title: cat.attributes.title
+  }))
+}
+
 /* Reducer */
 export default function (state = initialState, action) {
   switch (action.type) {
-    case GET_ABOUT_DATA:
-      return Object.assign({}, state, { list: action.payload });
+    case GET_ABOUT_DATA: {
+      const { list, categories = [] } = action.payload;
+      return Object.assign({}, state, {
+        list,
+        categories
+      });
+    }
     case SET_LOADING_ABOUT:
       return Object.assign({}, state, { loading: action.payload });
     case SET_ERROR_ABOUT:
@@ -37,8 +51,13 @@ export default function (state = initialState, action) {
 
 /* Action creators */
 export function getDataAbout(type) {
+  const include = ['photos'];
+  const isCitySupport = type === 'city-supports';
+
+  if (isCitySupport) include.push('city-support-category');
+
   const queryParams = queryString.stringify({
-    include: 'photos',
+    include: include.join(','),
     'page[size]': 1000
   });
 
@@ -61,17 +80,21 @@ export function getDataAbout(type) {
       dispatch({ type: SET_ERROR_ABOUT, payload: true });
       throw new Error(response.status);
     })
-    .then((data) => {
+    .then(({ data, included }) => {
       new Deserializer({ keyForAttribute: 'camelCase' })
-        .deserialize(data, (err, parsedData = []) => {
+        .deserialize({...{}, data, included }, (err, parsedData = []) => {
           dispatch({ type: SET_LOADING_ABOUT, payload: false });
           dispatch({
             type: GET_ABOUT_DATA,
-            payload: parsedData.map(d => ({
-              ...d,
-              ...{ date: moment(d.date).format('MMMM D, YYYY') },
-              ...d.photos[0] && { image: `${process.env.API_URL}${d.photos[0].attachment.url}` }
-            }))
+            payload: {
+              list: parsedData.map(d => ({
+                ...d,
+                ...{ date: moment(d.date).format('MMMM D, YYYY') },
+                ...d.photos[0] && { image: `${process.env.API_URL}${d.photos[0].attachment.url}` },
+                ...isCitySupport && { category: (d.citySupportCategory || {}).id }
+              })),
+              categories: isCitySupport ? getCategories(included) : []
+            }
           });
         });
     });

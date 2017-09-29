@@ -96,7 +96,6 @@ class CitySupport extends React.Component {
 
   render() {
     const { citiesByCategory, loading } = this.props;
-    console.log(citiesByCategory)
     return (
       <div className="c-about-content">
         {loading && <Spinner isLoading className="-transparent" />}

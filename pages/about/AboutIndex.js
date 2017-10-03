@@ -17,8 +17,8 @@ import Cover from 'components/common/Cover';
 import Initiative from 'components/about/Initiative';
 import Solutions from 'components/about/Solutions';
 import Events from 'components/about/Events';
-import CitySupport from 'components/about/CitySupport';
 import Blogs from 'components/about/Blogs';
+import CitySupport from 'components/about/CitySupport';
 import MoreInformation from 'components/about/MoreInformation';
 
 // constants

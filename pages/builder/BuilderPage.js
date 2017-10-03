@@ -20,7 +20,7 @@ import { GA_BUILDER_INDEX } from 'constants/analytics';
 
 export default (Component) => {
   const BuilderPageComponent = class extends Page {
-    static async getInitialProps({ req, pathname, query, isServer }) {
+    static async getInitialProps({ req, pathname, query, isServer, asPath }) {
       const route = routes.find(r => r.page === pathname);
       const parseParams = {};
 
@@ -38,6 +38,10 @@ export default (Component) => {
           route: route ? route.name : '',
           ...parseParams
         },
+        url: {
+          pathname: asPath,
+          query
+        },
         isServer,
         isMobile: isMobile && !isTablet
       };
@@ -45,6 +49,7 @@ export default (Component) => {
 
     componentDidMount() {
       if (this.props.isMobile) return;
+
 
       if (this.props.businessModelId) {
         this.props.fetchBM(this.props.businessModelId);

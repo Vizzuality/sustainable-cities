@@ -9,7 +9,7 @@ if (typeof window !== 'undefined') {
   /* eslint-enable global-require */
   const gaTrackingId = process.env.NODE_ENV === 'production' ?
     process.env.GA_TRACKING_ID : 'UA-XXXXXXX-XX';
-  GA.initialize(gaTrackingId);
+  GA.initialize('gaTrackingId');
 }
 
 const withTracker = (Page, options = {}) => {
@@ -22,7 +22,6 @@ const withTracker = (Page, options = {}) => {
       ...options
     });
 
-    GA.set({ page });
     GA.pageview(page);
   };
 

@@ -35,7 +35,7 @@ class Sidebar extends React.Component {
               </div>
             </div>
           </div>
-          <div className="u-relative">
+          {/*<div className="u-relative">
             <div className="tutorial-popup-cover tutorial-cover--enabling-condition" />
             <Button className="tutorial-popup-button u-w-100 u-mb-1/2" secondary={this.props.tutorialStep != "enabling-condition"} onClick={this.props.onEnablingsClick}>Select enabling conditions</Button>
             <div className="tutorial-popup tutorial-popup--enabling-condition">
@@ -48,7 +48,7 @@ class Sidebar extends React.Component {
                 <Button secondary onClick={this.props.onTutorialSkip}>Skip</Button>
               </div>
             </div>
-          </div>
+          </div>*/}
           <Button className="u-w-100" secondary onClick={this.props.onShowResultsClick}>Review your results</Button>
 
         </div>

@@ -49,7 +49,6 @@ const modals = {
 const tutorialSteps = [
   'start',
   'solution',
-  'enabling-condition',
   'bme',
   'finish'
 ];

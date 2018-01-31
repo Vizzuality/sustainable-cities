@@ -5,7 +5,7 @@ export default function LogoApp() {
   return (
     <div className="c-logo-app">
       <Link prefetch route="home">
-        <a>Financing <br /> Sustainable <br /> Cities</a>
+        <a><img src="static/fsci_logo.svg" alt=""/></a>
       </Link>
     </div>
   );

@@ -27,7 +27,7 @@ class ShareModal extends React.Component {
         <h1 className="c-title -fw-thin -fs-huge">Share</h1>
 
         <div className="row">
-          {
+          {/*{
             this.props.url ?
               <div className="column small-12 medium-6 -flex-column u-pr-2">
                 <div>
@@ -69,9 +69,9 @@ class ShareModal extends React.Component {
                   <Button primary onClick={this.props.onSave}>Save</Button>
                 </div>
               </div>
-          }
+          }*/}
 
-          <div className="column u-left-separator u-pl-2 u-flex-column u-small-pl-0">
+          <div className="column u-flex-column u-small-pl-0">
             <div>
               <h2 className="c-title -fw-light -fs-extrabig">Share a document</h2>
 

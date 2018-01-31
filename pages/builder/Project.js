@@ -197,8 +197,8 @@ class Project extends React.Component {
           />}
         >
           <Button secondary inverse onClick={this.showShare}>Share/Export</Button>
-          {!this.props.project.readonly &&
-            <Button inverse onClick={this.onSaveClick}>Save project</Button>}
+          {/*{!this.props.project.readonly &&
+            <Button inverse onClick={this.onSaveClick}>Save project</Button>}*/}
         </Cover>
 
         <div className="c-tabs -explore">

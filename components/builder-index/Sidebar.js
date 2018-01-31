@@ -69,7 +69,7 @@ class Sidebar extends React.Component {
         <div className="footer">
           <Button className="u-w-100 u-mb-1/2" secondary onClick={this.props.onHelpClick}>Need help?</Button>
           <Button className="u-w-100 u-mb-1/2" secondary onClick={this.props.onResetClick}>Restart project</Button>
-          <Button className="u-w-100" secondary onClick={this.props.onSaveClick}>Save current status</Button>
+          {/*<Button className="u-w-100" secondary onClick={this.props.onSaveClick}>Save current status</Button>*/}
         </div>
       </div>
     );

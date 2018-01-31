@@ -252,8 +252,6 @@ class RadialChart extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-
     if (nextProps.interactive) {
       if (nextProps.family !== this.props.family) {
         this.setState({ zooming: true });

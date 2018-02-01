@@ -13,14 +13,22 @@ import withTracker from 'hoc/withTracker';
 // constants
 import { GA_HOMEPAGE } from 'constants/analytics';
 
+// modules
+import { getSolutionPdfs } from 'modules/category';
+
+// content
+import Solutions from 'components/home/Solutions';
+
 
 class HomePage extends Page {
+
   render() {
     return (
       <Layout
         title="Home"
         queryParams={this.props.queryParams}
       >
+
         <section className="l-home-header">
           <div className="row">
             <div className="columns small-10 small-offset-1 medium-offset-0 medium-12">
@@ -149,6 +157,9 @@ class HomePage extends Page {
             </div>
           </div>
         </section>
+
+        <Solutions />
+
       </Layout>
     );
   }

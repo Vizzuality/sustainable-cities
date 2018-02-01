@@ -18,6 +18,8 @@ import { getSolutionPdfs } from 'modules/category';
 
 // content
 import Solutions from 'components/home/Solutions';
+import Events from 'components/home/Events';
+import CitySupport from 'components/home/CitySupport';
 
 
 class HomePage extends Page {
@@ -93,27 +95,30 @@ class HomePage extends Page {
             </li>
           </ul>
         </section>
-        <section className="l-home-main-links">
-          <ul className="row">
-            <li className="columns small-12 medium-4"><Link route="about">
-              <a className="main-link">
-                <svg className="icon"><use xlinkHref="#icon-home-about" /></svg>
-                <p className="c-title -dark -fs-extrabig -fw-light">Learn more about the initiative</p>
-              </a>
-            </Link></li>
-            <li className="columns small-12 medium-4"><Link route="explore-index">
-              <a className="main-link">
-                <svg className="icon"><use xlinkHref="#icon-home-explore" /></svg>
-                <p className="c-title -dark -fs-extrabig -fw-light">Explore sustainable projects</p>
-              </a>
-            </Link></li>
-            <li className="columns small-12 medium-4"><Link route="builder">
-              <a className="main-link">
-                <svg className="icon"><use xlinkHref="#icon-home-build" /></svg>
-                <p className="c-title -dark -fs-extrabig -fw-light">Design a business model</p>
-              </a>
-            </Link></li>
-          </ul>
+        <section>
+          <div className="l-activities">
+            <div className="row">
+              <div className="columns small-12">
+                <h2>FSCI Activities</h2>
+              </div>
+            </div>
+            <div className="row">
+              <div className="columns small-12 medium-4">
+                <h3>Events</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et similique, eveniet porro maxime, assumenda iure eligendi aliquid laudantium culpa quidem aliquam ex, tempore nesciunt, nam perferendis quas sit natus! Possimus.</p>
+                <a className="c-button -primary" href="/events">More events</a>
+              </div>
+              <Events />
+            </div>
+            <div className="row">
+              <div className="columns small-12 medium-4">
+                <h3>City Support</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et similique, eveniet porro maxime, assumenda iure eligendi aliquid laudantium culpa quidem aliquam ex, tempore nesciunt, nam perferendis quas sit natus! Possimus.</p>
+                <a className="c-button -primary" href="/events">More City Support</a>
+              </div>
+              <CitySupport />
+            </div>
+          </div>
         </section>
         <section className="l-home-call-to-action -intro">
           <div className="row">
@@ -126,33 +131,6 @@ class HomePage extends Page {
             <div className="columns samll-12 medium-6">
               <div className="video-wrapper">
                 <iframe src="https://player.vimeo.com/video/210677339" height="480" width="853" allowFullScreen="allowfullscreen" frameBorder="0"></iframe>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="l-home-call-to-action -explore">
-          <div className="row">
-            <div className="columns medium-8 medium-offset-4 large-6 large-offset-6">
-              <div className="call-to-action">
-                <h3 className="c-title -dark -fs-extrabig -fw-light">Worldwide experimentation</h3>
-                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Cities worldwide are experimenting with new ways to invest in sustainable solutions. Developing a common understanding of available business models will move us from talk to action.</p>
-                <Link route="explore-index"><a className="c-button -primary">start exploring</a></Link>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="l-home-call-to-action -builder">
-          <div className="row">
-            <div className="columns small-12 medium-8 large-6 -flex-vertical-centered">
-              <div className="call-to-action -no-border">
-                <h3 className="c-title -dark -fs-extrabig -fw-light">Business model design</h3>
-                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Get started with designing a sustainable urban project using experiences gained by cities worldwide.</p>
-                <Link route="builder"><a className="c-button -primary">design a project</a></Link>
-              </div>
-            </div>
-            <div className="columns small-12 medium-4 large-6">
-              <div className="picture">
-                <img src="/static/images/home-module-builder.png" alt="" />
               </div>
             </div>
           </div>

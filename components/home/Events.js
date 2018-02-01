@@ -23,7 +23,7 @@ class Events extends React.Component {
 
   render() {
     const { events, loading } = this.props;
-    console.log(events)
+
     return (
       <div className="c-detail-section columns small-12 medium-8">
         <div className="row">

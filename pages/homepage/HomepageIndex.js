@@ -20,6 +20,7 @@ import { getSolutionPdfs } from 'modules/category';
 import Solutions from 'components/home/Solutions';
 import Events from 'components/home/Events';
 import CitySupport from 'components/home/CitySupport';
+import Blogs from 'components/home/Blogs';
 
 
 class HomePage extends Page {
@@ -117,6 +118,19 @@ class HomePage extends Page {
                 <a className="c-button -primary" href="/events">More City Support</a>
               </div>
               <CitySupport />
+            </div>
+          </div>
+        </section>
+        <section>
+          <div className="l-blog">
+            <div className="row">
+              <div className="columns small-12 medium-10">
+                <h3>Post about FSCI</h3>
+              </div>
+              <div className="columns small-12 medium-2">
+                <a href="/blogs" className="c-button -primary">More blog posts</a>
+              </div>
+              <Blogs />
             </div>
           </div>
         </section>

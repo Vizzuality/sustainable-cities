@@ -130,8 +130,8 @@ class HomePage extends Page {
               <div className="columns small-12 medium-2 -flex-vertical-centered">
                 <a href="/blogs" className="c-button -primary">More blog posts</a>
               </div>
-              <Blogs />
             </div>
+            <Blogs />
           </div>
         </section>
 

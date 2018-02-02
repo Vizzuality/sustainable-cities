@@ -45,9 +45,11 @@ class CitySupport extends React.Component {
   render() {
     const { citiesByCategory, loading } = this.props;
     return (
-      <div className="c-about-content small-12 medium-8">
-        {loading && <Spinner isLoading className="-transparent" />}
-        {citiesByCategory.map((cat, index) => this.renderBlock(cat, citiesByCategory.length - 1 === index))}
+      <div className="small-12 medium-8">
+        <div className="c-content">
+          {loading && <Spinner isLoading className="-transparent" />}
+          {citiesByCategory.map((cat, index) => this.renderBlock(cat, citiesByCategory.length - 1 === index))}
+        </div>
       </div>);
   }
 }

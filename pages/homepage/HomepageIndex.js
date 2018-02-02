@@ -18,9 +18,19 @@ import { getSolutionPdfs } from 'modules/category';
 
 // content
 import Solutions from 'components/home/Solutions';
+import Modal from 'components/common/Modal';
+import DisclaimerModal from 'components/common/disclaimer/DisclaimerSign-up';
 
 
 class HomePage extends Page {
+
+  state = {
+    modal: {
+      disclaimer: {
+        open: true
+      }
+    }
+  };
 
   render() {
     return (
@@ -159,6 +169,19 @@ class HomePage extends Page {
         </section>
 
         <Solutions />
+
+        {this.state.modal.disclaimer.open && <Modal
+          open={this.state.modal.disclaimer.open}
+          toggleModal={v => this.setState({
+            modal: { ...this.state.modal, disclaimer: { open: v } }
+          })}
+        >
+          <DisclaimerModal
+            onClose={() => this.setState({
+              modal: { ...this.state.modal, disclaimer: { open: false } }
+            })}
+          />
+        </Modal>}
 
       </Layout>
     );

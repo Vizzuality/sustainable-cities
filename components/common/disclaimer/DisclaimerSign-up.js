@@ -38,7 +38,7 @@ export default class DisclaimerModal extends React.Component {
         </form>
 
         <div className="actions">
-          <Button onClick={onClose}>Close</Button>
+          <Button onClick={onClose}>Ok</Button>
         </div>
       </section>
     );

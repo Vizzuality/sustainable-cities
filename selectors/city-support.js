@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
-const getCities = state => state.about.list;
+const getCities = state => state.about['city-supports'];
 const getCategories = state => state.about.categories;
-const getCitiesByCategory = (cities, categories) => {
+const getCitiesByCategory = (cities = [], categories) => {
   if(!cities.length || !categories.length) return;
   // temporary reverse, set an "order" field or similar
   return categories.reverse().map(cat => ({

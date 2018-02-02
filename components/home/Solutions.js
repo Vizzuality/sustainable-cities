@@ -34,7 +34,7 @@ class Solutions extends React.Component {
     return (
     <div className="row home-solutions">
       <div className="column small-12">
-        <h3 className="c-title -huge -dark -fs-extrabig -fw-light">Documents</h3>
+        <h3 className="c-title -dark -fs-huge -fw-thin -title-margin">Documents</h3>
       </div>
       {this.props.solutions.filter(solution => solution.document).map(solution => (
 

@@ -48,36 +48,31 @@
   }
 }
 
-.l-home-main-links {
-  padding-top: 20px;
+.l-activities {
+  padding-top: 40px;
 
   @media (min-width: $screen-m) {
-    padding-top: 0;
-    border: solid 1px rgba($color-1, .1);
+    padding-top: 80px;
   }
 }
 
-.l-home-call-to-action {
-  background-repeat: no-repeat;
-  background-size: cover;
+.l-blog {
+  padding: 40px 0;
+  margin: 40px 0;
 
   @media (min-width: $screen-m) {
-    padding: 140px 0;
+    padding: 80px 0;
+    margin: 80px 0;
+    background-color: rgba(238,238,238,0.3);
+    border-top: 1px solid rgba(151,151,151,0.4);
+    border-bottom: 1px solid rgba(151,151,151,0.4);
   }
+}
 
-  &.-explore {
-    background-image: url('/static/images/home-module-explore.png');
-  }
+.l-home-videos {
+  padding: 40px 0;
 
-  &.-builder {
-    padding-bottom: 50px;
-  }
-
-  .picture {
-    img {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-    }
+  @media (min-width: $screen-m) {
+    padding: 100px 0;
   }
 }

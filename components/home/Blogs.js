@@ -59,7 +59,7 @@ Blogs.defaultProps = {
 export default withRedux(
   store,
   ({ about }) => ({
-    blogs: about.list,
+    blogs: about.blogs,
     loading: about.loading
   }),
   dispatch => ({

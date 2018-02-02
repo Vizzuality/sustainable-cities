@@ -100,12 +100,12 @@ class HomePage extends Page {
           <div className="l-activities">
             <div className="row">
               <div className="columns small-12">
-                <h2>FSCI Activities</h2>
+                <h2 className="c-title -dark -fs-huge -fw-thin">FSCI Activities</h2>
               </div>
             </div>
             <div className="row">
               <div className="columns small-12 medium-4">
-                <h3>Events</h3>
+                <h3 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">Events</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et similique, eveniet porro maxime, assumenda iure eligendi aliquid laudantium culpa quidem aliquam ex, tempore nesciunt, nam perferendis quas sit natus! Possimus.</p>
                 <a className="c-button -primary" href="/events">More events</a>
               </div>
@@ -113,7 +113,7 @@ class HomePage extends Page {
             </div>
             <div className="row">
               <div className="columns small-12 medium-4">
-                <h3>City Support</h3>
+                <h3 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">City Support</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et similique, eveniet porro maxime, assumenda iure eligendi aliquid laudantium culpa quidem aliquam ex, tempore nesciunt, nam perferendis quas sit natus! Possimus.</p>
                 <a className="c-button -primary" href="/events">More City Support</a>
               </div>
@@ -124,33 +124,34 @@ class HomePage extends Page {
         <section>
           <div className="l-blog">
             <div className="row">
-              <div className="columns small-12 medium-10">
-                <h3>Post about FSCI</h3>
+              <div className="columns small-12 medium-10 -flex-vertical-centered">
+                <h3 className="c-title -dark -fs-huge -fw-thin">Post about FSCI</h3>
               </div>
-              <div className="columns small-12 medium-2">
+              <div className="columns small-12 medium-2 -flex-vertical-centered">
                 <a href="/blogs" className="c-button -primary">More blog posts</a>
               </div>
               <Blogs />
             </div>
           </div>
         </section>
-        <section className="l-home-call-to-action -intro">
+
+        <Solutions />
+
+        <section className="l-home-videos">
           <div className="row">
-            <div className="columns small-12 medium-6 -flex-vertical-centered">
-              <div className="call-to-action -no-border">
-                <h3 className="c-title -dark -fs-extrabig -fw-light">A global movement</h3>
-                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">More and more city leaders see their actions as critical to helping tackle urgent challenges like climate change and living sustainably with our planet.</p>
-              </div>
+            <div className="columns small-12 -flex-vertical-centered">
+              <h3 className="c-title -dark -fs-huge -fw-thin">About FSCI</h3>
             </div>
-            <div className="columns samll-12 medium-6">
+            <div className="columns small-12 medium-5">
+              <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">In 2015, <a href="http://www.wrirosscities.org/" target="_blank">WRI Ross Center</a> for Sustainable Cities and <a href="www.c40.org" target="_blank">C40 Cities</a> Climate Leadership Group, funded by the <a href="http://www.citigroup.com/citi/foundation/" target="_blank">Citi Foundation</a>, teamed up for a new partnership to leverage the expertise of our three organizations – WRI’s analytical and research competencies and long-term engagement with cities, the high-level connection with city leaders of C40 and the Citi Foundation’s urban economic progress agenda.</p>
+            </div>
+            <div className="columns samll-12 medium-6 medium-offset-1">
               <div className="video-wrapper">
                 <iframe src="https://player.vimeo.com/video/210677339" height="480" width="853" allowFullScreen="allowfullscreen" frameBorder="0"></iframe>
               </div>
             </div>
           </div>
         </section>
-
-        <Solutions />
 
       </Layout>
     );

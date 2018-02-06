@@ -45,7 +45,7 @@ export default class Tab extends React.Component {
     const { queryParams } = this.props;
     const { route, category } = queryParams;
     const { children, label, modal, query, allowAll } = item;
-
+    // debugger
     if (children) {
       let subMenuOptions = children;
 
@@ -59,7 +59,7 @@ export default class Tab extends React.Component {
       if (!children.length) {
         return (
           <li
-            className={classnames('tab-item', { '-current': query.category === category })}
+            className={classnames('tab-item', item.slug, label, { '-current': query.category === category })}
             key={uuidv1()}
             role="menuitem"
             aria-haspopup="true"
@@ -99,7 +99,7 @@ export default class Tab extends React.Component {
         >
           <li
             ref={(node) => { this.tabNodes[index] = node; }}
-            className={classnames('tab-item', { '-current': query.category === category })}
+            className={classnames('tab-item', item.slug, label, { '-current': query.category === category })}
             role="menuitem"
             aria-haspopup="true"
             tabIndex="-1"
@@ -149,7 +149,7 @@ export default class Tab extends React.Component {
 
     return (
       <li
-        className={classnames('tab-item', { '-current': query.category === category })}
+        className={classnames('tab-item', item.slug, label, { '-current': query.category === category })}
         role="menuitem" tabIndex="-1"
         key={uuidv1()}
       >

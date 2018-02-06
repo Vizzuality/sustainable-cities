@@ -13,7 +13,6 @@ const SET_ERROR_ABOUT = 'bme/SET_ERROR_ABOUT';
 
 /* Initial state */
 const initialState = {
-  list: [],
   categories: [], // for city-support
   loading: false,
   error: false
@@ -31,11 +30,12 @@ const getCategories = (included) => {
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_ABOUT_DATA: {
-      const { list, categories = [] } = action.payload;
-      return Object.assign({}, state, {
-        list,
+      const { list, categories = [], type } = action.payload;
+      return {
+        ...state,
+        [type]: list,
         categories
-      });
+      }
     }
     case SET_LOADING_ABOUT:
       return Object.assign({}, state, { loading: action.payload });
@@ -87,6 +87,7 @@ export function getDataAbout(type) {
           dispatch({
             type: GET_ABOUT_DATA,
             payload: {
+              type,
               list: parsedData.map(d => ({
                 ...d,
                 ...{ date: moment(d.date).format('MMMM D, YYYY') },

@@ -127,7 +127,7 @@ class MainNav extends React.Component {
                   >
                     <Link prefetch route="builder"><a className="literal">Design</a></Link>
                   </li>
-                  <TetherComponent
+                 {/* <TetherComponent
                     attachment="top center"
                     targetAttachment="top center"
                     targetOffset="-10px 0"
@@ -162,7 +162,7 @@ class MainNav extends React.Component {
                         items={profileSubmenu}
                         onCloseSubMenu={() => this.onCloseSubMenu()}
                       />}
-                  </TetherComponent>
+                  </TetherComponent>*/}
                 </ul>
               </nav>
             </div>

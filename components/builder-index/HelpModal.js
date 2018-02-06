@@ -8,8 +8,7 @@ export default function HelpModal({ onClose }) {
     <section className="builder-help">
       <h1 className="c-title -fw-thin -fs-huge">Design your business model</h1>
       <p className="c-text">
-        Start by selecting a <strong>solution</strong> and then, optionally, some
-        <strong> enabling conditions</strong>, which provide context to the situation.
+        Start by selecting a <strong>solution</strong> which provide context to the situation.
         This will change how the elements are shown on the interactive chart.
       </p>
       <p className="c-text">

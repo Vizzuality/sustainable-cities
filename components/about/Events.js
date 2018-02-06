@@ -107,7 +107,7 @@ Events.defaultProps = {
 export default withRedux(
   store,
   ({ about }) => ({
-    events: about.list,
+    events: about.events,
     loading: about.loading
   }),
   dispatch => ({

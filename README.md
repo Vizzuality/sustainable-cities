@@ -14,13 +14,13 @@ To get started in development mode, just clone the repository and run:
 
 If you wanted to run this site in production run:
 
-    yarn
     yarn run build
     yarn start
 
 You should run the the build step again any time you make changes to pages or
 components.
 
+    yarn
 ## Configuring
 
 If you configure a .env file (just copy [.env.default](https://github.com/Vizzuality/otp-portal/blob/master/.env.default) over to '.env' and fill in the options) you can configure a range of options.

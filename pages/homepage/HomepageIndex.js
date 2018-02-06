@@ -21,9 +21,20 @@ import Solutions from 'components/home/Solutions';
 import Events from 'components/home/Events';
 import CitySupport from 'components/home/CitySupport';
 import Blogs from 'components/home/Blogs';
+import Modal from 'components/common/Modal';
+import DisclaimerModal from 'components/common/disclaimer/DisclaimerSign-up';
+
 
 
 class HomePage extends Page {
+
+  state = {
+    modal: {
+      disclaimer: {
+        open: true
+      }
+    }
+  };
 
   render() {
     return (
@@ -152,6 +163,19 @@ class HomePage extends Page {
             </div>
           </div>
         </section>
+
+        {this.state.modal.disclaimer.open && <Modal
+          open={this.state.modal.disclaimer.open}
+          toggleModal={v => this.setState({
+            modal: { ...this.state.modal, disclaimer: { open: v } }
+          })}
+        >
+          <DisclaimerModal
+            onClose={() => this.setState({
+              modal: { ...this.state.modal, disclaimer: { open: false } }
+            })}
+          />
+        </Modal>}
 
       </Layout>
     );

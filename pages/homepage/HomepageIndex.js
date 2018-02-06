@@ -18,6 +18,9 @@ import { getSolutionPdfs } from 'modules/category';
 
 // content
 import Solutions from 'components/home/Solutions';
+import Events from 'components/home/Events';
+import CitySupport from 'components/home/CitySupport';
+import Blogs from 'components/home/Blogs';
 
 
 class HomePage extends Page {
@@ -93,72 +96,62 @@ class HomePage extends Page {
             </li>
           </ul>
         </section>
-        <section className="l-home-main-links">
-          <ul className="row">
-            <li className="columns small-12 medium-4"><Link route="about">
-              <a className="main-link">
-                <svg className="icon"><use xlinkHref="#icon-home-about" /></svg>
-                <p className="c-title -dark -fs-extrabig -fw-light">Learn more about the initiative</p>
-              </a>
-            </Link></li>
-            <li className="columns small-12 medium-4"><Link route="explore-index">
-              <a className="main-link">
-                <svg className="icon"><use xlinkHref="#icon-home-explore" /></svg>
-                <p className="c-title -dark -fs-extrabig -fw-light">Explore sustainable projects</p>
-              </a>
-            </Link></li>
-            <li className="columns small-12 medium-4"><Link route="builder">
-              <a className="main-link">
-                <svg className="icon"><use xlinkHref="#icon-home-build" /></svg>
-                <p className="c-title -dark -fs-extrabig -fw-light">Design a business model</p>
-              </a>
-            </Link></li>
-          </ul>
-        </section>
-        <section className="l-home-call-to-action -intro">
-          <div className="row">
-            <div className="columns small-12 medium-6 -flex-vertical-centered">
-              <div className="call-to-action -no-border">
-                <h3 className="c-title -dark -fs-extrabig -fw-light">A global movement</h3>
-                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">More and more city leaders see their actions as critical to helping tackle urgent challenges like climate change and living sustainably with our planet.</p>
+        <section>
+          <div className="l-activities">
+            <div className="row">
+              <div className="columns small-12">
+                <h2 className="c-title -dark -fs-huge -fw-thin">FSCI Activities</h2>
               </div>
             </div>
-            <div className="columns samll-12 medium-6">
+            <div className="row">
+              <div className="columns small-12 medium-4">
+                <h3 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">Events</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et similique, eveniet porro maxime, assumenda iure eligendi aliquid laudantium culpa quidem aliquam ex, tempore nesciunt, nam perferendis quas sit natus! Possimus.</p>
+                <a className="c-button -primary" href="/events">More events</a>
+              </div>
+              <Events />
+            </div>
+            <div className="row">
+              <div className="columns small-12 medium-4">
+                <h3 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">City Support</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et similique, eveniet porro maxime, assumenda iure eligendi aliquid laudantium culpa quidem aliquam ex, tempore nesciunt, nam perferendis quas sit natus! Possimus.</p>
+                <a className="c-button -primary" href="/events">More City Support</a>
+              </div>
+              <CitySupport />
+            </div>
+          </div>
+        </section>
+        <section>
+          <div className="l-blog">
+            <div className="row">
+              <div className="columns small-12 medium-10 -flex-vertical-centered">
+                <h3 className="c-title -dark -fs-huge -fw-thin">Post about FSCI</h3>
+              </div>
+              <div className="columns small-12 medium-2 -flex-vertical-centered">
+                <a href="/blogs" className="c-button -primary">More blog posts</a>
+              </div>
+            </div>
+            <Blogs />
+          </div>
+        </section>
+
+        <Solutions />
+
+        <section className="l-home-videos">
+          <div className="row">
+            <div className="columns small-12 -flex-vertical-centered">
+              <h3 className="c-title -dark -fs-huge -fw-thin">About FSCI</h3>
+            </div>
+            <div className="columns small-12 medium-5">
+              <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">In 2015, <a href="http://www.wrirosscities.org/" target="_blank">WRI Ross Center</a> for Sustainable Cities and <a href="www.c40.org" target="_blank">C40 Cities</a> Climate Leadership Group, funded by the <a href="http://www.citigroup.com/citi/foundation/" target="_blank">Citi Foundation</a>, teamed up for a new partnership to leverage the expertise of our three organizations – WRI’s analytical and research competencies and long-term engagement with cities, the high-level connection with city leaders of C40 and the Citi Foundation’s urban economic progress agenda.</p>
+            </div>
+            <div className="columns samll-12 medium-6 medium-offset-1">
               <div className="video-wrapper">
                 <iframe src="https://player.vimeo.com/video/210677339" height="480" width="853" allowFullScreen="allowfullscreen" frameBorder="0"></iframe>
               </div>
             </div>
           </div>
         </section>
-        <section className="l-home-call-to-action -explore">
-          <div className="row">
-            <div className="columns medium-8 medium-offset-4 large-6 large-offset-6">
-              <div className="call-to-action">
-                <h3 className="c-title -dark -fs-extrabig -fw-light">Worldwide experimentation</h3>
-                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Cities worldwide are experimenting with new ways to invest in sustainable solutions. Developing a common understanding of available business models will move us from talk to action.</p>
-                <Link route="explore-index"><a className="c-button -primary">start exploring</a></Link>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="l-home-call-to-action -builder">
-          <div className="row">
-            <div className="columns small-12 medium-8 large-6 -flex-vertical-centered">
-              <div className="call-to-action -no-border">
-                <h3 className="c-title -dark -fs-extrabig -fw-light">Business model design</h3>
-                <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">Get started with designing a sustainable urban project using experiences gained by cities worldwide.</p>
-                <Link route="builder"><a className="c-button -primary">design a project</a></Link>
-              </div>
-            </div>
-            <div className="columns small-12 medium-4 large-6">
-              <div className="picture">
-                <img src="/static/images/home-module-builder.png" alt="" />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <Solutions />
 
       </Layout>
     );

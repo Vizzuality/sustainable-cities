@@ -306,14 +306,14 @@ class RadialChart extends React.Component {
               <span className="u-inline-block u-h-bl">Element</span>
             </div>
 
-            <div className="u-flex u-ml-1 u-mr-1">
+            {/*<div className="u-flex u-ml-1 u-mr-1">
               <svg className="radial-chart u-inline-block u-h-bl u-w-bl" viewBox="0 0 34 34">
                 <g transform="translate(17,17)">
                   <BME size={5} level={3} angle={0} depth={0} modifiers={["Success"]} />
                 </g>
               </svg>
               <span>Enabling condition applied</span>
-            </div>
+            </div>*/}
 
             <div className="u-flex u-ml-1 u-mr-1">
               <svg className="radial-chart u-inline-block u-h-bl u-w-bl" viewBox="0 0 34 34">

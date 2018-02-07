@@ -3,10 +3,24 @@ import PropTypes from 'prop-types';
 import { Link } from 'routes';
 import storage from 'local-storage-fallback';
 
+// Redux
+import withRedux from 'next-redux-wrapper';
+import { store } from 'store';
+
+// modules
+import { setEmail } from 'modules/sign-up';
+
 // components
 import Button from 'components/common/Button';
 
-export default class DisclaimerModal extends React.Component {
+class DisclaimerModal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: ''
+    };
+  }
 
   componentWillReceiveProps(nextProps) {
     const { disclaimer } = nextProps;
@@ -20,6 +34,16 @@ export default class DisclaimerModal extends React.Component {
     this.props.onClose();
   }
 
+  submitForm = (e) => {
+    e.preventDefault();
+    this.props.setEmail(this.state.email);
+    this.handleClose();
+  }
+
+  handleInput = (e) => {
+    this.setState({ email: e.target.value });
+  }
+
   render() {
     const { onClose, disclaimer } = this.props;
 
@@ -31,9 +55,17 @@ export default class DisclaimerModal extends React.Component {
 
         <p className="c-text -dark -fs-medium -fw-light">Sign up for updates</p>
 
-        <form className="c-form" action="">
-          <input className="c-input" type="text" placeholder="Your email address"/>
-          <input className="c-submit c-button -secondary" type="submit" value="send" onClick={this.handleClose} />
+        <form className="c-form" action="" onSubmit={this.submitForm}>
+          <input
+            className="c-input"
+            type="text"
+            placeholder="Your email address"
+            defaultValue={this.state.email}
+            onChange={this.handleInput}
+          />
+          <input className="c-submit c-button -secondary" type="submit" value="send"
+
+          />
         </form>
 
         <p className="c-text -dark -fs-medium -fw-light">Thank you!</p>
@@ -46,9 +78,20 @@ export default class DisclaimerModal extends React.Component {
   }
 }
 
+export default withRedux(
+  store,
+  state => state,
+  dispatch => ({
+    setEmail(email) {
+      dispatch(setEmail(email));
+    }
+  })
+)(DisclaimerModal);
+
 DisclaimerModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  disclaimer: PropTypes.string
+  disclaimer: PropTypes.string,
+  setEmail: PropTypes.func
 };
 
 DisclaimerModal.defaultProps = {

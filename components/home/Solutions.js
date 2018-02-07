@@ -64,7 +64,9 @@ export default withRedux(
     loading: state.category.solution.loading
   }),
   dispatch => ({
-    getSolutionPdfs() { dispatch(getSolutionPdfs()); }
+    getSolutionPdfs() {
+      dispatch(getSolutionPdfs());
+    }
   })
 )(Solutions);
 

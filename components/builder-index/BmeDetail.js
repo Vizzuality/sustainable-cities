@@ -10,7 +10,7 @@ import EnablingCheckbox from 'components/builder-index/EnablingCheckbox';
 
 const tabs = {
   info: 'Info',
-  'enabling-conditions': 'Enabling conditions',
+  // 'enabling-conditions': 'Enabling conditions',
   comment: 'Comment'
 };
 

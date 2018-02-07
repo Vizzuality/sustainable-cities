@@ -20,6 +20,7 @@ import Modal from 'components/common/Modal';
 import HelpModal from 'components/builder-index/HelpModal';
 import SaveModal from 'components/builder-index/SaveModal';
 import SavedModal from 'components/builder-index/SavedModal';
+import DisclaimerModal from 'components/common/disclaimer/DisclaimerSign-up';
 
 import { builderSelector, withModifiers } from 'selectors/builder';
 import { withSlice, leaves } from 'utils/builder';
@@ -54,6 +55,7 @@ const tutorialSteps = [
 ];
 
 class BuilderIndex extends React.Component {
+
   state = {
     tutorialStep: storage.getItem('builder.tutorial-finished') ? 'finish' : 'start',
     sidebar: 'default',
@@ -63,6 +65,9 @@ class BuilderIndex extends React.Component {
       ...modals,
       help: {
         open: process.browser && !storage.getItem('builder.tutorial-finished')
+      },
+      disclaimer: {
+        open: !storage.getItem('diclaimer.signUp')
       }
     }
   };
@@ -400,6 +405,19 @@ class BuilderIndex extends React.Component {
           } })}
         >
           <HelpModal onClose={this.hideHelp} />
+        </Modal>}
+
+        {this.state.modal.disclaimer.open && <Modal
+          open={this.state.modal.disclaimer.open}
+          toggleModal={v => this.setState({
+            modal: { ...this.state.modal, disclaimer: { open: v } }
+          })}
+        >
+          <DisclaimerModal
+            onClose={() => this.setState({
+              modal: { ...this.state.modal, disclaimer: { open: false } }
+            })}
+          />
         </Modal>}
       </Layout>
     );

@@ -1,4 +1,4 @@
-jsximport React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'routes';
 
@@ -26,7 +26,7 @@ export default class DisclaimerModal extends React.Component {
     return (
       <section className="disclaimer">
         <p className="c-text -fs-medium -fw-light">Welcome to the Beta version of the Financing Sustainable Cities Web Platform! Please feel free to explore the features that are currently available.</p>
-        <p>The full version of our platform will be up and running soon, but in the meantime we invite you to sign up to our mailing list to stay up-to-date with our progress.</p>
+        <p className="c-text -fs-medium -fw-light">The full version of our platform will be up and running soon, but in the meantime we invite you to sign up to our mailing list to stay up-to-date with our progress.</p>
 
         <p className="c-text -dark -fs-medium -fw-light">Sign up for updates</p>
 

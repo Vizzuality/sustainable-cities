@@ -407,7 +407,7 @@ class BuilderIndex extends React.Component {
           <HelpModal onClose={this.hideHelp} />
         </Modal>}
 
-        {this.state.modal.disclaimer.open && <Modal
+{/*        {this.state.modal.disclaimer.open && <Modal
           open={this.state.modal.disclaimer.open}
           toggleModal={v => this.setState({
             modal: { ...this.state.modal, disclaimer: { open: v } }
@@ -418,7 +418,7 @@ class BuilderIndex extends React.Component {
               modal: { ...this.state.modal, disclaimer: { open: false } }
             })}
           />
-        </Modal>}
+        </Modal>}*/}
       </Layout>
     );
   }

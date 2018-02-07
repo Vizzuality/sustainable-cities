@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'routes';
+import storage from 'local-storage-fallback';
 
 // components
 import Button from 'components/common/Button';
@@ -14,14 +15,13 @@ export default class DisclaimerModal extends React.Component {
     document.getElementsByTagName('body')[0].classList.toggle('no-overflow', !!disclaimer);
   }
 
-  handleClose() {
-    const { onClose } = this.props;
-    onClose();
+  handleClose = () => {
+    storage.setItem('diclaimer.signUp', true);
+    this.props.onClose();
   }
 
   render() {
     const { onClose, disclaimer } = this.props;
-
 
     return (
       <section className="disclaimer">
@@ -33,13 +33,13 @@ export default class DisclaimerModal extends React.Component {
 
         <form className="c-form" action="">
           <input className="c-input" type="text" placeholder="Your email address"/>
-          <input className="c-submit c-button -secondary" type="submit" value="send" onClick={onClose} />
+          <input className="c-submit c-button -secondary" type="submit" value="send" onClick={this.handleClose} />
         </form>
 
         <p className="c-text -dark -fs-medium -fw-light">Thank you!</p>
 
         <div className="actions">
-          <Button onClick={onClose}>Ok</Button>
+          <Button onClick={this.handleClose}>Ok</Button>
         </div>
       </section>
     );

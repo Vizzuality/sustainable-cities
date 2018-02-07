@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'routes';
+import storage from 'local-storage-fallback';
 
 // components
 import Page from 'pages/Page';

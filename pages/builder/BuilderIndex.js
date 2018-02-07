@@ -55,6 +55,7 @@ const tutorialSteps = [
 ];
 
 class BuilderIndex extends React.Component {
+
   state = {
     tutorialStep: storage.getItem('builder.tutorial-finished') ? 'finish' : 'start',
     sidebar: 'default',
@@ -66,7 +67,7 @@ class BuilderIndex extends React.Component {
         open: process.browser && !storage.getItem('builder.tutorial-finished')
       },
       disclaimer: {
-        open: true
+        open: !storage.getItem('diclaimer.signUp')
       }
     }
   };

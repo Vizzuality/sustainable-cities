@@ -37,7 +37,7 @@ export default () => (
             </div>
 
             <div className="columns small-12 medium-7">
-              <p className="c-text -dark -fs-big -fw-light -tagline">Helping cities develop business models to accelerate sustainable urban solutions</p>
+              <p className="c-text -dark -fs-big -fw-light -tagline">Helping cities accelerate and scale-up investments in sustainable urban solutions</p>
             </div>
 
           </div>

@@ -112,7 +112,7 @@ class HomePage extends Page {
           <div className="l-activities">
             <div className="row">
               <div className="columns small-12">
-                <h2 className="c-title -dark -fs-huge -fw-thin">FSCI Activities</h2>
+                <h2 className="c-title -dark -fs-huge -fw-thin">Financing Sustainable Cities Initiative (FSCI) Activities</h2>
               </div>
             </div>
             <div className="row">

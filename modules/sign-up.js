@@ -28,28 +28,27 @@ export default function (state = initialState, action) {
 /* Action creators */
 
 // Send email to endpoint
-export function setEmail() {
-  debugger
+export function setEmail(email) {
   return (dispatch, getState) => {
+    // dispatch({ type: SET_EMAIL, payload: true });
 
-    dispatch({ type: SET_EMAIL, payload: true });
-
-    const email = 'clara.linos@gmail.com';
-    debugger
-    post(`${process.env.API_URL}/contact[email]=${email}`, {
+    fetch(`${process.env.API_URL}/contacts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'SC-API-KEY': process.env.SC_API_KEY
-      }
+      },
+      body: JSON.stringify({
+        contact: {
+          email: email
+        }
+      })
     })
     .then((response) => {
       if (response.ok) {
-        if (getState().category.error) dispatch({ type: SET_EMAIL, payload: false });
         return response.json();
       }
 
-      dispatch({ type: SET_EMAIL, payload: true });
       throw new Error(response.status);
     })
   };

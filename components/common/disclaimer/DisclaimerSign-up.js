@@ -1,4 +1,4 @@
-import React from 'react';
+jsximport React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'routes';
 
@@ -25,17 +25,17 @@ export default class DisclaimerModal extends React.Component {
 
     return (
       <section className="disclaimer">
-        <h1 className="c-title -fw-thin -fs-huge">Welcome!</h1>
-        <p className="c-text -fs-medium -fw-light">Description Beta lorem ipsum nullam id dolor id nibh ultricies vehicula ut id elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Curabitur blandit tempus porttitor. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+        <p className="c-text -fs-medium -fw-light">Welcome to the Beta version of the Financing Sustainable Cities Web Platform! Please feel free to explore the features that are currently available.</p>
+        <p>The full version of our platform will be up and running soon, but in the meantime we invite you to sign up to our mailing list to stay up-to-date with our progress.</p>
 
-        <p className="c-text -dark -fs-medium -fw-light">
-          Sign up for updates
-        </p>
+        <p className="c-text -dark -fs-medium -fw-light">Sign up for updates</p>
 
         <form className="c-form" action="">
           <input className="c-input" type="text" placeholder="Your email address"/>
           <input className="c-submit c-button -secondary" type="submit" value="send" onClick={onClose} />
         </form>
+
+        <p className="c-text -dark -fs-medium -fw-light">Thank you!</p>
 
         <div className="actions">
           <Button onClick={onClose}>Ok</Button>

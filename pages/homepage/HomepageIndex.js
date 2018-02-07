@@ -49,7 +49,7 @@ class HomePage extends Page {
               <h1 className="c-title -fs-super-huge -light -fw-thin -center">Financing Sustainable Cities Initiative</h1>
             </div>
             <div className="column small-10 small-offset-1 medium-8 medium-offset-2">
-              <h2 className="c-title -fs-bigger -light -fw-light -center -subtitle">Helping cities develop business models to accelerate sustainable urban solutions</h2>
+              <h2 className="c-title -fs-bigger -light -fw-light -center -subtitle">Helping cities accelerate and scale-up investments in sustainable urban solution.</h2>
             </div>
           </div>
           <ul className="row">
@@ -117,16 +117,16 @@ class HomePage extends Page {
             <div className="row">
               <div className="columns small-12 medium-4">
                 <h3 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">Events</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et similique, eveniet porro maxime, assumenda iure eligendi aliquid laudantium culpa quidem aliquam ex, tempore nesciunt, nam perferendis quas sit natus! Possimus.</p>
-                <a className="c-button -primary" href="/events">More events</a>
+                <p>Events organised within the FSCI framework provide a platform for dialogue about financing sustainable urban solutions among city officials, investors, technical service providers and other stakeholders.</p>
+                <a className="c-button -primary" href="/about/events">More events</a>
               </div>
               <Events />
             </div>
             <div className="row">
               <div className="columns small-12 medium-4">
                 <h3 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">City Support</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et similique, eveniet porro maxime, assumenda iure eligendi aliquid laudantium culpa quidem aliquam ex, tempore nesciunt, nam perferendis quas sit natus! Possimus.</p>
-                <a className="c-button -primary" href="/events">More City Support</a>
+                <p>The FSCI engages with cities around the world to provide technical assistance to accelerate and scale-up investments for their sustainable urban projects.</p>
+                <a className="c-button -primary" href="/about/city-support">More City Support</a>
               </div>
               <CitySupport />
             </div>

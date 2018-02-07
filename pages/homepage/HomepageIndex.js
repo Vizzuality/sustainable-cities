@@ -47,10 +47,10 @@ class HomePage extends Page {
         <section className="l-home-header">
           <div className="row">
             <div className="columns small-10 small-offset-1 medium-offset-0 medium-12">
-              <h1 className="c-title -fs-super-huge -light -fw-thin -center">Financing Sustainable Cities Initiative</h1>
+              <h1 className="c-title -fs-super-huge -light -fw-thin -center">Financing Sustainable Cities Initiative <br/>(FSCI)</h1>
             </div>
             <div className="column small-10 small-offset-1 medium-8 medium-offset-2">
-              <h2 className="c-title -fs-bigger -light -fw-light -center -subtitle">Helping cities accelerate and scale-up investments in sustainable urban solution.</h2>
+              <h2 className="c-title -fs-bigger -light -fw-light -center -subtitle">Helping cities accelerate and scale-up investments in sustainable urban solutions.</h2>
             </div>
           </div>
           <ul className="row">
@@ -112,7 +112,7 @@ class HomePage extends Page {
           <div className="l-activities">
             <div className="row">
               <div className="columns small-12">
-                <h2 className="c-title -dark -fs-huge -fw-thin">Financing Sustainable Cities Initiative (FSCI) Activities</h2>
+                <h2 className="c-title -dark -fs-huge -fw-thin">FSCI Activities</h2>
               </div>
             </div>
             <div className="row">
@@ -137,7 +137,7 @@ class HomePage extends Page {
           <div className="l-blog">
             <div className="row">
               <div className="columns small-12 medium-10 -flex-vertical-centered">
-                <h3 className="c-title -dark -fs-huge -fw-thin">Post about FSCI</h3>
+                <h3 className="c-title -dark -fs-huge -fw-thin">Posts about FSCI</h3>
               </div>
               <div className="columns small-12 medium-2 -flex-vertical-centered">
                 <a href="/blogs" className="c-button -primary">More blog posts</a>

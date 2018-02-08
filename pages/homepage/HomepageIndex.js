@@ -140,7 +140,7 @@ class HomePage extends Page {
                 <h3 className="c-title -dark -fs-huge -fw-thin">Posts about FSCI</h3>
               </div>
               <div className="columns small-12 medium-2 -flex-vertical-centered">
-                <a href="/blogs" className="c-button -primary">More blog posts</a>
+                <a href="/about/blogs" className="c-button -primary">More blog posts</a>
               </div>
             </div>
             <Blogs />

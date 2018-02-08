@@ -40,7 +40,7 @@ export function setEmail(email) {
       },
       body: JSON.stringify({
         contact: {
-          email: email
+          email
         }
       })
     })

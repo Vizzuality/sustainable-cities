@@ -161,6 +161,9 @@ class HomePage extends Page {
               <div className="video-wrapper">
                 <iframe src="https://player.vimeo.com/video/210677339" height="480" width="853" allowFullScreen="allowfullscreen" frameBorder="0"></iframe>
               </div>
+              <div className="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/4NVIToVDHTc" height="480" width="853" allowFullScreen="allowfullscreen" frameBorder="0"></iframe>
+              </div>
             </div>
           </div>
         </section>

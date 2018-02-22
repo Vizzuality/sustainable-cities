@@ -39,21 +39,9 @@ const tabs = [
   },
   {
     id: uuidv1(),
-    label: 'Events',
-    section: 'events',
-    component: Events
-  },
-  {
-    id: uuidv1(),
     label: 'Blogs',
     section: 'blogs',
     component: Blogs
-  },
-  {
-    id: uuidv1(),
-    label: 'City Support',
-    section: 'city-support',
-    component: CitySupport
   },
   {
     id: uuidv1(),
@@ -69,18 +57,20 @@ class AboutPage extends Page {
   renderTabs() {
     return (<div className="c-tabs -explore">
       <div className="row">
-        <ul className="tab-list">
-          {tabs.map(tab => (
-            <li
-              key={tab.id}
-              className={classnames('tab-item', { '-current': (this.props.queryParams.section || null) === tab.section })}
-            >
-              <Link route="about" params={{ section: tab.section }} >
-                <a className="literal">{tab.label}</a>
-              </Link>
-            </li>
-         ))}
-        </ul>
+        <div className="olumn small-12 medium-10 medium-offset-1">
+          <ul className="tab-list">
+            {tabs.map(tab => (
+              <li
+                key={tab.id}
+                className={classnames('tab-item', { '-current': (this.props.queryParams.section || null) === tab.section })}
+              >
+                <Link route="about" params={{ section: tab.section }} >
+                  <a className="literal">{tab.label}</a>
+                </Link>
+              </li>
+           ))}
+          </ul>
+        </div>
       </div>
     </div>);
   }

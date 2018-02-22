@@ -32,7 +32,7 @@ class CitySupportPage extends Page {
           <Cover
             title="City Support"
             size="shorter"
-            image="/static/images/about-header.jpeg"
+            image="/static/images/city-support-header.jpg"
           />
 
           < CitySupport />

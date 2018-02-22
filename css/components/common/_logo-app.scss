@@ -12,16 +12,16 @@
     text-transform: uppercase;
     padding-left: 10px;
 
-    &::after {
-      content: "BETA";
-      position: absolute;
-      bottom: -6px;
-      right: -5px;
-      width: 36px;
-      padding: 2px 4px 0;
-      transform: translatex(100%);
-      color: $black;
-      background-color: $white;
-    }
+    // &::after {
+    //   content: "BETA";
+    //   position: absolute;
+    //   bottom: -6px;
+    //   right: -5px;
+    //   width: 36px;
+    //   padding: 2px 4px 0;
+    //   transform: translatex(100%);
+    //   color: $black;
+    //   background-color: $white;
+    // }
   }
 }

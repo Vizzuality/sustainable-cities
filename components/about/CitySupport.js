@@ -40,12 +40,6 @@ class CitySupport extends React.Component {
             ))}
           </div>
         </div>
-
-        {isEnd && <div className="row">
-          <div className="column small-12">
-            <div className="content" />
-          </div>
-        </div>}
       </div>
     );
   }

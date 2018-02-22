@@ -115,10 +115,23 @@ class MobileHeader extends React.Component {
                 <nav className="nav">
                   <ul className="nav-list" role="menubar">
                     <li
+                    className={classnames('nav-item', { '-current': route === 'city-support' })}
+                      role="menuitem"
+                    >
+                      <Link prefetch route="city-support"><a className="literal">City support</a></Link>
+                    </li>
+                    <li
+                      className={classnames('nav-item', { '-current': route === 'events' })}
+                      role="menuitem"
+                    >
+                      <Link prefetch route="events"><a className="literal">Events</a></Link>
+                    </li>
+
+                    <li
                       className={classnames('nav-item', { '-current': route === 'about' })}
                       role="menuitem"
                     >
-                      <Link prefetch route="about"><a className="literal">About</a></Link>
+                      <Link prefetch route="about"><a className="literal">About FSCI</a></Link>
                     </li>
                     <li
                       className={classnames('nav-item', { '-current': SOLUTION_MAP_ROUTES.indexOf(route) !== -1 })}

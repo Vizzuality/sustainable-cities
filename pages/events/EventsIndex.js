@@ -32,7 +32,7 @@ class EventsPage extends Page {
           <Cover
             title="FSCI Events"
             size="shorter"
-            image="/static/images/about-header.jpeg"
+            image="/static/images/events-header.jpg"
           />
 
           <Events />

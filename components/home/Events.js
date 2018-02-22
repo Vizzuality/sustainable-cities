@@ -37,7 +37,7 @@ class Events extends React.Component {
                 className="event"
               >
                 <div className="picture" style={{ backgroundImage: `url(${event.image})` }} />
-                <p className="c-text -dark -fs-medium -fw-light -lh-small">{event.title}</p>
+                <p className="c-text -dark -fs-medium">{event.title}</p>
                 <span className="c-text -dark -fs-smaller -fw-light -uppercase">{event.date}</span>
               </a>
             </div>

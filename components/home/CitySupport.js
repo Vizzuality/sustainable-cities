@@ -32,8 +32,8 @@ class CitySupport extends React.Component {
               <div className="post">
                 <div className="picture" style={{ backgroundImage: `url(${city.image})` }} />
                 {city.imageSource && <span className="c-text -dark -fs-smaller -fw-light -uppercase">image source: {city.imageSource}</span>}
-                <p className="c-title -dark -fs-big -fw-light -lh-small">{city.title}</p>
-                <p className="c-text -dark -fw-light -lh-small">{city.description || ''}</p>
+                <p className="c-text -dark -fs-medium">{city.title}</p>
+                <p className="c-text -dark -fw-light">{city.description || ''}</p>
               </div>
             </div>
           ))}

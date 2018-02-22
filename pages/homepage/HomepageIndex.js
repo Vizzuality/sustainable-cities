@@ -46,11 +46,11 @@ class HomePage extends Page {
 
         <section className="l-home-header">
           <div className="row">
-            <div className="columns small-10 small-offset-1 medium-offset-0 medium-12">
-              <h1 className="c-title -fs-super-huge -light -fw-thin -center">Financing Sustainable Cities Initiative <br/>(FSCI)</h1>
+            <div className="columns small-10 small-offset-1">
+              <h1 className="c-title -fs-super-huge -fw-regular -light -center">FINANCING SUSTAINABLE CITIES INITIATIVE (FSCI)</h1>
             </div>
             <div className="column small-10 small-offset-1 medium-8 medium-offset-2">
-              <h2 className="c-title -fs-bigger -light -fw-light -center -subtitle">Helping cities accelerate and scale-up investments in sustainable urban solutions.</h2>
+              <h2 className="c-title -fs-bigger -light -center -subtitle">Helping cities accelerate and scale-up investments in sustainable urban solutions.</h2>
             </div>
           </div>
           <ul className="row">
@@ -58,7 +58,7 @@ class HomePage extends Page {
               <Link route="explore-index" params={{ category: 'solutions', subCategory: 'bike-sharing-scheme' }}>
                 <a>
                   <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-bike" /></svg>
-                  <span className="c-text -fs-bigger -light -fw-light">Bike sharing systems</span>
+                  <span className="c-text -fs-bigger -light">Bike sharing systems</span>
                 </a>
               </Link>
             </li>
@@ -66,7 +66,7 @@ class HomePage extends Page {
               <Link route="explore-index" params={{ category: 'solutions', subCategory: 'bus-rapid-transit-brt' }}>
                 <a>
                   <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-rapidbus" /></svg>
-                  <span className="c-text -fs-bigger -light -fw-light">Bus rapid transit systems</span>
+                  <span className="c-text -fs-bigger -light">Bus rapid transit systems</span>
                 </a>
               </Link>
             </li>
@@ -74,7 +74,7 @@ class HomePage extends Page {
               <Link route="explore-index" params={{ category: 'solutions', subCategory: 'low-and-zero-emission-buses' }}>
                 <a>
                   <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-bus" /></svg>
-                  <span className="c-text -fs-bigger -light -fw-light">Low -and zero- emissions buses</span>
+                  <span className="c-text -fs-bigger -light">Low -and zero- emissions buses</span>
                 </a>
               </Link>
             </li>
@@ -82,7 +82,7 @@ class HomePage extends Page {
               <Link route="explore-index" params={{ category: 'solutions', subCategory: 'efficient-new-buildings' }}>
                 <a>
                   <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-buildings" /></svg>
-                  <span className="c-text -fs-bigger -light -fw-light">Efficient new buildings</span>
+                  <span className="c-text -fs-bigger -light">Efficient new buildings</span>
                 </a>
               </Link>
             </li>
@@ -90,7 +90,7 @@ class HomePage extends Page {
               <Link route="explore-index" params={{ category: 'solutions', subCategory: 'municipal-building-retrofits' }}>
                 <a>
                   <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-gov" /></svg>
-                  <span className="c-text -fs-bigger -light -fw-light">Municipal building retrofits</span>
+                  <span className="c-text -fs-bigger -light">Municipal building retrofits</span>
                 </a>
               </Link>
             </li>
@@ -98,13 +98,13 @@ class HomePage extends Page {
               <Link route="explore-index" params={{ category: 'solutions', subCategory: 'transit-oriented-development-tod' }}>
                 <a>
                   <svg className="icon -light -in-line-left -medium"><use xlinkHref="#icon-city" /></svg>
-                  <span className="c-text -fs-bigger -light -fw-light">Transit-oriented development</span>
+                  <span className="c-text -fs-bigger -light">Transit-oriented development</span>
                 </a>
               </Link>
             </li>
             <li className="column small-10 small-offset-1 medium-5 medium-offset-1">
               <svg className="icon -light -in-line-left -medium -short"><use xlinkHref="#icon-home-about" /></svg>
-              <span className="c-text -fs-bigger -light -fw-light">more coming soon</span>
+              <span className="c-text -fs-bigger -light">more coming soon</span>
             </li>
           </ul>
         </section>
@@ -117,7 +117,7 @@ class HomePage extends Page {
             </div>
             <div className="row">
               <div className="columns small-12 medium-4">
-                <h3 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">Events</h3>
+                <h3 className="c-title -dark -fs-extrabig -fw-thin -title-margin-small">Events</h3>
                 <p>Events organised within the FSCI framework provide a platform for dialogue about financing sustainable urban solutions among city officials, investors, technical service providers and other stakeholders.</p>
                 <a className="c-button -primary" href="/about/events">More events</a>
               </div>
@@ -125,7 +125,7 @@ class HomePage extends Page {
             </div>
             <div className="row">
               <div className="columns small-12 medium-4">
-                <h3 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">City Support</h3>
+                <h3 className="c-title -dark -fs-extrabig -fw-thin -title-margin-small">City Support</h3>
                 <p>The FSCI engages with cities around the world to provide technical assistance to accelerate and scale-up investments for their sustainable urban projects.</p>
                 <a className="c-button -primary" href="/about/city-support">More City Support</a>
               </div>
@@ -155,7 +155,7 @@ class HomePage extends Page {
               <h3 className="c-title -dark -fs-huge -fw-thin">About FSCI</h3>
             </div>
             <div className="columns small-12 medium-5">
-              <p className="c-text -gray-light -fs-medium -fw-light -lh-medium">In 2015, <a href="http://www.wrirosscities.org/" target="_blank">WRI Ross Center</a> for Sustainable Cities and <a href="www.c40.org" target="_blank">C40 Cities</a> Climate Leadership Group, funded by the <a href="http://www.citigroup.com/citi/foundation/" target="_blank">Citi Foundation</a>, teamed up for a new partnership to leverage the expertise of our three organizations – WRI’s analytical and research competencies and long-term engagement with cities, the high-level connection with city leaders of C40 and the Citi Foundation’s urban economic progress agenda.</p>
+              <p className="c-text -dark -fw-light">In 2015, <a href="http://www.wrirosscities.org/" target="_blank">WRI Ross Center</a> for Sustainable Cities and <a href="www.c40.org" target="_blank">C40 Cities</a> Climate Leadership Group, funded by the <a href="http://www.citigroup.com/citi/foundation/" target="_blank">Citi Foundation</a>, teamed up for a new partnership to leverage the expertise of our three organizations – WRI’s analytical and research competencies and long-term engagement with cities, the high-level connection with city leaders of C40 and the Citi Foundation’s urban economic progress agenda.</p>
             </div>
             <div className="columns samll-12 medium-6 medium-offset-1">
               <div className="video-wrapper">

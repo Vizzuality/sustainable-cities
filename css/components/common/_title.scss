@@ -1,11 +1,12 @@
 .c-title,
-.c-text  {
+.c-text,
+p  {
   margin: 0;
 
   font-family: $font-family-1;
   font-size: $font-size-default;
   font-weight: $font-weight-default;
-  line-height: 1.2em;
+  line-height: 2em;
 
   // colors
   &.-dark {
@@ -36,9 +37,10 @@
   // sizes
   &.-fs-super-huge {
     font-size: 50px;
+    line-height: 1.5;
 
     @media screen and (min-width: $screen-m) {
-      font-size: $font-size-super-huge;
+      font-size: $font-size-huge;
     }
   }
 
@@ -64,7 +66,7 @@
     line-height: 1.5em;
 
     @media screen and (min-width: $screen-m) {
-      font-size: $font-size-bigger;
+      font-size: $font-size-big;
     }
   }
 
@@ -93,6 +95,10 @@
   // weigths
   &.-fw-light {
     font-weight: $font-weight-light;
+  }
+
+  &.-fw-regular {
+    font-weight: initial;
   }
 
   &.-fw-thin {

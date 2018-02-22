@@ -94,9 +94,9 @@ class MainNav extends React.Component {
     const { section } = this.state;
     const { name } = profile || {};
 
-    const profileSubmenu = [
-      { id: uuidv1(), label: 'See profile' },
-      { id: uuidv1(), label: 'Log out', onClick: () => { this.props.logout(); } }
+    const toolsMenu = [
+      { id: uuidv1(), label: 'Design' },
+      { id: uuidv1(), label: 'Solutions Map' }
     ];
 
     return (
@@ -140,6 +140,36 @@ class MainNav extends React.Component {
                   >
                     <Link prefetch route="builder"><a className="literal">Design</a></Link>
                   </li>
+
+                  {/*<TetherComponent
+                    attachment="top center"
+                    targetAttachment="top center"
+                    targetOffset="-10px 0"
+                    key={uuidv1()}
+                    classPrefix="tab-wrap"
+                    constraints={[{
+                      to: 'target',
+                      attachment: 'together'
+                    }]}
+                  >
+                    <li
+                      ref="Tools"
+                      className={classnames('nav-item', { '-current': route === 'profile' })}
+                      role="menuitem"
+                    >
+                      <a href="/builder" className="literal">Design</a> :
+                      <a href="/explore-index" className="literal">Solutions map</a> :
+                    </li>
+                    <SubMenu
+                      className="-tab"
+                      parent={name}
+                      route={'builder'}
+                      parentNode={this.profileTabNode}
+                      items={toolsMenu}
+                      onCloseSubMenu={() => this.onCloseSubMenu()}
+                    />
+                  </TetherComponent>*/}
+
                  {/* <TetherComponent
                     attachment="top center"
                     targetAttachment="top center"

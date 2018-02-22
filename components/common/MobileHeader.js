@@ -145,7 +145,7 @@ class MobileHeader extends React.Component {
                     >
                       <Link prefetch route="builder"><a className="literal">Design</a></Link>
                     </li>
-                    {!token &&
+                    {/*{!token &&
                       <li
                         className="nav-item"
                         role="menuitem"
@@ -169,7 +169,7 @@ class MobileHeader extends React.Component {
                         role="menuitem"
                       >
                         <a className="literal" href="logout" onClick={e => this.onLogout(e)}>Logout</a>
-                      </li>}
+                      </li>}*/}
                   </ul>
                 </nav>
               </div>

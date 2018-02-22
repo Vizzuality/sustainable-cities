@@ -20,6 +20,7 @@ const SOLUTION_MAP_ROUTES = ['explore-index', 'solution-detail', 'bme-detail', '
 
 
 class MainNav extends React.Component {
+
   state = {
     section: '',
     modal: {
@@ -95,8 +96,13 @@ class MainNav extends React.Component {
     const { name } = profile || {};
 
     const toolsMenu = [
-      { id: uuidv1(), label: 'Design' },
-      { id: uuidv1(), label: 'Solutions Map' }
+      { id: uuidv1(), label: 'Design', route: 'builder' },
+      { id: uuidv1(), label: 'Solutions Map', route: 'explore-index' }
+    ];
+
+    const profileSubmenu = [
+      { id: uuidv1(), label: 'See profile' },
+      { id: uuidv1(), label: 'Log out', onClick: () => { this.props.logout(); } }
     ];
 
     return (
@@ -126,22 +132,22 @@ class MainNav extends React.Component {
                   >
                     <Link prefetch route="about"><a className="literal">About FSCI</a></Link>
                   </li>
-                  <li
+{/*                  <li
                     className={classnames('nav-item', { '-current': SOLUTION_MAP_ROUTES.indexOf(route) !== -1 })}
                     role="menuitem"
                   >
                     <Link prefetch route="explore-index" params={{ category: 'solutions' }}>
                       <a className="literal">Solutions map</a>
                     </Link>
-                  </li>
-                  <li
+                  </li>*/}
+{/*                  <li
                     className={classnames('nav-item', { '-current': route === 'builder' })}
                     role="menuitem"
                   >
                     <Link prefetch route="builder"><a className="literal">Design</a></Link>
-                  </li>
+                  </li>*/}
 
-                  {/*<TetherComponent
+                  <TetherComponent
                     attachment="top center"
                     targetAttachment="top center"
                     targetOffset="-10px 0"
@@ -153,24 +159,25 @@ class MainNav extends React.Component {
                     }]}
                   >
                     <li
-                      ref="Tools"
-                      className={classnames('nav-item', { '-current': route === 'profile' })}
+                      ref={(node) => { this.toolsTabNode = node; }}
+                      className={classnames('nav-item', { '-current': route === 'builder' })}
                       role="menuitem"
+                      onClick={e => this.onSelectSection(e, 'builder')}
                     >
-                      <a href="/builder" className="literal">Design</a> :
-                      <a href="/explore-index" className="literal">Solutions map</a> :
+                      <a href="/builder" className="username">Tools</a>
                     </li>
-                    <SubMenu
+                    {section === 'builder' &&
+                      <SubMenu
                       className="-tab"
-                      parent={name}
-                      route={'builder'}
-                      parentNode={this.profileTabNode}
+                      parent={'Tools'}
+                      parentNode={this.toolsTabNode}
                       items={toolsMenu}
                       onCloseSubMenu={() => this.onCloseSubMenu()}
-                    />
-                  </TetherComponent>*/}
+                    />}
+                  </TetherComponent>
 
-                 {/* <TetherComponent
+
+                  {/*<TetherComponent
                     attachment="top center"
                     targetAttachment="top center"
                     targetOffset="-10px 0"
@@ -206,6 +213,7 @@ class MainNav extends React.Component {
                         onCloseSubMenu={() => this.onCloseSubMenu()}
                       />}
                   </TetherComponent>*/}
+
                 </ul>
               </nav>
             </div>

@@ -53,7 +53,7 @@ export default class SubMenu extends React.Component {
             {item.onClick ?
               <span className="literal" onClick={() => item.onClick()}>{item.label}</span>
             : <Link
-              route={route}
+              route={route || item.route}
               params={item.query}
               prefetch
             >
@@ -72,5 +72,5 @@ SubMenu.propTypes = {
   onCloseSubMenu: PropTypes.func,
   parent: PropTypes.string,
   parentNode: PropTypes.object.isRequired,
-  route: PropTypes.string.isRequired
+  route: PropTypes.string
 };

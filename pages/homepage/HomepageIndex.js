@@ -155,7 +155,7 @@ class HomePage extends Page {
               <h3 className="c-title -dark -fs-huge -fw-thin">About FSCI</h3>
             </div>
             <div className="columns small-12 medium-5">
-              <p className="c-text -dark -fw-light">In 2015, <a href="http://www.wrirosscities.org/" target="_blank">WRI Ross Center</a> for Sustainable Cities and <a href="www.c40.org" target="_blank">C40 Cities</a> Climate Leadership Group, funded by the <a href="http://www.citigroup.com/citi/foundation/" target="_blank">Citi Foundation</a>, teamed up for a new partnership to leverage the expertise of our three organizations – WRI’s analytical and research competencies and long-term engagement with cities, the high-level connection with city leaders of C40 and the Citi Foundation’s urban economic progress agenda.</p>
+              <p className="c-text -fw-light">In 2015, <a href="http://www.wrirosscities.org/" target="_blank">WRI Ross Center</a> for Sustainable Cities and <a href="www.c40.org" target="_blank">C40 Cities</a> Climate Leadership Group, funded by the <a href="http://www.citigroup.com/citi/foundation/" target="_blank">Citi Foundation</a>, teamed up for a new partnership to leverage the expertise of our three organizations – WRI’s analytical and research competencies and long-term engagement with cities, the high-level connection with city leaders of C40 and the Citi Foundation’s urban economic progress agenda.</p>
             </div>
             <div className="columns samll-12 medium-6 medium-offset-1">
               <div className="video-wrapper">

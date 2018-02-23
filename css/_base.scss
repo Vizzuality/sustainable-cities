@@ -32,3 +32,8 @@ button {
   background: none;
   padding: 0;
 }
+
+
+a:-webkit-any-link {
+  color: inherit;
+}

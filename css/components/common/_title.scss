@@ -10,7 +10,7 @@ p  {
 
   // colors
   &.-dark {
-    color: $color-text-4;
+    color: $color-primary;
 
     a {
       color: $color-primary;
@@ -168,6 +168,16 @@ p  {
 
     @media screen and (min-width: $screen-m) {
       margin-top: 40px;
+    }
+  }
+}
+
+a {
+  p {
+    color: $black !important;
+
+    &.-dark {
+      color: $color-primary !important;
     }
   }
 }

@@ -174,11 +174,11 @@ class BmeDetailPage extends Page {
 
             <RelatedContent />
 
-            <DownloadData
+            {/*<DownloadData
               onClickButton={() => this.setState({
                 modal: { ...this.state.modal, download: true }
               })}
-            />
+            />*/}
 
             {this.state.modal.download && <Modal
               open={this.state.modal.download}

@@ -32,9 +32,9 @@ class CitySupport extends React.Component {
               <div key={city.id} className="column small-12 medium-4">
                 <div className="post">
                   <div className="picture" style={{ backgroundImage: `url(${city.image})` }} />
-                  {city.imageSource && <span className="c-text -dark -fs-smaller -fw-light -uppercase">image source: {city.imageSource}</span>}
                   <p className="c-title -dark -fs-big -fw-light -lh-small">{city.title}</p>
-                  <p className="c-text -dark -fw-light -lh-small">{city.description || ''}</p>
+                  <p className="c-text -fw-light -lh-small">{city.description || ''}</p>
+                  {city.imageSource && <span className="c-text -fs-smaller -fw-light">image source: {city.imageSource}</span>}
                 </div>
               </div>
             ))}

@@ -31,7 +31,7 @@ export default function GridItem(props) {
           && <svg className={`icon ${icon}`}>
             <use xlinkHref={`#${icon}`} /></svg>}
       </div>
-      <h4 className="c-title -dark -fw-light title">{props.title}</h4>
+      <h4 className="c-title -fw-light title">{props.title}</h4>
       { props.subtitle && <h5 className="c-title -gray-light -uppercase subtitle">{props.subtitle}</h5> }
     </a>
   );

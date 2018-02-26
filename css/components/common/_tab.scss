@@ -73,7 +73,7 @@
       height: 100%;
 
       font-size: $font-size-extrasmall;
-      color: $color-text-3;
+      color: $color-primary;
       line-height: 1;
       text-align: center;
       text-transform: uppercase;
@@ -86,7 +86,7 @@
     &.-current {
       > .literal {
         position: relative;
-        color: $color-text-2;
+        color: $color-primary;
         cursor: default;
 
         &::after {
@@ -98,7 +98,7 @@
           transform: translate(-50%, 0);
           width: 50%;
           height: 5px;
-          background: $color-6;
+          background: $color-primary;;
         }
       }
     }

@@ -96,8 +96,8 @@ class MainNav extends React.Component {
     const { name } = profile || {};
 
     const toolsMenu = [
-      { id: uuidv1(), label: 'Design', route: 'builder' },
-      { id: uuidv1(), label: 'Solutions Map', route: 'explore-index' }
+      { id: uuidv1(), label: 'Solutions Map', route: 'explore-index' },
+      { id: uuidv1(), label: 'Design', route: 'builder' }
     ];
 
     const profileSubmenu = [
@@ -164,7 +164,7 @@ class MainNav extends React.Component {
                       role="menuitem"
                       onClick={e => this.onSelectSection(e, 'builder')}
                     >
-                      <a href="/builder" className="username">Tools</a>
+                      <a href="/builder" className="literal">Tools</a>
                     </li>
                     {section === 'builder' &&
                       <SubMenu

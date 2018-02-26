@@ -9,7 +9,7 @@ export default function ProjectOverview({ project }) {
   return (<div className="solution-overview">
     <div className="solution-overview-summary">
       <div className="row">
-        <div className="column large-12 c-text -fs-huge -fw-thin">
+        <div className="column large-12 c-text -dark -fs-huge -fw-thin">
           Overview
         </div>
       </div>

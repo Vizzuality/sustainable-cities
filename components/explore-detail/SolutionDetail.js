@@ -25,7 +25,7 @@ export default function SolutionDetail({ project }) {
   return (
     <div className="solution-detail">
       <div className="row">
-        <div className="column large-12 c-text -fs-huge -fw-thin">
+        <div className="column large-12 c-text -dark -fs-huge -fw-thin">
           Project Details
         </div>
       </div>

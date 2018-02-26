@@ -60,7 +60,7 @@ $grid-item-portrait-height:  310px;
   }
 
   .title {
-    font-size: $font-size-default;
+    line-height: 1.5;
 
     @media #{$mq-tablet} {
       font-size: $font-size-bigger;

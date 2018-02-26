@@ -21,7 +21,7 @@ export default function SolutionCategory({ category, projectBmes }) {
   return (<div className="solution-category">
     <div className="solution-category-summary">
       <div className="row">
-        <div className="column large-12 c-text -fs-huge -fw-thin">
+        <div className="column large-12 c-text -dark -fs-huge -fw-thin">
           Summary
         </div>
       </div>

@@ -17,6 +17,12 @@ routes.add('city-detail', '/cities/:id/:tab?', 'explore/detail/CityPageDetail');
 // ABOUT
 routes.add('about', '/about/:section?', 'about/AboutIndex');
 
+// CITY-SUPPORT
+routes.add('city-support', '/city-support', 'city-support/CitySupportIndex');
+
+// CITY-SUPPORT
+routes.add('events', '/events', 'events/EventsIndex');
+
 // BUILDER
 routes.add('builder-project-print', '/builder/:id?/project/print', 'builder/ProjectPrint');
 routes.add('builder-project', '/builder/:id?/project', 'builder/Project');

@@ -39,17 +39,19 @@ class Solutions extends React.Component {
       {this.props.solutions.filter(solution => solution.document).map(solution => (
 
         <div className="column small-12 medium-3" key={solution.id}>
-          <svg className="icon -huge -dark -in-line-left">
-            <use xlinkHref={`#${CATEGORY_ICONS[solution.slug]}`} />
-          </svg>
-          <h2 className="c-title -dark -fs-big -fw-light">{solution.name}</h2>
-          {solution.document && <a
-            className="c-button -secondary"
-            href={Solutions._getPdfLink(solution.document)}
-            download={`${solution.slug}.pdf`}
-          >
-            Download
-          </a>}
+          <div className="c-solution">
+            <svg className="icon -huge -dark -in-line-left">
+              <use xlinkHref={`#${CATEGORY_ICONS[solution.slug]}`} />
+            </svg>
+            <h2 className="c-title -fs-big -fw-light">{solution.name}</h2>
+            {solution.document && <a
+              className="c-button -secondary"
+              href={Solutions._getPdfLink(solution.document)}
+              download={`${solution.slug}.pdf`}
+            >
+              Download
+            </a>}
+          </div>
         </div>
       ))}
     </div>

@@ -1,10 +1,15 @@
 .c-main-nav {
   // height: $nav-height;
   padding: 0 15px;
-  background: $color-1;
+  // background: $color-1;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
 
   .logo {
     width: auto !important;
+  }
+
+  .literal {
+    font-weight: 700;
   }
 
   .logo,
@@ -52,6 +57,7 @@
     .nav-list > .nav-item {
       display: inline-flex;
       align-items: center;
+      color: $color-primary;
 
       &:not(:first-child) {
         margin: 0 0 0 35px;
@@ -67,13 +73,13 @@
           left: 50%;
           width: 50%;
           height: 5px;
-          background: $color-primary;
+          background-color: $color-primary;
           transform: translate(-50%, 0);
         }
 
         & > .literal,
         & > .username {
-          color: $color-white;
+          color: $color-primary;
         }
       }
 
@@ -98,7 +104,7 @@
         display: inline-flex;
         align-items: center;
         height: 100%;
-        color: rgba($color-white, .5);
+        color: $color-primary;
         text-transform: uppercase;
         cursor: pointer;
         max-width: 130px;

@@ -309,9 +309,9 @@ class ExploreIndex extends Page {
           </div>
         </div>
 
-        <DownloadData
+        {/*<DownloadData
           onClickButton={() => this._openDownloadData()}
-        />
+        />*/}
 
         {this.state.modal.download && <Modal
           open={this.state.modal.download}

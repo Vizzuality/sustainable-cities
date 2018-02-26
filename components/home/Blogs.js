@@ -36,7 +36,7 @@ class Blogs extends React.Component {
                 className="post"
               >
                 <div className="picture" style={{ backgroundImage: `url(${blog.image})` }} />
-                <p className="c-text -dark -fs-medium -fw-light -lh-small">{blog.title}</p>
+                <p className="c-text -dark -fs-medium">{blog.title}</p>
                 <span className="c-text -dark -fs-smaller -fw-light -uppercase">{blog.date}</span>
               </a>
             </div>

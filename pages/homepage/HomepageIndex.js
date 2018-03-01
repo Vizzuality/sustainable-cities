@@ -119,7 +119,7 @@ class HomePage extends Page {
               <div className="columns small-12 medium-4">
                 <h3 className="c-title -dark -fs-extrabig -fw-thin -title-margin-small">Events</h3>
                 <p>Events organised within the FSCI framework provide a platform for dialogue about financing sustainable urban solutions among city officials, investors, technical service providers and other stakeholders.</p>
-                <a className="c-button -primary" href="/about/events">More events</a>
+                <a className="c-button -primary" href="/events">More events</a>
               </div>
               <Events />
             </div>
@@ -127,7 +127,7 @@ class HomePage extends Page {
               <div className="columns small-12 medium-4">
                 <h3 className="c-title -dark -fs-extrabig -fw-thin -title-margin-small">City Support</h3>
                 <p>The FSCI engages with cities around the world to provide technical assistance to accelerate and scale-up investments for their sustainable urban projects.</p>
-                <a className="c-button -primary" href="/about/city-support">More City Support</a>
+                <a className="c-button -primary" href="/city-support">More City Support</a>
               </div>
               <CitySupport />
             </div>

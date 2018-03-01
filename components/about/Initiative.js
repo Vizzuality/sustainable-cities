@@ -9,8 +9,7 @@ export default function Initiative() {
         </div>
         <div className="column small-12 medium-8">
           <p className="c-text -fs-medium -fw-light">
-            In 2015, <a href="http://www.wrirosscities.org/" target="_blank" rel="noopener noreferrer">WRI Ross Center for Sustainable Cities</a>
-            and <a href="http://www.c40.org" target="_blank" rel="noopener noreferrer">C40 Cities Climate Leadership Group</a>,
+            In 2015, <a href="http://www.wrirosscities.org/" target="_blank" rel="noopener noreferrer">WRI Ross Center for Sustainable Cities</a> and <a href="http://www.c40.org" target="_blank" rel="noopener noreferrer">C40 Cities  Climate Leadership Group</a>,
             funded by the <a href="http://www.citigroup.com/citi/foundation/" target="_blank" rel="noopener noreferrer">Citi Foundation</a>,
             teamed up for a new partnership to leverage the expertise of our three organizations – WRI’s analytical
             and research competencies and long-term engagement with cities, the high-level connection with city leaders of

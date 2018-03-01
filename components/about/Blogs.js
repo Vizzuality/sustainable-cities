@@ -64,28 +64,15 @@ class Blogs extends React.Component {
               <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">Continue reading</h2>
             </div>
             <div className="column small-12 medium-4">
-              <a className="main-link -border -about" href="/about/events">
-                <p className="c-text -dark -fs-medium -fw-light">Events</p>
-                <p className="c-title -dark">FSCI's forums, workshops and events</p>
-              </a>
-            </div>
-            <div className="column small-12 medium-4">
-              <a className="main-link -border -about" href="/about/city-support">
-                <p className="c-text -dark -fs-medium -fw-light">City Support</p>
-                <p className="c-title -dark">FSCI's forums, workshops, on-the-ground technical support and long-term engagements.</p>
-              </a>
-            </div>
-            <div className="column small-12 medium-4"></div>
-            <div className="column small-12 medium-4">
               <a className="main-link -border -about" href="/about/more-information">
-                <p className="c-text -dark -fs-medium -fw-light">More information</p>
-                <p className="c-title -dark">The initiative's partners, research methodology and data policy.</p>
+                <p className="c-text -fs-medium -dark">More information</p>
+                <p className="c-title">The initiative's partners, research methodology and data policy.</p>
               </a>
             </div>
             <div className="column small-12 medium-4">
               <a className="main-link -border -about" href="/about">
-                <p className="c-text -dark -fs-medium -fw-light">About the initiative</p>
-                <p className="c-title -dark">Background information about FSCI and its partners.</p>
+                <p className="c-text -fs-medium  -dark">About the initiative</p>
+                <p className="c-title">Background information about FSCI and its partners.</p>
               </a>
             </div>
           </div>

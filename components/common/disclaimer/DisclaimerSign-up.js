@@ -53,7 +53,7 @@ class DisclaimerModal extends React.Component {
         <p className="c-text -fw-light">Welcome to the Beta version of the Financing Sustainable Cities Web Platform! Please feel free to explore the features that are currently available.</p>
         <p className="c-text -fw-light">The full version of our platform will be up and running soon, but in the meantime we invite you to sign up to our mailing list to stay up-to-date with our progress.</p>
 
-        <p className="c-text -fs-medium -fw-light">Sign up for updates</p>
+        <p className="c-text -fs-medium">Sign up for updates</p>
 
         <form className="c-form" action="" onSubmit={this.submitForm}>
           <input

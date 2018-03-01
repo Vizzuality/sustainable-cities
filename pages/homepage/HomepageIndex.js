@@ -47,7 +47,7 @@ class HomePage extends Page {
         <section className="l-home-header">
           <div className="row">
             <div className="columns small-10 small-offset-1">
-              <h1 className="c-title -fs-super-huge -fw-regular -light -center">FINANCING SUSTAINABLE CITIES INITIATIVE (FSCI)</h1>
+              <h1 className="c-title -fs-super-huge -fw-regular -light -center">FINANCING SUSTAINABLE CITIES INITIATIVE</h1>
             </div>
             <div className="column small-10 small-offset-1 medium-8 medium-offset-2">
               <h2 className="c-title -fs-bigger -light -center -subtitle">Helping cities accelerate and scale-up investments in sustainable urban solutions.</h2>

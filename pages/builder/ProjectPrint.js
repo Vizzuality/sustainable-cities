@@ -15,7 +15,7 @@ class ProjectPrint extends React.Component {
         <Head
           title="Builder"
           description=""
-        />jsx
+        />
         <div className="l-print">
           <div className="row u-mt-2">
             <div className="u-flex u-ml-a u-hide-print">

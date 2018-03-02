@@ -68,7 +68,7 @@ export default function BmeDetail({ bme, print }) {
           </div>))}
         </div>)}
       </div>
-      <div className="row">
+      <div className="row external-sources">
         <div className="column small-12 large-4 c-title -fs-extrabig -fw-light">
           Where can I learn more?
         </div>

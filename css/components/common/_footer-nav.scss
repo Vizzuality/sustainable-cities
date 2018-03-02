@@ -1,9 +1,12 @@
 .footer-nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
+
   // margin-top: 20px;
 
   @media (min-width: $screen-m) {
+    justify-content: space-between;
     margin-top: 0;
     display: block;
   }
@@ -11,6 +14,7 @@
   li {
     text-align: right;
     margin-right: 20px;
+    line-height: 1.2;
 
     @media (min-width: $screen-m) {
       display: block;

@@ -3,7 +3,7 @@
     font-size: $font-size-extrasmall;
     font-weight: $font-weight-bold;
     line-height: 1.25;
-    color: $color-primary;
+    color: $white;
 
     &:not(:last-of-type)::after {
       display: inline-block;
@@ -15,10 +15,9 @@
     span {
       font-size: $font-size-extrasmall;
       font-weight: $font-weight-bold;
-      text-transform: uppercase;
       line-height: 1.25;
       letter-spacing: 1px;
-      color: $color-primary;
+      color: $white;
     }
 
     &.-title {

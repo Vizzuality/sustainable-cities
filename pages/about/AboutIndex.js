@@ -91,7 +91,7 @@ class AboutPage extends Page {
       >
         <div className="about-page">
           <Cover
-            title="About"
+            title="The Initiative"
             size="shorter"
             image="/static/images/about-header.jpeg"
           />

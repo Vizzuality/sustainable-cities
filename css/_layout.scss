@@ -6,9 +6,11 @@
 
 //Grid modificators
 .-flex-vertical-centered {
-    flex-direction: column;
-    justify-content: center;
-    display: flex;
+    @media #{$mq-tablet} {
+      flex-direction: column;
+      justify-content: center;
+      display: flex;
+    }
 }
 
 

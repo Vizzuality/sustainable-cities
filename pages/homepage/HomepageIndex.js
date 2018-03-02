@@ -136,10 +136,10 @@ class HomePage extends Page {
         <section>
           <div className="l-blog">
             <div className="row">
-              <div className="columns small-12 medium-10 -flex-vertical-centered">
+              <div className="columns small-12 medium-9 large-10 -flex-vertical-centered">
                 <h3 className="c-title -dark -fs-huge -fw-thin">Posts about FSCI</h3>
               </div>
-              <div className="columns small-12 medium-2 -flex-vertical-centered">
+              <div className="columns small-12 medium-3 large-2 -flex-vertical-centered">
                 <a href="/about/blogs" className="c-button -primary">More blog posts</a>
               </div>
             </div>

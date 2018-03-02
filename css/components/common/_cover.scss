@@ -26,7 +26,11 @@
 
   &.-position-bottom {
     .c-cover-veil {
-      padding: 180px 0 25px;
+      padding: 50px 0 25px;
+
+      @media #{$mq-tablet} {
+        padding: 180px 0 25px;
+      }
     }
   }
 

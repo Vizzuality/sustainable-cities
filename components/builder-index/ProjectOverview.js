@@ -14,7 +14,7 @@ export default function ProjectOverview({ project }) {
         </div>
       </div>
       <div className="row">
-        <div className="column large-8">
+        <div className="column small-12 large-8">
           <div className="c-detail-section">
             <div className="content">
               <BmeOverview

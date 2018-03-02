@@ -66,45 +66,47 @@ class BmeDetailPrintPage extends Page {
     return (
       <div>
         <Head title="Business model element detail" defaultDescription="" />
-        <div className="row u-mt-2">
-          <div className="u-flex u-ml-a u-hide-print">
-            <Button secondary link={{ route: 'bme-detail', params: { id: this.props.queryParams.id }}} className="u-mr-1">
-              Go back
-            </Button>
+        <div className="l-print">
+          <div className="row u-mt-2">
+            <div className="u-flex u-ml-a u-hide-print">
+              <Button secondary link={{ route: 'bme-detail', params: { id: this.props.queryParams.id }}} className="u-mr-1">
+                Go back
+              </Button>
 
-            <Button primary onClick={() => window.print()}>
-              Print
-            </Button>
-          </div>
-          <div className="u-w-100 u-flex u-flex-sb u-pt-2 u-pb-2 u-bottom-separator u-align-items-center">
-            <h1 className="c-title -fs-huge -fw-thin">{bme.name}</h1>
+              <Button primary onClick={() => window.print()}>
+                Print
+              </Button>
+            </div>
+            <div className="u-w-100 u-flex u-flex-sb u-pt-2 u-pb-2 u-bottom-separator u-align-items-center">
+              <h1 className="c-title -fs-huge -fw-thin">{bme.name}</h1>
 
-            <div className="c-text u-flex -fw-bold -uppercase -fs-extrasmall">
-              <div className="u-pr-1/2">powered by</div>
-              <div className="u-left-separator u-bw-2 u-bc-cc u-pl-1/2">
-                <div>financing</div>
-                <div>sustainable</div>
-                <div>cities</div>
+              <div className="c-text u-flex -fw-bold -uppercase -fs-extrasmall">
+                <div className="u-pr-1/2">powered by</div>
+                <div className="u-left-separator u-bw-2 u-bc-cc u-pl-1/2">
+                  <div>financing</div>
+                  <div>sustainable</div>
+                  <div>cities</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
 
-        <div className="bme-detail-page">
+          <div className="l-print bme-detail-page">
 
-          {isLoading && (<div>
-            Loading bme...
-          </div>)}
+            {isLoading && (<div>
+              Loading bme...
+            </div>)}
 
-          {!isLoading && (<div>
-            <BmeDetail
-              bme={bme}
-              isLoading={isLoading}
-              print={true}
-            />
+            {!isLoading && (<div>
+              <BmeDetail
+                bme={bme}
+                isLoading={isLoading}
+                print={true}
+              />
 
-          </div>)}
+            </div>)}
+          </div>
         </div>
       </div>
     );

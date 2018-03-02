@@ -22,16 +22,22 @@ export default () => (
             <div className="columns small-12 medium-6">
               <ul className="footer-nav">
                 <li>
-                  <Link prefetch route="about"><a className="c-text -dark -uppercase -fs-smaller">about</a></Link>
+                  <Link prefetch route="city-support"><a className="c-text -dark -uppercase -fs-smaller">City Support</a></Link>
                 </li>
                 <li>
-                  <Link prefetch route="explore-index"><a className="c-text -dark -uppercase -fs-smaller">Solutions map</a></Link>
+                  <Link prefetch route="events"><a className="c-text -dark -uppercase -fs-smaller">Events</a></Link>
+                </li>
+                <li>
+                  <Link prefetch route="about"><a className="c-text -dark -uppercase -fs-smaller">The Initiative</a></Link>
+                </li>
+                <li>
+                  <Link prefetch route="explore-index"><a className="c-text -dark -uppercase -fs-smaller">Explore</a></Link>
                 </li>
                 <li>
                   <Link prefetch route="builder"><a className="c-text -dark -uppercase -fs-smaller">Design</a></Link>
                 </li>
                 <li>
-                  <a className="c-text -dark -uppercase -fs-smaller" href="mailto:amaassen@wri.org?subject=Hello from the fsci site">Contact</a>
+                  <a className="c-text -dark -uppercase -fs-smaller" href="mailto:fscities@wri.org?subject=Hello from the fsci site">Contact</a>
                 </li>
               </ul>
             </div>

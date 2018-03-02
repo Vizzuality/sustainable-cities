@@ -9,8 +9,7 @@ export default function Initiative() {
         </div>
         <div className="column small-12 medium-8">
           <p className="c-text -fs-medium -fw-light">
-            In 2015, <a href="http://www.wrirosscities.org/" target="_blank" rel="noopener noreferrer">WRI Ross Center for Sustainable Cities</a>
-            and <a href="http://www.c40.org" target="_blank" rel="noopener noreferrer">C40 Cities Climate Leadership Group</a>,
+            In 2015, <a href="http://www.wrirosscities.org/" target="_blank" rel="noopener noreferrer">WRI Ross Center for Sustainable Cities</a> and <a href="http://www.c40.org" target="_blank" rel="noopener noreferrer">C40 Cities  Climate Leadership Group</a>,
             funded by the <a href="http://www.citigroup.com/citi/foundation/" target="_blank" rel="noopener noreferrer">Citi Foundation</a>,
             teamed up for a new partnership to leverage the expertise of our three organizations – WRI’s analytical
             and research competencies and long-term engagement with cities, the high-level connection with city leaders of
@@ -46,28 +45,15 @@ export default function Initiative() {
           <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small -title-margin-small">Continue reading</h2>
         </div>
         <div className="column small-12 medium-4">
-          <a className="main-link -border -about" href="/about/events">
-            <p className="c-text -fs-medium -fw-light">Events</p>
-            <p className="c-title -dark">FSCI's forums, workshops and events</p>
-          </a>
-        </div>
-        <div className="column small-12 medium-4">
           <a className="main-link -border -about" href="/about/blogs">
-            <p className="c-text -fs-medium -fw-light">Blogs</p>
-            <p className="c-title -dark">FSCI's news, discussion and announcements</p>
-          </a>
-        </div>
-        <div className="column small-12 medium-4"></div>
-        <div className="column small-12 medium-4">
-          <a className="main-link -border -about" href="/about/city-support">
-            <p className="c-text -fs-medium -fw-light">City Support</p>
-            <p className="c-title -dark">FSCI's forums, workshops, on-the-ground technical support and long-term engagements.</p>
+            <p className="c-text -fs-medium -dark">Blogs</p>
+            <p className="c-title">FSCI's news, discussion and announcements</p>
           </a>
         </div>
         <div className="column small-12 medium-4">
           <a className="main-link -border -about" href="/about/more-information">
-            <p className="c-text -fs-medium -fw-light">More information</p>
-            <p className="c-title -dark">The initiative's partners, research methodology and data policy.</p>
+            <p className="c-text -fs-medium -dark">More information</p>
+            <p className="c-title">The initiative's partners, research methodology and data policy.</p>
           </a>
         </div>
       </div>

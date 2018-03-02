@@ -47,7 +47,7 @@ class HomePage extends Page {
         <section className="l-home-header">
           <div className="row">
             <div className="columns small-10 small-offset-1">
-              <h1 className="c-title -fs-super-huge -fw-regular -light -center">FINANCING SUSTAINABLE CITIES INITIATIVE (FSCI)</h1>
+              <h1 className="c-title -fs-super-huge -fw-regular -light -center">FINANCING SUSTAINABLE CITIES INITIATIVE</h1>
             </div>
             <div className="column small-10 small-offset-1 medium-8 medium-offset-2">
               <h2 className="c-title -fs-bigger -light -center -subtitle">Helping cities accelerate and scale-up investments in sustainable urban solutions.</h2>
@@ -136,10 +136,10 @@ class HomePage extends Page {
         <section>
           <div className="l-blog">
             <div className="row">
-              <div className="columns small-12 medium-10 -flex-vertical-centered">
+              <div className="columns small-12 medium-9 large-10 -flex-vertical-centered">
                 <h3 className="c-title -dark -fs-huge -fw-thin">Posts about FSCI</h3>
               </div>
-              <div className="columns small-12 medium-2 -flex-vertical-centered">
+              <div className="columns small-12 medium-3 large-2 -flex-vertical-centered">
                 <a href="/about/blogs" className="c-button -primary">More blog posts</a>
               </div>
             </div>

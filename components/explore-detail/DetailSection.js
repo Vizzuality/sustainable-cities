@@ -7,8 +7,10 @@ export default function DetailSection(props) {
     <div
       className={classnames('c-detail-section', {
         '-content-separator': props.contentSeparator,
-        '-content-padding': props.contentPadding
+        '-content-padding': props.contentPadding,
+
       })}
+      id={props.type}
     >
       <div className="row">
         <div className="column small-12 medium-4">

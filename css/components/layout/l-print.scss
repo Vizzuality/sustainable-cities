@@ -1,4 +1,6 @@
 .l-print {
+  background: $white;
+
   .-fs-huge {
     font-size: $font-size-extrabig !important;
   }
@@ -66,11 +68,30 @@
     padding-top: 0;
   }
 
-  .solution-overview-summary .column.small-12.large-8 {
+  .solution-overview-summary .column.small-12.large-8,
+  .solution-overview-summary .column.large-4 {
     flex: 0 0 50%;
+    max-width: none!important;
   }
 
   .solution-overview-summary .column.large-4 {
+    max-width: 35% !important;
+  }
+
+  .c-bme-overview {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .c-bme-overview-item {
     flex: 0 0 50%;
+  }
+
+  #sourcesList {
+    display: none;
+  }
+
+  .c-bme-overview-strip {
+    -webkit-print-color-adjust: exact;
   }
 }

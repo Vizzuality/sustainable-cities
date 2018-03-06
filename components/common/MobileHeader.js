@@ -131,7 +131,7 @@ class MobileHeader extends React.Component {
                       className={classnames('nav-item', { '-current': route === 'about' })}
                       role="menuitem"
                     >
-                      <Link prefetch route="about"><a className="literal">The Initiative</a></Link>
+                      <Link prefetch route="about"><a className="literal">About FSCI</a></Link>
                     </li>
                     <li
                       className={classnames('nav-item', { '-current': SOLUTION_MAP_ROUTES.indexOf(route) !== -1 })}

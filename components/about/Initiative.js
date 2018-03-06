@@ -27,15 +27,12 @@ export default function Initiative() {
     <div className="c-detail-section -content-padding">
       <div className="row">
         <div className="column small-12 medium-4">
-          <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">The initiative</h2>
+          <h2 className="c-title -dark -fs-extrabig -fw-light -title-margin-small">The Initiative</h2>
         </div>
         <div className="column small-12 medium-8">
-          <p className="c-text -fs-medium -fw-light">Financing Sustainable Cities is an initiative focused on <strong>helping cities develop business models</strong> that can accelerate the implementation of sustainable urban solutions.</p>
-          <p className="c-text -fs-medium -fw-light">Cities are uniquely positioned to deliver sustainable solutions that can positively impact the lives of over half the world’s population. But, while investment capital and demand for sustainable solutions are in good supply, structuring successful sustainable projects can be a complex, time-consuming process.</p>
-          <p className="c-text -fs-medium -fw-light">Solutions such as mass public transit, bike sharing systems and energy efficient buildings need a <strong>strong business model behind them to come to life.</strong> The challenge is that supply and demand are often mismatched: cities’ sustainable infrastructure projects (the “demand side”) are not seen as viable investment opportunities by the investor community (the “supply side”) as they are too small, or too risky relative to expected returns.</p>
-          <p className="c-text -fs-medium -fw-light">This is particularly pronounced in emerging markets, where such investments are critical. The mismatch results in too few “bankable” projects, or investment-ready projects that are attractive enough for investors.</p>
-          <p className="c-text -fs-medium -fw-light">Yet cities worldwide are experimenting with new ways to invest in sustainable solutions, but progress often remains isolated and does not result in scalable and replicable change. Developing a common understanding of <strong>smart approaches to building cities</strong> will move us from talk to action.</p>
-          <p className="c-text -fs-medium -fw-light">The current focus of the initiative is on helping cities develop business models to accelerate the implementation of sustainable urban solutions.</p>
+          <p className="c-text -fs-medium -fw-light">The Financing Sustainable Cities Initiative (FSCI), funded by the Citi Foundation, is a partnership between the WRI Ross Center for Sustainable Cities and C40 Cities Climate Leadership Group that helps cities accelerate and scale-up investments in sustainable urban solutions through the development of innovative business models.</p>
+
+          <p className="c-text -fs-medium -fw-light">By identifying the ingredients of successful sustainable urban projects around the world, this groundbreaking partnership is helping city governments and investors develop business models that enable all stakeholders to bridge quickly from innovative ideas to their implementation. It is not just about finding more money; investors and city decision-makers need new ways of seeing eye-to-eye on what makes urban investment a sustainable and financially viable solution. </p>
         </div>
       </div>
     </div>

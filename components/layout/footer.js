@@ -28,7 +28,7 @@ export default () => (
                   <Link prefetch route="events"><a className="c-text -dark -uppercase -fs-smaller">Events</a></Link>
                 </li>
                 <li>
-                  <Link prefetch route="about"><a className="c-text -dark -uppercase -fs-smaller">The Initiative</a></Link>
+                  <Link prefetch route="about"><a className="c-text -dark -uppercase -fs-smaller">About FSCI</a></Link>
                 </li>
                 <li>
                   <Link prefetch route="explore-index"><a className="c-text -dark -uppercase -fs-smaller">Explore</a></Link>

@@ -94,7 +94,7 @@ export function getDataAbout(type) {
                 ...d.photos[0] && { image: `${process.env.API_URL}${d.photos[0].attachment.url}` },
                 ...isCitySupport && { category: (d.citySupportCategory || {}).id }
               })),
-              categories: isCitySupport ? getCategories(included) : []
+              categories: getCategories(included)
             }
           });
         });

@@ -10,8 +10,10 @@
   text-transform: uppercase;
   text-align: center;
   cursor: pointer;
+  font-weight: 700;
 
-  p + & {
+  p + &,
+  h2 + & {
     margin-top: 10px;
   }
 

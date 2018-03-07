@@ -18,3 +18,9 @@
   margin-bottom: 20px;
 }
 
+.l-video-row {
+  @media #{$mq-tablet} {
+    margin-top: 30px;
+  }
+}
+

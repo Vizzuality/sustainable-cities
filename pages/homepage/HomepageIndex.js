@@ -31,6 +31,7 @@ class HomePage extends Page {
 
   state = {
     modal: {
+
       disclaimer: {
         open: true
       }
@@ -161,8 +162,22 @@ class HomePage extends Page {
               <div className="video-wrapper">
                 <iframe src="https://player.vimeo.com/video/210677339" height="480" width="853" allowFullScreen="allowfullscreen" frameBorder="0"></iframe>
               </div>
-              <div className="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/4NVIToVDHTc" height="480" width="853" allowFullScreen="allowfullscreen" frameBorder="0"></iframe>
+            </div>
+          </div>
+          <div className="l-video-row">
+            <div className="row">
+              <div className="columns small-12 medium-6 large-4">
+                <div className="video-wrapper">
+                  <iframe src="https://www.youtube.com/embed/4NVIToVDHTc" allowFullScreen="allowfullscreen" frameBorder="0"></iframe>
+                </div>
+              </div>
+              <div className="columns small-12 medium-6 large-4">
+                <div className="video-wrapper">
+                  <iframe src="https://www.youtube.com/embed/0JvfYvBRo_o" allowFullScreen="allowfullscreen" frameBorder="0"></iframe>
+                </div>
+              </div>
+              <div className="columns small-12 medium-6 large-4">
+                <div className="video-wrapper"></div>
               </div>
             </div>
           </div>

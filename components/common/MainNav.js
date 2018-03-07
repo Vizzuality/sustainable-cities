@@ -160,7 +160,7 @@ class MainNav extends React.Component {
                   >
                     <li
                       ref={(node) => { this.toolsTabNode = node; }}
-                      className={classnames('nav-item', { '-current': route === 'builder' })}
+                      className={classnames('nav-item -tool', { '-current': route === 'builder' })}
                       role="menuitem"
                       onClick={e => this.onSelectSection(e, 'builder')}
                     >

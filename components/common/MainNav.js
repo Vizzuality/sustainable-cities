@@ -165,6 +165,7 @@ class MainNav extends React.Component {
                       onClick={e => this.onSelectSection(e, 'builder')}
                     >
                       <a href="/builder" className="literal">Tools</a>
+                      <span className="arrow"></span>
                     </li>
                     {section === 'builder' &&
                       <SubMenu

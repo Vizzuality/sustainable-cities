@@ -58,6 +58,8 @@
       display: inline-flex;
       align-items: center;
       color: $color-primary;
+      position: relative;
+
 
       &:not(:first-child) {
         margin: 0 0 0 35px;
@@ -65,7 +67,7 @@
 
       &:hover,
       &.-current {
-        position: relative;
+
 
         &::after {
           content: '';
@@ -121,4 +123,13 @@
       }
     }
   }
+}
+
+
+.nav-item.-tool .arrow {
+  position: absolute;
+  top: 25px;
+  right: -20px;
+  // transform: translate(0, -50%);
+  @include arrow(10px, 2px, $color-primary, down);
 }

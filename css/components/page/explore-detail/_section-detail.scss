@@ -6,7 +6,11 @@ $city-support: 'city-1', 'city-2', 'city-3', 'city-4', 'city-5', 'city-6', 'city
   margin: 20px 0 0;
 
   @media screen and (min-width: $screen-m) {
-    margin: 50px 0 0;
+    .about-page & {
+      margin: 50px 0 0;
+    }
+
+    margin: 0;
   }
 
   &.-content-separator {

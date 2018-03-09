@@ -160,11 +160,12 @@ class MainNav extends React.Component {
                   >
                     <li
                       ref={(node) => { this.toolsTabNode = node; }}
-                      className={classnames('nav-item', { '-current': route === 'builder' })}
+                      className={classnames('nav-item -tool', { '-current': route === 'builder' })}
                       role="menuitem"
                       onClick={e => this.onSelectSection(e, 'builder')}
                     >
                       <a href="/builder" className="literal">Tools</a>
+                      <span className="arrow"></span>
                     </li>
                     {section === 'builder' &&
                       <SubMenu

@@ -22,13 +22,13 @@ class CitySupport extends React.Component {
     this.props.resetData();
   }
 
-  renderBlock(category, isEnd) {
+  renderBlock(category) {
     const { loading } = this.props;
     return (
       <div className="c-detail-section -content-separator" key={category.id}>
         <div className="row">
           <div className="about-content">
-            {(category.cities || []).map(city => (
+            {category.map(city => (
               <div key={city.id} className="column small-12 medium-4">
                 <div className="post">
                   <div className="picture" style={{ backgroundImage: `url(${city.image})` }} />
@@ -46,11 +46,10 @@ class CitySupport extends React.Component {
 
   render() {
     const { citiesByCategory, loading } = this.props;
-
     return (
       <div className="c-about-content">
         {loading && <Spinner isLoading className="-transparent" />}
-        {citiesByCategory.map((cat, index) => this.renderBlock(cat, citiesByCategory.length - 1 === index))}
+        {this.renderBlock(citiesByCategory)}
       </div>);
   }
 }

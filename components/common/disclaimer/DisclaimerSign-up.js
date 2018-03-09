@@ -50,7 +50,7 @@ class DisclaimerModal extends React.Component {
     return (
       <section className="disclaimer">
         <h1 className="c-title -dark -fs-huge -fw-thin">Welcome!</h1>
-        <p className="c-text -fw-light">Welcome to the Beta version of the Financing Sustainable Cities Web Platform! Please feel free to explore the features that are currently available.</p>
+        <p className="c-text">Welcome to the Beta version of the Financing Sustainable Cities Web Platform! Please feel free to explore the features that are currently available.</p>
         <p className="c-text">The full version of our platform will be up and running soon, but in the meantime we invite you to sign up to our mailing list to stay up-to-date with our progress.</p>
 
         <p className="c-text -fs-big">Sign up for updates</p>

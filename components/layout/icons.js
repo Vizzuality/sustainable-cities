@@ -4,6 +4,11 @@ export default function Icons() {
   return (
     <svg style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }} version="1.1" xmlns="http://www.w3.org/2000/svg">
       <defs>
+        <symbol id="icon-play" viewBox="0 0 32 32">
+        <title>play</title>
+        <path fill="#fff" d="M32 16c0 8.837-7.163 16-16 16s-16-7.163-16-16c0-8.837 7.163-16 16-16s16 7.163 16 16z"></path>
+        <path fill="#2c2f33" opacity="0.9" d="M11.208 8.789l13.252 7.211-13.252 7.211v-14.421zM12.371 10.747v10.505l9.653-5.253-9.653-5.253z"></path>
+        </symbol>
         <symbol id="icon-close" viewBox="0 0 32 32">
           <title>close</title>
           <path d="M16.359 13.070l-11.569-11.569-3.289 3.289 11.569 11.569-11.569 11.569 3.289 3.289 11.569-11.569 11.569 11.569 3.289-3.289-11.569-11.569 11.569-11.569-3.289-3.289-11.569 11.569z" />

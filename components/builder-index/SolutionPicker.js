@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import sortBy from 'lodash/sortBy';
 
 import Button from 'components/common/Button';
 import { BME } from 'components/common/RadialChart';
@@ -26,7 +27,7 @@ class SolutionPicker extends React.Component {
               onChange={() => this.props.onSolutionSelected({ id: undefined })}
             />
           </li>
-          {this.props.solutions.map(solution => (
+          {sortBy(this.props.solutions, 'name').map(solution => (
             <li key={solution.slug} className="u-block">
               <SolutionRadio
                 solution={solution}

@@ -5,50 +5,41 @@ import { Link } from 'routes';
 
 export default class SubMenu extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    // bindings
-    this._onClickOutside = this.onClickOutside.bind(this);
-  }
-
-  componentDidMount() {
-    this.setEventListeners();
-  }
-
-  componentWillUnmount() {
-    this.removeEventListeners();
-  }
-
-  onClickOutside(e) {
-    const isClickOutside = this.subMenuNode &&
-      this.subMenuNode.contains &&
-      !this.subMenuNode.contains(e.target) &&
-      !this.props.parentNode.contains(e.target);
-
-    if (isClickOutside) {
-      this.props.onCloseSubMenu();
-    }
-  }
-
-  setEventListeners() {
-    window.addEventListener('click', this._onClickOutside);
-  }
-
-  removeEventListeners() {
-    window.removeEventListener('click', this._onClickOutside);
+  handleClickInfo = () => {
+    const { onCloseSubMenu, modal } = this.props
+    onCloseSubMenu();
+    modal.onClick();
   }
 
   render() {
-    const { items, className, parent, route } = this.props;
-    const classNames = classnames('c-submenu', {
+    const { items, className, parent, route, onCloseSubMenu, modal } = this.props;
+    const classNames = classnames({
+      'c-submenu': true,
       [className]: !!className
     });
 
     return (
-      <div className={classNames} ref={(node) => { this.subMenuNode = node; }}>
-        <div className="parent-menu"><span className="literal">{parent}</span></div>
-        <ul className="menu-list" role="menubar" aria-label={`Submenu for ${parent} section`}>
+      <div
+        className={classNames}
+        onMouseLeave={onCloseSubMenu}
+      >
+        <div className="parent-menu">
+          <span className="literal">{parent}</span>
+          {modal &&
+            <button
+              className="c-info-icon"
+              onClick={this.handleClickInfo}
+            >
+              <svg className="icon -info">
+                <use xlinkHref="#icon-info" />
+              </svg>
+            </button>}
+        </div>
+        <ul
+          className="menu-list"
+          role="menubar"
+          aria-label={`Submenu for ${parent} section`}
+        >
           {items.map(item => <li key={item.id} className="menu-item" role="menuitem" tabIndex="-1">
             {item.onClick ?
               <span className="literal" onClick={() => item.onClick()}>{item.label}</span>
@@ -66,11 +57,14 @@ export default class SubMenu extends React.Component {
   }
 }
 
+
+SubMenu.defaultProps = { modal: {} }
+
 SubMenu.propTypes = {
   className: PropTypes.string,
   items: PropTypes.array.isRequired,
-  onCloseSubMenu: PropTypes.func,
+  onCloseSubMenu: PropTypes.func.isRequired,
+  modal: PropTypes.object,
   parent: PropTypes.string,
-  parentNode: PropTypes.object.isRequired,
   route: PropTypes.string
 };

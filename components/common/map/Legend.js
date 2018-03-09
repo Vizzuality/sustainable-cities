@@ -96,16 +96,18 @@ export default class Legend extends React.Component {
         });
 
         // build the item array with the necessary values
-        items = projectCategories.map((catSlug) => {
-          const solutionCategory = solutionCategories.find(sc => sc.slug === catSlug);
-          return ({
-            id: solutionCategory.id,
-            name: solutionCategory.name,
-            slug: solutionCategory.slug,
-            color: CATEGORY_SOLUTIONS_COLORS[solutionCategory.slug],
-            type: 'single-circle'
+        items = projectCategories.filter(catSlug => solutionCategories.find(sc => sc.slug === catSlug))
+          .map((catSlug) => {
+            const solutionCategory = solutionCategories.find(sc => sc.slug === catSlug);
+
+            return ({
+              id: solutionCategory.id,
+              name: solutionCategory.name,
+              slug: solutionCategory.slug,
+              color: CATEGORY_SOLUTIONS_COLORS[solutionCategory.slug],
+              type: 'single-circle'
+            });
           });
-        });
 
         items.push(MULTI_SOLUTION_ITEM);
 

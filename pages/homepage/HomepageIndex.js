@@ -177,7 +177,8 @@ class HomePage extends Page {
                 </div>
               </div>
               <div className="columns small-12 medium-6 large-4">
-                <div className="video-wrapper"></div>
+                <div className="video-wrapper">
+                </div>
               </div>
             </div>
           </div>

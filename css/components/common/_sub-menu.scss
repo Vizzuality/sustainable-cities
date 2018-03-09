@@ -32,6 +32,11 @@
         background: $color-primary;
       }
     }
+
+    > .c-info-icon {
+      margin: 0 0 0 16px;
+      cursor: pointer;
+    }
   }
 
   > .menu-list {

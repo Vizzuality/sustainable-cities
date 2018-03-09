@@ -88,7 +88,7 @@
       > .literal {
         position: relative;
         color: $color-primary;
-        cursor: default;
+        cursor: pointer;
 
         &::after {
           content: '';

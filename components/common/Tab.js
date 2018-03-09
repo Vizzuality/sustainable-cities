@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { Link } from 'routes';
 import TetherComponent from 'react-tether';
 import isEqual from 'lodash/isEqual';
+import debounce from 'lodash/debounce';
 import uuidv1 from 'uuid/v1';
 
 // components
@@ -16,12 +17,11 @@ export default class Tab extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      category: ''
-    };
+    this.state = {};
 
-    // saves node references of tabs to colocate submenus
-    this.tabNodes = [];
+
+    // binding
+    this.debouncedClickTab = debounce(this.onClickTab, 300);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -30,22 +30,19 @@ export default class Tab extends React.Component {
     }
   }
 
-  onClickTab(e, category) {
-    if (e) e.preventDefault();
-    this.setState({ category });
+  onClickTab(category, value) {
+    this.setState({ [category]: value });
   }
 
-  onCloseSubMenu() {
-    this.setState({
-      category: ''
-    });
+  onCloseSubMenu(category) {
+    this.setState({ [category]: false });
   }
 
   renderTab(item, index) {
     const { queryParams } = this.props;
     const { route, category } = queryParams;
     const { children, label, modal, query, allowAll } = item;
-    // debugger
+
     if (children) {
       let subMenuOptions = children;
 
@@ -80,7 +77,6 @@ export default class Tab extends React.Component {
         );
       }
 
-
       return (
         <TetherComponent
           attachment="top center"
@@ -98,11 +94,12 @@ export default class Tab extends React.Component {
           }]}
         >
           <li
-            ref={(node) => { this.tabNodes[index] = node; }}
             className={classnames('tab-item', item.slug, label, { '-current': query.category === category })}
             role="menuitem"
             aria-haspopup="true"
             tabIndex="-1"
+            onMouseEnter={() => this.debouncedClickTab(query.category, true)}
+            onMouseLeave={() => this.debouncedClickTab(query.category, false)}
           >
             <Mobile>
               <Link
@@ -119,7 +116,6 @@ export default class Tab extends React.Component {
             <Tablet>
               <a
                 href="/"
-                onClick={e => this.onClickTab(e, query.category)}
                 className="literal"
               >
                 {label}
@@ -132,17 +128,17 @@ export default class Tab extends React.Component {
                 </svg>
               </button>}
           </li>
-          <Tablet>
-            {this.state.category === query.category &&
+          {this.state[query.category] &&
+            <Tablet>
               <SubMenu
                 className="-tab"
                 parent={label}
                 route={route}
-                parentNode={this.tabNodes[index]}
                 items={subMenuOptions}
-                onCloseSubMenu={() => this.onCloseSubMenu()}
-              />}
-          </Tablet>
+                onCloseSubMenu={() => this.onCloseSubMenu(query.category)}
+                modal={modal}
+              />
+            </Tablet>}
         </TetherComponent>
       );
     }
@@ -161,7 +157,7 @@ export default class Tab extends React.Component {
           <a
             href={query.category}
             className="literal"
-            onClick={e => this.onClickTab(e, query.category)}
+            onClick={e => this.debouncedClickTab(query.category)}
           >
             {label}
           </a>

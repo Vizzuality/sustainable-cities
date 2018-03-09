@@ -29,7 +29,7 @@ export default function MoreInformation() {
 
             <p className="c-text -fs-medium -fw-light">Data collection for most of the projects on this platform consisted of literature reviews and practitioner interviews combined with expert verification of project details.</p>
 
-            <p className="c-text -fs-medium -fw-light">For more information on the research method, please contact Anne Maassen, <a className="c-text -fs-medium -fw-light" href="mailto:amaassen@wri.org">amaassen@wri.org</a></p>
+            <p className="c-text -fs-medium -fw-light">For more information on the research method, please contact us at <a className="c-text -fs-medium -fw-light" href="mailto:fscities@wri.org">fscities@wri.org</a></p>
           </div>
         </div>
       </div>

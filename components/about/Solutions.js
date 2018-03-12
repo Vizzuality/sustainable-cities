@@ -32,16 +32,6 @@ class Solutions extends React.Component {
 
   render() {
     return (<div className="c-about-content">
-      // <div className="c-detail-section -content-padding">
-      //   <div className="row">
-      //     <div className="column small-12 medium-8 medium-offset-4">
-      //       <p className="c-text -dark -fs-medium -fw-light">The initiative&apos;s current focus is on transit oriented-development, bike sharing schemes,
-      //         electric buses, bus rapid transit, energy efficient new buildings and retrofitting
-      //         existing buildings. These are sustainable solutions that can positively impact the
-      //         lives of over half of the world&apos;s population.</p>
-      //     </div>
-      //   </div>
-      // </div>
       <div className="c-detail-section -content-padding -content-separator">
         <div className="row">
           <div className="column small-12 medium-4">

@@ -25,7 +25,7 @@ export default class SubMenu extends React.Component {
       >
         <div className="parent-menu">
           <span className="literal">{parent}</span>
-          {modal &&
+          {!!Object.keys(modal).length &&
             <button
               className="c-info-icon"
               onClick={this.handleClickInfo}

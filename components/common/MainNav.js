@@ -162,7 +162,8 @@ class MainNav extends React.Component {
                       ref={(node) => { this.toolsTabNode = node; }}
                       className={classnames('nav-item -tool', { '-current': route === 'builder' })}
                       role="menuitem"
-                      onClick={e => this.onSelectSection(e, 'builder')}
+                      onMouseEnter={e => this.onSelectSection(e, 'builder')}
+                      onMouseLeave={e => this.onSelectSection(e, '')}
                     >
                       <a href="/builder" className="literal">Tools</a>
                       <span className="arrow"></span>

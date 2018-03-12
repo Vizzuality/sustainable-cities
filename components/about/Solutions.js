@@ -43,6 +43,7 @@ class Solutions extends React.Component {
                 className="-transparent"
                 isLoading={this.props.loading}
               />}
+
               {this.props.solutions.map(solution =>
                 <div className="column small-12 medium-6" key={solution.id}>
                   <div className="solution-item">

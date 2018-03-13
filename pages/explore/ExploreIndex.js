@@ -211,7 +211,7 @@ class ExploreIndex extends Page {
       queryParams,
       solutionsDownloadOptions
     } = this.props;
-    const { category } = queryParams;
+    const { category, subCategory } = queryParams;
     const isSolutionView = category === 'solutions';
     const items = this._setItemsToDisplay();
     const conditions = this._setDisplayConditions();
@@ -307,6 +307,31 @@ class ExploreIndex extends Page {
                 />}
             </div>
           </div>
+          {/* hardcoded logo display buses logos */}
+          {subCategory === 'low-and-zero-emission-buses' &&
+            <div className="c-buses-acknowledges">
+              <div className="row">
+                <div className="column small-12">
+                  <p className="c-text -fs-medium -fw-light">
+                    This research was financially supported by the Climate Technology Transfer Mechanisms
+                    and Networks in Latin America and the Caribbean project implemented by the
+                    Inter-American Development Bank and the World Resources Institute with funds from
+                    the Global Environmental Facility.
+                  </p>
+                </div>
+              </div>
+              <div className="logos-container">
+                <div className="row">
+                  <div className="columns small-6">
+                    <img src="/static/images/GEF_logo_Global_Environment_Facility.png" alt="Global Environment Facility (GEF)" />
+                  </div>
+                  <div className="columns small-6">
+                    <img src="/static/images/Inter-American-Development-Bank.png" alt="Inter American Development Bank (IADB)" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
         </div>
 
         {/*<DownloadData

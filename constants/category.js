@@ -20,7 +20,9 @@ const CATEGORY_FIRST_LEVEL_COLORS = {
 };
 
 const CATEGORY_SOLUTIONS_COLORS = {
+  'affordable-housing-and-biodegradable-energy-to-waste': '#9a4d00', // Affordable housing
   'bike-sharing-scheme': '#80CED2', // Bike Sharing Scheme
+  'biodegradable-energy-to-waste': '#000', // Biodegradable waste-to-energy systems
   'efficient-new-buildings': '#38638F', // Efficient New Buildings
   'bus-rapid-transit-brt': '#f7b50c', // Bus Rapid Transit (BRT)
   'low-and-zero-emission-buses': '#94CB6C', // Low And Zero Emission Buses

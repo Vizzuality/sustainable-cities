@@ -39,6 +39,10 @@
     }
   }
 
+  &.-padding {
+    padding: 8px 40px 7px;
+  }
+
   &.-disabled {
     opacity: .3;
     pointer-events: none;

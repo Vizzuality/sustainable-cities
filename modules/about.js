@@ -33,7 +33,7 @@ export default function (state = initialState, action) {
       const { list, categories = [], type } = action.payload;
       return {
         ...state,
-        [type]: list,
+        [type]: [...list],
         categories
       }
     }

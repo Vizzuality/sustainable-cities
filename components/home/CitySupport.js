@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
-// redux
-import { store } from 'store';
-import withRedux from 'next-redux-wrapper';
+import { connect } from 'react-redux';
 
 // modules
 import { getDataAbout, resetData } from 'modules/about';
-import getCitiesByCategory from 'selectors/city-support';
 
 // components
 import Spinner from 'components/common/Spinner';
 
-class CitySupport extends React.Component {
+class CitySupport extends PureComponent {
+  static propTypes = {
+    cities: PropTypes.array,
+    getCitySupport: PropTypes.func.isRequired
+  };
+
+  static defaultProps = { cities: [] };
 
   componentWillMount() {
     this.props.getCitySupport();
@@ -22,51 +24,34 @@ class CitySupport extends React.Component {
     this.props.resetData();
   }
 
-  renderBlock(category) {
-    const { loading } = this.props;
-    return (
-      <div className="columns c-detail-section" key={category.id}>
-        <div className="row">
-          {(category.cities || []).slice(0, 2).map(city => (
-            <div key={city.id} className="column small-12 medium-6">
-              <div className="post">
-                <div className="picture" style={{ backgroundImage: `url(${city.image})` }} />
-                {city.imageSource && <span className="c-text -dark -fs-smaller -fw-light -uppercase">image source: {city.imageSource}</span>}
-                <p className="c-text -dark -fs-medium">{city.title}</p>
-                <p className="c-text -fw-light">{city.description || ''}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   render() {
-    const { citiesByCategory, loading } = this.props;
+    const { cities, loading } = this.props;
     return (
       <div className="small-12 medium-8">
         <div className="c-content">
           {loading && <Spinner isLoading className="-transparent" />}
-          {this.renderBlock(citiesByCategory)}
+          <div className="columns c-detail-section">
+-           <div className="row">
+              {cities.map(city => (
+                <div key={city.id} className="column small-12 medium-6">
+                  <div className="post">
+                    <div className="picture" style={{ backgroundImage: `url(${city.image})` }} />
+                    {city.imageSource && <span className="c-text -dark -fs-smaller -fw-light -uppercase">image source: {city.imageSource}</span>}
+                    <p className="c-text -dark -fs-medium">{city.title}</p>
+                    <p className="c-text -fw-light">{city.description || ''}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>);
   }
 }
 
-CitySupport.propTypes = {
-  citiesByCategory: PropTypes.array,
-  getCitySupport: PropTypes.func
-};
-
-CitySupport.defaultProps = {
-  citiesByCategory: []
-};
-
-export default withRedux(
-  store,
-  (state) => ({
-    citiesByCategory: getCitiesByCategory(state),
+export default connect(
+  state => ({
+    cities: state.about['city-supports'],
     loading: state.about.loading
   }),
   dispatch => ({

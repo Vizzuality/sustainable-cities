@@ -31,7 +31,7 @@ class CitySupport extends PureComponent {
         <div className="c-content">
           {loading && <Spinner isLoading className="-transparent" />}
           <div className="columns c-detail-section">
--           <div className="row">
+            <div className="row">
               {cities.map(city => (
                 <div key={city.id} className="column small-12 medium-6">
                   <div className="post">
@@ -51,7 +51,7 @@ class CitySupport extends PureComponent {
 
 export default connect(
   state => ({
-    cities: state.about['city-supports'],
+    cities: (state.about['city-supports'] || []).slice(0, 4),
     loading: state.about.loading
   }),
   dispatch => ({

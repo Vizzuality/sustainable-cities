@@ -102,8 +102,8 @@ export function getSolutions() {
       dispatch({ type: ERROR_SOLUTIONS, payload: true });
       throw new Error(response.status);
     })
-    .then((bmes) => {
-      dispatch({ type: GET_SOLUTION_TREE, payload: deserialize(bmes) });
+    .then((solutions) => {
+      dispatch({ type: GET_SOLUTION_TREE, payload: deserialize(solutions) });
     });
   };
 }

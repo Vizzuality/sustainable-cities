@@ -1,27 +1,13 @@
 .c-logo-app {
-  display: flex;
   height: 65px;
   padding: 15px 0;
 
   > a {
-    position: relative;
-    font-size: $font-size-extrasmall;
-    color: $color-primary;
-    line-height: 14px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    display: inline-block;
     padding-left: 10px;
 
-    // &::after {
-    //   content: "BETA";
-    //   position: absolute;
-    //   bottom: -6px;
-    //   right: -5px;
-    //   width: 36px;
-    //   padding: 2px 4px 0;
-    //   transform: translatex(100%);
-    //   color: $black;
-    //   background-color: $white;
-    // }
+    > img {
+      height: 100%;
+    }
   }
 }

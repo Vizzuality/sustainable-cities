@@ -321,12 +321,12 @@ class ExploreIndex extends Page {
                 </div>
               </div>
               <div className="logos-container">
-                <div className="row">
-                  <div className="columns small-6">
-                    <img src="/static/images/GEF_logo_Global_Environment_Facility.png" alt="Global Environment Facility (GEF)" />
+                <div className="row row-container">
+                  <div className="column small-12 medium-3">
+                    <div className="logo-background" style={{ backgroundImage: 'url(/static/images/GEF_logo_Global_Environment_Facility.png)' }} />
                   </div>
-                  <div className="columns small-6">
-                    <img src="/static/images/Inter-American-Development-Bank.png" alt="Inter American Development Bank (IADB)" />
+                  <div className="column small-12 medium-3">
+                    <div className="logo-background" style={{ backgroundImage: 'url(/static/images/Inter-American-Development-Bank.png)' }} />
                   </div>
                 </div>
               </div>

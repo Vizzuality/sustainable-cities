@@ -1,0 +1,39 @@
+.c-buses-acknowledges {
+  transform: translate(0, -75px);
+
+  p {
+    font-style: italic;
+  }
+
+  .logos-container {
+    margin: 5px 0 0;
+    height: 400px;
+
+    @media #{$mq-tablet} {
+      margin: 25px 0 0;
+      height: 210px;
+    }
+
+    @media #{$mq-desktop} {
+      height: 185px;
+    }
+
+    .row-container {
+      height: 100%;
+    }
+
+    .logo-background {
+      width: 100%;
+      height: 100%;
+      margin: 15px 0 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      @media #{$mq-tablet} {
+        margin: 0;
+        background-size: contain;
+      }
+    }
+  }
+}

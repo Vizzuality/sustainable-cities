@@ -64,12 +64,13 @@ export const onSubmit = () =>
     const { fields } = getState().contactForm;
     const queryParams = { fields };
 
-    fetch(`${process.env.API_URL}/endpoint_to_define?${queryParams}`, {
-      method: 'GET',
+    fetch(`${process.env.API_URL}/contact-us`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'SC-API-KEY': process.env.SC_API_KEY
-      }
+      },
+      body: JSON.stringify({ contact: { name: fields["contact-name"], email: fields["email"], message: fields["message"] } })
     })
     .then((response) => {
       if (response.ok) {

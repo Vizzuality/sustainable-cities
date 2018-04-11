@@ -1,7 +1,36 @@
 .c-contact-form {
-  display: none;
   border-top: 1px solid rgba($color-1, .1);
   padding: 50px 0;
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: rgba($color-black, .02);
+
+  form {
+    margin: 25px 0 0;
+
+    .form-row {
+      &:not(:first-child) {
+        margin: 15px 0 0;
+      }
+    }
+
+    .form-element-name {
+      margin: 0;
+      font-weight: $font-weight-light;
+    }
+
+    textarea {
+      width: 100%;
+    }
+  }
+
+  .c-title {
+    letter-spacing: -1.1px;
+    line-height: 1;
+  }
+
+  .buttons-container {
+    display: flex;
+    margin: 25px 0 0;
+    justify-content: center;
+  }
 }
 

@@ -7,3 +7,4 @@ export { default as builder } from './builder';
 export { default as builderAPI } from './builder-api';
 export { default as auth } from './auth';
 export { default as about } from './about';
+export { default as contactForm } from './contact-form';

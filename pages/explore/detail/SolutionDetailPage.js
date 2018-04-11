@@ -34,7 +34,6 @@ import Modal from 'components/common/Modal';
 import DownloadDataModal from 'components/common/modal/DownloadDataModal';
 import ShareModal from 'components/common/ShareModal';
 import RelatedContent from 'components/explore-detail/RelatedContent';
-import ContactForm from 'components/explore-detail/ContactForm';
 import SolutionDetail from 'components/explore-detail/SolutionDetail';
 import SolutionOverview from 'components/explore-detail/SolutionOverview';
 import SolutionCategory from 'components/explore-detail/SolutionCategory';
@@ -284,8 +283,6 @@ class SolutionDetailPage extends Page {
             {this.renderTabs()}
 
             {this.renderContent()}
-
-            <ContactForm />
 
             <RelatedContent />
 

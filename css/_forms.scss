@@ -1,4 +1,5 @@
 textarea {
+  resize: none;
   box-shadow: 0 1px 3px 0 rgba($color-black, 0.15);
   border: none;
 
@@ -9,17 +10,23 @@ textarea {
 
   &::placeholder {
     color: $color-text-3;
+    font-size: $font-size-small;
   }
 }
 
 .input-text {
+  width: 100%;
   height: 50px;
   padding: 12px 20px;
   box-shadow: 0 1px 3px 0 rgba($color-black, 0.15);
   border: none;
 
+  font-family: $font-family-1;
+  font-size: $font-size-default;
+
   &::placeholder {
     color: $color-text-3;
+    font-size: $font-size-small;
   }
 }
 

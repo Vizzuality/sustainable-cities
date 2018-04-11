@@ -9,8 +9,14 @@ export default function Button(props) {
     '-primary': !props.secondary,
     '-secondary': props.secondary,
     '-inverse': props.inverse,
+    '-padding': props.padding,
     '-disabled': props.disabled
   }, props.className);
+
+  const buttonType = classnames({
+    'button': !props.submit,
+    'submit': props.submit
+  })
 
   if (props.link) {
     // If the link is a string, this means that it is external
@@ -45,7 +51,7 @@ export default function Button(props) {
   return (
     <button
       className={classnames(classes)}
-      type="button"
+      type={buttonType}
       onClick={props.onClick}
     >
       {props.children}

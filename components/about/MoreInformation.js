@@ -1,5 +1,7 @@
 import React from 'react';
 
+import ContactForm from 'components/about/contact-form';
+
 export default function MoreInformation() {
   return (
   <div className="c-about-content">
@@ -94,5 +96,6 @@ export default function MoreInformation() {
           </div>
         </div>
       </div>
+      <ContactForm />
     </div>);
 }

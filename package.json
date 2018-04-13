@@ -19,6 +19,7 @@
     "cookie-parser": "^1.4.3",
     "copy-to-clipboard": "^3.0.8",
     "dotenv": "^4.0.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
     "eventemitter3": "^2.0.3",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
@@ -70,8 +71,8 @@
     "eslint-config-vizzuality": "1.0.7",
     "eslint-import-resolver-babel-module": "^3.0.0",
     "eslint-plugin-babel": "^4.1.1",
-    "eslint-plugin-import": "https://registry.npmjs.org/eslint-plugin-import/-/eslint-plugin-import-2.2.0.tgz",
-    "eslint-plugin-react": "^6.10.3"
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-react": "^7.7.0"
   },
   "scripts": {
     "dev": "NODE_ENV=development node index.js",

@@ -13,9 +13,8 @@ import ContactFormModal from 'components/common/modal/contact-form-modal';
 class ContactForm extends PureComponent {
   static propTypes = {
     formValues: PropTypes.object.isRequired,
-    loading: PropTypes.bool.isRequired,
     success: PropTypes.bool.isRequired,
-    error: PropTypes.bool.isRequired,
+    sent: PropTypes.bool.isRequired,
     setFormValue: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     resetForm: PropTypes.func.isRequired
@@ -27,47 +26,44 @@ class ContactForm extends PureComponent {
     this.state = { modal: props.sent };
   }
 
-  componentWillUnmount() {
-    this.props.resetForm();
-  }
-
   componentWillReceiveProps(nextProps) {
     const { sent: nextSent } = nextProps;
 
     this.setState({ modal: nextSent });
   }
 
-  handleSubmit = e => {
-    e && e.preventDefault();
+  componentWillUnmount() {
+    this.props.resetForm();
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
 
     this.props.onSubmit();
   }
 
   handleInput = (event) => {
-    const { name, value} = event.target;
+    const { name, value } = event.target;
 
     this.props.setFormValue({ name, value });
   }
 
   handleToggleModal = () => {
-    this.setState({ modal: !this.state.modal })
+    this.setState({ modal: !this.state.modal });
     this.props.resetForm();
   }
 
   render() {
     const {
       formValues,
-      success,
-      sent
+      success
     } = this.props;
 
     const {
       'contact-name': contactName,
       email,
-      message,
+      message
     } = formValues;
-
-    const modalShouldOpen = this.state.modal;
 
     return (
       <div className="c-contact-form">
@@ -108,16 +104,16 @@ class ContactForm extends PureComponent {
               <div className="form-row">
                 <div className="row">
                   <div className="columns small-12">
-                      <h3 className="form-element-name">Message</h3>
-                      <textarea
-                        name="message"
-                        rows="10"
-                        placeholder="Your message here"
-                        value={message}
-                        required
-                        onChange={this.handleInput}
-                      />
-                    </div>
+                    <h3 className="form-element-name">Message</h3>
+                    <textarea
+                      name="message"
+                      rows="10"
+                      placeholder="Your message here"
+                      value={message}
+                      required
+                      onChange={this.handleInput}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="form-row">
@@ -149,7 +145,7 @@ class ContactForm extends PureComponent {
               onCloseModal={this.handleToggleModal}
             />
           </Modal>}
-        </div>
+      </div>
     );
   }
 }
@@ -159,8 +155,7 @@ export default connect(
     formValues: state.contactForm.fields,
     sent: state.contactForm.sent,
     loading: state.contactForm.loading,
-    success: state.contactForm.success,
-    error: state.contactForm.error
+    success: state.contactForm.success
   }),
   dispatch => ({
     setFormValue(field) { dispatch(setFormValue(field)); },

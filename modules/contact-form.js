@@ -6,6 +6,7 @@ const SET_FORM_FIELD_VALUE = 'contact-form/SET_FORM_FIELD_VALUE';
 const SET_FORM_LOADING = 'contact-form/SET_FORM_LOADING';
 const SET_FORM_SUCCESS = 'contact-form/SET_FORM_SUCCESS';
 const SET_FORM_ERROR = 'contact-form/SET_FORM_ERROR';
+const SET_FORM_SENT = 'contact-form/SET_FORM_SENT';
 const SET_FORM_SUBMIT = 'contact-form/SET_FORM_SUBMIT';
 const RESET_FORM_DATA = 'contact-form/RESET_FORM_DATA';
 
@@ -18,6 +19,7 @@ const initialState = {
   },
   loading: false,
   success: false,
+  sent: false,
   error: false
 };
 
@@ -40,6 +42,8 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, { success: action.payload });
     case SET_FORM_ERROR:
       return Object.assign({}, state, { error: action.payload });
+    case SET_FORM_SENT:
+      return Object.assign({}, state, { sent: action.payload });
     case RESET_FORM_DATA:
       return Object.assign({}, state, initialState);
     default:
@@ -53,9 +57,15 @@ export const setFormValue = (field) =>
     dispatch({ type: SET_FORM_FIELD_VALUE, payload: field });
   };
 
+export const setSentForm = (sent) =>
+  dispatch => {
+    dispatch({ type: SET_FORM_SENT, payload: sent });
+  };
+
 export const resetForm = (field) =>
   dispatch => {
     dispatch({ type: RESET_FORM_DATA });
+    dispatch(setSentForm(initialState.sent));
   };
 
 export const onSubmit = () =>
@@ -63,6 +73,8 @@ export const onSubmit = () =>
     dispatch({ type: SET_FORM_LOADING, payload: true });
     const { fields } = getState().contactForm;
     const queryParams = { fields };
+
+    dispatch(setSentForm(true));
 
     fetch(`${process.env.API_URL}/contact-us`, {
       method: 'POST',
@@ -79,10 +91,18 @@ export const onSubmit = () =>
       }
 
       dispatch({ type: SET_FORM_ERROR, payload: true });
+      dispatch(setSentForm(false));
       throw new Error(response.status);
     })
     .then(response => {
       dispatch({ type: SET_FORM_LOADING, payload: false });
-      dispatch({ type: SET_FORM_SUCCESS, payload: true })
+
+      // message was sent successfully
+      if (response.messages[0].status === 201) {
+        dispatch({ type: SET_FORM_SUCCESS, payload: true })
+      } else {
+        dispatch(setSentForm(false));
+        dispatch({ type: SET_FORM_ERROR, payload: true });
+      }
     });
   };

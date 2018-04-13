@@ -1,0 +1,31 @@
+
+.c-contact-form-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+
+  .c-title {
+
+    & + .confirmed-container {
+      margin: 25px auto 0;
+    }
+  }
+
+  .confirmed-container {
+    width: 163px;
+    height: 117px;
+    margin: 0 auto;
+
+    background: url('/static/confirmed.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin: 55px 0 0;
+  }
+}

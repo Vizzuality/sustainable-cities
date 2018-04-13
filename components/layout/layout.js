@@ -7,9 +7,12 @@ import Header from 'components/layout/header';
 import Footer from 'components/layout/footer';
 import Head from 'components/layout/head';
 import Icons from 'components/layout/icons';
+import ContactForm from 'components/about/contact-form';
 
 export default function Layout(props) {
   const { title, children, className, description, queryParams } = props;
+
+  const notHomepage = queryParams.route !== 'home';
 
   const classNames = classnames({
     [className]: !!className
@@ -31,6 +34,9 @@ export default function Layout(props) {
       <div className={`l-main ${classNames}`}>
         {children}
       </div>
+
+      {notHomepage &&
+        <ContactForm />}
 
       <Footer />
     </div>

@@ -7,6 +7,8 @@ import { setFormValue, onSubmit, resetForm } from 'modules/contact-form';
 
 // components
 import Button from 'components/common/Button';
+import Modal from 'components/common/Modal';
+import ContactFormModal from 'components/common/modal/contact-form-modal';
 
 class ContactForm extends PureComponent {
   static propTypes = {
@@ -19,8 +21,20 @@ class ContactForm extends PureComponent {
     resetForm: PropTypes.func.isRequired
   }
 
+  constructor(props) {
+    super(props);
+
+    this.state = { modal: props.sent };
+  }
+
   componentWillUnmount() {
     this.props.resetForm();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { sent: nextSent } = nextProps;
+
+    this.setState({ modal: nextSent });
   }
 
   handleSubmit = e => {
@@ -35,12 +49,25 @@ class ContactForm extends PureComponent {
     this.props.setFormValue({ name, value });
   }
 
+  handleToggleModal = () => {
+    this.setState({ modal: !this.state.modal })
+    this.props.resetForm();
+  }
+
   render() {
+    const {
+      formValues,
+      success,
+      sent
+    } = this.props;
+
     const {
       'contact-name': contactName,
       email,
-      message
-    } = this.props.formValues;
+      message,
+    } = formValues;
+
+    const modalShouldOpen = this.state.modal;
 
     return (
       <div className="c-contact-form">
@@ -59,7 +86,7 @@ class ContactForm extends PureComponent {
                       className="input-text"
                       type="text"
                       placeholder="Your name"
-                      defaultValue={contactName}
+                      value={contactName}
                       required
                       onChange={this.handleInput}
                     />
@@ -71,7 +98,7 @@ class ContactForm extends PureComponent {
                       className="input-text"
                       type="email"
                       placeholder="example@email.org"
-                      defaultValue={email}
+                      value={email}
                       required
                       onChange={this.handleInput}
                     />
@@ -86,7 +113,7 @@ class ContactForm extends PureComponent {
                         name="message"
                         rows="10"
                         placeholder="Your message here"
-                        defaultValue={message}
+                        value={message}
                         required
                         onChange={this.handleInput}
                       />
@@ -101,6 +128,7 @@ class ContactForm extends PureComponent {
                         primary
                         padding
                         submit
+                        disabled={success}
                       >
                         Send message
                       </Button>
@@ -111,7 +139,17 @@ class ContactForm extends PureComponent {
             </form>
           </div>
         </div>
-      </div>
+
+        {this.state.modal &&
+          <Modal
+            open
+            toggleModal={this.handleToggleModal}
+          >
+            <ContactFormModal
+              onCloseModal={this.handleToggleModal}
+            />
+          </Modal>}
+        </div>
     );
   }
 }
@@ -119,6 +157,7 @@ class ContactForm extends PureComponent {
 export default connect(
   state => ({
     formValues: state.contactForm.fields,
+    sent: state.contactForm.sent,
     loading: state.contactForm.loading,
     success: state.contactForm.success,
     error: state.contactForm.error

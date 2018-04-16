@@ -69,9 +69,7 @@ class ContactForm extends PureComponent {
       <div className="c-contact-form">
         <div className="row">
           <div className="columns small-12">
-            <h2 className="c-title -dark -fs-huge -fw-thin -center">
-              Contact Financing Sustainable Cities
-            </h2>
+            <h2 className="c-title -dark -fs-huge -fw-thin -center">Contact the FSCI</h2>
             <form className="c-form" onSubmit={this.handleSubmit}>
               <div className="form-row">
                 <div className="row">

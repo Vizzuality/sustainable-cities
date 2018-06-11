@@ -46,8 +46,8 @@ class HomePage extends Page {
             {this.props.solutions.map(solution => (
               <li key={solution.id} className="column small-10 small-offset-1 medium-5 medium-offset-1">
                 <Link route="explore-index" params={{ category: 'solutions', subCategory: solution.slug }}>
-                  <a>
-                    <svg className="icon -light -in-line-left -medium"><use xlinkHref={`#${CATEGORY_ICONS[solution.slug]}`} /></svg>
+                  <a className="solution-link">
+                    <svg className="icon -light -in-line-left -medium"><use xlinkHref={`#${CATEGORY_ICONS[solution.slug] || 'icon-home-about'}`} /></svg>
                     <span className="c-text -fs-bigger -light">{solution.name}</span>
                   </a>
                 </Link>

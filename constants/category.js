@@ -38,7 +38,9 @@ const CATEGORY_ICONS = {
   'bus-rapid-transit-brt': 'icon-rapidbus', // Bus Rapid Transit (BRT)
   'low-and-zero-emission-buses': 'icon-bus', // Low And Zero Emission Buses
   'municipal-building-retrofits': 'icon-gov', // Building Efficiency Retrofits
-  'transit-oriented-development-tod': 'icon-city' // Transit-oriented Development (TOD)
+  'transit-oriented-development-tod': 'icon-city', // Transit-oriented Development (TOD)
+  'affordable-housing-and-biodegradable-energy-to-waste': 'icon-affordable',  // Affordable housing
+  'biodegradable-energy-to-waste': 'icon-energy-waste' // Waste-to-energy systems
 };
 
 export {

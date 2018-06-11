@@ -30,6 +30,11 @@
     margin-bottom: 30px;
   }
 
+  .solution-link {
+    display: inline-flex;
+    align-items: center;
+  }
+
   @media (min-width: $screen-l) {
     padding: 150px 0;
 

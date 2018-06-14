@@ -332,6 +332,21 @@ class ExploreIndex extends Page {
               </div>
             </div>
           }
+          {subCategory === 'biodegradable-energy-to-waste' &&
+            <div className="additional-info">
+              <div className="row">
+                <div className="column small-12">
+                  <p className="c-text -fs-medium -fw-light">
+                    Research conducted by Megha Shenoy with assistance
+                    from Xiaotian Fu and Poornima Wasdani. Special thanks
+                    to all of the staff from private companies and research
+                    institutions who willingly shared their knowledge and time
+                    to help us complete this research.
+                  </p>
+                </div>
+              </div>
+            </div>
+          }
         </div>
 
         {/*<DownloadData

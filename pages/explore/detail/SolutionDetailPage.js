@@ -269,7 +269,7 @@ class SolutionDetailPage extends Page {
               position="bottom"
               image={getImage(project)}
             >
-              <Button
+              {/* <Button
                 primary
                 inverse
                 onClick={() => this.setState({
@@ -277,7 +277,7 @@ class SolutionDetailPage extends Page {
                 })}
               >
                 Share
-              </Button>
+              </Button> */}
             </Cover>
 
             {this.renderTabs()}

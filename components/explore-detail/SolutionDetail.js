@@ -78,14 +78,14 @@ export default function SolutionDetail({ project }) {
           </ul>
         </DetailSection> */}
 
-        {impactItems.length > 0 &&
+        {/* {impactItems.length > 0 &&
           <DetailSection
             title="Reported impacts to date"
           >
             <ReportedImpact
               items={impactItems}
             />
-          </DetailSection>}
+          </DetailSection>} */}
 
         {sourcesList.length > 0 &&
           <DetailSection

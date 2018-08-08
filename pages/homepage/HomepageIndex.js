@@ -128,18 +128,34 @@ class HomePage extends Page {
             <div className="row">
               <div className="columns small-12 medium-6 large-4">
                 <div className="video-wrapper">
-                  <iframe title="video-1" src="https://www.youtube.com/embed/4NVIToVDHTc" allowFullScreen="allowfullscreen" frameBorder="0" />
+                  <iframe
+                    title="Cities are Taking on Electric Buses: How the FSCI Helps Accelerate the Transition"
+                    src="https://www.youtube.com/embed/4NVIToVDHTc"
+                    allowFullScreen="allowfullscreen"
+                    frameBorder="0"
+                  />
                 </div>
               </div>
               <div className="columns small-12 medium-6 large-4">
                 <div className="video-wrapper">
-                  <iframe title="video-2" src="https://www.youtube.com/embed/0JvfYvBRo_o" allowFullScreen="allowfullscreen" frameBorder="0" />
+                  <iframe
+                    title="Bike Sharing Can Improve Mobility & Quality of Life: Here’s How the FSCI Is Helping Cities"
+                    src="https://www.youtube.com/embed/1x1UbSqqUF4"
+                    allowFullScreen="allowfullscreen"
+                    frameBorder="0"
+                  />
                 </div>
               </div>
-              {/* <div className="columns small-12 medium-6 large-4">
+              <div className="columns small-12 medium-6 large-4">
                 <div className="video-wrapper">
+                  <iframe
+                    title="How the FSCI is Helping Cities Rethink Bus Procurement"
+                    src="https://www.youtube.com/embed/-a3nbgicKy4"
+                    allowFullScreen="allowfullscreen"
+                    frameBorder="0"
+                  />
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </section>

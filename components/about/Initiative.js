@@ -14,8 +14,12 @@ export default function Initiative() {
             teamed up for a new partnership to leverage the expertise of our three organizations – WRI’s analytical
             and research competencies and long-term engagement with cities, the high-level connection with city leaders of
             C40 and the Citi Foundation’s urban economic progress agenda.</p>
+<<<<<<< HEAD
           <p className="c-text -fs-medium -fw-light">The Financing Sustainable Cities Initiative (FSCI) combines knowledge sharing between cities and investors, on-the-ground technical assistance to cities, and an online platform to scale investments in urban infrastructure and services that produce local improvements in people’s lives and global sustainability benefits.</p>
           <p className="c-text -fs-medium -fw-light">Financing Sustainable Cities aims to support the growing ecosystem of people working to <strong>reduce global emissions and improve the quality of life</strong> for urban residents around the world.</p>
+=======
+          <p className="c-text -fs-medium -fw-light">Financing Sustainable Cities combines knowledge sharing between cities and investors, on-the-ground technical assistance to cities, and an online platform to scale investments in urban infrastructure and services that produce local improvements in people’s lives and global sustainability benefits.</p>
+>>>>>>> master
           <div className="picture -gradient -buildings">
             <p className="c-text -caption -light -fs-extrabig -fw-light">
               The Financing Sustainable Cities Initiative aims to support the growing ecosystem
